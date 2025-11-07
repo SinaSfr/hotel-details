@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.basiscore.net/basisfly.com/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="../assets/css/output.css">
+</head>
+
+<body>
+    <main class="book-bg-zinc-50">
+        <div class="max-lg:book-w-[90%] book-mx-auto">
+            <section class="book-relative book-mt-16">
+                <div class="swiper hotel-big-img-gallery book-select-none">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img src="../assets/images/hotel-image.jpg"
+                                class="book-w-full book-h-44 book-object-cover book-rounded" alt="" width="288"
+                                height="176" />
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="../assets/images/hotel-image.jpg"
+                                class="book-w-full book-h-44 book-object-cover book-rounded" alt="" width="288"
+                                height="176" />
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="../assets/images/hotel-image.jpg"
+                                class="book-w-full book-h-44 book-object-cover book-rounded" alt="" width="288"
+                                height="176" />
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="swiper hotel-small-img-gallery book-mt-2">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide book-cursor-pointer">
+                            <img src="../assets/images/nature-image.jpg" alt=""
+                                class="book-w-full book-h-14 book-object-cover book-rounded" width="91" height="56"
+                                loading="lazy">
+                        </div>
+                        <div class="swiper-slide book-cursor-pointer">
+                            <img src="../assets/images/nature-image.jpg" alt=""
+                                class="book-w-full book-h-14 book-object-cover book-rounded" width="91" height="56"
+                                loading="lazy">
+                        </div>
+                        <div class="swiper-slide book-cursor-pointer">
+                            <img src="../assets/images/nature-image.jpg" alt=""
+                                class="book-w-full book-h-14 book-object-cover book-rounded" width="91" height="56"
+                                loading="lazy">
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination !-book-bottom-9"></div>
+
+                <!-- Popup Modal -->
+                <div id="hotelPopupModalGallery"
+                    class="popup-modal book-fixed book-inset-0 book-z-50 book-bg-black book-bg-opacity-70 book-justify-center book-items-center book-hidden">
+                    <div
+                        class="popup-content book-relative book-flex book-items-center book-justify-center book-border-4 book-border-solid book-border-white book-rounded-3xl book-h-[520px] book-max-w-7xl book-overflow-hidden">
+
+                        <div
+                            class="book-absolute book-top-0 book-left-0 book-right-0 book-flex book-items-center book-justify-between book-px-6 book-py-3 book-z-20">
+                            <h2 class="text-lg font-semibold text-zinc-800 dark:text-zinc-100">گالری تصاویر</h2>
+                            <button id="closePopupGallery"
+                                class="book-flex book-items-center book-justify-center book-w-12 book-h-12 book-bg-white/30 book-backdrop-blur-md book-rounded-full book-text-white book-transition-all book-duration-300 hover:book-bg-secondary-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+                                    fill="none" class="stroke-current">
+                                    <path d="M6 6l12 12M18 6L6 18" stroke-width="2" stroke-linecap="round" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <div class="swiper hotel-big-img-gallery-popup book-select-none book-h-full book-w-full">
+                            <div class="swiper-wrapper">
+
+                            </div>
+
+                            <div
+                                class="swiper-button-next book-w-12 book-h-12 after:book-text-2xl book-bg-white/30 backdrop-blur-md book-rounded-full book-text-white book-shadow-lg">
+                            </div>
+                            <div
+                                class="swiper-button-prev w-12 h-12 after:text-2xl bg-white/30 backdrop-blur-md rounded-full text-white shadow-lg">
+                            </div>
+                        </div>
+
+                        <div
+                            class="book-absolute book-bottom-0 book-left-0 book-right-0 book-px-6 book-py-3 book-rounded-3xl book-bg-gradient-to-t book-from-black/80 book-to-transparent book-flex book-items-center book-justify-between book-text-sm book-text-white book-z-20">
+                            <span class="gallery-img-count text-3xl">1 / 5</span>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+            <div class="book-bg-white book-px-3 book-py-6 book-rounded-xl book-mt-12">
+                <section>
+                    <h1 class="book-font-medium book-text-zinc-900 book-text-sm book-mb-1.5">هتل مجلل درویشی در مشهد
+                    </h1>
+                    <div class="book-flex book-items-center book-gap-0.5">
+                        <svg width="24" height="24">
+                            <use href="../assets/images/book-sprite-icons.svg#icon-golden-star">
+                            </use>
+                        </svg>
+                        <svg width="24" height="24">
+                            <use href="../assets/images/book-sprite-icons.svg#icon-golden-star">
+                            </use>
+                        </svg>
+                        <svg width="24" height="24">
+                            <use href="../assets/images/book-sprite-icons.svg#icon-golden-star">
+                            </use>
+                        </svg>
+                    </div>
+                    <div class="book-text-xs book-text-zinc-900 book-mt-5 book-leading-6">
+                        متنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود. طراح گرافیک از این
+                        متن به
+                        عنوان عنصری از ترکیب بندی برای پر کردن صفحه و ارایه اولیه شکل ظاهری و کلی طرح سفارش گرفته شده
+                        استفاده می نماید متنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود. طراح
+                        گرافیک از این متن به عنوان عنصری از ترکیب بندی برای پر کردن صفحه و ارایه اولیه شکل ظاهری و کلی
+                        طرح
+                        سفارش گرفته شده استفاده می نمایدمتنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک
+                        گفته
+                        می‌شود. طراح گرافیک از این متن به عنوان عنصری از ترکیب بندی برای پر کردن صفحه و ارایه اولیه شکل
+                        ظاهری و کلی طرح سفارش گرفته شده استفاده می نماید
+                    </div>
+                </section>
+                <section class="book-mt-10">
+                    <h2 class="book-font-medium book-text-sm book-text-primary-400">ارتباط با هتل</h2>
+                    <div class="book-flex book-flex-col book-gap-1 book-mt-3">
+                        <div class="book-flex book-items-center book-gap-1">
+                            <svg width="48" height="48">
+                                <use href="../assets/images/book-sprite-icons.svg#icon-site">
+                                </use>
+                            </svg>
+                            <span class="book-text-xs book-text-zinc-900">www.moshenheydari.com</span>
+                        </div>
+                        <div class="book-flex book-items-center book-gap-1">
+                            <svg width="48" height="48">
+                                <use href="../assets/images/book-sprite-icons.svg#icon-location">
+                                </use>
+                            </svg>
+                            <span class="book-text-xs book-text-zinc-900">تهران خیابان کشاورز خیابان فلسطین</span>
+                        </div>
+                        <div class="book-flex book-items-center book-gap-1">
+                            <svg width="48" height="48">
+                                <use href="../assets/images/book-sprite-icons.svg#icon-phone">
+                                </use>
+                            </svg>
+                            <div class="book-flex-col book-gap-1">
+                                <span class="book-text-xs book-text-zinc-900">+51-556699774411</span>
+                                <span class="book-text-xs book-text-zinc-900">+51-556699774411</span>
+                            </div>
+                        </div>
+                        <div class="book-flex book-items-center book-gap-1">
+                            <svg width="48" height="48">
+                                <use href="../assets/images/book-sprite-icons.svg#icon-mail">
+                                </use>
+                            </svg>
+                            <span class="book-text-xs book-text-zinc-900">heydarimohsen71@gmail.com</span>
+                        </div>
+                        <div class="book-flex book-items-center book-gap-1">
+                            <svg width="48" height="48">
+                                <use href="../assets/images/book-sprite-icons.svg#icon-telephone">
+                                </use>
+                            </svg>
+                            <span class="book-text-xs book-text-zinc-900">+14-66335544</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <section class="book-mt-3">
+                <img src="../assets/images/map.png" class="book-w-full book-h-36 book-object-cover book-rounded-xl"
+                    alt="" width="288" height="144" loading="lazy">
+            </section>
+
+            <section class="book-bg-white book-p-4 book-rounded-xl book-mt-3">
+                <div
+                    class="book-flex book-items-center book-justify-between book-bg-zinc-100 book-rounded-xl book-px-3 book-py-2">
+                    <div class="book-flex book-flex-col book-gap-1">
+                        <h2 class="book-font-medium book-text-sm book-text-zinc-900">تاریخ انتخابی</h2>
+                        <span class="book-flex book-items-center book-gap-2 book-text-zinc-500 book-text-xs">
+                            <span>3 شب</span> <span>1402/12/12</span> تا <span>1402/12/15</span>
+                        </span>
+                    </div>
+                    <svg width="48" height="48" class="book-text-zinc-500">
+                        <use href="../assets/images/book-sprite-icons.svg#icon-chevron-down">
+                        </use>
+                    </svg>
+                </div>
+                <div
+                    class="book-flex book-items-center book-justify-between book-bg-zinc-100 book-rounded-xl book-px-3 book-py-2 book-mt-2">
+                    <div class="book-flex book-flex-col book-gap-1">
+                        <h2 class="book-font-medium book-text-sm book-text-zinc-900">تعداد مسافران</h2>
+                        <span class="book-flex book-items-center book-gap-2 book-text-zinc-500 book-text-xs">
+                            1 بزرگسال/1 اتاق
+                        </span>
+                    </div>
+                    <svg width="48" height="48" class="book-text-zinc-500">
+                        <use href="../assets/images/book-sprite-icons.svg#icon-chevron-down">
+                        </use>
+                    </svg>
+                </div>
+                <button
+                    class="book-w-full book-h-14 book-flex book-items-center book-justify-center book-rounded-xl book-bg-primary-300 book-text-white book-font-medium book-mt-5">جستجو</button>
+            </section>
+
+            <section>
+                <div class="book-bg-white book-rounded-xl book-pt-6">
+                    <div class="tabs book-relative book-overflow-hidden">
+                        <div
+                            class="tabs-container book-flex book-items-center book-gap-10 book-overflow-x-auto book-scrollbar-thin book-whitespace-nowrap book-pb-3 book-px-3">
+                            <button
+                                class="book-flex-1 book-text-zinc-900 book-text-sm book-font-medium">امکانات</button>
+                            <button class="book-flex-1 book-text-zinc-900 book-text-sm book-font-medium">اتاق
+                                ها</button>
+                            <button class="book-flex-1 book-text-zinc-900 book-text-sm book-font-medium">قوانین و
+                                مقررات</button>
+                            <button class="book-flex-1 book-text-zinc-900 book-text-sm book-font-medium">نظر
+                                کاربران</button>
+                        </div>
+                        <div
+                            class="active-line book-absolute book-bottom-0 book-h-0.5 book-bg-primary-300 book-transition-all book-duration-300">
+                        </div>
+                    </div>
+                </div>
+                <div class="book-bg-white book-rounded-xl book-px-3 book-pb-6 book-pt-3 book-mt-3">
+                    <h2
+                        class="book-text-zinc-900 book-font-medium book-border-b book-border-solid book-border-zinc-200 -book-mx-3 book-px-3 book-pb-4 book-mb-4">
+                        امکانات</h2>
+                    <div class="book-flex book-flex-col book-gap-6">
+                        <div class="book-flex book-items-start book-gap-2">
+                            <svg width="24" height="24">
+                                <use href="../assets/images/book-sprite-icons.svg#icon-wifi">
+                                </use>
+                            </svg>
+                            <div class="book-flex book-flex-col book-gap-2">
+                                <h3 class="book-font-medium book-text-sm book-text-zinc-900">اینترنت</h3>
+                                <span class="book-text-xs book-text-zinc-600">اینترنت رایگان</span>
+                            </div>
+                        </div>
+                        <div class="book-flex book-items-start book-gap-2">
+                            <svg width="24" height="24">
+                                <use href="../assets/images/book-sprite-icons.svg#icon-parking">
+                                </use>
+                            </svg>
+                            <div class="book-flex book-flex-col book-gap-2">
+                                <h3 class="book-font-medium book-text-sm book-text-zinc-900">پارکینگ</h3>
+                                <span class="book-text-xs book-text-zinc-600">با پارکینگ</span>
+                            </div>
+                        </div>
+                        <div class="book-flex book-items-start book-gap-2">
+                            <svg width="24" height="24">
+                                <use href="../assets/images/book-sprite-icons.svg#icon-tick">
+                                </use>
+                            </svg>
+                            <div class="book-flex book-flex-col book-gap-2">
+                                <h3 class="book-font-medium book-text-sm book-text-zinc-900">دیگر خدمات</h3>
+                                <span class="book-text-xs book-text-zinc-600">خدمات نظافت روزانه</span>
+                            </div>
+                        </div>
+                        <div class="book-flex book-items-start book-gap-2">
+                            <svg width="24" height="24">
+                                <use href="../assets/images/book-sprite-icons.svg#icon-bath">
+                                </use>
+                            </svg>
+                            <div class="book-flex book-flex-col book-gap-2">
+                                <h3 class="book-font-medium book-text-sm book-text-zinc-900">سرویس بهداشتی</h3>
+                                <div class="book-flex book-flex-col book-gap-1">
+                                    <span class="book-text-xs book-text-zinc-600">دستشویی ایرانی</span>
+                                    <span class="book-text-xs book-text-zinc-600">دستشویی ایرانی</span>
+                                    <span class="book-text-xs book-text-zinc-600">دستشویی ایرانی</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="book-flex book-items-start book-gap-2">
+                            <svg width="24" height="24">
+                                <use href="../assets/images/book-sprite-icons.svg#icon-food">
+                                </use>
+                            </svg>
+                            <div class="book-flex book-flex-col book-gap-2">
+                                <h3 class="book-font-medium book-text-sm book-text-zinc-900">سرو غذا</h3>
+                                <div class="book-flex book-flex-col book-gap-1">
+                                    <span class="book-text-xs book-text-zinc-600">صبحانه سلف سرویس</span>
+                                    <span class="book-text-xs book-text-zinc-600">سرو نهار در اتاق</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="book-flex book-items-start book-gap-2">
+                            <svg width="24" height="24">
+                                <use href="../assets/images/book-sprite-icons.svg#icon-bed">
+                                </use>
+                            </svg>
+                            <div class="book-flex book-flex-col book-gap-2">
+                                <h3 class="book-font-medium book-text-sm book-text-zinc-900">اتاق</h3>
+                                <div class="book-flex book-flex-col book-gap-1">
+                                    <span class="book-text-xs book-text-zinc-600">تخت دو نفره</span>
+                                    <span class="book-text-xs book-text-zinc-600">تخت دو نفره</span>
+                                    <span class="book-text-xs book-text-zinc-600">تخت دو نفره</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="book-flex book-items-start book-gap-2">
+                            <svg width="24" height="24">
+                                <use href="../assets/images/book-sprite-icons.svg#icon-ventilation">
+                                </use>
+                            </svg>
+                            <div class="book-flex book-flex-col book-gap-2">
+                                <h3 class="book-font-medium book-text-sm book-text-zinc-900">تهویه</h3>
+                                <div class="book-flex book-flex-col book-gap-1">
+                                    <span class="book-text-xs book-text-zinc-600">سرمایشی کولر اسپلیت</span>
+                                    <span class="book-text-xs book-text-zinc-600">گرمایشی شوفاژ</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="book-bg-zinc-800 book-rounded-xl book-px-6 book-py-2 book-mt-3">
+                <div class="book-flex book-flex-col book-gap-3">
+                    <p class="book-flex book-items-center book-gap-2 book-text-white">تعداد کودک:<span>0</span></p>
+                    <p class="book-flex book-items-center book-gap-2 book-text-white">تعداد بزرگسال:<span>0</span></p>
+                    <p class="book-flex book-items-center book-gap-2 book-text-white">تعداد اتاق:<span>0</span></p>
+                    <p class="book-flex book-items-center book-gap-2 book-text-white">تاریخ:<span>۱۴۰۴/۰۳/۰۲</span> -
+                        <span>۱۴۰۴/۰۲/۰۱</span>
+                    </p>
+                </div>
+            </section>
+
+            <section
+                class="book-flex book-flex-col book-gap-7 book-bg-white book-rounded-xl book-mt-3 book-py-2 book-px-3">
+                <h2 class="book-text-sm book-font-medium book-text-zinc-900">فیلتر بر اساس:</h2>
+                <div class="book-relative book-w-full book-max-w-sm">
+                    <h3 class="book-text-sm book-mb-2">خدمات اتاق:</h3>
+
+                    <button
+                        class="room-select-btn book-flex book-items-center book-justify-between book-bg-zinc-100 book-rounded-xl book-px-3 book-py-px book-w-full book-transition-all book-duration-300">
+                        <span class="room-select-text book-text-zinc-600">room_only</span>
+                        <svg width="48" height="48" class="book-text-zinc-500 book-transition-all book-duration-300">
+                            <use href="../assets/images/book-sprite-icons.svg#icon-chevron-down"></use>
+                        </svg>
+                    </button>
+
+                    <ul
+                        class="room-options book-absolute book-left-0 book-right-0 book-bg-white book-rounded-xl book-shadow-lg book-mt-2 book-overflow-hidden book-z-10 book-hidden">
+                        <li
+                            class="room-option book-px-3 book-py-2 book-text-sm book-text-zinc-700 hover:book-bg-zinc-100 book-cursor-pointer">
+                            Room Only</li>
+                        <li
+                            class="room-option book-px-3 book-py-2 book-text-sm book-text-zinc-700 hover:book-bg-zinc-100 book-cursor-pointer">
+                            Bed & Breakfast</li>
+                        <li
+                            class="room-option book-px-3 book-py-2 book-text-sm book-text-zinc-700 hover:book-bg-zinc-100 book-cursor-pointer">
+                            Half Board</li>
+                        <li
+                            class="room-option book-px-3 book-py-2 book-text-sm book-text-zinc-700 hover:book-bg-zinc-100 book-cursor-pointer">
+                            Full Board</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="book-text-sm book-mb-2">نام اتاق:</h3>
+                    <div class="book-bg-zinc-100 book-rounded-xl book-px-3 book-py-px">
+                        <input type="text"
+                            class="book-placeholder-zinc-600 book-bg-transparent book-h-12 book-outline-none" name=""
+                            id="" placeholder="نام اتاق">
+                    </div>
+                </div>
+                <button
+                    class="book-w-full book-h-12 book-flex book-items-center book-justify-center book-rounded-xl book-bg-primary-300 book-text-white book-font-medium">اعمال
+                    فيلتر</button>
+            </section>
+
+            <section class="book-bg-white book-rounded-xl book-px-3 book-pb-6 book-pt-3 book-mt-3">
+                <h2
+                    class="book-text-zinc-900 book-font-medium book-border-b book-border-solid book-border-zinc-200 -book-mx-3 book-px-3 book-pb-4 book-mb-4">
+                    اتاق ها</h2>
+                <div class="book-flex book-flex-col book-gap-4">
+                    <div class="book-border book-border-solid book-border-zinc-200 book-rounded-lg book-py-4 book-px-2">
+                        <div
+                            class="book-flex book-flex-col book-gap-6 book-divide-y book-divide-dashed book-divide-zinc-300">
+                            <div>
+                                <h3 class="book-text-xs book-text-zinc-900 book-mb-4">اتاق دو تخته دبل ( اقامت با
+                                    صبحانه)</h3>
+                                <div class="book-flex book-gap-2">
+                                    <span
+                                        class="book-bg-primary-50 book-text-primary-800 book-text-xs book-rounded-3xl book-py-1 book-px-3">صبحانه
+                                        سلف سرویس</span>
+                                    <span
+                                        class="book-bg-specialcolor-1 book-text-specialcolor-2 book-text-xs book-rounded-3xl book-py-1 book-px-4">Available</span>
+                                </div>
+                            </div>
+                            <div class="book-pt-6">
+                                <h3 class="book-text-xs book-text-zinc-900 book-mb-4">اتاق دو تخته دبل ( اقامت با
+                                    صبحانه)</h3>
+                                <div class="book-flex book-gap-2">
+                                    <span
+                                        class="book-bg-primary-50 book-text-primary-800 book-text-xs book-rounded-3xl book-py-1 book-px-3">صبحانه
+                                        سلف سرویس</span>
+                                    <span
+                                        class="book-bg-specialcolor-1 book-text-specialcolor-2 book-text-xs book-rounded-3xl book-py-1 book-px-4">Available</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="book-flex book-flex-col book-gap-1 book-items-center book-mt-6">
+                            <h3 class="book-text-xs book-text-zinc-900">قیمت نهایی:</h3>
+                            <p class="book-text-zinc-900 book-font-bold book-text-xl">1۲/200/000 <span
+                                    class="book-text-zinc-500 book-text-xs book-font-normal">تومان</span></p>
+                        </div>
+                        <div class="book-flex book-items-center book-gap-1.5 book-mt-4">
+                            <div class="book-flex-1 book-flex book-items-center">
+                                <svg width="57" height="48">
+                                    <use href="../assets/images/book-sprite-icons.svg#icon-document"></use>
+                                </svg>
+                                <span class="book-text-blue-600 book-text-xs">قوانين اتاق</span>
+                            </div>
+                            <button
+                                class="book-flex-1 book-h-12 book-flex book-items-center book-justify-center book-rounded-xl book-bg-primary-300 book-text-white book-font-medium">رزرو
+                                اتاق</button>
+                        </div>
+                    </div>
+                    <div class="book-border book-border-solid book-border-zinc-200 book-rounded-lg book-py-4 book-px-2">
+                        <div
+                            class="book-flex book-flex-col book-gap-6 book-divide-y book-divide-dashed book-divide-zinc-300">
+                            <div>
+                                <h3 class="book-text-xs book-text-zinc-900 book-mb-4">اتاق دو تخته دبل ( اقامت با
+                                    صبحانه)</h3>
+                                <div class="book-flex book-gap-2">
+                                    <span
+                                        class="book-bg-primary-50 book-text-primary-800 book-text-xs book-rounded-3xl book-py-1 book-px-3">صبحانه
+                                        سلف سرویس</span>
+                                    <span
+                                        class="book-bg-specialcolor-1 book-text-specialcolor-2 book-text-xs book-rounded-3xl book-py-1 book-px-4">Available</span>
+                                </div>
+                            </div>
+                            <div class="book-pt-6">
+                                <h3 class="book-text-xs book-text-zinc-900 book-mb-4">اتاق دو تخته دبل ( اقامت با
+                                    صبحانه)</h3>
+                                <div class="book-flex book-gap-2">
+                                    <span
+                                        class="book-bg-primary-50 book-text-primary-800 book-text-xs book-rounded-3xl book-py-1 book-px-3">صبحانه
+                                        سلف سرویس</span>
+                                    <span
+                                        class="book-bg-specialcolor-1 book-text-specialcolor-2 book-text-xs book-rounded-3xl book-py-1 book-px-4">Available</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="book-flex book-flex-col book-gap-1 book-items-center book-mt-6">
+                            <h3 class="book-text-xs book-text-zinc-900">قیمت نهایی:</h3>
+                            <p class="book-text-zinc-900 book-font-bold book-text-xl">1۲/200/000 <span
+                                    class="book-text-zinc-500 book-text-xs book-font-normal">تومان</span></p>
+                        </div>
+                        <div class="book-flex book-items-center book-gap-1.5 book-mt-4">
+                            <div class="book-flex-1 book-flex book-items-center">
+                                <svg width="57" height="48">
+                                    <use href="../assets/images/book-sprite-icons.svg#icon-document"></use>
+                                </svg>
+                                <span class="book-text-blue-600 book-text-xs">قوانين اتاق</span>
+                            </div>
+                            <button
+                                class="book-flex-1 book-h-12 book-flex book-items-center book-justify-center book-rounded-xl book-bg-primary-300 book-text-white book-font-medium">رزرو
+                                اتاق</button>
+                        </div>
+                    </div>
+                </div>
+                <ul class="book-flex book-items-center book-justify-center book-gap-1 book-mt-4 book-dir-ltr">
+                    <li
+                        class="book-flex book-items-center book-justify-center book-w-12 book-h-12 book-rounded-xl book-bg-zinc-800 book-mr-3">
+                        <svg width="24" height="24">
+                            <use href="../assets/images/book-sprite-icons.svg#icon-chevron-left"></use>
+                        </svg>
+
+                    </li>
+                    <li
+                        class="book-flex book-items-center book-justify-center book-w-12 book-h-12 book-text-zinc-900 book-rounded-xl book-bg-zinc-100">
+                        1
+                    </li>
+                    <li
+                        class="book-flex book-items-center book-justify-center book-w-12 book-h-12 book-text-primary-800 book-rounded-xl book-bg-primary-50">
+                        1
+                    </li>
+                    <li
+                        class="book-flex book-items-center book-justify-center book-w-12 book-h-12 book-text-zinc-900 book-rounded-xl book-bg-zinc-100">
+                        1
+                    </li>
+                    <li
+                        class="book-flex book-items-center book-justify-center book-w-12 book-h-12 book-rounded-xl book-bg-zinc-800 book-ml-3">
+                        <svg width="24" height="24">
+                            <use href="../assets/images/book-sprite-icons.svg#icon-chevron-right"></use>
+                        </svg>
+
+                    </li>
+                </ul>
+            </section>
+            <section class="book-bg-white book-rounded-xl book-py-6 book-px-3 book-mt-3">
+                <h2
+                    class="book-text-zinc-900 book-font-medium book-border-b book-border-solid book-border-zinc-200 -book-mx-3 book-px-3 book-pb-6 book-mb-6">
+                    اماکن اطراف هتل</h2>
+                <div class="book-flex book-flex-col book-gap-9">
+                    <div class="book-flex book-items-center book-gap-1">
+                        <svg width="48" height="48">
+                            <use href="../assets/images/book-sprite-icons.svg#icon-shop">
+                            </use>
+                        </svg>
+                        <div class="book-flex book-flex-col book-gap-1">
+                            <h3 class="book-font-medium book-text-sm book-text-zinc-900">فروشگاه</h3>
+                            <span class="book-text-xs book-text-zinc-600">10 مترو نزدیک به هتل</span>
+                        </div>
+                    </div>
+                    <div class="book-flex book-items-center book-gap-1">
+                        <svg width="48" height="48">
+                            <use href="../assets/images/book-sprite-icons.svg#icon-tree">
+                            </use>
+                        </svg>
+                        <div class="book-flex book-flex-col book-gap-1">
+                            <h3 class="book-font-medium book-text-sm book-text-zinc-900">پارک</h3>
+                            <span class="book-text-xs book-text-zinc-600">2 پارک نزدیک هتل</span>
+                        </div>
+                    </div>
+                    <div class="book-flex book-items-center book-gap-1">
+                        <svg width="48" height="48">
+                            <use href="../assets/images/book-sprite-icons.svg#icon-bag">
+                            </use>
+                        </svg>
+                        <div class="book-flex book-flex-col book-gap-1">
+                            <h3 class="book-font-medium book-text-sm book-text-zinc-900">مرکز خرید</h3>
+                            <span class="book-text-xs book-text-zinc-600">10 مترو نزدیک به هتل</span>
+                        </div>
+                    </div>
+                    <div class="book-flex book-items-center book-gap-1">
+                        <svg width="48" height="48">
+                            <use href="../assets/images/book-sprite-icons.svg#icon-bus">
+                            </use>
+                        </svg>
+                        <div class="book-flex book-flex-col book-gap-1">
+                            <h3 class="book-font-medium book-text-sm book-text-zinc-900">اتوبوس</h3>
+                            <div class="book-flex book-flex-col book-gap-1">
+                                <span class="book-text-xs book-text-zinc-600">2 اتوبوس نزدیک هتل</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book-flex book-items-center book-gap-1">
+                        <svg width="48" height="48">
+                            <use href="../assets/images/book-sprite-icons.svg#icon-subway">
+                            </use>
+                        </svg>
+                        <div class="book-flex book-flex-col book-gap-1">
+                            <h3 class="book-font-medium book-text-sm book-text-zinc-900">مترو</h3>
+                            <div class="book-flex book-flex-col book-gap-1">
+                                <span class="book-text-xs book-text-zinc-600">10 مترو نزدیک به هتل</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book-flex book-items-center book-gap-1">
+                        <svg width="48" height="48">
+                            <use href="../assets/images/book-sprite-icons.svg#icon-building">
+                            </use>
+                        </svg>
+                        <div class="book-flex book-flex-col book-gap-1">
+                            <h3 class="book-font-medium book-text-sm book-text-zinc-900">مكان هاي دیدنی</h3>
+                            <div class="book-flex book-flex-col book-gap-1">
+                                <span class="book-text-xs book-text-zinc-600">10 مکان تفریحی نزدیک به هتل</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="book-bg-white book-rounded-xl book-py-6 book-px-3 book-mt-3">
+                <h2
+                    class="book-text-zinc-900 book-font-medium book-border-b book-border-solid book-border-zinc-200 -book-mx-3 book-px-3 book-pb-6 book-mb-6">
+                    قوانین و مقررات</h2>
+                    <div>
+                        
+                    </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script src="https://cdn.basiscore.net/basisfly.com/js/swiper-bundle.min.js"></script>
+    <script src="../assets/js/hotelDetails.js"></script>
+
+</body>
+
+</html>
