@@ -3,13 +3,6 @@ module.exports = {
   prefix: 'book-',
   theme: {
     extend: {
-      backgroundImage: {
-        "purple-shadow":
-          "linear-gradient(180deg, rgba(24, 28, 71, 0.16) 0%, #141F37 100%)",
-      },
-      boxShadow: {
-        'mega-menu': '0px 8px 12px 0px #00000033',
-      },
       colors: {
         primary: {
           DEFAULT: "var(--primary)",

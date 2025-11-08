@@ -571,6 +571,10 @@ body {
   position: relative;
 }
 
+.book-sticky {
+  position: sticky;
+}
+
 .book-inset-0 {
   inset: 0px;
 }
@@ -595,6 +599,10 @@ body {
   top: 0px;
 }
 
+.book-top-full {
+  top: 100%;
+}
+
 .book-z-10 {
   z-index: 10;
 }
@@ -615,6 +623,16 @@ body {
 .book-mx-auto {
   margin-left: auto;
   margin-right: auto;
+}
+
+.-book-mx-8 {
+  margin-left: -2rem;
+  margin-right: -2rem;
+}
+
+.-book-mx-6 {
+  margin-left: -1.5rem;
+  margin-right: -1.5rem;
 }
 
 .book-mb-1\.5 {
@@ -677,8 +695,28 @@ body {
   margin-top: 1.5rem;
 }
 
+.book-mt-9 {
+  margin-top: 2.25rem;
+}
+
+.book-mt-28 {
+  margin-top: 7rem;
+}
+
+.book-mt-8 {
+  margin-top: 2rem;
+}
+
+.book-mt-1\.5 {
+  margin-top: 0.375rem;
+}
+
 .book-flex {
   display: flex;
+}
+
+.book-grid {
+  display: grid;
 }
 
 .book-hidden {
@@ -717,6 +755,39 @@ body {
   height: 100%;
 }
 
+.book-h-\[552x\] {
+  height: 552x;
+}
+
+.book-h-\[552px\] {
+  height: 552px;
+}
+
+.book-h-fit {
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+.book-h-8 {
+  height: 2rem;
+}
+
+.book-h-72 {
+  height: 18rem;
+}
+
+.book-h-\[\] {
+  height: ;
+}
+
+.book-h-\[305px\] {
+  height: 305px;
+}
+
+.book-h-16 {
+  height: 4rem;
+}
+
 .book-w-12 {
   width: 3rem;
 }
@@ -729,6 +800,34 @@ body {
   width: 100%;
 }
 
+.\!book-w-full {
+  width: 100% !important;
+}
+
+.book-w-\[358px\] {
+  width: 358px;
+}
+
+.book-w-24 {
+  width: 6rem;
+}
+
+.book-w-28 {
+  width: 7rem;
+}
+
+.book-w-52 {
+  width: 13rem;
+}
+
+.book-w-60 {
+  width: 15rem;
+}
+
+.book-w-16 {
+  width: 4rem;
+}
+
 .book-max-w-7xl {
   max-width: 80rem;
 }
@@ -739,6 +838,14 @@ body {
 
 .book-flex-1 {
   flex: 1 1 0%;
+}
+
+.book-flex-\[2\.53\] {
+  flex: 2.53;
+}
+
+.book-flex-\[2\.75\] {
+  flex: 2.75;
 }
 
 .book-shrink-0 {
@@ -758,6 +865,20 @@ body {
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
+}
+
+.book-columns-4 {
+  -moz-columns: 4;
+       columns: 4;
+}
+
+.book-break-inside-avoid {
+  -moz-column-break-inside: avoid;
+       break-inside: avoid;
+}
+
+.book-grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .book-flex-col {
@@ -824,10 +945,24 @@ body {
   gap: 2.25rem;
 }
 
+.book-gap-y-8 {
+  row-gap: 2rem;
+}
+
 .book-divide-y > :not([hidden]) ~ :not([hidden]) {
   --tw-divide-y-reverse: 0;
   border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
   border-bottom-width: calc(1px * var(--tw-divide-y-reverse));
+}
+
+.book-divide-x > :not([hidden]) ~ :not([hidden]) {
+  --tw-divide-x-reverse: 0;
+  border-right-width: calc(1px * var(--tw-divide-x-reverse));
+  border-left-width: calc(1px * calc(1 - var(--tw-divide-x-reverse)));
+}
+
+.book-divide-x-reverse > :not([hidden]) ~ :not([hidden]) {
+  --tw-divide-x-reverse: 1;
 }
 
 .book-divide-dashed > :not([hidden]) ~ :not([hidden]) {
@@ -978,6 +1113,10 @@ body {
   padding: 1rem;
 }
 
+.book-p-6 {
+  padding: 1.5rem;
+}
+
 .book-px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -1028,6 +1167,21 @@ body {
   padding-bottom: 1px;
 }
 
+.book-px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.book-py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.book-py-5 {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+}
+
 .book-pb-3 {
   padding-bottom: 0.75rem;
 }
@@ -1048,6 +1202,14 @@ body {
   padding-top: 1.5rem;
 }
 
+.book-pr-6 {
+  padding-right: 1.5rem;
+}
+
+.book-pl-2 {
+  padding-left: 0.5rem;
+}
+
 .book-text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
@@ -1061,6 +1223,11 @@ body {
 .book-text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
+}
+
+.book-text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
 }
 
 .book-font-bold {
@@ -1251,8 +1418,14 @@ body {
   background-color: rgb(244 244 245 / var(--tw-bg-opacity, 1));
 }
 
-@media not all and (min-width: 1024px) {
-  .max-lg\:book-w-\[90\%\] {
-    width: 90%;
+@media not all and (min-width: 1280px) {
+  .max-xl\:book-w-\[97\%\] {
+    width: 97%;
+  }
+}
+
+@media (min-width: 1280px) {
+  .xl\:book-max-w-7xl {
+    max-width: 80rem;
   }
 }

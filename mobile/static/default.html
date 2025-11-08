@@ -34,7 +34,7 @@
 
                 </div>
 
-                <div class="swiper hotel-small-img-gallery book-mt-2">
+                <div thumbsSlider="" class="swiper hotel-small-img-gallery book-mt-2">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide book-cursor-pointer">
                             <img src="../assets/images/nature-image.jpg" alt=""
@@ -170,9 +170,10 @@
                 </section>
             </div>
 
-            <section class="book-mt-3">
-                <img src="../assets/images/map.png" class="book-w-full book-h-36 book-object-cover book-rounded-xl"
-                    alt="" width="288" height="144" loading="lazy">
+            <section class="book-relative book-rounded-xl book-overflow-hidden book-mt-3">
+                <img src="../assets/images/map.png" class="book-w-full book-h-36 book-object-cover" alt="" width="288"
+                    height="144" loading="lazy">
+                <div class="book-absolute book-inset-0 book-bg-black/20 book-w-full book-h-full"></div>
             </section>
 
             <section class="book-bg-white book-p-4 book-rounded-xl book-mt-3">
@@ -567,14 +568,77 @@
                 </div>
             </section>
             <section class="book-bg-white book-rounded-xl book-py-6 book-px-3 book-mt-3">
-                <h2
-                    class="book-text-zinc-900 book-font-medium book-border-b book-border-solid book-border-zinc-200 -book-mx-3 book-px-3 book-pb-6 book-mb-6">
-                    قوانین و مقررات</h2>
-                    <div>
-                        
+                <div class="book-flex book-flex-col book-gap-6 book-divide-y book-divide-zinc-200">
+                    <h2 class="book-text-zinc-900 book-font-medium -book-mx-3 book-px-3">
+                        قوانین و مقررات</h2>
+                    <div class="book-flex book-items-center book-gap-4 book-pt-6">
+                        <div class="book-flex-1 book-flex book-flex-col book-items-center book-gap-2">
+                            <h3 class="book-text-zinc-900">ساعت خروج</h3>
+                            <span
+                                class="book-flex book-items-center book-justify-center book-w-full book-bg-primary-50 book-rounded-full book-text-sm book-text-zinc-900 book-py-2">12:00</span>
+                        </div>
+                        <div class="book-flex-1 book-flex book-flex-col book-items-center book-gap-2">
+                            <h3 class="book-text-zinc-900">ساعت ورود</h3>
+                            <span
+                                class="book-flex book-items-center book-justify-center book-w-full book-bg-primary-50 book-rounded-full book-text-sm book-text-zinc-900 book-py-2">12:00</span>
+                        </div>
                     </div>
+                    <div>
+                        <h3 class="book-text-zinc-900 book-font-medium book-mb-3 book-pt-6">نکات ضروری</h3>
+                        <div class="book-text-zinc-600 book-text-xs book-leading-6">
+                            خدمات ویژه هتل الماس ۲ مشهد:
+                            پذیرایی صبحانه بوفه در طبقه هفده
+                            ترانسفر رفت از هتل به حرم رایگان است.
+                            ترانسفر هتل، رایگان است.
+                            ترانسفر رفت و برگشت (فرودگاهی و راه آهن) از ساعت 12 شب تا 6 صبح انجام نمی‌شود.
+                            مجموعه آبی هتل (استخر، سونا و جکوزی)، رایگان است.
+                            ترانسفر استقبال و بدرقه فرودگاهی، رایگان است.
+                            اینترنت در لابی و تمام اتاق‌ها به صورت نامحدود و رایگان است.
+                            رزرو اتاق‌های VIP، به همراه پذیرایی میوه و شیرینی به صورت روزانه در اتاق است.
+                            پذیرایی صبحانه در اتاق به صورت روم سرویس، مشمول شارژ هزینه صبحانه و پذیرایی خواهد بود.
+                            اتاق‌های برلیان و اتاق‌های یک تخته و دو تخته یاقوت، با توجه به ساختمان‌سازی، فاقد ویو است و
+                            دارای شیشه‌های مشجر است.
+                        </div>
+                    </div>
+                </div>
             </section>
-
+            <section class="book-bg-white book-rounded-xl book-py-6 book-px-3 book-mt-3">
+                <h2
+                    class="book-text-zinc-900 book-font-bold book-text-xl book-border-b book-border-solid book-border-zinc-200 -book-mx-3 book-px-3 book-pb-6 book-mb-6">
+                    نظر کاربران</h2>
+                <div class="book-flex book-flex-col book-gap-8">
+                    <div class="book-flex book-items-start book-gap-2">
+                        <span
+                            class="book-shrink-0 book-flex book-items-center book-justify-center book-w-9 book-h-9 book-bg-zinc-100 book-rounded-full">
+                            <svg width="16" height="16">
+                                <use href="../assets/images/book-sprite-icons.svg#icon-user">
+                                </use>
+                            </svg>
+                        </span>
+                        <div class="book-flex book-flex-col book-gap-2">
+                            <h3 class="book-text-sm book-text-zinc-900">محسن حیدری</h3>
+                            <p class="book-text-zinc-600 book-text-xs book-leading-6">متنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود. طراح گرافیک از
+                                این متن به عنوان عنصری از ترکیب بندی برای پر کردن صفحه و ارایه اولیه شکل ظاهری و کلی طرح
+                                سفارش گرفته شده استفاده می نماید</p>
+                        </div>
+                    </div>
+                    <div class="book-flex book-items-start book-gap-2">
+                        <span
+                            class="book-shrink-0 book-flex book-items-center book-justify-center book-w-9 book-h-9 book-bg-zinc-100 book-rounded-full">
+                            <svg width="16" height="16">
+                                <use href="../assets/images/book-sprite-icons.svg#icon-user">
+                                </use>
+                            </svg>
+                        </span>
+                        <div class="book-flex book-flex-col book-gap-2">
+                            <h3 class="book-text-sm book-text-zinc-900">محسن حیدری</h3>
+                            <p class="book-text-zinc-600 book-text-xs book-leading-6">متنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود. طراح گرافیک از
+                                این متن به عنوان عنصری از ترکیب بندی برای پر کردن صفحه و ارایه اولیه شکل ظاهری و کلی طرح
+                                سفارش گرفته شده استفاده می نماید</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
     </main>
 
