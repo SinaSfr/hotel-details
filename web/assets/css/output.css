@@ -603,6 +603,34 @@ body {
   top: 100%;
 }
 
+.book-top-1\/2 {
+  top: 50%;
+}
+
+.book-left-4 {
+  left: 1rem;
+}
+
+.book-right-4 {
+  right: 1rem;
+}
+
+.-book-bottom-1 {
+  bottom: -0.25rem;
+}
+
+.-book-bottom-\[11px\] {
+  bottom: -11px;
+}
+
+.book-bottom-\[-11px\] {
+  bottom: -11px;
+}
+
+.book-bottom-1 {
+  bottom: 0.25rem;
+}
+
 .book-z-10 {
   z-index: 10;
 }
@@ -620,27 +648,14 @@ body {
   margin-right: -0.75rem;
 }
 
-.book-mx-auto {
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .-book-mx-8 {
   margin-left: -2rem;
   margin-right: -2rem;
 }
 
-.-book-mx-6 {
-  margin-left: -1.5rem;
-  margin-right: -1.5rem;
-}
-
-.book-mb-1\.5 {
-  margin-bottom: 0.375rem;
-}
-
-.book-mb-2 {
-  margin-bottom: 0.5rem;
+.book-mx-auto {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .book-mb-3 {
@@ -663,8 +678,8 @@ body {
   margin-right: 0.75rem;
 }
 
-.book-mt-10 {
-  margin-top: 2.5rem;
+.book-mt-1\.5 {
+  margin-top: 0.375rem;
 }
 
 .book-mt-12 {
@@ -679,6 +694,10 @@ body {
   margin-top: 0.5rem;
 }
 
+.book-mt-28 {
+  margin-top: 7rem;
+}
+
 .book-mt-3 {
   margin-top: 0.75rem;
 }
@@ -687,28 +706,20 @@ body {
   margin-top: 1rem;
 }
 
-.book-mt-5 {
-  margin-top: 1.25rem;
+.book-mt-44 {
+  margin-top: 11rem;
 }
 
 .book-mt-6 {
   margin-top: 1.5rem;
 }
 
-.book-mt-9 {
-  margin-top: 2.25rem;
-}
-
-.book-mt-28 {
-  margin-top: 7rem;
-}
-
 .book-mt-8 {
   margin-top: 2rem;
 }
 
-.book-mt-1\.5 {
-  margin-top: 0.375rem;
+.book-mt-9 {
+  margin-top: 2.25rem;
 }
 
 .book-flex {
@@ -735,8 +746,8 @@ body {
   height: 3.5rem;
 }
 
-.book-h-36 {
-  height: 9rem;
+.book-h-16 {
+  height: 4rem;
 }
 
 .book-h-44 {
@@ -747,16 +758,12 @@ body {
   height: 2.25rem;
 }
 
+.book-h-\[305px\] {
+  height: 305px;
+}
+
 .book-h-\[520px\] {
   height: 520px;
-}
-
-.book-h-full {
-  height: 100%;
-}
-
-.book-h-\[552x\] {
-  height: 552x;
 }
 
 .book-h-\[552px\] {
@@ -768,48 +775,28 @@ body {
   height: fit-content;
 }
 
-.book-h-8 {
-  height: 2rem;
+.book-h-full {
+  height: 100%;
 }
 
-.book-h-72 {
-  height: 18rem;
-}
-
-.book-h-\[\] {
-  height: ;
-}
-
-.book-h-\[305px\] {
-  height: 305px;
-}
-
-.book-h-16 {
-  height: 4rem;
-}
-
-.book-w-12 {
-  width: 3rem;
-}
-
-.book-w-9 {
-  width: 2.25rem;
-}
-
-.book-w-full {
-  width: 100%;
+.book-h-px {
+  height: 1px;
 }
 
 .\!book-w-full {
   width: 100% !important;
 }
 
-.book-w-\[358px\] {
-  width: 358px;
+.book-w-12 {
+  width: 3rem;
 }
 
-.book-w-24 {
-  width: 6rem;
+.book-w-14 {
+  width: 3.5rem;
+}
+
+.book-w-16 {
+  width: 4rem;
 }
 
 .book-w-28 {
@@ -824,16 +811,24 @@ body {
   width: 15rem;
 }
 
-.book-w-16 {
-  width: 4rem;
+.book-w-9 {
+  width: 2.25rem;
+}
+
+.book-w-\[358px\] {
+  width: 358px;
+}
+
+.book-w-full {
+  width: 100%;
+}
+
+.book-w-0 {
+  width: 0px;
 }
 
 .book-max-w-7xl {
   max-width: 80rem;
-}
-
-.book-max-w-sm {
-  max-width: 24rem;
 }
 
 .book-flex-1 {
@@ -850,6 +845,16 @@ body {
 
 .book-shrink-0 {
   flex-shrink: 0;
+}
+
+.book-translate-y-1\/2 {
+  --tw-translate-y: 50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.-book-translate-y-1\/2 {
+  --tw-translate-y: -50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 .book-rotate-180 {
@@ -909,10 +914,6 @@ body {
   gap: 0.25rem;
 }
 
-.book-gap-1\.5 {
-  gap: 0.375rem;
-}
-
 .book-gap-10 {
   gap: 2.5rem;
 }
@@ -933,32 +934,28 @@ body {
   gap: 1.5rem;
 }
 
-.book-gap-7 {
-  gap: 1.75rem;
-}
-
 .book-gap-8 {
   gap: 2rem;
 }
 
-.book-gap-9 {
-  gap: 2.25rem;
+.book-gap-5 {
+  gap: 1.25rem;
 }
 
 .book-gap-y-8 {
   row-gap: 2rem;
 }
 
-.book-divide-y > :not([hidden]) ~ :not([hidden]) {
-  --tw-divide-y-reverse: 0;
-  border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
-  border-bottom-width: calc(1px * var(--tw-divide-y-reverse));
-}
-
 .book-divide-x > :not([hidden]) ~ :not([hidden]) {
   --tw-divide-x-reverse: 0;
   border-right-width: calc(1px * var(--tw-divide-x-reverse));
   border-left-width: calc(1px * calc(1 - var(--tw-divide-x-reverse)));
+}
+
+.book-divide-y > :not([hidden]) ~ :not([hidden]) {
+  --tw-divide-y-reverse: 0;
+  border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
+  border-bottom-width: calc(1px * var(--tw-divide-y-reverse));
 }
 
 .book-divide-x-reverse > :not([hidden]) ~ :not([hidden]) {
@@ -987,10 +984,6 @@ body {
   overflow-x: auto;
 }
 
-.book-whitespace-nowrap {
-  white-space: nowrap;
-}
-
 .book-rounded {
   border-radius: 0.25rem;
 }
@@ -1001,10 +994,6 @@ body {
 
 .book-rounded-full {
   border-radius: 9999px;
-}
-
-.book-rounded-lg {
-  border-radius: 0.5rem;
 }
 
 .book-rounded-xl {
@@ -1086,6 +1075,19 @@ body {
   background-color: rgb(39 39 42 / var(--tw-bg-opacity, 1));
 }
 
+.book-bg-zinc-900 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(24 24 27 / var(--tw-bg-opacity, 1));
+}
+
+.book-bg-secondary-800 {
+  background-color: var(--secondary-800);
+}
+
+.book-bg-secondary-300 {
+  background-color: var(--secondary-300);
+}
+
 .book-bg-opacity-70 {
   --tw-bg-opacity: 0.7;
 }
@@ -1117,11 +1119,6 @@ body {
   padding: 1.5rem;
 }
 
-.book-px-2 {
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-}
-
 .book-px-3 {
   padding-left: 0.75rem;
   padding-right: 0.75rem;
@@ -1135,6 +1132,11 @@ body {
 .book-px-6 {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+}
+
+.book-px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 .book-py-1 {
@@ -1152,9 +1154,9 @@ body {
   padding-bottom: 0.75rem;
 }
 
-.book-py-4 {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+.book-py-5 {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
 }
 
 .book-py-6 {
@@ -1167,47 +1169,29 @@ body {
   padding-bottom: 1px;
 }
 
-.book-px-8 {
-  padding-left: 2rem;
-  padding-right: 2rem;
-}
-
-.book-py-8 {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-}
-
-.book-py-5 {
-  padding-top: 1.25rem;
-  padding-bottom: 1.25rem;
-}
-
 .book-pb-3 {
   padding-bottom: 0.75rem;
-}
-
-.book-pb-4 {
-  padding-bottom: 1rem;
 }
 
 .book-pb-6 {
   padding-bottom: 1.5rem;
 }
 
-.book-pt-3 {
-  padding-top: 0.75rem;
-}
-
-.book-pt-6 {
-  padding-top: 1.5rem;
+.book-pl-2 {
+  padding-left: 0.5rem;
 }
 
 .book-pr-6 {
   padding-right: 1.5rem;
 }
 
-.book-pl-2 {
-  padding-left: 0.5rem;
+.book-pt-6 {
+  padding-top: 1.5rem;
+}
+
+.book-text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
 }
 
 .book-text-sm {
@@ -1223,11 +1207,6 @@ body {
 .book-text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
-}
-
-.book-text-2xl {
-  font-size: 1.5rem;
-  line-height: 2rem;
 }
 
 .book-font-bold {
@@ -1416,6 +1395,38 @@ body {
 .hover\:book-bg-zinc-100:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(244 244 245 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:book-bg-primary-900:hover {
+  background-color: var(--primary-900);
+}
+
+.hover\:book-bg-primary-50:hover {
+  background-color: var(--primary-50);
+}
+
+.hover\:book-bg-primary-600:hover {
+  background-color: var(--primary-600);
+}
+
+.hover\:book-bg-primary-300:hover {
+  background-color: var(--primary-300);
+}
+
+.hover\:book-font-medium:hover {
+  font-weight: 500;
+}
+
+.hover\:book-text-primary-900:hover {
+  color: var(--primary-900);
+}
+
+.hover\:book-text-primary-300:hover {
+  color: var(--primary-300);
+}
+
+.book-group:hover .group-hover\:book-w-full {
+  width: 100%;
 }
 
 @media not all and (min-width: 1280px) {

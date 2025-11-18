@@ -1251,6 +1251,10 @@ body {
   background-color: rgb(244 244 245 / var(--tw-bg-opacity, 1));
 }
 
+.hover\:book-text-primary-300:hover {
+  color: var(--primary-300);
+}
+
 @media not all and (min-width: 1024px) {
   .max-lg\:book-w-\[90\%\] {
     width: 90%;
