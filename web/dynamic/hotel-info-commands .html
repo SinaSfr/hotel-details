@@ -1,0 +1,24 @@
+<!-- Get Token -->
+<basis core="api" name="api.token" url="https://admin.basiscore.net/apitoken" method="post"
+    content-type="application/json" run="atclient" if="{##cms.token##}" triggers="cms.token" body='{
+        "dmnid": "[##cms.cms.domainid##]"
+    }'>
+</basis>
+<basis core="callback" triggers="api.token" run="atclient" method="setToken"></basis>
+<!-- Get Gallery -->
+<basis core="api" name="api.gallery"
+    url="https://data.basiscore.net/{##cms.data.lang##}/bc/{##cms.data.name##}/id/{##cms.data.id##}/gallery/json"
+    method="post" content-type="application/json" run="atclient" if="{##cms.data##}" triggers="cms.data" body='{
+        "token": "{##cms.data.token##}",
+        "wordid": "94604"
+        }'>
+</basis>
+<!-- Get Info -->
+<basis core="api" name="api.info"
+    url="https://data.basiscore.com/{##cms.data.lang##}/bc/{##cms.data.name##}/id/{##cms.data.id##}/inf/json"
+    method="post" content-type="application/json" run="atclient" if="{##cms.data##}" triggers="cms.data" body='{
+        "token": "{##cms.data.token##}",
+        "mode": "1"
+        }'>
+</basis>
+<basis core="callback" triggers="api.info" run="atclient" method="setInfo"></basis>

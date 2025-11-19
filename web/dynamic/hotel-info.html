@@ -2,82 +2,75 @@
 <html lang="fa" dir="rtl">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://cdn.basiscore.net/basisfly.com/css/swiper-bundle.min.css">
-    <link rel="stylesheet" href="../assets/css/output.css">
+    <basis core="call" file="book/taglist" lid="1"></basis>
+    <title>اطلاعات هتل</title>
+    <meta name="description" content="اطلاعات هتل">
+    <link href="[##cms.cms.cdn##]/booking/css/hotel-info.ui.min.css?ver=[##cms.cms.date2##][##cms.cms.time2##]"
+        type="text/css" rel="stylesheet" />
+    <link href="[##cms.cms.cdn##]/_css/swiper-bundle.min.css" type="text/css" rel="stylesheet" />
 </head>
 
 <body class="book-bg-zinc-50">
+    <!-- Header -->
+    <basis core="call" file="header.inc" lid="1" pageindex="[##cms.cms.pageindex|(1)##]"></basis>
+    <!-- Main-->
     <main>
-        <div class="max-xl:book-w-[97%] xl:book-max-w-7xl book-mx-auto book-mt-44">
+        <!-- Commands / Requests -->
+        <basis core="call" file="hotel/info/commands" lid="1"></basis>
+        <div class="max-xl:book-w-[97%] xl:book-max-w-7xl book-mx-auto book-my-5">
             <div
                 class="book-text-zinc-700 book-text-xs book-transition-all book-duration-300 hover:book-text-primary-300">
                 صفحه اصلی / مشاهده هتل / هتل مجلل درویشی در مشهد </div>
             <section class="book-relative book-mt-6">
                 <div class="book-flex book-gap-3">
-                    <div class="book-flex-[2.53] swiper hotel-big-img-gallery book-select-none">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <img src="../assets/images/hotel-image.jpg"
-                                    class="book-w-full book-h-[552px] book-object-cover book-rounded-xl" alt=""
-                                    width="908" height="552" />
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="../assets/images/hotel-image.jpg"
-                                    class="book-w-full book-h-[552px] book-object-cover book-rounded-xl" alt=""
-                                    width="908" height="552" />
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="../assets/images/hotel-image.jpg"
-                                    class="book-w-full book-h-[552px] book-object-cover book-rounded-xl" alt=""
-                                    width="908" height="552" />
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="../assets/images/hotel-image2.jpg"
-                                    class="book-w-full book-h-[552px] book-object-cover book-rounded-xl" alt=""
-                                    width="908" height="552" />
-                            </div>
-                        </div>
-                        <div
-                            class="swiper-button-next-custom book-absolute book-z-10 book-left-4 book-top-1/2 -book-translate-y-1/2 book-w-14 book-h-14 book-flex book-items-center book-justify-center book-bg-zinc-900 backdrop-blur-md book-rounded-full book-shadow-lg book-transition-all book-duration-300 hover:book-bg-primary-600">
-                            <svg width="32" height="32" class="book-text-white">
-                                <use href="../assets/images/book-sprite-icons.svg#icon-chevron-left">
-                                </use>
-                            </svg>
-                        </div>
-                        <div
-                            class="swiper-button-prev-custom book-absolute book-z-10 book-right-4 book-top-1/2 -book-translate-y-1/2 book-w-14 book-h-14 book-flex book-items-center book-justify-center book-bg-zinc-900 backdrop-blur-md book-rounded-full book-shadow-lg book-transition-all book-duration-300 hover:book-bg-primary-600">
-                            <svg width="32" height="32" class="book-text-white">
-                                <use href="../assets/images/book-sprite-icons.svg#icon-chevron-right">
-                                </use>
-                            </svg>
-                        </div>
-                    </div>
-
-                    <div thumbsSlider="" class="book-flex-1 swiper hotel-small-img-gallery">
-                        <div class="swiper-wrapper book-flex-col book-justify-between">
-                            <div class="swiper-slide !book-w-full book-h-fit book-cursor-pointer">
-                                <img src="../assets/images/nature-image.jpg" alt=""
-                                    class="book-w-full book-h-44 book-object-cover book-rounded-xl" width="358"
-                                    height="176" loading="lazy">
-                            </div>
-                            <div class="swiper-slide !book-w-full book-h-fit book-cursor-pointer">
-                                <img src="../assets/images/nature-image.jpg" alt=""
-                                    class="book-w-full book-h-44 book-object-cover book-rounded-xl" width="358"
-                                    height="176" loading="lazy">
-                            </div>
-                            <div class="swiper-slide !book-w-full book-h-fit book-cursor-pointer">
-                                <img src="../assets/images/nature-image.jpg" alt=""
-                                    class="book-w-full book-h-44 book-object-cover book-rounded-xl" width="358"
-                                    height="176" loading="lazy">
-                            </div>
-                        </div>
-                    </div>
+                    <basis core="print" datamembername="api.gallery" run="atclient">
+                        <layout>
+                            <script type="text/template">
+                                <div class="book-flex-[2.53] swiper hotel-big-img-gallery book-select-none">
+                                    <div class="swiper-wrapper">
+                                        @child
+                                    </div>
+                                    <div
+                                        class="swiper-button-next-custom book-absolute book-z-10 book-left-4 book-top-1/2 -book-translate-y-1/2 book-w-14 book-h-14 book-flex book-items-center book-justify-center book-bg-zinc-900 backdrop-blur-md book-rounded-full book-shadow-lg book-transition-all book-duration-300 hover:book-bg-primary-600">
+                                        <svg width="32" height="32" class="book-text-white">
+                                            <use href="../assets/images/book-sprite-icons.svg#icon-chevron-left">
+                                            </use>
+                                        </svg>
+                                    </div>
+                                    <div
+                                        class="swiper-button-prev-custom book-absolute book-z-10 book-right-4 book-top-1/2 -book-translate-y-1/2 book-w-14 book-h-14 book-flex book-items-center book-justify-center book-bg-zinc-900 backdrop-blur-md book-rounded-full book-shadow-lg book-transition-all book-duration-300 hover:book-bg-primary-600">
+                                        <svg width="32" height="32" class="book-text-white">
+                                            <use href="../assets/images/book-sprite-icons.svg#icon-chevron-right">
+                                            </use>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </script>
+                        </layout>
+                        <face>
+                            <script type="text/template">
+                                {{ return await renderSlider($data)}}
+                            </script>
+                        </face>
+                    </basis>
+                    <basis core="print" datamembername="api.gallery" run="atclient">
+                        <layout>
+                            <script type="text/template">
+                                <div thumbsSlider="" class="book-flex-1 swiper hotel-small-img-gallery">
+                                    <div class="swiper-wrapper book-flex-col book-justify-between">
+                                        @child
+                                    </div>
+                                </div>
+                            </script>
+                        </layout>
+                        <face>
+                            <script type="text/template">
+                                {{ return await renderThumbsSlider($data)}}
+                            </script>
+                        </face>
+                    </basis>
                 </div>
                 <div class="swiper-pagination !-book-bottom-9"></div>
-
                 <!-- Popup Modal -->
                 <div id="hotelPopupModalGallery"
                     class="popup-modal book-fixed book-inset-0 book-z-50 book-bg-black book-bg-opacity-70 book-justify-center book-items-center book-hidden">
@@ -122,21 +115,8 @@
                     <div class="book-bg-white book-p-6 book-rounded-xl">
                         <section>
                             <div class="book-flex book-items-center book-justify-between">
-                                <h1 class="book-font-bold book-text-zinc-900 book-text-2xl">هتل مجلل درویشی در مشهد
-                                </h1>
-                                <div class="book-flex book-items-center book-gap-0.5">
-                                    <svg width="24" height="24">
-                                        <use href="../assets/images/book-sprite-icons.svg#icon-golden-star">
-                                        </use>
-                                    </svg>
-                                    <svg width="24" height="24">
-                                        <use href="../assets/images/book-sprite-icons.svg#icon-golden-star">
-                                        </use>
-                                    </svg>
-                                    <svg width="24" height="24">
-                                        <use href="../assets/images/book-sprite-icons.svg#icon-golden-star">
-                                        </use>
-                                    </svg>
+                                <h1 class="book-hotel__title book-font-bold book-text-zinc-900 book-text-2xl"></h1>
+                                <div class="book-hotel__stars book-flex book-items-center book-gap-0.5">
                                 </div>
                             </div>
                             <div class="book-text-sm book-text-zinc-900 book-mt-9 book-leading-6">
@@ -166,32 +146,22 @@
                                         <use href="../assets/images/book-sprite-icons.svg#icon-site">
                                         </use>
                                     </svg>
-                                    <span class="book-text-sm book-text-zinc-900">www.moshenheydari.com</span>
+                                    <span class="book-hotel__website book-text-sm book-text-zinc-900"></span>
                                 </div>
                                 <div class="book-flex book-items-center book-gap-1">
                                     <svg width="48" height="48">
                                         <use href="../assets/images/book-sprite-icons.svg#icon-location">
                                         </use>
                                     </svg>
-                                    <span class="book-text-sm book-text-zinc-900">تهران خیابان کشاورز خیابان
-                                        فلسطین</span>
+                                    <span class="book-hotel__address book-text-sm book-text-zinc-900"></span>
                                 </div>
                                 <div class="book-flex book-items-center book-gap-1">
                                     <svg width="48" height="48">
                                         <use href="../assets/images/book-sprite-icons.svg#icon-phone">
                                         </use>
                                     </svg>
-                                    <div class="book-flex book-gap-5">
-                                        <span
-                                            class="book-relative book-group book-text-sm book-text-zinc-900 book-transition-all book-duration-300 hover:book-text-primary-300">+51-556699774411
-                                            <span
-                                                class="book-absolute -book-bottom-1 book-right-0 book-w-0 book-transition-all book-duration-300 book-h-px book-bg-primary-300 group-hover:book-w-full"></span>
-                                        </span>
-                                        <span
-                                            class="book-relative book-group book-text-sm book-text-zinc-900 book-transition-all book-duration-300 hover:book-text-primary-300">+51-556699774411
-                                            <span
-                                                class="book-absolute -book-bottom-1 book-right-0 book-w-0 book-transition-all book-duration-300 book-h-px book-bg-primary-300 group-hover:book-w-full"></span>
-                                        </span>
+                                    <div class="book-hotel__phones book-flex book-gap-5">
+
                                     </div>
                                 </div>
                                 <div class="book-flex book-items-center book-gap-1">
@@ -200,9 +170,7 @@
                                         </use>
                                     </svg>
                                     <span
-                                        class="book-relative book-group book-text-sm book-text-zinc-900 book-transition-all book-duration-300 hover:book-text-primary-300">heydarimohsen71@gmail.com
-                                        <span
-                                            class="book-absolute -book-bottom-1 book-right-0 book-w-0 book-transition-all book-duration-300 book-h-px book-bg-primary-300 group-hover:book-w-full"></span>
+                                        class="book-hotel__email book-relative book-group book-text-sm book-text-zinc-900 book-transition-all book-duration-300 hover:book-text-primary-300">heydarimohsen71@gmail.com
                                     </span>
                                 </div>
                                 <div class="book-flex book-items-center book-gap-1">
@@ -211,9 +179,7 @@
                                         </use>
                                     </svg>
                                     <span
-                                        class="book-relative book-group book-text-sm book-font-medium book-text-zinc-900 book-transition-all book-duration-300 hover:book-text-primary-300">+14-66335544
-                                        <span
-                                            class="book-absolute -book-bottom-1 book-right-0 book-w-0 book-transition-all book-duration-300 book-h-px book-bg-primary-300 group-hover:book-w-full"></span>
+                                        class="book-hotel__fax book-relative book-group book-text-sm book-font-medium book-text-zinc-900 book-transition-all book-duration-300 hover:book-text-primary-300">+14-66335544
                                     </span>
                                 </div>
                             </div>
@@ -621,12 +587,12 @@
                                 <div class="book-flex-1 book-flex book-flex-col book-items-center book-gap-2">
                                     <h3 class="book-text-zinc-900">ساعت ورود</h3>
                                     <span
-                                        class="book-flex book-items-center book-justify-center book-w-full book-bg-primary-50 book-rounded-full book-text-sm book-text-zinc-900 book-py-2">12:00</span>
+                                        class="book-hotel__checkin__time book-flex book-items-center book-justify-center book-w-full book-bg-primary-50 book-rounded-full book-text-sm book-text-zinc-900 book-py-2"></span>
                                 </div>
                                 <div class="book-flex-1 book-flex book-flex-col book-items-center book-gap-2">
                                     <h3 class="book-text-zinc-900">ساعت خروج</h3>
                                     <span
-                                        class="book-flex book-items-center book-justify-center book-w-full book-bg-primary-50 book-rounded-full book-text-sm book-text-zinc-900 book-py-2">12:00</span>
+                                        class="book-hotel__checkout__time book-flex book-items-center book-justify-center book-w-full book-bg-primary-50 book-rounded-full book-text-sm book-text-zinc-900 book-py-2"></span>
                                 </div>
                             </div>
                             <div class="book-pr-6">
@@ -737,9 +703,357 @@
 
         </div>
     </main>
+    <!-- Footer-->
+    <basis core="call" file="footer.inc" lid="1" pageindex="[##cms.cms.pageindex|(1)##]"></basis>
+    <script src="[##cms.cms.cdn##]/_js/swiper-bundle.11.2.5.min.js" type="text/javascript"></script>
+    <script src="[##cms.cms.cdn##]/booking/js/hotel-info.js?ver=[##cms.cms.date2##][##cms.cms.time2##]"
+        type="text/javascript"></script>
+    <script>
+        /**
+   * Global variables to store session search and booking data from sessionSearch.
+   * Initialized as null to be populated on DOM load.
+   */
+        let translations = {};
+        let currentLanguage = document.documentElement.lang || 'fa';
+        let isRTL = document.documentElement.dir === 'rtl' || currentLanguage === 'fa' || currentLanguage === 'ar';
+        const hotelName = currentLanguage === 'fa' ? 'هتل' : 'hotel';
+        const isMobile = document.querySelector("main").dataset.mob === "true";
+        var provider, id;
 
-    <script src="https://cdn.basiscore.net/basisfly.com/js/swiper-bundle.min.js"></script>
-    <script src="../assets/js/hotelDetails.js"></script>
+        // 🎯 Optimized code with 100% guarantee of single execution
+        (function () {
+            'use strict';
+
+            // ✅ Prevent duplicate execution
+            if (window.__CMS_DATA_INITIALIZED__) {
+                console.warn('⚠️ CMS data already initialized, skipping duplicate execution');
+                return;
+            }
+
+            // ✅ Set flag immediately
+            window.__CMS_DATA_INITIALIZED__ = true;
+
+            // ✅ Main initialization function
+            async function initializeCmsData() {
+                try {
+                    console.log('🚀 CMS data initialization started');
+
+                    // Build window.cmsData object
+                    window.cmsData = {
+                        provider: "[##cms.form.provider-hotel##]",
+                        id: "[##cms.form.hotelid##]"
+                    };
+
+                    // Run API logic
+                    if (typeof runApiLogic === 'function') {
+                        console.log('🔄 Running API logic...');
+                        await runApiLogic();
+                    }
+
+                    console.log('✅ CMS data initialized successfully');
+                    console.log('📦 Window.cmsData:', window.cmsData);
+
+                } catch (error) {
+                    console.error('❌ CMS initialization failed:', error?.message || error);
+                    console.error('Stack:', error?.stack);
+
+                    // Reset flag on error for retry
+                    window.__CMS_DATA_INITIALIZED__ = false;
+                    throw error;
+                }
+            }
+
+            // ✅ Execute based on DOM state
+            if (document.readyState === 'loading') {
+                // DOM not yet loaded
+                document.addEventListener('DOMContentLoaded', initializeCmsData, { once: true });
+                console.log('📌 Waiting for DOMContentLoaded...');
+            } else {
+                // DOM already ready
+                console.log('📌 DOM already loaded, running immediately');
+                initializeCmsData();
+            }
+
+        })();
+
+        /**
+         * Global helper function to access cmsData
+         * @param {string} key - Optional key to retrieve specific data
+         * @returns {any} - Returns cmsData or specific value
+         */
+        window.getCmsData = function (key) {
+            if (!window.cmsData) {
+                console.warn('⚠️ cmsData not initialized yet');
+                return null;
+            }
+            return key ? window.cmsData[key] : window.cmsData;
+        };
+
+        /**
+         * Sets up the token data and updates the UI based on hotel search parameters
+         * @param {Object} args - Arguments containing source data
+         * @returns {void}
+         */
+        const setToken = async (args) => {
+            try {
+                // Update token data
+                $bc.setSource("cms.data", {
+                    token: args.source.rows[0].token,
+                    lang: currentLanguage,
+                    id: id,
+                    name: hotelName,
+                    run: true
+                });
+
+            } catch (error) {
+                console.error("setToken: " + error.message);
+            }
+        };
+
+        /**
+         * Function to assign values from window.cmsData and trigger API call if provider is allowed
+         * @returns {Promise<void>}
+         */
+        async function runApiLogic() {
+            try {
+                // Destructure provider and id from cmsData
+                ({
+                    provider,
+                    id
+                } = window.cmsData);
+
+                // List of allowed provider IDs
+                const allowedProviders = [
+                    '0', '29', '41', '46', '58',
+                    '70', '75', '82', '88', '102',
+                    '106', '109'
+                ];
+
+                // Check if provider is in allowed list and trigger API call
+                if (allowedProviders.includes(String(provider))) {
+                    $bc.setSource("cms.token");
+                }
+            } catch (error) {
+                console.error("runApiLogic error: " + error.message);
+            }
+        }
+
+        // Counter for main slider images
+        let sliderCounter = 0;
+
+        /**
+         * Renders main slider HTML for hotel images
+         * @param {Object} $data - Data object containing image information
+         * @returns {string} - HTML string for slider slide
+         */
+        const renderSlider = ($data) => {
+            try {
+                sliderCounter++;
+
+                // Skip first 3 images
+                if (sliderCounter < 4) {
+                    return '';
+                }
+
+                // Validate data structure
+                if (!$data || !$data.original) {
+                    console.warn('renderSlider: original not found in $data', $data);
+                    return '';
+                }
+
+                // Return slider HTML
+                return `
+            <div class="swiper-slide">
+                <img src="/${$data.original}"
+                    class="book-w-full book-h-[552px] book-object-cover book-rounded-xl" alt=""
+                    width="908" height="552" />
+            </div>
+        `;
+            } catch (error) {
+                console.error("renderSlider error: " + error.message);
+                return '';
+            }
+        };
+
+        // Counter for thumbnail slider images
+        let thumbsCounter = 0;
+
+        /**
+         * Renders thumbnail slider HTML for hotel images
+         * @param {Object} $data - Data object containing image information
+         * @returns {string} - HTML string for thumbnail slide
+         */
+        const renderThumbsSlider = ($data) => {
+            try {
+                thumbsCounter++;
+
+                // Only show first 3 thumbnails
+                if (thumbsCounter > 3) {
+                    return '';
+                }
+
+                // Validate data structure
+                if (!$data || !$data.original) {
+                    console.warn('renderThumbsSlider: original not found in $data', $data);
+                    return '';
+                }
+
+                // Return thumbnail HTML
+                return `
+            <div class="swiper-slide !book-w-full book-h-fit book-cursor-pointer">
+                <img src="/${$data.original}" alt=""
+                    class="book-w-full book-h-44 book-object-cover book-rounded-xl" width="358"
+                    height="176" loading="lazy"/>
+            </div>
+        `;
+            } catch (error) {
+                console.error("renderThumbsSlider error: " + error.message);
+                return '';
+            }
+        };
+
+        /**
+         * Finds a property value from JSON data using section ID and property ID
+         * @param {Array} data - Array of hotel data sections
+         * @param {number} sectionId - ID of the section to search
+         * @param {number} propertyId - ID of the property to find
+         * @returns {string|null} - Property value text or null if not found
+         */
+        function findPropertyById(data, sectionId, propertyId) {
+            try {
+                // Find section by ID
+                const section = data.find(s => s.id === sectionId);
+                if (!section) return null;
+
+                // Find property by ID within section
+                const property = section.properties.find(p => p.propertyid === propertyId);
+                if (!property || !property.answer || property.answer.length === 0) return null;
+
+                // Return trimmed text value
+                return property.answer[0].text.trim();
+            } catch (error) {
+                console.error("findPropertyById error: " + error.message);
+                return '';
+            }
+        }
+
+        /**
+         * Generates star rating HTML based on rating number
+         * @param {string|number} rating - Rating value (number of stars)
+         * @returns {string} - HTML string with star SVG icons
+         */
+        const generateStars = (rating) => {
+            try {
+                let starsHtml = '';
+                const stars = parseInt(rating) || 0;
+
+                // Generate star icons
+                for (let i = 0; i < stars; i++) {
+                    starsHtml += `
+                <svg width="24" height="24">
+                    <use href="../assets/images/book-sprite-icons.svg#icon-golden-star"></use>
+                </svg>
+            `;
+                }
+                return starsHtml;
+            } catch (error) {
+                console.error("generateStars error: " + error.message);
+                return '';
+            }
+        }
+
+        /**
+         * Populates hotel information on the page from JSON data
+         * Updates DOM elements with hotel details like title, rating, contact info, etc.
+         * @param {Object} args - Arguments object containing source data
+         * @returns {Promise<void>}
+         */
+        const setInfo = async (args) => {
+            try {
+                console.log(args);
+
+                // Extract data from args
+                const data = args.source?.rows || args.source;
+                console.log(data);
+
+                // Set hotel title - propertyid: 1360
+                const hotelTitle = findPropertyById(data, 3086557, 1360);
+                if (hotelTitle) {
+                    const titleElement = document.querySelector('.book-hotel__title');
+                    if (titleElement) titleElement.textContent = hotelTitle;
+                }
+
+                // Set hotel rating (stars) - propertyid: 1361
+                const hotelRating = findPropertyById(data, 3086557, 1361);
+                if (hotelRating) {
+                    const starsContainer = document.querySelector('.book-hotel__stars');
+                    if (starsContainer) {
+                        starsContainer.innerHTML = generateStars(hotelRating);
+                    }
+                }
+
+                // Set website - propertyid: 1382
+                const website = findPropertyById(data, 3086559, 1382);
+                if (website) {
+                    const websiteElement = document.querySelector('.book-hotel__website');
+                    if (websiteElement) websiteElement.textContent = website;
+                }
+
+                // Set address - propertyid: 1379
+                const address = findPropertyById(data, 3086559, 1379);
+                if (address) {
+                    const addressElement = document.querySelector('.book-hotel__address');
+                    if (addressElement) addressElement.textContent = address;
+                }
+
+                // Set phone number - propertyid: 1380
+                const phone = findPropertyById(data, 3086559, 1380);
+                if (phone) {
+                    const phoneContainer = document.querySelector('.book-hotel__phones');
+                    if (phoneContainer) {
+                        phoneContainer.innerHTML = `
+                    <span class="book-relative book-group book-text-sm book-text-zinc-900 book-transition-all book-duration-300 hover:book-text-primary-300">
+                        ${phone}
+                        <span class="book-absolute -book-bottom-1 book-right-0 book-w-0 book-transition-all book-duration-300 book-h-px book-bg-primary-300 group-hover:book-w-full"></span>
+                    </span>
+                `;
+                    }
+                }
+
+                // Set email - propertyid: 1383
+                const email = findPropertyById(data, 3086559, 1383);
+                if (email) {
+                    const emailElement = document.querySelector('.book-hotel__email');
+                    if (emailElement) emailElement.textContent = email;
+                }
+
+                // Set fax number - propertyid: 1381
+                const fax = findPropertyById(data, 3086559, 1381);
+                if (fax) {
+                    const faxElement = document.querySelector('.book-hotel__fax');
+                    if (faxElement) faxElement.textContent = fax;
+                }
+
+                // Set check-in time - propertyid: 1376
+                const checkIn = findPropertyById(data, 3086562, 1376);
+                if (checkIn) {
+                    const checkInElement = document.querySelector('.book-hotel__checkin__time');
+                    if (checkInElement) checkInElement.textContent = checkIn;
+                }
+
+                // Set check-out time - propertyid: 1377
+                const checkOut = findPropertyById(data, 3086562, 1377);
+                if (checkOut) {
+                    const checkOutElement = document.querySelector('.book-hotel__checkout__time');
+                    if (checkOutElement) checkOutElement.textContent = checkOut;
+                }
+            } catch (error) {
+                console.error("setInfo error: " + error.message);
+                return '';
+            }
+        };
+    </script>
+
 
 </body>
 
