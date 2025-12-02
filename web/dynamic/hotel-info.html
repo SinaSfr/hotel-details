@@ -13,6 +13,9 @@
 <body class="book-bg-zinc-50">
     <!-- Header -->
     <basis core="call" file="header.inc" lid="1" pageindex="[##cms.cms.pageindex|(1)##]"></basis>
+    <basis core="callback" run="atclient"
+        triggers="hotel.list cms.page cms.nextpage cms.prevpage cms.services cms.roomtypes" method="manipulation">
+    </basis>
     <!-- Main-->
     <main>
         <!-- Commands / Requests -->
@@ -327,13 +330,14 @@
                         </div>
                     </section>
 
+
                     <section
                         class="book-flex book-items-center book-justify-between book-bg-white book-rounded-xl book-mt-8 book-py-2 book-pr-6 book-pl-2">
                         <h2 class="book-font-medium book-text-zinc-900">فیلتر بر اساس:</h2>
                         <div class="book-flex book-items-center book-gap-2">
                             <h3 class="book-text-sm">نام اتاق:</h3>
                             <div class="">
-                                <input type="text"
+                                <input type="text" bc-name="cms.roomtypes" bc-value="" bc-triggers="keyup"
                                     class="book-placeholder-zinc-600 book-bg-transparent book-w-52 book-h-12 book-bg-zinc-100 book-rounded-xl book-px-3 book-py-px book-outline-none"
                                     name="" id="" placeholder="نام اتاق">
                             </div>
@@ -343,28 +347,33 @@
 
                             <button
                                 class="room-select-btn book-w-60 book-flex book-items-center book-justify-between book-bg-zinc-100 book-rounded-xl book-px-3 book-py-px book-transition-all book-duration-300">
-                                <span class="room-select-text book-text-zinc-600">room_only</span>
+                                <span class="room-select-text book-text-zinc-600">-</span>
                                 <svg width="48" height="48"
                                     class="book-text-zinc-500 book-transition-all book-duration-300">
                                     <use href="../assets/images/book-sprite-icons.svg#icon-chevron-down"></use>
                                 </svg>
                             </button>
+                            <basis core="print" datamembername="hotel.services" run="atclient">
+                                <layout>
+                                    <script type="text/template">
+                                        <ul
+                                        class="room-options book-absolute book-top-full book-left-0 book-right-0 book-bg-white book-rounded-xl book-shadow-lg book-mt-2 book-overflow-hidden book-z-10 book-hidden">
+                                       @child
+                                     
+                                    </ul>
+                                   </script>
+                                </layout>
+                                <face>
+                                    <script type="text/template">
+                                        <li bc-value="@Name@" bc-name="cms.services" bc-triggers="click"
+                                        class="room-option book-px-3 book-py-2 book-text-sm book-text-zinc-700 hover:book-bg-zinc-100 book-cursor-pointer">
+                                        @Name@</li>
+                                    </script>
+                                </face>
+                            </basis>
 
-                            <ul
-                                class="room-options book-absolute book-top-full book-left-0 book-right-0 book-bg-white book-rounded-xl book-shadow-lg book-mt-2 book-overflow-hidden book-z-10 book-hidden">
-                                <li
-                                    class="room-option book-px-3 book-py-2 book-text-sm book-text-zinc-700 hover:book-bg-zinc-100 book-cursor-pointer">
-                                    Room Only</li>
-                                <li
-                                    class="room-option book-px-3 book-py-2 book-text-sm book-text-zinc-700 hover:book-bg-zinc-100 book-cursor-pointer">
-                                    Bed & Breakfast</li>
-                                <li
-                                    class="room-option book-px-3 book-py-2 book-text-sm book-text-zinc-700 hover:book-bg-zinc-100 book-cursor-pointer">
-                                    Half Board</li>
-                                <li
-                                    class="room-option book-px-3 book-py-2 book-text-sm book-text-zinc-700 hover:book-bg-zinc-100 book-cursor-pointer">
-                                    Full Board</li>
-                            </ul>
+
+
                         </div>
                         <button
                             class="book-w-28 book-h-12 book-flex book-items-center book-justify-center book-rounded-xl book-bg-primary-300 book-text-white book-font-medium book-transition-all book-duration-300 hover:book-bg-primary-900">اعمال
@@ -375,106 +384,50 @@
                         <h2
                             class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
                             اتاق ها</h2>
-                        <div class="book-flex book-flex-col book-gap-4">
-                            <div
-                                class="book-flex book-gap-6 book-border book-border-solid book-border-zinc-200 book-rounded-xl book-py-5 book-px-6">
-                                <div
-                                    class="book-flex-[2.75] book-flex book-flex-col book-gap-6 book-divide-y book-divide-dashed book-divide-zinc-300">
-                                    <div>
-                                        <h3 class="book-text-zinc-900 book-mb-3">اتاق دو تخته دبل ( اقامت
-                                            با
-                                            صبحانه)</h3>
-                                        <div class="book-flex book-gap-2">
-                                            <span
-                                                class="book-bg-primary-50 book-text-primary-800 book-text-xs book-rounded-3xl book-py-1 book-px-3">صبحانه
-                                                سلف سرویس</span>
-                                            <span
-                                                class="book-bg-specialcolor-1 book-text-specialcolor-2 book-text-xs book-rounded-3xl book-py-1 book-px-4">Available</span>
+                        <basis core="print" datamembername="hotel.updated" run="atclient">
+                            <layout>
+                                <script type="text/template">
+                                        <div class="book-list__cards__container book-flex book-flex-col book-gap-4">
+                                            @child
+                                        </div>
+                                    </script>
+                            </layout>
+                            <face>
+                                <script type="text/template">
+                                        <div
+                                        class="book-flex book-gap-6 book-border book-border-solid book-border-zinc-200 book-rounded-xl book-py-5 book-px-6">
+                                            {{ return await renderAvailableRooms($data)}}
+                                        <div class="book-flex-1">
+                                            <div class="book-flex-1 book-flex book-items-center book-justify-center">
+                                                <svg width="57" height="48">
+                                                    <use href="../assets/images/book-sprite-icons.svg#icon-document"></use>
+                                                </svg>
+                                                {{
+                                                    return `<span class="book-text-blue-600 book-text-xs" onclick="showRules(this,'${$data.optionId}',`${JSON.stringifyt($data.id.provider)}`)">قوانين اتاق</span>`
+                                                }}
+                                                
+                                            </div>
+                                            <div class="book-flex book-flex-col book-gap-1 book-items-center book-mt-1.5">
+                                                <h3 class="book-text-xs book-text-zinc-900">قیمت نهایی:</h3>
+                                                {{
+                                                    return `<p class="book-text-zinc-900 book-font-bold book-text-xl">
+                                                        <span class="book-price__check__currency" data-original-price="${$data.totalCom}">${await priceWithCurrency($data.totalCom)}</span>
+                                                        <span
+                                                            class="book-text-zinc-500 book-text-xs book-font-normal book-unit__check__currency">ریال</span>
+                                                    </p>`
+                                                }}
+                                            </div>
+                                            <div class="book-mt-4">
+                                                <button
+                                                    class="book-w-full book-h-12 book-flex book-items-center book-justify-center book-rounded-xl book-bg-primary-300 book-text-white book-font-medium book-transition-all book-duration-300 hover:book-bg-primary-900">رزرو
+                                                    اتاق</button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="book-pt-6">
-                                        <h3 class="book-text-zinc-900 book-mb-3">اتاق دو تخته دبل ( اقامت
-                                            با
-                                            صبحانه)</h3>
-                                        <div class="book-flex book-gap-2">
-                                            <span
-                                                class="book-bg-primary-50 book-text-primary-800 book-text-xs book-rounded-3xl book-py-1 book-px-3">صبحانه
-                                                سلف سرویس</span>
-                                            <span
-                                                class="book-bg-specialcolor-1 book-text-specialcolor-2 book-text-xs book-rounded-3xl book-py-1 book-px-4">Available</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="book-flex-1">
-                                    <div class="book-flex-1 book-flex book-items-center book-justify-center">
-                                        <svg width="57" height="48">
-                                            <use href="../assets/images/book-sprite-icons.svg#icon-document"></use>
-                                        </svg>
-                                        <span class="book-text-blue-600 book-text-xs">قوانين اتاق</span>
-                                    </div>
-                                    <div class="book-flex book-flex-col book-gap-1 book-items-center book-mt-1.5">
-                                        <h3 class="book-text-xs book-text-zinc-900">قیمت نهایی:</h3>
-                                        <p class="book-text-zinc-900 book-font-bold book-text-xl">1۲/200/000 <span
-                                                class="book-text-zinc-500 book-text-xs book-font-normal">تومان</span>
-                                        </p>
-                                    </div>
-                                    <div class="book-mt-4">
-                                        <button
-                                            class="book-w-full book-h-12 book-flex book-items-center book-justify-center book-rounded-xl book-bg-primary-300 book-text-white book-font-medium book-transition-all book-duration-300 hover:book-bg-primary-900">رزرو
-                                            اتاق</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div
-                                class="book-flex book-gap-6 book-border book-border-solid book-border-zinc-200 book-rounded-xl book-py-5 book-px-6">
-                                <div
-                                    class="book-flex-[2.75] book-flex book-flex-col book-gap-6 book-divide-y book-divide-dashed book-divide-zinc-300">
-                                    <div>
-                                        <h3 class="book-text-zinc-900 book-mb-3">اتاق دو تخته دبل ( اقامت
-                                            با
-                                            صبحانه)</h3>
-                                        <div class="book-flex book-gap-2">
-                                            <span
-                                                class="book-bg-primary-50 book-text-primary-800 book-text-xs book-rounded-3xl book-py-1 book-px-3">صبحانه
-                                                سلف سرویس</span>
-                                            <span
-                                                class="book-bg-specialcolor-1 book-text-specialcolor-2 book-text-xs book-rounded-3xl book-py-1 book-px-4">Available</span>
-                                        </div>
-                                    </div>
-                                    <div class="book-pt-6">
-                                        <h3 class="book-text-zinc-900 book-mb-3">اتاق دو تخته دبل ( اقامت
-                                            با
-                                            صبحانه)</h3>
-                                        <div class="book-flex book-gap-2">
-                                            <span
-                                                class="book-bg-primary-50 book-text-primary-800 book-text-xs book-rounded-3xl book-py-1 book-px-3">صبحانه
-                                                سلف سرویس</span>
-                                            <span
-                                                class="book-bg-specialcolor-1 book-text-specialcolor-2 book-text-xs book-rounded-3xl book-py-1 book-px-4">Available</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="book-flex-1">
-                                    <div class="book-flex-1 book-flex book-items-center book-justify-center">
-                                        <svg width="57" height="48">
-                                            <use href="../assets/images/book-sprite-icons.svg#icon-document"></use>
-                                        </svg>
-                                        <span class="book-text-blue-600 book-text-xs">قوانين اتاق</span>
-                                    </div>
-                                    <div class="book-flex book-flex-col book-gap-1 book-items-center book-mt-1.5">
-                                        <h3 class="book-text-xs book-text-zinc-900">قیمت نهایی:</h3>
-                                        <p class="book-text-zinc-900 book-font-bold book-text-xl">1۲/200/000 <span
-                                                class="book-text-zinc-500 book-text-xs book-font-normal">تومان</span>
-                                        </p>
-                                    </div>
-                                    <div class="book-mt-4">
-                                        <button
-                                            class="book-w-full book-h-12 book-flex book-items-center book-justify-center book-rounded-xl book-bg-primary-300 book-text-white book-font-medium book-transition-all book-duration-300 hover:book-bg-primary-900">رزرو
-                                            اتاق</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                    </script>
+                            </face>
+                        </basis>
+
                         <ul class="book-flex book-items-center book-justify-center book-gap-1 book-mt-8 book-dir-ltr">
                             <li
                                 class="book-flex book-items-center book-justify-center book-w-12 book-h-12 book-rounded-xl book-bg-zinc-800 book-mr-3 book-transition-all book-duration-300 hover:book-bg-primary-600">
@@ -483,18 +436,20 @@
                                 </svg>
 
                             </li>
-                            <li
-                                class="book-flex book-items-center book-justify-center book-w-12 book-h-12 book-text-zinc-900 book-rounded-xl book-bg-zinc-100 book-transition-all book-duration-300 hover:book-bg-primary-50">
-                                1
-                            </li>
-                            <li
-                                class="book-flex book-items-center book-justify-center book-w-12 book-h-12 book-text-primary-800 book-rounded-xl book-bg-primary-50">
-                                1
-                            </li>
-                            <li
-                                class="book-flex book-items-center book-justify-center book-w-12 book-h-12 book-text-zinc-900 book-rounded-xl book-bg-zinc-100 book-transition-all book-duration-300 hover:book-bg-primary-50">
-                                1
-                            </li>
+                            <basis core="print" datamembername="hotel.paging" run="atclient">
+                                <layout>
+                                    <script type="text/template">@child</script>
+                                </layout>
+                                <face>
+                                    <script type="text/template">
+            {{
+                return await renderPaging($data)
+            }}
+        </script>
+                                </face>
+                            </basis>
+
+
                             <li
                                 class="book-flex book-items-center book-justify-center book-w-12 book-h-12 book-rounded-xl book-bg-zinc-800 book-ml-3 book-transition-all book-duration-300 hover:book-bg-primary-600">
                                 <svg width="24" height="24" class="book-text-white">
@@ -504,6 +459,8 @@
                             </li>
                         </ul>
                     </section>
+
+
                     <section class="book-bg-white book-rounded-xl book-py-6 book-px-8 book-mt-3">
                         <h2
                             class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
@@ -710,21 +667,29 @@
         type="text/javascript"></script>
     <script>
         /**
-   * Global variables to store session search and booking data from sessionSearch.
-   * Initialized as null to be populated on DOM load.
-   */
+         * Global variables to store session search and booking data from sessionSearch.
+         * Initialized as null to be populated on DOM load.
+         */
         let translations = {};
         let currentLanguage = document.documentElement.lang || 'fa';
-        let isRTL = document.documentElement.dir === 'rtl' || currentLanguage === 'fa' || currentLanguage === 'ar';
+        const LID = (() => {
+            // Try <html lang="fa|en|ar"> first; fallback to dir attribute
+            const lang = (document.documentElement.getAttribute('lang') || '').toLowerCase();
+            const dir = (document.documentElement.getAttribute('dir') || '').toLowerCase();
+
+            if (lang.startsWith('fa') || dir === 'rtl') return "1";   // Persian
+            if (lang.startsWith('ar')) return "3";                    // Arabic
+            return "2";                                               // Default: English
+        })();
         const hotelName = currentLanguage === 'fa' ? 'هتل' : 'hotel';
         const isMobile = document.querySelector("main").dataset.mob === "true";
-        var provider, id;
+        var provider, id, optionId, usedforids;
 
-        // 🎯 Optimized code with 100% guarantee of single execution
+        // Optimized code with 100% guarantee of single execution
         (function () {
             'use strict';
 
-            // ✅ Prevent duplicate execution
+            // Prevent duplicate execution
             if (window.__CMS_DATA_INITIALIZED__) {
                 console.warn('⚠️ CMS data already initialized, skipping duplicate execution');
                 return;
@@ -741,7 +706,9 @@
                     // Build window.cmsData object
                     window.cmsData = {
                         provider: "[##cms.form.provider-hotel##]",
-                        id: "[##cms.form.hotelid##]"
+                        id: "[##cms.form.hotelid##]",
+                        optionId: "[##cms.form.optionId-hotel##]",
+                        usedforids: "[##cms.form.encoded_usedforid##]"
                     };
 
                     // Run API logic
@@ -802,6 +769,7 @@
                     lang: currentLanguage,
                     id: id,
                     name: hotelName,
+                    usedforids: usedforids,
                     run: true
                 });
 
@@ -819,7 +787,9 @@
                 // Destructure provider and id from cmsData
                 ({
                     provider,
-                    id
+                    id,
+                    optionId,
+                    usedforids
                 } = window.cmsData);
 
                 // List of allowed provider IDs
@@ -832,7 +802,24 @@
                 // Check if provider is in allowed list and trigger API call
                 if (allowedProviders.includes(String(provider))) {
                     $bc.setSource("cms.token");
-                }
+                };
+
+                const formBody = new URLSearchParams();
+                formBody.append('optionId', optionId);
+                formBody.append('lid', LID);
+
+                const response = await fetch('/Client_Hotel_ShowAllRooms.bc', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+                    },
+                    body: formBody.toString()
+                });
+
+                const rawText = await response.text();
+                const fixedText = rawText.replace(/'/g, '"');
+                const result = JSON.parse(fixedText);
+                $bc.setSource("hotel.list", result)
             } catch (error) {
                 console.error("runApiLogic error: " + error.message);
             }
@@ -856,19 +843,19 @@
                 }
 
                 // Validate data structure
-                if (!$data || !$data.original) {
+                if (!$data || !$data.originalImage) {
                     console.warn('renderSlider: original not found in $data', $data);
                     return '';
                 }
 
                 // Return slider HTML
                 return `
-            <div class="swiper-slide">
-                <img src="/${$data.original}"
-                    class="book-w-full book-h-[552px] book-object-cover book-rounded-xl" alt=""
-                    width="908" height="552" />
-            </div>
-        `;
+      <div class="swiper-slide">
+          <img src="/${$data.originalImage}"
+              class="book-w-full book-h-[552px] book-object-cover book-rounded-xl" alt=""
+              width="908" height="552" />
+      </div>
+  `;
             } catch (error) {
                 console.error("renderSlider error: " + error.message);
                 return '';
@@ -893,19 +880,19 @@
                 }
 
                 // Validate data structure
-                if (!$data || !$data.original) {
+                if (!$data || !$data.originalImage) {
                     console.warn('renderThumbsSlider: original not found in $data', $data);
                     return '';
                 }
 
                 // Return thumbnail HTML
                 return `
-            <div class="swiper-slide !book-w-full book-h-fit book-cursor-pointer">
-                <img src="/${$data.original}" alt=""
-                    class="book-w-full book-h-44 book-object-cover book-rounded-xl" width="358"
-                    height="176" loading="lazy"/>
-            </div>
-        `;
+      <div class="swiper-slide !book-w-full book-h-fit book-cursor-pointer">
+          <img src="/${$data.originalImage}" alt=""
+              class="book-w-full book-h-44 book-object-cover book-rounded-xl" width="358"
+              height="176" loading="lazy"/>
+      </div>
+  `;
             } catch (error) {
                 console.error("renderThumbsSlider error: " + error.message);
                 return '';
@@ -950,10 +937,10 @@
                 // Generate star icons
                 for (let i = 0; i < stars; i++) {
                     starsHtml += `
-                <svg width="24" height="24">
-                    <use href="../assets/images/book-sprite-icons.svg#icon-golden-star"></use>
-                </svg>
-            `;
+          <svg width="24" height="24">
+              <use href="../assets/images/book-sprite-icons.svg#icon-golden-star"></use>
+          </svg>
+      `;
                 }
                 return starsHtml;
             } catch (error) {
@@ -970,12 +957,8 @@
          */
         const setInfo = async (args) => {
             try {
-                console.log(args);
-
                 // Extract data from args
                 const data = args.source?.rows || args.source;
-                console.log(data);
-
                 // Set hotel title - propertyid: 1360
                 const hotelTitle = findPropertyById(data, 3086557, 1360);
                 if (hotelTitle) {
@@ -1012,11 +995,11 @@
                     const phoneContainer = document.querySelector('.book-hotel__phones');
                     if (phoneContainer) {
                         phoneContainer.innerHTML = `
-                    <span class="book-relative book-group book-text-sm book-text-zinc-900 book-transition-all book-duration-300 hover:book-text-primary-300">
-                        ${phone}
-                        <span class="book-absolute -book-bottom-1 book-right-0 book-w-0 book-transition-all book-duration-300 book-h-px book-bg-primary-300 group-hover:book-w-full"></span>
-                    </span>
-                `;
+              <span class="book-relative book-group book-text-sm book-text-zinc-900 book-transition-all book-duration-300 hover:book-text-primary-300">
+                  ${phone}
+                  <span class="book-absolute -book-bottom-1 book-right-0 book-w-0 book-transition-all book-duration-300 book-h-px book-bg-primary-300 group-hover:book-w-full"></span>
+              </span>
+          `;
                     }
                 }
 
@@ -1052,6 +1035,606 @@
                 return '';
             }
         };
+        const renderAvailableRooms = async (element) => {
+            try {
+                if (!element || !Array.isArray(element.availablerooms)) {
+                    console.warn("⚠️ renderAvailableRooms: no availablerooms found");
+                    return "";
+                }
+                console.log(element)
+
+                const serviceLabel = element.services;
+
+                const roomsHtml = element.availablerooms
+                    .map((room) => {
+                        const info = room.info || {};
+                        const roomName = info.room || "";
+                        const availability = info.availability || "";
+                        const availabilityLabel = availability
+                            ? availability.charAt(0).toUpperCase() + availability.slice(1)
+                            : "";
+
+                        return `
+<div>
+<h3 class="book-text-zinc-900 book-mb-3">${roomName}</h3>
+<div class="book-flex book-gap-2">
+  <span
+      class="book-bg-primary-50 book-text-primary-800 book-text-xs book-rounded-3xl book-py-1 book-px-3">${serviceLabel}</span>
+  <span
+      class="book-bg-specialcolor-1 book-text-specialcolor-2 book-text-xs book-rounded-3xl book-py-1 book-px-4">${availabilityLabel}</span>
+</div>
+</div>`;
+                    })
+                    .join("");
+
+                return `
+<div class="book-flex-[2.75] book-flex book-flex-col book-gap-6 book-divide-y book-divide-dashed book-divide-zinc-300">
+${roomsHtml}
+</div>`;
+            } catch (error) {
+                console.error(`renderAvailableRooms: ${error.message}`);
+                return "";
+            }
+        };
+
+        const getCurrencyUnitFromStorage = (key = 'currencyObject') => {
+            const EMPTY = {
+                currency_unit: null,
+                currency_cost: null,
+                currency_cost_number: null,
+                floatdigit: null,
+            };
+
+            try {
+                if (typeof localStorage === 'undefined') return EMPTY;
+                const raw = localStorage.getItem(key);
+                if (!raw) return EMPTY;
+
+                let obj;
+                try {
+                    obj = JSON.parse(raw);
+                } catch {
+                    return EMPTY; // invalid JSON
+                }
+                if (!obj || typeof obj !== 'object') return EMPTY;
+
+                // TTL validation (expire/time)
+                const time = Number.isFinite(+obj.time) ? +obj.time : null;
+                const expire = Number.isFinite(+obj.expire) ? +obj.expire : null;
+                const isExpired = (time !== null && expire !== null) && (Date.now() - time > expire);
+                if (isExpired) return EMPTY;
+
+                // currency_unit
+                const currency_unit =
+                    typeof obj.currency_unit === 'string' ? obj.currency_unit.trim() : null;
+
+                // currency_cost (raw) + numeric version
+                const currency_cost =
+                    (typeof obj.currency_cost === 'string' || typeof obj.currency_cost === 'number')
+                        ? obj.currency_cost
+                        : null;
+
+                let currency_cost_number = null;
+                if (currency_cost != null) {
+                    const sanitized = String(currency_cost).replace(/[^\d.-]/g, '');
+                    const num = Number(sanitized);
+                    currency_cost_number = Number.isFinite(num) ? num : null;
+                }
+
+                // floatdigit
+                const floatdigit =
+                    Number.isFinite(+obj.floatdigit) ? parseInt(obj.floatdigit, 10) : null;
+
+                return { currency_unit, currency_cost, currency_cost_number, floatdigit };
+            } catch (err) {
+                console.error('getCurrencyUnitFromStorage error:', err);
+                return {
+                    currency_unit: null,
+                    currency_cost: null,
+                    currency_cost_number: null,
+                    floatdigit: null,
+                };
+            }
+        };
+        const priceWithCurrency = (amount, opts = {}) => {
+            try {
+                const a = Number(amount);
+                if (!Number.isFinite(a)) return opts.as === 'number' ? 0 : '0';
+
+                const { currency_cost_number, floatdigit } = getCurrencyUnitFromStorage();
+
+                const rate = Number.isFinite(opts.rate)
+                    ? Number(opts.rate)
+                    : Number.isFinite(currency_cost_number) ? currency_cost_number : 1;
+
+                let x = a * rate;
+
+                // Apply floatdigit following renderTotal logic
+                if (floatdigit !== null && floatdigit !== undefined && floatdigit !== '') {
+                    if (floatdigit >= 0) {
+                        const toString_x = x.toString();
+                        if (toString_x.indexOf('.') > -1) {
+                            const fixed = x.toFixed(floatdigit);
+                            const parts = fixed.split('.');
+                            // If decimal part contains only zeros, show one decimal place
+                            if (parts[1] && /^0+$/.test(parts[1])) {
+                                x = parseFloat(x.toFixed(1));
+                            } else {
+                                x = parseFloat(fixed);
+                            }
+                        } else {
+                            x = parseFloat(x.toFixed(floatdigit));
+                        }
+                    } else {
+                        // Negative floatdigit
+                        const multiplier = Math.pow(10, Math.abs(floatdigit));
+                        x = Math.round(x / multiplier) * multiplier;
+                    }
+                }
+
+                if (opts.as === 'number') return x;
+
+                // Format with comma separator
+                const useGrouping = opts.group !== false;
+                const hasDigits = floatdigit !== null && floatdigit !== undefined && floatdigit !== '';
+
+                const nf = new Intl.NumberFormat(opts.locale || undefined,
+                    hasDigits && floatdigit >= 0
+                        ? {
+                            minimumFractionDigits: opts.fixed ? Math.max(0, floatdigit) : 0,
+                            maximumFractionDigits: Math.max(0, floatdigit),
+                            useGrouping
+                        }
+                        : { useGrouping }
+                );
+                return nf.format(x);
+            } catch {
+                return opts.as === 'number' ? 0 : '0';
+            }
+        };
+
+        /**
+         * Global state for hotel room filtering, sorting, and pagination
+         */
+
+        let allHotelFamilies = [];
+        let originalHotelFamilies = [];
+        let mustUpdate = true;
+        let newDataCame = false;
+        let InUpdateUIProcess = false;
+        let InUpdatePaging = true;
+        let InUpdateFiltering = true;
+        let allDataProcessed = false;
+        let currentSort = { value: "price", order: "ascend" };
+        let selectedRoomTypes = [];
+        let selectedServices = [];
+
+
+        /**
+         * Main function to process hotel data, handle filtering, sorting, and pagination
+         * @param {Object} args - Input arguments containing source data and context
+         * @returns {void}
+         */
+        const manipulation = async (args) => {
+            // ============= INITIALIZATION =============
+            let currentIndex = 0;
+            let start = 0;
+            let end = 10; // نمایش 10 اتاق در هر صفحه
+            let dynamicRoomCount = 0;
+
+            // ============= PAGINATION HANDLERS =============
+            if (args.source.id === 'cms.page') {
+                mustUpdate = true;
+                InUpdatePaging = false;
+                InUpdateFiltering = false;
+
+                const currentValue = parseInt(args.source.rows[0].value);
+                const prevButton = document.querySelector(".book-prevpage");
+                const nextButton = document.querySelector(".book-nextpage");
+                const pagingContainer = document.querySelector(".book-paging__cards__container");
+
+                // Update active page styling
+                const activeButton = document.querySelector(".book-active__paging");
+                if (activeButton) {
+                    activeButton.classList.remove("book-active__paging");
+                    activeButton.classList.add("book-bg-white");
+                }
+                const newActive = pagingContainer.querySelector(`[bc-value="${currentValue}"]`);
+                if (newActive) {
+                    newActive.classList.add("book-active__paging");
+                    newActive.classList.remove("book-bg-white");
+                }
+
+                // Calculate pagination range
+                start = currentValue * 10;
+                end = start + 10;
+
+                // Toggle previous button visibility
+                if (prevButton) {
+                    prevButton.classList.toggle("book-hidden", currentValue === 0);
+                }
+
+                // Toggle next button visibility
+                const allButtons = Array.from(document.querySelectorAll(".book-paging__container:not(.book-prevpage):not(.book-nextpage)"));
+                const lastButton = allButtons[allButtons.length - 1];
+                if (nextButton && newActive) {
+                    nextButton.classList.toggle("book-hidden", newActive === lastButton);
+                }
+
+            } else if (args.source.id === 'cms.nextpage') {
+                mustUpdate = true;
+                InUpdatePaging = false;
+                InUpdateFiltering = false;
+
+                const prevButton = document.querySelector(".book-prevpage");
+                const nextButton = document.querySelector(".book-nextpage");
+                const activeButton = document.querySelector(".book-active__paging");
+                const currentValue = parseInt(activeButton.getAttribute("bc-value"));
+                const nextValue = currentValue + 1;
+                const nextPage = document.querySelector(`.book-paging__cards__container [bc-value="${nextValue}"]`);
+
+                if (nextPage) {
+                    // Update active page styling
+                    activeButton.classList.remove("book-active__paging");
+                    activeButton.classList.add("bg-white");
+                    nextPage.classList.add("book-active__paging");
+                    nextPage.classList.remove("bg-white");
+
+                    // Show next page if hidden
+                    if (nextPage.classList.contains("book-hidden")) {
+                        nextPage.classList.remove("book-hidden");
+                        const firstVisible = document.querySelector(".book-paging__container:not(.hidden):not(.book-prevpage):not(.book-nextpage)");
+                        if (firstVisible) firstVisible.classList.add("book-hidden");
+                    }
+
+                    // Show previous button if not on first page
+                    if (prevButton) {
+                        prevButton.classList.toggle("book-hidden", nextValue === 0);
+                    }
+                }
+
+                // Toggle next button visibility
+                const allButtons = Array.from(document.querySelectorAll(".book-paging__container:not(.book-prevpage):not(.book-nextpage)"));
+                const lastButton = allButtons[allButtons.length - 1];
+                if (nextButton && nextPage) {
+                    nextButton.classList.toggle("book-hidden", nextPage === lastButton);
+                }
+
+                // Update pagination range
+                start = nextValue * 10;
+                end = start + 10;
+
+            } else if (args.source.id === 'cms.prevpage') {
+                mustUpdate = true;
+                InUpdatePaging = false;
+                InUpdateFiltering = false;
+
+                const prevButton = document.querySelector(".book-prevpage");
+                const nextButton = document.querySelector(".book-nextpage");
+                const activeButton = document.querySelector(".book-active__paging");
+                const currentValue = parseInt(activeButton.getAttribute("bc-value"));
+                const prevValue = currentValue - 1;
+                const prevPage = document.querySelector(`.book-paging__cards__container [bc-value="${prevValue}"]`);
+
+                if (prevPage) {
+                    // Update active page styling
+                    activeButton.classList.remove("book-active__paging");
+                    activeButton.classList.add("bg-white");
+                    prevPage.classList.add("book-active__paging");
+                    prevPage.classList.remove("bg-white");
+
+                    // Show previous page if hidden
+                    if (prevPage.classList.contains("book-hidden")) {
+                        prevPage.classList.remove("book-hidden");
+                        const allButtons = Array.from(document.querySelectorAll(".book-paging__container:not(.book-prevpage):not(.book-nextpage)"));
+                        const lastVisible = allButtons.reverse().find(btn => !btn.classList.contains("book-hidden"));
+                        if (lastVisible) lastVisible.classList.add("book-hidden");
+                    }
+
+                    // Toggle previous and next button visibility
+                    if (prevButton) {
+                        prevButton.classList.toggle("book-hidden", prevValue === 0);
+                    }
+                    if (nextButton) {
+                        nextButton.classList.remove("book-hidden");
+                    }
+                }
+
+                // Update pagination range
+                start = prevValue * 10;
+                end = start + 10;
+
+            } else if (args.source.id === "hotel.list") {
+                newDataCame = true;
+                allDataProcessed = false;
+            } else if (args.source.id === 'cms.roomtypes') {
+                mustUpdate = true;
+                InUpdatePaging = true;
+                InUpdateFiltering = false;
+
+                // دریافت متن تایپ شده برای جستجو
+                console.log('args.source for roomtypes:', args.source);
+                console.log('args.source.rows:', args.source.rows);
+
+                // چک کردن ساختار rows
+                let searchText = '';
+                if (args.source.rows && args.source.rows.length > 0) {
+                    // اگر rows آرایه‌ای از آبجکت‌ها بود
+                    if (args.source.rows[0].value !== undefined) {
+                        searchText = args.source.rows[0].value;
+                    }
+                    // اگر خود rows یک آرایه ساده بود
+                    else if (typeof args.source.rows[0] === 'string') {
+                        searchText = args.source.rows[0];
+                    }
+                }
+
+                console.log('searchText:', searchText);
+
+                // اگر متنی تایپ شده، فیلتر کن
+                if (searchText && searchText.trim()) {
+                    selectedRoomTypes = [searchText.trim()];
+                } else {
+                    selectedRoomTypes = [];
+                }
+                console.log('selectedRoomTypes:', selectedRoomTypes);
+
+            } else if (args.source.id === 'cms.services') {
+                mustUpdate = true;
+                InUpdatePaging = true;
+                InUpdateFiltering = false;
+
+                // دریافت متن تایپ شده برای جستجو
+                const searchText = args.source.rows[0]?.value || '';
+
+                // اگر متنی تایپ شده، فیلتر کن
+                if (searchText && searchText.trim()) {
+                    selectedServices = [searchText.trim()];
+                } else {
+                    selectedServices = [];
+                }
+            }
+
+            // ============= UI UPDATE PROCESS =============
+            if (mustUpdate && !InUpdateUIProcess) {
+                InUpdateUIProcess = true;
+
+                // Collect new hotel families and reset for new searches
+                if (newDataCame) {
+                    const source = args.context.tryToGetSource("hotel.list");
+
+                    // Reset data for new searches
+                    if (source.rows[0]?.isNewSearch) {
+                        allHotelFamilies = [];
+                    }
+
+                    source.rows.forEach(row => {
+                        if (Array.isArray(row.families)) {
+                            allHotelFamilies.push(...row.families);
+                            originalHotelFamilies = [...allHotelFamilies];
+                        }
+                    });
+
+                    newDataCame = false;
+                    allDataProcessed = true;
+                }
+
+                // ============= SORTING LOGIC =============
+                if (allDataProcessed) {
+                    // Sort newSource if we have filtered data, otherwise sort all
+                    const sourceToSort = (selectedRoomTypes.length > 0 || selectedServices.length > 0)
+                        ? [...allHotelFamilies]
+                        : allHotelFamilies;
+
+                    sourceToSort.sort((a, b) => {
+                        const priceA = a.totalPrice ? parseFloat(a.totalPrice) : Infinity;
+                        const priceB = b.totalPrice ? parseFloat(b.totalPrice) : Infinity;
+
+                        if (currentSort.order === "ascend") {
+                            return priceA - priceB;
+                        } else {
+                            return priceB - priceA;
+                        }
+                    });
+
+                    // Update allHotelFamilies with sorted data
+                    if (selectedRoomTypes.length === 0 && selectedServices.length === 0) {
+                        allHotelFamilies = sourceToSort;
+                    }
+                }
+
+                // ============= FILTERING LOGIC =============
+                console.log('Starting filter with selectedRoomTypes:', selectedRoomTypes);
+                console.log('Starting filter with selectedServices:', selectedServices);
+                console.log('allHotelFamilies before filter:', allHotelFamilies.length);
+
+                const filters = [
+                    // فیلتر براساس نام اتاق (جستجو با includes)
+                    item => {
+                        if (!selectedRoomTypes.length) return true;
+                        const searchTerm = selectedRoomTypes[0].toLowerCase();
+                        const hasMatch = item.availablerooms.some(room => {
+                            const roomName = room.info.room || '';
+                            console.log('Checking room:', roomName, 'against:', searchTerm);
+                            return roomName.toLowerCase().includes(searchTerm);
+                        });
+                        console.log('Item filter result:', hasMatch);
+                        return hasMatch;
+                    },
+                    // فیلتر براساس خدمات (جستجو با includes)
+                    item => {
+                        if (!selectedServices.length) return true;
+                        const searchTerm = selectedServices[0].toLowerCase();
+                        return item.services && item.services.toLowerCase().includes(searchTerm);
+                    }
+                ];
+
+                // Filter hotel families
+                const newSource = allHotelFamilies.filter(item =>
+                    filters.every(filter => filter(item))
+                );
+
+                console.log('Filtered results:', newSource.length);
+
+                // Update room count display
+                dynamicRoomCount = newSource.length;
+                const countElement = document.querySelector(".book-count__api__content");
+                if (countElement) {
+                    countElement.textContent = dynamicRoomCount;
+                }
+
+                // Add index to each item
+                const indexedSource = newSource.map((item, i) => ({
+                    ...item,
+                    index: currentIndex + i
+                }));
+                currentIndex += newSource.length;
+
+                // Apply pagination
+                const pagedSource = indexedSource.slice(start, end);
+
+                // ============= UI UPDATE LOGIC =============
+                if (newSource.length > 0) {
+                    // Update price range - استفاده از newSource به جای allHotelFamilies
+                    const pricesSource = newSource
+                        .map(item => item.totalPrice ? parseFloat(item.totalPrice) : null)
+                        .filter(Boolean);
+
+
+                    // Update pagination UI
+                    if (InUpdatePaging) {
+                        const container = document.querySelector(".book-paging__cards__container");
+                        if (container) {
+                            const nextPage = container.querySelector(".book-nextpage");
+                            const prevPage = container.querySelector(".book-prevpage");
+
+                            if (prevPage) {
+                                prevPage.classList.add("book-hidden");
+                            }
+
+                            const roundedNumber = Math.ceil(currentIndex / 10);
+                            const activePage = 0;
+
+                            const arrayPaging = Array.from({ length: roundedNumber }, (_, i) => ({
+                                index: i,
+                                page: i + 1,
+                                isActive: i === activePage,
+                                isVisible: true
+                            }));
+
+                            if (nextPage) {
+                                nextPage.classList.toggle("book-hidden", arrayPaging.length <= 1);
+                            }
+
+                            args.context.setAsSource("hotel.paging", arrayPaging);
+                        }
+                    }
+
+                    // ============= FILTER UPDATE LOGIC =============
+                    if (InUpdateFiltering) {
+                        const filteringSource = allHotelFamilies;
+
+                        // استخراج نام اتاق‌های یونیک
+                        const allRoomTypes = [];
+                        filteringSource.forEach(item => {
+                            item.availablerooms.forEach(room => {
+                                if (room.info.room) {
+                                    allRoomTypes.push({
+                                        name: room.info.room,
+                                        price: item.totalPrice || 0
+                                    });
+                                }
+                            });
+                        });
+
+                        // حذف تکراری‌ها و انتخاب ارزان‌ترین قیمت برای هر نوع اتاق
+                        const roomTypeMap = {};
+                        allRoomTypes.forEach(room => {
+                            if (!roomTypeMap[room.name] || roomTypeMap[room.name].price > room.price) {
+                                roomTypeMap[room.name] = room;
+                            }
+                        });
+
+                        const uniqueRoomTypes = Object.values(roomTypeMap)
+                            .sort((a, b) => a.price - b.price)
+                            .map(room => ({ Name: room.name }));
+
+                        args.context.setAsSource("hotel.roomtypes", uniqueRoomTypes);
+
+                        // استخراج خدمات یونیک
+                        const allServices = filteringSource
+                            .map(item => ({ Name: item.services }))
+                            .filter(item => item.Name);
+
+                        const uniqueServices = allServices.filter((item, index, self) =>
+                            index === self.findIndex(t => t.Name === item.Name)
+                        );
+
+                        args.context.setAsSource("hotel.services", uniqueServices);
+                    }
+
+                    // Update hotel list
+                    args.context.setAsSource("hotel.updated", pagedSource, { keyFieldName: "optionId" });
+                    InUpdateUIProcess = false;
+
+                } else {
+                    // ============= NO RESULTS HANDLING =============
+                    InUpdateUIProcess = false;
+
+                    // Display no rooms found message
+                    const listContainer = document.querySelector(".book-list__cards__container");
+                    if (listContainer) {
+                        listContainer.innerHTML = `
+              <div class="book-text-center">
+                  <div>هیچ اتاقی با فیلترهای انتخابی یافت نشد</div>
+                  <div class="book-text-zinc-900 book-text-xs book-mt-2">لطفاً فیلترها را تغییر دهید</div>
+              </div>
+          `;
+                    }
+
+                    // Hide pagination controls when no results
+                    const container = document.querySelector(".book-paging__cards__container");
+                    if (container) {
+                        const buttons = container.querySelectorAll(".book-paging__container:not(.book-nextpage):not(.book-prevpage)");
+                        const nextPage = container.querySelector(".book-nextpage");
+                        const prevPage = container.querySelector(".book-prevpage");
+
+                        if (prevPage) prevPage.classList.add("book-hidden");
+                        if (nextPage) nextPage.classList.add("book-hidden");
+                        buttons.forEach(button => button.remove());
+                    }
+                }
+            }
+        };
+
+        const renderPaging = async (element) => {
+            try {
+                const { index, page, isActive, isVisible } = element;
+                const nextPage = pagingContainer?.querySelector(".book-nextpage");
+                const prevPage = pagingContainer?.querySelector(".book-prevpage");
+
+                // Show next button if there are more than 5 pages
+                if (index >= 5 && nextPage?.classList.contains("book-hidden")) {
+                    nextPage.classList.remove("book-hidden");
+                }
+                // Show previous button if not on the first active page
+                if (index > 0 && isActive && prevPage?.classList.contains("book-hidden")) {
+                    prevPage.classList.remove("book-hidden");
+                }
+                // Render button with active/visible styling
+                return ` <li  bc-value="${index}" bc-name="cms.page" bc-triggers="click"
+                          class="book-flex book-items-center book-justify-center book-w-12 book-h-12 book-text-zinc-900 book-rounded-xl book-bg-zinc-100 book-transition-all book-duration-300 hover:book-bg-primary-50 ${isActive ? ' book-active__paging' : ' book-bg-white'}">
+                         ${page}
+                      </li>`;
+            } catch (error) {
+                console.error(`renderPaging: ${error.message}`);
+                return "";
+            }
+        };
+
+        const showRules = () => {
+            console.log('showRules');
+        }
     </script>
 
 
