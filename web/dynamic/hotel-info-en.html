@@ -2,7 +2,7 @@
 <html lang="fa" dir="rtl">
 
 <head>
-    <basis core="call" file="book/taglist" lid="1"></basis>
+    <basis core="call" file="book/taglist" lid="2"></basis>
     <title>اطلاعات هتل</title>
     <meta name="description" content="اطلاعات هتل">
     <link href="[##cms.cms.cdn##]/_css/swiper-bundle.min.css" type="text/css" rel="stylesheet" />
@@ -13,14 +13,14 @@
 
 <body class="book-bg-zinc-50">
     <!-- Header -->
-    <basis core="call" file="header.inc" lid="1" pageindex="[##cms.cms.pageindex|(1)##]"></basis>
+    <basis core="call" file="header.inc" lid="2" pageindex="[##cms.cms.pageindex|(1)##]"></basis>
     <basis core="callback" run="atclient"
         triggers="hotel.list cms.page cms.nextpage cms.prevpage cms.services cms.roomtypes" method="manipulation">
     </basis>
     <!-- Main-->
     <main>
         <!-- Commands / Requests -->
-        <basis core="call" file="hotel/info/commands" lid="1"></basis>
+        <basis core="call" file="hotel/info/commands" lid="2"></basis>
         <div class="max-xl:book-w-[97%] xl:book-max-w-7xl book-mx-auto book-my-5">
             <div
                 class="book-text-zinc-700 book-text-xs book-transition-all book-duration-300 hover:book-text-primary-300">
@@ -55,7 +55,7 @@
                         <face>
                             <script type="text/template">
                                 <div class="swiper-slide">
-                                    <img src="/@originalImage@"
+                                    <img src="@originalImage@"
                                         class="book-w-full book-h-[552px] book-object-cover book-rounded-xl" alt=""
                                         width="908" height="552" />
                                 </div>
@@ -76,7 +76,7 @@
                         <face>
                             <script type="text/template">
                                 <div class="swiper-slide !book-w-full book-h-fit book-cursor-pointer">
-                                    <img src="/@originalImage@" alt=""
+                                    <img src="@originalImage@" alt=""
                                         class="book-w-full book-h-44 book-object-cover book-rounded-xl" width="358"
                                         height="176" loading="lazy"/>
                                 </div>
@@ -680,7 +680,7 @@
         </div>
     </main>
     <!-- Footer-->
-    <basis core="call" file="footer.inc" lid="1" pageindex="[##cms.cms.pageindex|(1)##]"></basis>
+    <basis core="call" file="footer.inc" lid="2" pageindex="[##cms.cms.pageindex|(1)##]"></basis>
     <script src="[##cms.cms.cdn##]/_js/swiper-bundle.11.2.5.min.js" type="text/javascript"></script>
     <script src="[##cms.cms.cdn##]/booking/js/hotel-info.js?ver=[##cms.cms.date2##][##cms.cms.time2##]"
         type="text/javascript"></script>
@@ -726,7 +726,8 @@
                         provider: "[##cms.form.provider-hotel##]",
                         id: "[##cms.form.hotelid##]",
                         optionId: "[##cms.form.optionId-hotel##]",
-                        usedforids: "[##cms.form.encoded_usedforid##]"
+                        usedforids: "[##cms.form.encoded_usedforid##]",
+                        sid: "[##cms.form.sid##]",
                     };
 
                     // Run API logic
@@ -813,38 +814,83 @@
 
                 const fetchHotelImages = async () => {
                     try {
-                        // ارسال درخواست GET به URL
+                        const formData = new FormData();
+                        formData.append('optionId', '[##cms.form.optionId-hotel##]');
+                        formData.append('sid', window.cmsData.sid);
+
                         const response = await fetch('/Client_Hotel_Image_Json.bc', {
-                            method: 'GET', // متد HTTP که برای درخواست استفاده می‌کنیم
-                            headers: {
-                                'Content-Type': 'application/json', // نوع محتوای درخواست
-                            },
+                            method: 'POST',
+                            body: formData,
                         });
 
-                        // بررسی وضعیت پاسخ
                         if (!response.ok) {
-                            throw new Error(`خطا در دریافت داده‌ها: ${response.statusText}`);
+                            throw new Error(`Error retrieving data: ${response.statusText}`);
                         }
 
-                        // تجزیه داده‌های JSON
-                        const data = await response.json();
-                        console.log('داده‌های دریافتی:', data);
+                        const jsonObject = await response.json();
 
-                        // در اینجا می‌توانید داده‌ها را در صفحه نمایش دهید یا به کار دیگری استفاده کنید
-                        return data; // برگرداندن داده‌ها
+                        const updatedData = jsonObject.map(item => {
+                            const updatedItem = { ...item };
+                            if (updatedItem.largeIMG) {
+                                updatedItem.originalImage = updatedItem.largeIMG;
+                                delete updatedItem.largeIMG;
+                            }
+                            return updatedItem;
+                        });
+
+
+                        $bc.setSource("api.gallery", updatedData);
+
+
                     } catch (error) {
-                        console.error('خطا:', error);
+                        console.error('error:', error);
                     }
                 };
+
+                const fetchHotelInfo = async () => {
+                    try {
+                        const formData = new FormData();
+                        formData.append('optionId', '[##cms.form.optionId-hotel##]');
+                        formData.append('sid', window.cmsData.sid);
+
+                        const response = await fetch('/Client_Hotel_Info_Json.bc', {
+                            method: 'POST',
+                            body: formData,
+                        });
+
+                        if (!response.ok) {
+                            throw new Error(`Error retrieving data: ${response.statusText}`);
+                        }
+
+                        const responseText = await response.text();
+
+                        const correctedJsonText = responseText.replace(/'/g, '"');
+
+                        try {
+                            const jsonObject = JSON.parse(correctedJsonText);
+                            $bc.setSource("api.info", correctedJsonText);
+                        } catch (jsonError) {
+                            console.error('Invalid JSON:', jsonError);
+                        }
+
+                    } catch (error) {
+                        console.error('error:', error);
+                    }
+                };
+
+
+
+
 
                 // Check if provider is in allowed list and trigger API call
                 if (allowedProviders.includes(String(provider))) {
                     $bc.setSource("cms.token");
                 } else {
                     fetchHotelImages();
+                    fetchHotelInfo();
                 }
 
-                
+
 
                 const formBody = new URLSearchParams();
                 formBody.append('optionId', optionId);
@@ -875,7 +921,7 @@
          * @param {number} propertyId - ID of the property to find
          * @returns {string|null} - Property value text or null if not found
          */
-        function findPropertyById(data, propertyId) {
+        function findPropertyByIdOptimized(data, propertyId) {
             try {
                 // Ensure that the data is an array
                 if (!Array.isArray(data)) {
@@ -883,28 +929,38 @@
                     return null;
                 }
 
-                // Iterate through all sections to find the property by prpId
+                // Iterate through all sections to find the property by prpId or propertyId
                 for (const section of data) {
-                    // Ensure properties exist in the section
                     if (Array.isArray(section.properties)) {
-                        const property = section.properties.find(p => String(p.prpId) === String(propertyId));
+                        // Check for first structure (prpId)
+                        let property = section.properties.find(p => String(p.prpId) === String(propertyId));
 
-                        // If property is found, return its value
                         if (property) {
+                            // If found in the first structure
                             const value = property.answers?.[0]?.parts?.[0]?.values?.[0]?.value ?? null;
+                            return value ? String(value).trim() : null;
+                        }
+
+                        // Check for second structure (propertyid)
+                        property = section.properties.find(p => String(p.propertyid) === String(propertyId));
+
+                        if (property) {
+                            // If found in the second structure
+                            const value = property.answer?.[0]?.text ?? null;
                             return value ? String(value).trim() : null;
                         }
                     }
                 }
 
                 // If property not found in any section
-                console.warn(`Property with prpId = ${propertyId} not found.`);
+                console.warn(`Property with propertyId = ${propertyId} not found.`);
                 return null;
             } catch (error) {
-                console.error('Error in findPropertyById:', error);
+                console.error('Error in findPropertyByIdOptimized:', error);
                 return '';
             }
         }
+
 
 
         /**
@@ -943,14 +999,15 @@
                 // Extract data from args
                 const data = args.source?.rows || args.source;
                 // Set hotel title - propertyid: 1360
-                const hotelTitle = findPropertyById(data, 1360);
+                const hotelTitle = findPropertyByIdOptimized(data, 1360);
+                console.log(hotelTitle);
                 if (hotelTitle) {
                     const titleElement = document.querySelector('.book-hotel__title');
                     if (titleElement) titleElement.textContent = hotelTitle;
                 }
 
                 // Set hotel rating (stars) - propertyid: 1361
-                const hotelRating = findPropertyById(data, 1361);
+                const hotelRating = findPropertyByIdOptimized(data, 1361);
                 if (hotelRating) {
                     const starsContainer = document.querySelector('.book-hotel__stars');
                     if (starsContainer) {
@@ -959,22 +1016,21 @@
                 }
 
                 // Set website - propertyid: 1382
-                const website = findPropertyById(data, 1382);
-                console.log(website);
+                const website = findPropertyByIdOptimized(data, 1382);
                 if (website) {
                     const websiteElement = document.querySelector('.book-hotel__website');
                     if (websiteElement) websiteElement.textContent = website;
                 }
 
                 // Set address - propertyid: 1379
-                const address = findPropertyById(data, 1379);
+                const address = findPropertyByIdOptimized(data, 1379);
                 if (address) {
                     const addressElement = document.querySelector('.book-hotel__address');
                     if (addressElement) addressElement.textContent = address;
                 }
 
                 // Set phone number - propertyid: 1380
-                const phone = findPropertyById(data, 1380);
+                const phone = findPropertyByIdOptimized(data, 1380);
                 if (phone) {
                     const phoneContainer = document.querySelector('.book-hotel__phones');
                     if (phoneContainer) {
@@ -988,39 +1044,34 @@
                 }
 
                 // Set email - propertyid: 1383
-                const email = findPropertyById(data, 1383);
+                const email = findPropertyByIdOptimized(data, 1383);
                 if (email) {
                     const emailElement = document.querySelector('.book-hotel__email');
                     if (emailElement) emailElement.textContent = email;
                 }
 
                 // Set fax number - propertyid: 1381
-                const fax = findPropertyById(data, 1381);
+                const fax = findPropertyByIdOptimized(data, 1381);
                 if (fax) {
                     const faxElement = document.querySelector('.book-hotel__fax');
                     if (faxElement) faxElement.textContent = fax;
                 }
 
                 // Set check-in time - propertyid: 1376
-                const checkIn = findPropertyById(data, 1376);
+                const checkIn = findPropertyByIdOptimized(data, 1376);
                 if (checkIn) {
                     const checkInElement = document.querySelector('.book-hotel__checkin__time');
                     if (checkInElement) checkInElement.textContent = checkIn;
                 }
 
                 // Set check-out time - propertyid: 1377
-                const checkOut = findPropertyById(data, 1377);
+                const checkOut = findPropertyByIdOptimized(data, 1377);
                 if (checkOut) {
                     const checkOutElement = document.querySelector('.book-hotel__checkout__time');
                     if (checkOutElement) checkOutElement.textContent = checkOut;
                 }
 
-                const unkown = findPropertyById(data, 1379);
-                if (unkown) {
-                    console.log(unkown);
-                    // const checkOutElement = document.querySelector('.book-hotel__checkout__time');
-                    // if (checkOutElement) checkOutElement.textContent = checkOut;
-                }
+
             } catch (error) {
                 console.error("setInfo error: " + error.message);
                 return '';

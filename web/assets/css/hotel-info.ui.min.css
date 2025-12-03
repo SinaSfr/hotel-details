@@ -62,8 +62,16 @@ body {
     left: 0px;
 }
 
+.book-left-6 {
+    left: 1.5rem;
+}
+
 .book-right-0 {
     right: 0px;
+}
+
+.book-right-6 {
+    right: 1.5rem;
 }
 
 .book-top-0 {
@@ -246,6 +254,10 @@ body {
     height: 552px;
 }
 
+.book-h-\[561px\] {
+    height: 561px;
+}
+
 .book-h-fit {
     height: -moz-fit-content;
     height: fit-content;
@@ -380,6 +392,10 @@ body {
 
 .book-justify-between {
     justify-content: space-between;
+}
+
+.book-justify-end {
+    justify-content: flex-end;
 }
 
 .book-gap-0\.5 {
@@ -653,6 +669,10 @@ body {
     padding-bottom: 1.5rem;
 }
 
+.book-pb-10 {
+    padding-bottom: 2.5rem;
+}
+
 .book-pl-2 {
     padding-left: 0.5rem;
 }
@@ -668,6 +688,11 @@ body {
 .book-text-2xl {
     font-size: 1.5rem;
     line-height: 2rem;
+}
+
+.book-text-3xl {
+    font-size: 1.875rem /* 30px */;
+    line-height: 2.25rem /* 36px */;
 }
 
 .book-text-sm {
