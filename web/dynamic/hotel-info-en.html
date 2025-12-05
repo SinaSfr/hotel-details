@@ -10,6 +10,64 @@
         type="text/css" rel="stylesheet" />
 
 </head>
+<style>
+    .gallery-img-loader {
+        position: relative;
+        height: 552px;
+    }
+
+    .gallery-img-loader:after {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background-repeat: no-repeat;
+        background-image: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%),
+            linear-gradient(#e2e8f0 176px, transparent 0),
+            linear-gradient(#e8e8f0 176px, transparent 0),
+            linear-gradient(#e2e8f0 176px, transparent 0),
+            linear-gradient(#e2e8f0 550px, transparent 0),
+            linear-gradient(#ffffff 100%, transparent 0);
+        background-size: 640px 100%, 360px 176px, 360px 176px, 360px 176px, 900px 550px, 100% 100%;
+        background-position: 0 0, 0px 0px, 0px 188px, 0px 376px, 372px 0px, 0 0;
+        animation: skeleton-animation 2000ms infinite;
+    }
+
+    @keyframes skeleton-animation {
+        to {
+            background-position: 100% 0, 0px 0px, 0px 188px, 0px 376px, 372px 0px, 0 0;
+        }
+    }
+
+    .book-hotel__description {
+        font-size: revert;
+        font-weight: revert;
+    }
+
+    .book-hotel__description ul,
+    .book-hotel__description ol {
+        padding: revert !important;
+    }
+
+    .book-hotel__description ul,
+    .book-hotel__description ul li {
+        list-style: disc;
+    }
+
+    .book-hotel__description ol,
+    .book-hotel__description ol li {
+        list-style: decimal;
+    }
+
+    .book-hotel__description table {
+        table-layout: auto;
+        width: auto;
+        max-width: 100%;
+    }
+</style>
 
 <body class="book-bg-zinc-50">
     <!-- Header -->
@@ -27,6 +85,7 @@
                 صفحه اصلی / مشاهده هتل / هتل مجلل درویشی در مشهد </div>
             <section class="book-relative book-mt-6">
                 <div class="book-flex book-gap-3">
+                    <div class="gallery-img-loader book-w-full"></div>
                     <basis core="print" datamembername="api.gallery" run="atclient" onrendered="onrenderedApiGallery">
                         <layout>
                             <script type="text/template">
@@ -139,23 +198,8 @@
                                 <div class="book-hotel__stars book-flex book-items-center book-gap-0.5">
                                 </div>
                             </div>
-                            <div class="book-text-sm book-text-zinc-900 book-mt-9 book-leading-6">
-                                متنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود. طراح گرافیک
-                                از این
-                                متن به
-                                عنوان عنصری از ترکیب بندی برای پر کردن صفحه و ارایه اولیه شکل ظاهری و کلی طرح سفارش
-                                گرفته شده
-                                استفاده می نماید متنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک گفته
-                                می‌شود. طراح
-                                گرافیک از این متن به عنوان عنصری از ترکیب بندی برای پر کردن صفحه و ارایه اولیه شکل ظاهری
-                                و کلی
-                                طرح
-                                سفارش گرفته شده استفاده می نمایدمتنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی
-                                گرافیک
-                                گفته
-                                می‌شود. طراح گرافیک از این متن به عنوان عنصری از ترکیب بندی برای پر کردن صفحه و ارایه
-                                اولیه شکل
-                                ظاهری و کلی طرح سفارش گرفته شده استفاده می نماید
+                            <div
+                                class="book-hotel__description book-text-sm book-text-zinc-900 book-mt-9 book-leading-6">
                             </div>
                         </section>
                         <section class="book-mt-28">
@@ -210,25 +254,25 @@
                             <div class="tabs book-relative book-overflow-hidden">
                                 <div
                                     class="tabs-container book-flex book-items-center book-gap-10 book-overflow-x-auto book-pb-3 book-px-3">
-                                    <button
+                                    <button data-target="#section-amenities"
                                         class="book-relative book-group book-text-zinc-900 book-font-medium book-transition-all book-duration-300 hover:book-text-primary-300">امکانات
                                         <span
                                             class="book-absolute book-bottom-[-11px] book-right-0 book-w-0 book-transition-all book-duration-300 book-h-px book-bg-primary-300 group-hover:book-w-full"></span>
                                     </button>
-                                    <button
+                                    <button data-target="#section-rooms"
                                         class="book-relative book-group book-text-zinc-900 book-font-medium book-transition-all book-duration-300 hover:book-text-primary-300">اتاق
                                         ها
                                         <span
                                             class="book-absolute book-bottom-[-11px] book-right-0 book-w-0 book-transition-all book-duration-300 book-h-px book-bg-primary-300 group-hover:book-w-full"></span>
                                     </button>
-                                    <button
+                                    <button data-target="#section-rules"
                                         class="book-relative book-group book-text-zinc-900 book-font-medium book-transition-all book-duration-300 hover:book-text-primary-300">قوانین
                                         و
                                         مقررات
                                         <span
                                             class="book-absolute book-bottom-[-11px] book-right-0 book-w-0 book-transition-all book-duration-300 book-h-px book-bg-primary-300 group-hover:book-w-full"></span>
                                     </button>
-                                    <button
+                                    <button data-target="#section-comments"
                                         class="book-relative book-group book-text-zinc-900 book-font-medium book-transition-all book-duration-300 hover:book-text-primary-300">نظر
                                         کاربران
                                         <span
@@ -241,11 +285,11 @@
                             </div>
                         </div>
                         <div class="book-bg-white book-rounded-xl book-px-8 book-py-6 book-mt-3">
-                            <h2
+                            <h2 id="section-amenities"
                                 class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
                                 امکانات</h2>
-                            <div class="book-columns-4">
-                                <div class="book-flex book-items-start book-gap-2 book-break-inside-avoid book-mb-4">
+                            <div class="book-hotel__facilities grid book-grid-cols-3 book-gap-2">
+                                <!-- <div class="book-flex book-items-start book-gap-2 book-break-inside-avoid book-mb-4">
                                     <svg width="24" height="24">
                                         <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-wifi">
                                         </use>
@@ -328,7 +372,7 @@
                                             <span class="book-text-xs book-text-zinc-600">گرمایشی شوفاژ</span>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </section>
@@ -400,7 +444,7 @@
                     </section>
 
                     <section class="book-bg-white book-rounded-xl book-px-8 book-py-6 book-mt-3">
-                        <h2
+                        <h2 id="section-rooms"
                             class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
                             اتاق ها</h2>
                         <basis core="print" datamembername="hotel.updated" run="atclient">
@@ -555,7 +599,7 @@
                     </section>
                     <section class="book-bg-white book-rounded-xl book-py-6 book-px-8 book-mt-3">
 
-                        <h2
+                        <h2 id="section-rules"
                             class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
                             قوانین و مقررات</h2>
                         <div class="book-flex book-gap-6 book-divide-x book-divide-x-reverse book-divide-zinc-200">
@@ -593,7 +637,7 @@
                         </div>
                     </section>
                     <section class="book-bg-white book-rounded-xl book-py-6 book-px-3 book-mt-3">
-                        <h2
+                        <h2 id="section-comments"
                             class="book-text-zinc-900 book-font-bold book-text-xl book-border-b book-border-solid book-border-zinc-200 -book-mx-3 book-px-3 book-pb-6 book-mb-6">
                             نظر کاربران</h2>
                         <div class="book-flex book-flex-col book-gap-8">
@@ -638,9 +682,14 @@
                 </div>
                 <aside class="book-w-[358px] book-h-fit book-sticky book-top-0">
                     <section class="book-relative book-rounded-xl book-overflow-hidden">
-                        <img src="../assets/images/map.png" class="book-w-full book-h-[305px] book-object-cover" alt=""
-                            width="358" height="305" loading="lazy">
-                        <div class="book-absolute book-inset-0 book-bg-black/20 book-w-full book-h-full"></div>
+                        <iframe width="358" height="305" loading="lazy"
+                            class="book-hotel__location book-w-full book-h-[305px] book-object-cover"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            src="https://www.google.com/maps?q=41.003941,28.968703&output=embed">
+                        </iframe>
+                        <div
+                            class="book-absolute book-inset-0 book-bg-black/20 book-w-full book-h-full book-pointer-events-none">
+                        </div>
                     </section>
 
                     <section class="book-bg-white book-p-4 book-rounded-xl book-mt-3">
@@ -868,6 +917,7 @@
 
                         try {
                             const jsonObject = JSON.parse(correctedJsonText);
+                            console.log(jsonObject)
                             $bc.setSource("api.info", correctedJsonText);
                         } catch (jsonError) {
                             console.error('Invalid JSON:', jsonError);
@@ -921,45 +971,102 @@
          * @param {number} propertyId - ID of the property to find
          * @returns {string|null} - Property value text or null if not found
          */
-        function findPropertyByIdOptimized(data, propertyId) {
+        function findPropertySingle(data, propertyId) {
             try {
-                // Ensure that the data is an array
+                if (typeof data === "string") {
+                    data = JSON.parse(data);
+                }
+
+                if (Array.isArray(data) && data.length === 1 && typeof data[0].value === "string") {
+                    data = JSON.parse(data[0].value);
+                }
+
                 if (!Array.isArray(data)) {
-                    console.warn('Data is not an array:', data);
+                    console.warn("Data is not a valid array:", data);
                     return null;
                 }
 
-                // Iterate through all sections to find the property by prpId or propertyId
                 for (const section of data) {
                     if (Array.isArray(section.properties)) {
-                        // Check for first structure (prpId)
+
                         let property = section.properties.find(p => String(p.prpId) === String(propertyId));
 
                         if (property) {
-                            // If found in the first structure
                             const value = property.answers?.[0]?.parts?.[0]?.values?.[0]?.value ?? null;
                             return value ? String(value).trim() : null;
                         }
 
-                        // Check for second structure (propertyid)
                         property = section.properties.find(p => String(p.propertyid) === String(propertyId));
 
                         if (property) {
-                            // If found in the second structure
                             const value = property.answer?.[0]?.text ?? null;
                             return value ? String(value).trim() : null;
                         }
                     }
                 }
 
-                // If property not found in any section
                 console.warn(`Property with propertyId = ${propertyId} not found.`);
                 return null;
+
             } catch (error) {
-                console.error('Error in findPropertyByIdOptimized:', error);
-                return '';
+                console.error("Error in findPropertySingle:", error);
+                return null;
             }
         }
+
+        function findPropertyList(data, propertyId) {
+            try {
+                if (typeof data === "string") {
+                    data = JSON.parse(data);
+                }
+
+                if (Array.isArray(data) && data.length === 1 && typeof data[0].value === "string") {
+                    data = JSON.parse(data[0].value);
+                }
+
+                if (!Array.isArray(data)) {
+                    console.warn("Data is not a valid array:", data);
+                    return [];
+                }
+
+                for (const section of data) {
+                    if (!Array.isArray(section.properties)) continue;
+
+                    const property = section.properties.find(
+                        p => String(p.propertyid) === String(propertyId)
+                    );
+
+                    if (property && Array.isArray(property.answer)) {
+                        return property.answer
+                            .map(a => a.text?.trim())
+                            .filter(Boolean);
+                    }
+                }
+
+                return [];
+
+            } catch (error) {
+                console.error("Error in findPropertyList:", error);
+                return [];
+            }
+        }
+
+        function getSectionHTML(data, sectionTitle) {
+            if (Array.isArray(data) && data.length === 1 && typeof data[0].value === "string") {
+                data = JSON.parse(data[0].value);
+            }
+
+            if (!Array.isArray(data)) return "";
+
+            const section = data.find(sec => sec.title === sectionTitle);
+            if (!section) return "";
+
+            const prop = section.properties?.[0];
+            if (!prop?.title) return "";
+
+            return prop.title;
+        }
+
 
 
 
@@ -999,15 +1106,14 @@
                 // Extract data from args
                 const data = args.source?.rows || args.source;
                 // Set hotel title - propertyid: 1360
-                const hotelTitle = findPropertyByIdOptimized(data, 1360);
-                console.log(hotelTitle);
+                const hotelTitle = findPropertySingle(data, 1360);
                 if (hotelTitle) {
                     const titleElement = document.querySelector('.book-hotel__title');
                     if (titleElement) titleElement.textContent = hotelTitle;
                 }
 
                 // Set hotel rating (stars) - propertyid: 1361
-                const hotelRating = findPropertyByIdOptimized(data, 1361);
+                const hotelRating = findPropertySingle(data, 1361);
                 if (hotelRating) {
                     const starsContainer = document.querySelector('.book-hotel__stars');
                     if (starsContainer) {
@@ -1016,21 +1122,21 @@
                 }
 
                 // Set website - propertyid: 1382
-                const website = findPropertyByIdOptimized(data, 1382);
+                const website = findPropertySingle(data, 1382);
                 if (website) {
                     const websiteElement = document.querySelector('.book-hotel__website');
                     if (websiteElement) websiteElement.textContent = website;
                 }
 
                 // Set address - propertyid: 1379
-                const address = findPropertyByIdOptimized(data, 1379);
+                const address = findPropertySingle(data, 1379);
                 if (address) {
                     const addressElement = document.querySelector('.book-hotel__address');
                     if (addressElement) addressElement.textContent = address;
                 }
 
                 // Set phone number - propertyid: 1380
-                const phone = findPropertyByIdOptimized(data, 1380);
+                const phone = findPropertySingle(data, 1380);
                 if (phone) {
                     const phoneContainer = document.querySelector('.book-hotel__phones');
                     if (phoneContainer) {
@@ -1044,32 +1150,75 @@
                 }
 
                 // Set email - propertyid: 1383
-                const email = findPropertyByIdOptimized(data, 1383);
+                const email = findPropertySingle(data, 1383);
                 if (email) {
                     const emailElement = document.querySelector('.book-hotel__email');
                     if (emailElement) emailElement.textContent = email;
                 }
 
                 // Set fax number - propertyid: 1381
-                const fax = findPropertyByIdOptimized(data, 1381);
+                const fax = findPropertySingle(data, 1381);
                 if (fax) {
                     const faxElement = document.querySelector('.book-hotel__fax');
                     if (faxElement) faxElement.textContent = fax;
                 }
 
                 // Set check-in time - propertyid: 1376
-                const checkIn = findPropertyByIdOptimized(data, 1376);
+                const checkIn = findPropertySingle(data, 1376);
                 if (checkIn) {
                     const checkInElement = document.querySelector('.book-hotel__checkin__time');
                     if (checkInElement) checkInElement.textContent = checkIn;
                 }
 
                 // Set check-out time - propertyid: 1377
-                const checkOut = findPropertyByIdOptimized(data, 1377);
+                const checkOut = findPropertySingle(data, 1377);
                 if (checkOut) {
                     const checkOutElement = document.querySelector('.book-hotel__checkout__time');
                     if (checkOutElement) checkOutElement.textContent = checkOut;
                 }
+
+                const facilities = findPropertyList(data, 1367);
+                if (facilities) {
+                    const facilitiesContainer = document.querySelector('.book-hotel__facilities');
+
+                    facilities.forEach(item => {
+                        const wrapper = document.createElement("div");
+                        wrapper.className = "book-flex book-items-center book-gap-2 book-break-inside-avoid book-mb-4";
+
+                        const icon = `
+        <svg class="book-shrink-0" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M15.993 10.222L11.375 14.84C11.228 14.987 11.037 15.06 10.845 15.06C10.652 15.06 10.461 14.987 10.314 14.84L8.005 12.531C7.712 12.238 7.712 11.763 8.005 11.47C8.298 11.177 8.772 11.177 9.065 11.47L10.845 13.249L14.932 9.161C15.225 8.868 15.7 8.868 15.993 9.161C16.286 9.454 16.286 9.929 15.993 10.222ZM12 2.5C6.762 2.5 2.5 6.762 2.5 12C2.5 17.239 6.762 21.5 12 21.5C17.238 21.5 21.5 17.239 21.5 12C21.5 6.762 17.238 2.5 12 2.5Z"
+                fill="#18181B" />
+        </svg>
+    `;
+
+                        wrapper.innerHTML = `
+        ${icon}
+        <div class="book-flex book-flex-col book-gap-2">
+            <span class="book-text-xs book-text-zinc-600">${item}</span>
+        </div>
+    `;
+
+                        facilitiesContainer.appendChild(wrapper);
+                    });
+
+                }
+
+                const location = findPropertySingle(data, 1378);
+                if (location) {
+                    const [lat, lng] = location.split(' ');
+                    const locationElement = document.querySelector('.book-hotel__location');
+                    if (locationElement) {
+                        locationElement.src = `https://www.google.com/maps?q=${lat},${lng}&output=embed`;
+                    }
+                }
+
+                const description = getSectionHTML(data, "توضیحات");
+                if (description) {
+                    document.querySelector('.book-hotel__description').innerHTML = description;
+                }
+
 
 
             } catch (error) {

@@ -684,933 +684,994 @@
     <script src="[##cms.cms.cdn##]/_js/swiper-bundle.11.2.5.min.js" type="text/javascript"></script>
     <script src="[##cms.cms.cdn##]/booking/js/hotel-info.js?ver=[##cms.cms.date2##][##cms.cms.time2##]"
         type="text/javascript"></script>
-    <script>
-        /**
-         * Global variables to store session search and booking data from sessionSearch.
-         * Initialized as null to be populated on DOM load.
-         */
-        let translations = {};
-        let currentLanguage = document.documentElement.lang || 'fa';
-        const LID = (() => {
-            // Try <html lang="fa|en|ar"> first; fallback to dir attribute
-            const lang = (document.documentElement.getAttribute('lang') || '').toLowerCase();
-            const dir = (document.documentElement.getAttribute('dir') || '').toLowerCase();
-
-            if (lang.startsWith('fa') || dir === 'rtl') return "1";   // Persian
-            if (lang.startsWith('ar')) return "3";                    // Arabic
-            return "2";                                               // Default: English
-        })();
-        const hotelName = currentLanguage === 'fa' ? 'هتل' : 'hotel';
-        const isMobile = document.querySelector("main").dataset.mob === "true";
-        var provider, id, optionId, usedforids;
-
-        // Optimized code with 100% guarantee of single execution
-        (function () {
-            'use strict';
-
-            // Prevent duplicate execution
-            if (window.__CMS_DATA_INITIALIZED__) {
-                console.warn('⚠️ CMS data already initialized, skipping duplicate execution');
-                return;
-            }
-
-            // ✅ Set flag immediately
-            window.__CMS_DATA_INITIALIZED__ = true;
-
-            // ✅ Main initialization function
-            async function initializeCmsData() {
-                try {
-
-                    // Build window.cmsData object
-                    window.cmsData = {
-                        provider: "[##cms.form.provider-hotel##]",
-                        id: "[##cms.form.hotelid##]",
-                        optionId: "[##cms.form.optionId-hotel##]",
-                        usedforids: "[##cms.form.encoded_usedforid##]"
-                    };
-
-                    // Run API logic
-                    if (typeof runApiLogic === 'function') {
-                        await runApiLogic();
-                    }
-
-                } catch (error) {
-                    console.error('❌ CMS initialization failed:', error?.message || error);
-                    console.error('Stack:', error?.stack);
-
-                    // Reset flag on error for retry
-                    window.__CMS_DATA_INITIALIZED__ = false;
-                    throw error;
+        <script>
+            /**
+             * Global variables to store session search and booking data from sessionSearch.
+             * Initialized as null to be populated on DOM load.
+             */
+            let translations = {};
+            let currentLanguage = document.documentElement.lang || 'fa';
+            const LID = (() => {
+                // Try <html lang="fa|en|ar"> first; fallback to dir attribute
+                const lang = (document.documentElement.getAttribute('lang') || '').toLowerCase();
+                const dir = (document.documentElement.getAttribute('dir') || '').toLowerCase();
+    
+                if (lang.startsWith('fa') || dir === 'rtl') return "1";   // Persian
+                if (lang.startsWith('ar')) return "3";                    // Arabic
+                return "2";                                               // Default: English
+            })();
+            const hotelName = currentLanguage === 'fa' ? 'هتل' : 'hotel';
+            const isMobile = document.querySelector("main").dataset.mob === "true";
+            var provider, id, optionId, usedforids;
+    
+            // Optimized code with 100% guarantee of single execution
+            (function () {
+                'use strict';
+    
+                // Prevent duplicate execution
+                if (window.__CMS_DATA_INITIALIZED__) {
+                    console.warn('⚠️ CMS data already initialized, skipping duplicate execution');
+                    return;
                 }
-            }
-
-            // ✅ Execute based on DOM state
-            if (document.readyState === 'loading') {
-                // DOM not yet loaded
-                document.addEventListener('DOMContentLoaded', initializeCmsData, { once: true });
-            } else {
-                // DOM already ready
-                initializeCmsData();
-            }
-
-        })();
-
-        /**
-         * Global helper function to access cmsData
-         * @param {string} key - Optional key to retrieve specific data
-         * @returns {any} - Returns cmsData or specific value
-         */
-        window.getCmsData = function (key) {
-            if (!window.cmsData) {
-                console.warn('⚠️ cmsData not initialized yet');
-                return null;
-            }
-            return key ? window.cmsData[key] : window.cmsData;
-        };
-
-        /**
-         * Sets up the token data and updates the UI based on hotel search parameters
-         * @param {Object} args - Arguments containing source data
-         * @returns {void}
-         */
-        const setToken = async (args) => {
-            try {
-                // Update token data
-                $bc.setSource("cms.data", {
-                    token: args.source.rows[0].token,
-                    lang: currentLanguage,
-                    id: id,
-                    name: hotelName,
-                    usedforids: usedforids,
-                    run: true
-                });
-
-            } catch (error) {
-                console.error("setToken: " + error.message);
-            }
-        };
-
-        /**
-         * Function to assign values from window.cmsData and trigger API call if provider is allowed
-         * @returns {Promise<void>}
-         */
-        async function runApiLogic() {
-            try {
-                // Destructure provider and id from cmsData
-                ({
-                    provider,
-                    id,
-                    optionId,
-                    usedforids
-                } = window.cmsData);
-
-                // List of allowed provider IDs
-                const allowedProviders = [
-                    '0', '29', '41', '46', '58',
-                    '70', '75', '82', '88', '102',
-                    '106', '109'
-                ];
-
-                const fetchHotelImages = async () => {
+    
+                // ✅ Set flag immediately
+                window.__CMS_DATA_INITIALIZED__ = true;
+    
+                // ✅ Main initialization function
+                async function initializeCmsData() {
                     try {
-                        // ارسال درخواست GET به URL
-                        const response = await fetch('/Client_Hotel_Image_Json.bc', {
-                            method: 'GET', // متد HTTP که برای درخواست استفاده می‌کنیم
-                            headers: {
-                                'Content-Type': 'application/json', // نوع محتوای درخواست
-                            },
-                        });
-
-                        // بررسی وضعیت پاسخ
-                        if (!response.ok) {
-                            throw new Error(`خطا در دریافت داده‌ها: ${response.statusText}`);
+    
+                        // Build window.cmsData object
+                        window.cmsData = {
+                            provider: "[##cms.form.provider-hotel##]",
+                            id: "[##cms.form.hotelid##]",
+                            optionId: "[##cms.form.optionId-hotel##]",
+                            usedforids: "[##cms.form.encoded_usedforid##]",
+                            sid: "[##cms.form.sid##]",
+                        };
+    
+                        // Run API logic
+                        if (typeof runApiLogic === 'function') {
+                            await runApiLogic();
                         }
-
-                        // تجزیه داده‌های JSON
-                        const data = await response.json();
-                        console.log('داده‌های دریافتی:', data);
-
-                        // در اینجا می‌توانید داده‌ها را در صفحه نمایش دهید یا به کار دیگری استفاده کنید
-                        return data; // برگرداندن داده‌ها
+    
                     } catch (error) {
-                        console.error('خطا:', error);
+                        console.error('❌ CMS initialization failed:', error?.message || error);
+                        console.error('Stack:', error?.stack);
+    
+                        // Reset flag on error for retry
+                        window.__CMS_DATA_INITIALIZED__ = false;
+                        throw error;
                     }
-                };
-
-                // Check if provider is in allowed list and trigger API call
-                if (allowedProviders.includes(String(provider))) {
-                    $bc.setSource("cms.token");
-                } else {
-                    fetchHotelImages();
                 }
-
-                
-
-                const formBody = new URLSearchParams();
-                formBody.append('optionId', optionId);
-                formBody.append('lid', LID);
-
-                const response = await fetch('/Client_Hotel_ShowAllRooms.bc', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-                    },
-                    body: formBody.toString()
-                });
-
-                const rawText = await response.text();
-                const fixedText = rawText.replace(/'/g, '"');
-                const result = JSON.parse(fixedText);
-                $bc.setSource("hotel.list", result)
-            } catch (error) {
-                console.error("runApiLogic error: " + error.message);
-            }
-        }
-
-
-        /**
-         * Finds a property value from JSON data using section ID and property ID
-         * @param {Array} data - Array of hotel data sections
-         * @param {number} sectionId - ID of the section to search
-         * @param {number} propertyId - ID of the property to find
-         * @returns {string|null} - Property value text or null if not found
-         */
-        function findPropertyById(data, propertyId) {
-            try {
-                // Ensure that the data is an array
-                if (!Array.isArray(data)) {
-                    console.warn('Data is not an array:', data);
+    
+                // ✅ Execute based on DOM state
+                if (document.readyState === 'loading') {
+                    // DOM not yet loaded
+                    document.addEventListener('DOMContentLoaded', initializeCmsData, { once: true });
+                } else {
+                    // DOM already ready
+                    initializeCmsData();
+                }
+    
+            })();
+    
+            /**
+             * Global helper function to access cmsData
+             * @param {string} key - Optional key to retrieve specific data
+             * @returns {any} - Returns cmsData or specific value
+             */
+            window.getCmsData = function (key) {
+                if (!window.cmsData) {
+                    console.warn('⚠️ cmsData not initialized yet');
                     return null;
                 }
-
-                // Iterate through all sections to find the property by prpId
-                for (const section of data) {
-                    // Ensure properties exist in the section
-                    if (Array.isArray(section.properties)) {
-                        const property = section.properties.find(p => String(p.prpId) === String(propertyId));
-
-                        // If property is found, return its value
-                        if (property) {
-                            const value = property.answers?.[0]?.parts?.[0]?.values?.[0]?.value ?? null;
-                            return value ? String(value).trim() : null;
+                return key ? window.cmsData[key] : window.cmsData;
+            };
+    
+            /**
+             * Sets up the token data and updates the UI based on hotel search parameters
+             * @param {Object} args - Arguments containing source data
+             * @returns {void}
+             */
+            const setToken = async (args) => {
+                try {
+                    // Update token data
+                    $bc.setSource("cms.data", {
+                        token: args.source.rows[0].token,
+                        lang: currentLanguage,
+                        id: id,
+                        name: hotelName,
+                        usedforids: usedforids,
+                        run: true
+                    });
+    
+                } catch (error) {
+                    console.error("setToken: " + error.message);
+                }
+            };
+    
+            /**
+             * Function to assign values from window.cmsData and trigger API call if provider is allowed
+             * @returns {Promise<void>}
+             */
+            async function runApiLogic() {
+                try {
+                    // Destructure provider and id from cmsData
+                    ({
+                        provider,
+                        id,
+                        optionId,
+                        usedforids
+                    } = window.cmsData);
+    
+                    // List of allowed provider IDs
+                    const allowedProviders = [
+                        '0', '29', '41', '46', '58',
+                        '70', '75', '82', '88', '102',
+                        '106', '109'
+                    ];
+    
+                    const fetchHotelImages = async () => {
+                        try {
+                            const formData = new FormData();
+                            formData.append('optionId', '[##cms.form.optionId-hotel##]');
+                            formData.append('sid', window.cmsData.sid);
+    
+                            const response = await fetch('/Client_Hotel_Image_Json.bc', {
+                                method: 'POST',
+                                body: formData,
+                            });
+    
+                            if (!response.ok) {
+                                throw new Error(`Error retrieving data: ${response.statusText}`);
+                            }
+    
+                            const jsonObject = await response.json();
+    
+                            const updatedData = jsonObject.map(item => {
+                                const updatedItem = { ...item };
+                                if (updatedItem.largeIMG) {
+                                    updatedItem.originalImage = updatedItem.largeIMG;
+                                    delete updatedItem.largeIMG;
+                                }
+                                return updatedItem;
+                            });
+    
+    
+                            $bc.setSource("api.gallery", updatedData);
+    
+    
+                        } catch (error) {
+                            console.error('error:', error);
                         }
+                    };
+    
+                    const fetchHotelInfo = async () => {
+                        try {
+                            const formData = new FormData();
+                            formData.append('optionId', '[##cms.form.optionId-hotel##]');
+                            formData.append('sid', window.cmsData.sid);
+    
+                            const response = await fetch('/Client_Hotel_Info_Json.bc', {
+                                method: 'POST',
+                                body: formData,
+                            });
+    
+                            if (!response.ok) {
+                                throw new Error(`Error retrieving data: ${response.statusText}`);
+                            }
+    
+                            const responseText = await response.text();
+    
+                            const correctedJsonText = responseText.replace(/'/g, '"');
+    
+                            try {
+                                const jsonObject = JSON.parse(correctedJsonText);
+                                console.log(jsonObject)
+                                $bc.setSource("api.info", correctedJsonText);
+                            } catch (jsonError) {
+                                console.error('Invalid JSON:', jsonError);
+                            }
+    
+                        } catch (error) {
+                            console.error('error:', error);
+                        }
+                    };
+    
+    
+    
+    
+    
+                    // Check if provider is in allowed list and trigger API call
+                    if (allowedProviders.includes(String(provider))) {
+                        $bc.setSource("cms.token");
+                    } else {
+                        fetchHotelImages();
+                        fetchHotelInfo();
                     }
+    
+    
+    
+                    const formBody = new URLSearchParams();
+                    formBody.append('optionId', optionId);
+                    formBody.append('lid', LID);
+    
+                    const response = await fetch('/Client_Hotel_ShowAllRooms.bc', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+                        },
+                        body: formBody.toString()
+                    });
+    
+                    const rawText = await response.text();
+                    const fixedText = rawText.replace(/'/g, '"');
+                    const result = JSON.parse(fixedText);
+                    $bc.setSource("hotel.list", result)
+                } catch (error) {
+                    console.error("runApiLogic error: " + error.message);
                 }
-
-                // If property not found in any section
-                console.warn(`Property with prpId = ${propertyId} not found.`);
+            }
+    
+    
+            /**
+             * Finds a property value from JSON data using section ID and property ID
+             * @param {Array} data - Array of hotel data sections
+             * @param {number} sectionId - ID of the section to search
+             * @param {number} propertyId - ID of the property to find
+             * @returns {string|null} - Property value text or null if not found
+             */
+             function findPropertyByIdOptimized(data, propertyId) {
+        try {
+            // اگر data مستقیماً یک رشته JSON بود (string)
+            if (typeof data === "string") {
+                data = JSON.parse(data);
+            }
+    
+            // اگر ساختار شبیه API بود: data[0].value یک JSON string است
+            if (Array.isArray(data) && data.length === 1 && typeof data[0].value === "string") {
+                data = JSON.parse(data[0].value);
+            }
+    
+            // چک کن که اکنون data یک آرایه است
+            if (!Array.isArray(data)) {
+                console.warn("Data is not a valid array:", data);
                 return null;
-            } catch (error) {
-                console.error('Error in findPropertyById:', error);
-                return '';
             }
-        }
-
-
-        /**
-         * Generates star rating HTML based on rating number
-         * @param {string|number} rating - Rating value (number of stars)
-         * @returns {string} - HTML string with star SVG icons
-         */
-        const generateStars = (rating) => {
-            try {
-                let starsHtml = '';
-                const stars = parseInt(rating) || 0;
-
-                // Generate star icons
-                for (let i = 0; i < stars; i++) {
-                    starsHtml += `
-          <svg width="24" height="24">
-              <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-golden-star"></use>
-          </svg>
-      `;
-                }
-                return starsHtml;
-            } catch (error) {
-                console.error("generateStars error: " + error.message);
-                return '';
-            }
-        }
-
-        /**
-         * Populates hotel information on the page from JSON data
-         * Updates DOM elements with hotel details like title, rating, contact info, etc.
-         * @param {Object} args - Arguments object containing source data
-         * @returns {Promise<void>}
-         */
-        const setInfo = async (args) => {
-            try {
-                // Extract data from args
-                const data = args.source?.rows || args.source;
-                // Set hotel title - propertyid: 1360
-                const hotelTitle = findPropertyById(data, 1360);
-                if (hotelTitle) {
-                    const titleElement = document.querySelector('.book-hotel__title');
-                    if (titleElement) titleElement.textContent = hotelTitle;
-                }
-
-                // Set hotel rating (stars) - propertyid: 1361
-                const hotelRating = findPropertyById(data, 1361);
-                if (hotelRating) {
-                    const starsContainer = document.querySelector('.book-hotel__stars');
-                    if (starsContainer) {
-                        starsContainer.innerHTML = generateStars(hotelRating);
+    
+            // جستجو در همه سکشن‌ها
+            for (const section of data) {
+                if (Array.isArray(section.properties)) {
+    
+                    // ساختار اول: prpId
+                    let property = section.properties.find(p => String(p.prpId) === String(propertyId));
+    
+                    if (property) {
+                        const value = property.answers?.[0]?.parts?.[0]?.values?.[0]?.value ?? null;
+                        return value ? String(value).trim() : null;
+                    }
+    
+                    // ساختار دوم: propertyid
+                    property = section.properties.find(p => String(p.propertyid) === String(propertyId));
+    
+                    if (property) {
+                        const value = property.answer?.[0]?.text ?? null;
+                        return value ? String(value).trim() : null;
                     }
                 }
-
-                // Set website - propertyid: 1382
-                const website = findPropertyById(data, 1382);
-                console.log(website);
-                if (website) {
-                    const websiteElement = document.querySelector('.book-hotel__website');
-                    if (websiteElement) websiteElement.textContent = website;
-                }
-
-                // Set address - propertyid: 1379
-                const address = findPropertyById(data, 1379);
-                if (address) {
-                    const addressElement = document.querySelector('.book-hotel__address');
-                    if (addressElement) addressElement.textContent = address;
-                }
-
-                // Set phone number - propertyid: 1380
-                const phone = findPropertyById(data, 1380);
-                if (phone) {
-                    const phoneContainer = document.querySelector('.book-hotel__phones');
-                    if (phoneContainer) {
-                        phoneContainer.innerHTML = `
-              <span class="book-relative book-group book-text-sm book-text-zinc-900 book-transition-all book-duration-300 hover:book-text-primary-300">
-                  ${phone}
-                  <span class="book-absolute -book-bottom-1 book-right-0 book-w-0 book-transition-all book-duration-300 book-h-px book-bg-primary-300 group-hover:book-w-full"></span>
-              </span>
+            }
+    
+            console.warn(`Property with propertyId = ${propertyId} not found.`);
+            return null;
+    
+        } catch (error) {
+            console.error("Error in findPropertyByIdOptimized:", error);
+            return null;
+        }
+    }
+    
+    
+    
+            /**
+             * Generates star rating HTML based on rating number
+             * @param {string|number} rating - Rating value (number of stars)
+             * @returns {string} - HTML string with star SVG icons
+             */
+            const generateStars = (rating) => {
+                try {
+                    let starsHtml = '';
+                    const stars = parseInt(rating) || 0;
+    
+                    // Generate star icons
+                    for (let i = 0; i < stars; i++) {
+                        starsHtml += `
+              <svg width="24" height="24">
+                  <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-golden-star"></use>
+              </svg>
           `;
                     }
+                    return starsHtml;
+                } catch (error) {
+                    console.error("generateStars error: " + error.message);
+                    return '';
                 }
-
-                // Set email - propertyid: 1383
-                const email = findPropertyById(data, 1383);
-                if (email) {
-                    const emailElement = document.querySelector('.book-hotel__email');
-                    if (emailElement) emailElement.textContent = email;
-                }
-
-                // Set fax number - propertyid: 1381
-                const fax = findPropertyById(data, 1381);
-                if (fax) {
-                    const faxElement = document.querySelector('.book-hotel__fax');
-                    if (faxElement) faxElement.textContent = fax;
-                }
-
-                // Set check-in time - propertyid: 1376
-                const checkIn = findPropertyById(data, 1376);
-                if (checkIn) {
-                    const checkInElement = document.querySelector('.book-hotel__checkin__time');
-                    if (checkInElement) checkInElement.textContent = checkIn;
-                }
-
-                // Set check-out time - propertyid: 1377
-                const checkOut = findPropertyById(data, 1377);
-                if (checkOut) {
-                    const checkOutElement = document.querySelector('.book-hotel__checkout__time');
-                    if (checkOutElement) checkOutElement.textContent = checkOut;
-                }
-
-                const unkown = findPropertyById(data, 1379);
-                if (unkown) {
-                    console.log(unkown);
-                    // const checkOutElement = document.querySelector('.book-hotel__checkout__time');
-                    // if (checkOutElement) checkOutElement.textContent = checkOut;
-                }
-            } catch (error) {
-                console.error("setInfo error: " + error.message);
-                return '';
             }
-        };
-        const renderAvailableRooms = async (element) => {
-            try {
-                if (!element || !Array.isArray(element.availablerooms)) {
-                    console.warn("⚠️ renderAvailableRooms: no availablerooms found");
+    
+            /**
+             * Populates hotel information on the page from JSON data
+             * Updates DOM elements with hotel details like title, rating, contact info, etc.
+             * @param {Object} args - Arguments object containing source data
+             * @returns {Promise<void>}
+             */
+            const setInfo = async (args) => {
+                try {
+                    // Extract data from args
+                    const data = args.source?.rows || args.source;
+                    // Set hotel title - propertyid: 1360
+                    const hotelTitle = findPropertyByIdOptimized(data, 1360);
+                    console.log(hotelTitle);
+                    if (hotelTitle) {
+                        const titleElement = document.querySelector('.book-hotel__title');
+                        if (titleElement) titleElement.textContent = hotelTitle;
+                    }
+    
+                    // Set hotel rating (stars) - propertyid: 1361
+                    const hotelRating = findPropertyByIdOptimized(data, 1361);
+                    if (hotelRating) {
+                        const starsContainer = document.querySelector('.book-hotel__stars');
+                        if (starsContainer) {
+                            starsContainer.innerHTML = generateStars(hotelRating);
+                        }
+                    }
+    
+                    // Set website - propertyid: 1382
+                    const website = findPropertyByIdOptimized(data, 1382);
+                    if (website) {
+                        const websiteElement = document.querySelector('.book-hotel__website');
+                        if (websiteElement) websiteElement.textContent = website;
+                    }
+    
+                    // Set address - propertyid: 1379
+                    const address = findPropertyByIdOptimized(data, 1379);
+                    if (address) {
+                        const addressElement = document.querySelector('.book-hotel__address');
+                        if (addressElement) addressElement.textContent = address;
+                    }
+    
+                    // Set phone number - propertyid: 1380
+                    const phone = findPropertyByIdOptimized(data, 1380);
+                    if (phone) {
+                        const phoneContainer = document.querySelector('.book-hotel__phones');
+                        if (phoneContainer) {
+                            phoneContainer.innerHTML = `
+                  <span class="book-relative book-group book-text-sm book-text-zinc-900 book-transition-all book-duration-300 hover:book-text-primary-300">
+                      ${phone}
+                      <span class="book-absolute -book-bottom-1 book-right-0 book-w-0 book-transition-all book-duration-300 book-h-px book-bg-primary-300 group-hover:book-w-full"></span>
+                  </span>
+              `;
+                        }
+                    }
+    
+                    // Set email - propertyid: 1383
+                    const email = findPropertyByIdOptimized(data, 1383);
+                    if (email) {
+                        const emailElement = document.querySelector('.book-hotel__email');
+                        if (emailElement) emailElement.textContent = email;
+                    }
+    
+                    // Set fax number - propertyid: 1381
+                    const fax = findPropertyByIdOptimized(data, 1381);
+                    if (fax) {
+                        const faxElement = document.querySelector('.book-hotel__fax');
+                        if (faxElement) faxElement.textContent = fax;
+                    }
+    
+                    // Set check-in time - propertyid: 1376
+                    const checkIn = findPropertyByIdOptimized(data, 1376);
+                    if (checkIn) {
+                        const checkInElement = document.querySelector('.book-hotel__checkin__time');
+                        if (checkInElement) checkInElement.textContent = checkIn;
+                    }
+    
+                    // Set check-out time - propertyid: 1377
+                    const checkOut = findPropertyByIdOptimized(data, 1377);
+                    if (checkOut) {
+                        const checkOutElement = document.querySelector('.book-hotel__checkout__time');
+                        if (checkOutElement) checkOutElement.textContent = checkOut;
+                    }
+    
+    
+                } catch (error) {
+                    console.error("setInfo error: " + error.message);
+                    return '';
+                }
+            };
+            const renderAvailableRooms = async (element) => {
+                try {
+                    if (!element || !Array.isArray(element.availablerooms)) {
+                        console.warn("⚠️ renderAvailableRooms: no availablerooms found");
+                        return "";
+                    }
+    
+                    const serviceLabel = element.services;
+    
+                    const roomsHtml = element.availablerooms
+                        .map((room) => {
+                            const info = room.info || {};
+                            const roomName = info.room || "";
+                            const availability = info.availability || "";
+                            const availabilityLabel = availability
+                                ? availability.charAt(0).toUpperCase() + availability.slice(1)
+                                : "";
+    
+                            return `
+    <div>
+    <h3 class="book-text-zinc-900 book-mb-3">${roomName}</h3>
+    <div class="book-flex book-gap-2">
+      <span
+          class="book-bg-primary-50 book-text-primary-800 book-text-xs book-rounded-3xl book-py-1 book-px-3">${serviceLabel}</span>
+      <span
+          class="book-bg-specialcolor-1 book-text-specialcolor-2 book-text-xs book-rounded-3xl book-py-1 book-px-4">${availabilityLabel}</span>
+    </div>
+    </div>`;
+                        })
+                        .join("");
+    
+                    return `
+    <div class="book-flex-[2.75] book-flex book-flex-col book-gap-6 book-divide-y book-divide-dashed book-divide-zinc-300">
+    ${roomsHtml}
+    </div>`;
+                } catch (error) {
+                    console.error(`renderAvailableRooms: ${error.message}`);
                     return "";
                 }
-
-                const serviceLabel = element.services;
-
-                const roomsHtml = element.availablerooms
-                    .map((room) => {
-                        const info = room.info || {};
-                        const roomName = info.room || "";
-                        const availability = info.availability || "";
-                        const availabilityLabel = availability
-                            ? availability.charAt(0).toUpperCase() + availability.slice(1)
-                            : "";
-
-                        return `
-<div>
-<h3 class="book-text-zinc-900 book-mb-3">${roomName}</h3>
-<div class="book-flex book-gap-2">
-  <span
-      class="book-bg-primary-50 book-text-primary-800 book-text-xs book-rounded-3xl book-py-1 book-px-3">${serviceLabel}</span>
-  <span
-      class="book-bg-specialcolor-1 book-text-specialcolor-2 book-text-xs book-rounded-3xl book-py-1 book-px-4">${availabilityLabel}</span>
-</div>
-</div>`;
-                    })
-                    .join("");
-
-                return `
-<div class="book-flex-[2.75] book-flex book-flex-col book-gap-6 book-divide-y book-divide-dashed book-divide-zinc-300">
-${roomsHtml}
-</div>`;
-            } catch (error) {
-                console.error(`renderAvailableRooms: ${error.message}`);
-                return "";
-            }
-        };
-
-        const getCurrencyUnitFromStorage = (key = 'currencyObject') => {
-            const EMPTY = {
-                currency_unit: null,
-                currency_cost: null,
-                currency_cost_number: null,
-                floatdigit: null,
             };
-
-            try {
-                if (typeof localStorage === 'undefined') return EMPTY;
-                const raw = localStorage.getItem(key);
-                if (!raw) return EMPTY;
-
-                let obj;
-                try {
-                    obj = JSON.parse(raw);
-                } catch {
-                    return EMPTY; // invalid JSON
-                }
-                if (!obj || typeof obj !== 'object') return EMPTY;
-
-                // TTL validation (expire/time)
-                const time = Number.isFinite(+obj.time) ? +obj.time : null;
-                const expire = Number.isFinite(+obj.expire) ? +obj.expire : null;
-                const isExpired = (time !== null && expire !== null) && (Date.now() - time > expire);
-                if (isExpired) return EMPTY;
-
-                // currency_unit
-                const currency_unit =
-                    typeof obj.currency_unit === 'string' ? obj.currency_unit.trim() : null;
-
-                // currency_cost (raw) + numeric version
-                const currency_cost =
-                    (typeof obj.currency_cost === 'string' || typeof obj.currency_cost === 'number')
-                        ? obj.currency_cost
-                        : null;
-
-                let currency_cost_number = null;
-                if (currency_cost != null) {
-                    const sanitized = String(currency_cost).replace(/[^\d.-]/g, '');
-                    const num = Number(sanitized);
-                    currency_cost_number = Number.isFinite(num) ? num : null;
-                }
-
-                // floatdigit
-                const floatdigit =
-                    Number.isFinite(+obj.floatdigit) ? parseInt(obj.floatdigit, 10) : null;
-
-                return { currency_unit, currency_cost, currency_cost_number, floatdigit };
-            } catch (err) {
-                console.error('getCurrencyUnitFromStorage error:', err);
-                return {
+    
+            const getCurrencyUnitFromStorage = (key = 'currencyObject') => {
+                const EMPTY = {
                     currency_unit: null,
                     currency_cost: null,
                     currency_cost_number: null,
                     floatdigit: null,
                 };
-            }
-        };
-        const priceWithCurrency = (amount, opts = {}) => {
-            try {
-                const a = Number(amount);
-                if (!Number.isFinite(a)) return opts.as === 'number' ? 0 : '0';
-
-                const { currency_cost_number, floatdigit } = getCurrencyUnitFromStorage();
-
-                const rate = Number.isFinite(opts.rate)
-                    ? Number(opts.rate)
-                    : Number.isFinite(currency_cost_number) ? currency_cost_number : 1;
-
-                let x = a * rate;
-
-                // Apply floatdigit following renderTotal logic
-                if (floatdigit !== null && floatdigit !== undefined && floatdigit !== '') {
-                    if (floatdigit >= 0) {
-                        const toString_x = x.toString();
-                        if (toString_x.indexOf('.') > -1) {
-                            const fixed = x.toFixed(floatdigit);
-                            const parts = fixed.split('.');
-                            // If decimal part contains only zeros, show one decimal place
-                            if (parts[1] && /^0+$/.test(parts[1])) {
-                                x = parseFloat(x.toFixed(1));
+    
+                try {
+                    if (typeof localStorage === 'undefined') return EMPTY;
+                    const raw = localStorage.getItem(key);
+                    if (!raw) return EMPTY;
+    
+                    let obj;
+                    try {
+                        obj = JSON.parse(raw);
+                    } catch {
+                        return EMPTY; // invalid JSON
+                    }
+                    if (!obj || typeof obj !== 'object') return EMPTY;
+    
+                    // TTL validation (expire/time)
+                    const time = Number.isFinite(+obj.time) ? +obj.time : null;
+                    const expire = Number.isFinite(+obj.expire) ? +obj.expire : null;
+                    const isExpired = (time !== null && expire !== null) && (Date.now() - time > expire);
+                    if (isExpired) return EMPTY;
+    
+                    // currency_unit
+                    const currency_unit =
+                        typeof obj.currency_unit === 'string' ? obj.currency_unit.trim() : null;
+    
+                    // currency_cost (raw) + numeric version
+                    const currency_cost =
+                        (typeof obj.currency_cost === 'string' || typeof obj.currency_cost === 'number')
+                            ? obj.currency_cost
+                            : null;
+    
+                    let currency_cost_number = null;
+                    if (currency_cost != null) {
+                        const sanitized = String(currency_cost).replace(/[^\d.-]/g, '');
+                        const num = Number(sanitized);
+                        currency_cost_number = Number.isFinite(num) ? num : null;
+                    }
+    
+                    // floatdigit
+                    const floatdigit =
+                        Number.isFinite(+obj.floatdigit) ? parseInt(obj.floatdigit, 10) : null;
+    
+                    return { currency_unit, currency_cost, currency_cost_number, floatdigit };
+                } catch (err) {
+                    console.error('getCurrencyUnitFromStorage error:', err);
+                    return {
+                        currency_unit: null,
+                        currency_cost: null,
+                        currency_cost_number: null,
+                        floatdigit: null,
+                    };
+                }
+            };
+            const priceWithCurrency = (amount, opts = {}) => {
+                try {
+                    const a = Number(amount);
+                    if (!Number.isFinite(a)) return opts.as === 'number' ? 0 : '0';
+    
+                    const { currency_cost_number, floatdigit } = getCurrencyUnitFromStorage();
+    
+                    const rate = Number.isFinite(opts.rate)
+                        ? Number(opts.rate)
+                        : Number.isFinite(currency_cost_number) ? currency_cost_number : 1;
+    
+                    let x = a * rate;
+    
+                    // Apply floatdigit following renderTotal logic
+                    if (floatdigit !== null && floatdigit !== undefined && floatdigit !== '') {
+                        if (floatdigit >= 0) {
+                            const toString_x = x.toString();
+                            if (toString_x.indexOf('.') > -1) {
+                                const fixed = x.toFixed(floatdigit);
+                                const parts = fixed.split('.');
+                                // If decimal part contains only zeros, show one decimal place
+                                if (parts[1] && /^0+$/.test(parts[1])) {
+                                    x = parseFloat(x.toFixed(1));
+                                } else {
+                                    x = parseFloat(fixed);
+                                }
                             } else {
-                                x = parseFloat(fixed);
+                                x = parseFloat(x.toFixed(floatdigit));
                             }
                         } else {
-                            x = parseFloat(x.toFixed(floatdigit));
+                            // Negative floatdigit
+                            const multiplier = Math.pow(10, Math.abs(floatdigit));
+                            x = Math.round(x / multiplier) * multiplier;
                         }
+                    }
+    
+                    if (opts.as === 'number') return x;
+    
+                    // Format with comma separator
+                    const useGrouping = opts.group !== false;
+                    const hasDigits = floatdigit !== null && floatdigit !== undefined && floatdigit !== '';
+    
+                    const nf = new Intl.NumberFormat(opts.locale || undefined,
+                        hasDigits && floatdigit >= 0
+                            ? {
+                                minimumFractionDigits: opts.fixed ? Math.max(0, floatdigit) : 0,
+                                maximumFractionDigits: Math.max(0, floatdigit),
+                                useGrouping
+                            }
+                            : { useGrouping }
+                    );
+                    return nf.format(x);
+                } catch {
+                    return opts.as === 'number' ? 0 : '0';
+                }
+            };
+    
+            /**
+             * Global state for hotel room filtering, sorting, and pagination
+             */
+    
+            let allHotelFamilies = [];
+            let originalHotelFamilies = [];
+            let mustUpdate = true;
+            let newDataCame = false;
+            let InUpdateUIProcess = false;
+            let InUpdatePaging = true;
+            let InUpdateFiltering = true;
+            let allDataProcessed = false;
+            let currentSort = { value: "price", order: "ascend" };
+            let selectedRoomTypes = [];
+            let selectedServices = [];
+    
+    
+            /**
+             * Main function to process hotel data, handle filtering, sorting, and pagination
+             * @param {Object} args - Input arguments containing source data and context
+             * @returns {void}
+             */
+            const manipulation = async (args) => {
+                // ============= INITIALIZATION =============
+                let currentIndex = 0;
+                let start = 0;
+                let end = 10; // نمایش 10 اتاق در هر صفحه
+                let dynamicRoomCount = 0;
+    
+                // ============= PAGINATION HANDLERS =============
+                if (args.source.id === 'cms.page') {
+                    mustUpdate = true;
+                    InUpdatePaging = false;
+                    InUpdateFiltering = false;
+    
+                    const currentValue = parseInt(args.source.rows[0].value);
+                    const prevButton = document.querySelector(".book-prevpage");
+                    const nextButton = document.querySelector(".book-nextpage");
+                    const pagingContainer = document.querySelector(".book-paging__cards__container");
+    
+                    // Update active page styling
+                    const activeButton = document.querySelector(".book-active__paging");
+                    if (activeButton) {
+                        activeButton.classList.remove("book-active__paging");
+                        activeButton.classList.add("book-bg-white");
+                    }
+                    const newActive = pagingContainer.querySelector(`[bc-value="${currentValue}"]`);
+                    if (newActive) {
+                        newActive.classList.add("book-active__paging");
+                        newActive.classList.remove("book-bg-white");
+                    }
+    
+                    // Calculate pagination range
+                    start = currentValue * 10;
+                    end = start + 10;
+    
+                    // Toggle previous button visibility
+                    if (prevButton) {
+                        prevButton.classList.toggle("book-hidden", currentValue === 0);
+                    }
+    
+                    // Toggle next button visibility
+                    const allButtons = Array.from(document.querySelectorAll(".book-paging__container:not(.book-prevpage):not(.book-nextpage)"));
+                    const lastButton = allButtons[allButtons.length - 1];
+                    if (nextButton && newActive) {
+                        nextButton.classList.toggle("book-hidden", newActive === lastButton);
+                    }
+    
+                } else if (args.source.id === 'cms.nextpage') {
+                    mustUpdate = true;
+                    InUpdatePaging = false;
+                    InUpdateFiltering = false;
+    
+                    const prevButton = document.querySelector(".book-prevpage");
+                    const nextButton = document.querySelector(".book-nextpage");
+                    const activeButton = document.querySelector(".book-active__paging");
+                    const currentValue = parseInt(activeButton.getAttribute("bc-value"));
+                    const nextValue = currentValue + 1;
+                    const nextPage = document.querySelector(`.book-paging__cards__container [bc-value="${nextValue}"]`);
+    
+                    if (nextPage) {
+                        // Update active page styling
+                        activeButton.classList.remove("book-active__paging");
+                        activeButton.classList.add("bg-white");
+                        nextPage.classList.add("book-active__paging");
+                        nextPage.classList.remove("bg-white");
+    
+                        // Show next page if hidden
+                        if (nextPage.classList.contains("book-hidden")) {
+                            nextPage.classList.remove("book-hidden");
+                            const firstVisible = document.querySelector(".book-paging__container:not(.hidden):not(.book-prevpage):not(.book-nextpage)");
+                            if (firstVisible) firstVisible.classList.add("book-hidden");
+                        }
+    
+                        // Show previous button if not on first page
+                        if (prevButton) {
+                            prevButton.classList.toggle("book-hidden", nextValue === 0);
+                        }
+                    }
+    
+                    // Toggle next button visibility
+                    const allButtons = Array.from(document.querySelectorAll(".book-paging__container:not(.book-prevpage):not(.book-nextpage)"));
+                    const lastButton = allButtons[allButtons.length - 1];
+                    if (nextButton && nextPage) {
+                        nextButton.classList.toggle("book-hidden", nextPage === lastButton);
+                    }
+    
+                    // Update pagination range
+                    start = nextValue * 10;
+                    end = start + 10;
+    
+                } else if (args.source.id === 'cms.prevpage') {
+                    mustUpdate = true;
+                    InUpdatePaging = false;
+                    InUpdateFiltering = false;
+    
+                    const prevButton = document.querySelector(".book-prevpage");
+                    const nextButton = document.querySelector(".book-nextpage");
+                    const activeButton = document.querySelector(".book-active__paging");
+                    const currentValue = parseInt(activeButton.getAttribute("bc-value"));
+                    const prevValue = currentValue - 1;
+                    const prevPage = document.querySelector(`.book-paging__cards__container [bc-value="${prevValue}"]`);
+    
+                    if (prevPage) {
+                        // Update active page styling
+                        activeButton.classList.remove("book-active__paging");
+                        activeButton.classList.add("bg-white");
+                        prevPage.classList.add("book-active__paging");
+                        prevPage.classList.remove("bg-white");
+    
+                        // Show previous page if hidden
+                        if (prevPage.classList.contains("book-hidden")) {
+                            prevPage.classList.remove("book-hidden");
+                            const allButtons = Array.from(document.querySelectorAll(".book-paging__container:not(.book-prevpage):not(.book-nextpage)"));
+                            const lastVisible = allButtons.reverse().find(btn => !btn.classList.contains("book-hidden"));
+                            if (lastVisible) lastVisible.classList.add("book-hidden");
+                        }
+    
+                        // Toggle previous and next button visibility
+                        if (prevButton) {
+                            prevButton.classList.toggle("book-hidden", prevValue === 0);
+                        }
+                        if (nextButton) {
+                            nextButton.classList.remove("book-hidden");
+                        }
+                    }
+    
+                    // Update pagination range
+                    start = prevValue * 10;
+                    end = start + 10;
+    
+                } else if (args.source.id === "hotel.list") {
+                    newDataCame = true;
+                    allDataProcessed = false;
+                } else if (args.source.id === 'cms.roomtypes') {
+                    mustUpdate = true;
+                    InUpdatePaging = true;
+                    InUpdateFiltering = false;
+    
+                    // چک کردن ساختار rows
+                    let searchText = '';
+                    if (args.source.rows && args.source.rows.length > 0) {
+                        // اگر rows آرایه‌ای از آبجکت‌ها بود
+                        if (args.source.rows[0].value !== undefined) {
+                            searchText = args.source.rows[0].value;
+                        }
+                        // اگر خود rows یک آرایه ساده بود
+                        else if (typeof args.source.rows[0] === 'string') {
+                            searchText = args.source.rows[0];
+                        }
+                    }
+    
+                    // اگر متنی تایپ شده، فیلتر کن
+                    if (searchText && searchText.trim()) {
+                        selectedRoomTypes = [searchText.trim()];
                     } else {
-                        // Negative floatdigit
-                        const multiplier = Math.pow(10, Math.abs(floatdigit));
-                        x = Math.round(x / multiplier) * multiplier;
+                        selectedRoomTypes = [];
+                    }
+    
+                } else if (args.source.id === 'cms.services') {
+                    mustUpdate = true;
+                    InUpdatePaging = true;
+                    InUpdateFiltering = false;
+    
+                    // دریافت متن تایپ شده برای جستجو
+                    const searchText = args.source.rows[0]?.value || '';
+    
+                    // اگر متنی تایپ شده، فیلتر کن
+                    if (searchText && searchText.trim()) {
+                        selectedServices = [searchText.trim()];
+                    } else {
+                        selectedServices = [];
                     }
                 }
-
-                if (opts.as === 'number') return x;
-
-                // Format with comma separator
-                const useGrouping = opts.group !== false;
-                const hasDigits = floatdigit !== null && floatdigit !== undefined && floatdigit !== '';
-
-                const nf = new Intl.NumberFormat(opts.locale || undefined,
-                    hasDigits && floatdigit >= 0
-                        ? {
-                            minimumFractionDigits: opts.fixed ? Math.max(0, floatdigit) : 0,
-                            maximumFractionDigits: Math.max(0, floatdigit),
-                            useGrouping
+    
+                // ============= UI UPDATE PROCESS =============
+                if (mustUpdate && !InUpdateUIProcess) {
+                    InUpdateUIProcess = true;
+    
+                    // Collect new hotel families and reset for new searches
+                    if (newDataCame) {
+                        const source = args.context.tryToGetSource("hotel.list");
+    
+                        // Reset data for new searches
+                        if (source.rows[0]?.isNewSearch) {
+                            allHotelFamilies = [];
                         }
-                        : { useGrouping }
-                );
-                return nf.format(x);
-            } catch {
-                return opts.as === 'number' ? 0 : '0';
-            }
-        };
-
-        /**
-         * Global state for hotel room filtering, sorting, and pagination
-         */
-
-        let allHotelFamilies = [];
-        let originalHotelFamilies = [];
-        let mustUpdate = true;
-        let newDataCame = false;
-        let InUpdateUIProcess = false;
-        let InUpdatePaging = true;
-        let InUpdateFiltering = true;
-        let allDataProcessed = false;
-        let currentSort = { value: "price", order: "ascend" };
-        let selectedRoomTypes = [];
-        let selectedServices = [];
-
-
-        /**
-         * Main function to process hotel data, handle filtering, sorting, and pagination
-         * @param {Object} args - Input arguments containing source data and context
-         * @returns {void}
-         */
-        const manipulation = async (args) => {
-            // ============= INITIALIZATION =============
-            let currentIndex = 0;
-            let start = 0;
-            let end = 10; // نمایش 10 اتاق در هر صفحه
-            let dynamicRoomCount = 0;
-
-            // ============= PAGINATION HANDLERS =============
-            if (args.source.id === 'cms.page') {
-                mustUpdate = true;
-                InUpdatePaging = false;
-                InUpdateFiltering = false;
-
-                const currentValue = parseInt(args.source.rows[0].value);
-                const prevButton = document.querySelector(".book-prevpage");
-                const nextButton = document.querySelector(".book-nextpage");
-                const pagingContainer = document.querySelector(".book-paging__cards__container");
-
-                // Update active page styling
-                const activeButton = document.querySelector(".book-active__paging");
-                if (activeButton) {
-                    activeButton.classList.remove("book-active__paging");
-                    activeButton.classList.add("book-bg-white");
-                }
-                const newActive = pagingContainer.querySelector(`[bc-value="${currentValue}"]`);
-                if (newActive) {
-                    newActive.classList.add("book-active__paging");
-                    newActive.classList.remove("book-bg-white");
-                }
-
-                // Calculate pagination range
-                start = currentValue * 10;
-                end = start + 10;
-
-                // Toggle previous button visibility
-                if (prevButton) {
-                    prevButton.classList.toggle("book-hidden", currentValue === 0);
-                }
-
-                // Toggle next button visibility
-                const allButtons = Array.from(document.querySelectorAll(".book-paging__container:not(.book-prevpage):not(.book-nextpage)"));
-                const lastButton = allButtons[allButtons.length - 1];
-                if (nextButton && newActive) {
-                    nextButton.classList.toggle("book-hidden", newActive === lastButton);
-                }
-
-            } else if (args.source.id === 'cms.nextpage') {
-                mustUpdate = true;
-                InUpdatePaging = false;
-                InUpdateFiltering = false;
-
-                const prevButton = document.querySelector(".book-prevpage");
-                const nextButton = document.querySelector(".book-nextpage");
-                const activeButton = document.querySelector(".book-active__paging");
-                const currentValue = parseInt(activeButton.getAttribute("bc-value"));
-                const nextValue = currentValue + 1;
-                const nextPage = document.querySelector(`.book-paging__cards__container [bc-value="${nextValue}"]`);
-
-                if (nextPage) {
-                    // Update active page styling
-                    activeButton.classList.remove("book-active__paging");
-                    activeButton.classList.add("bg-white");
-                    nextPage.classList.add("book-active__paging");
-                    nextPage.classList.remove("bg-white");
-
-                    // Show next page if hidden
-                    if (nextPage.classList.contains("book-hidden")) {
-                        nextPage.classList.remove("book-hidden");
-                        const firstVisible = document.querySelector(".book-paging__container:not(.hidden):not(.book-prevpage):not(.book-nextpage)");
-                        if (firstVisible) firstVisible.classList.add("book-hidden");
-                    }
-
-                    // Show previous button if not on first page
-                    if (prevButton) {
-                        prevButton.classList.toggle("book-hidden", nextValue === 0);
-                    }
-                }
-
-                // Toggle next button visibility
-                const allButtons = Array.from(document.querySelectorAll(".book-paging__container:not(.book-prevpage):not(.book-nextpage)"));
-                const lastButton = allButtons[allButtons.length - 1];
-                if (nextButton && nextPage) {
-                    nextButton.classList.toggle("book-hidden", nextPage === lastButton);
-                }
-
-                // Update pagination range
-                start = nextValue * 10;
-                end = start + 10;
-
-            } else if (args.source.id === 'cms.prevpage') {
-                mustUpdate = true;
-                InUpdatePaging = false;
-                InUpdateFiltering = false;
-
-                const prevButton = document.querySelector(".book-prevpage");
-                const nextButton = document.querySelector(".book-nextpage");
-                const activeButton = document.querySelector(".book-active__paging");
-                const currentValue = parseInt(activeButton.getAttribute("bc-value"));
-                const prevValue = currentValue - 1;
-                const prevPage = document.querySelector(`.book-paging__cards__container [bc-value="${prevValue}"]`);
-
-                if (prevPage) {
-                    // Update active page styling
-                    activeButton.classList.remove("book-active__paging");
-                    activeButton.classList.add("bg-white");
-                    prevPage.classList.add("book-active__paging");
-                    prevPage.classList.remove("bg-white");
-
-                    // Show previous page if hidden
-                    if (prevPage.classList.contains("book-hidden")) {
-                        prevPage.classList.remove("book-hidden");
-                        const allButtons = Array.from(document.querySelectorAll(".book-paging__container:not(.book-prevpage):not(.book-nextpage)"));
-                        const lastVisible = allButtons.reverse().find(btn => !btn.classList.contains("book-hidden"));
-                        if (lastVisible) lastVisible.classList.add("book-hidden");
-                    }
-
-                    // Toggle previous and next button visibility
-                    if (prevButton) {
-                        prevButton.classList.toggle("book-hidden", prevValue === 0);
-                    }
-                    if (nextButton) {
-                        nextButton.classList.remove("book-hidden");
-                    }
-                }
-
-                // Update pagination range
-                start = prevValue * 10;
-                end = start + 10;
-
-            } else if (args.source.id === "hotel.list") {
-                newDataCame = true;
-                allDataProcessed = false;
-            } else if (args.source.id === 'cms.roomtypes') {
-                mustUpdate = true;
-                InUpdatePaging = true;
-                InUpdateFiltering = false;
-
-                // چک کردن ساختار rows
-                let searchText = '';
-                if (args.source.rows && args.source.rows.length > 0) {
-                    // اگر rows آرایه‌ای از آبجکت‌ها بود
-                    if (args.source.rows[0].value !== undefined) {
-                        searchText = args.source.rows[0].value;
-                    }
-                    // اگر خود rows یک آرایه ساده بود
-                    else if (typeof args.source.rows[0] === 'string') {
-                        searchText = args.source.rows[0];
-                    }
-                }
-
-                // اگر متنی تایپ شده، فیلتر کن
-                if (searchText && searchText.trim()) {
-                    selectedRoomTypes = [searchText.trim()];
-                } else {
-                    selectedRoomTypes = [];
-                }
-
-            } else if (args.source.id === 'cms.services') {
-                mustUpdate = true;
-                InUpdatePaging = true;
-                InUpdateFiltering = false;
-
-                // دریافت متن تایپ شده برای جستجو
-                const searchText = args.source.rows[0]?.value || '';
-
-                // اگر متنی تایپ شده، فیلتر کن
-                if (searchText && searchText.trim()) {
-                    selectedServices = [searchText.trim()];
-                } else {
-                    selectedServices = [];
-                }
-            }
-
-            // ============= UI UPDATE PROCESS =============
-            if (mustUpdate && !InUpdateUIProcess) {
-                InUpdateUIProcess = true;
-
-                // Collect new hotel families and reset for new searches
-                if (newDataCame) {
-                    const source = args.context.tryToGetSource("hotel.list");
-
-                    // Reset data for new searches
-                    if (source.rows[0]?.isNewSearch) {
-                        allHotelFamilies = [];
-                    }
-
-                    source.rows.forEach(row => {
-                        if (Array.isArray(row.families)) {
-                            allHotelFamilies.push(...row.families);
-                            originalHotelFamilies = [...allHotelFamilies];
-                        }
-                    });
-
-                    newDataCame = false;
-                    allDataProcessed = true;
-                }
-
-                // ============= SORTING LOGIC =============
-                if (allDataProcessed) {
-                    // Sort newSource if we have filtered data, otherwise sort all
-                    const sourceToSort = (selectedRoomTypes.length > 0 || selectedServices.length > 0)
-                        ? [...allHotelFamilies]
-                        : allHotelFamilies;
-
-                    sourceToSort.sort((a, b) => {
-                        const priceA = a.totalPrice ? parseFloat(a.totalPrice) : Infinity;
-                        const priceB = b.totalPrice ? parseFloat(b.totalPrice) : Infinity;
-
-                        if (currentSort.order === "ascend") {
-                            return priceA - priceB;
-                        } else {
-                            return priceB - priceA;
-                        }
-                    });
-
-                    // Update allHotelFamilies with sorted data
-                    if (selectedRoomTypes.length === 0 && selectedServices.length === 0) {
-                        allHotelFamilies = sourceToSort;
-                    }
-                }
-
-
-                const filters = [
-                    // فیلتر براساس نام اتاق (جستجو با includes)
-                    item => {
-                        if (!selectedRoomTypes.length) return true;
-                        const searchTerm = selectedRoomTypes[0].toLowerCase();
-                        const hasMatch = item.availablerooms.some(room => {
-                            const roomName = room.info.room || '';
-                            return roomName.toLowerCase().includes(searchTerm);
+    
+                        source.rows.forEach(row => {
+                            if (Array.isArray(row.families)) {
+                                allHotelFamilies.push(...row.families);
+                                originalHotelFamilies = [...allHotelFamilies];
+                            }
                         });
-                        return hasMatch;
-                    },
-                    // فیلتر براساس خدمات (جستجو با includes)
-                    item => {
-                        if (!selectedServices.length) return true;
-                        const searchTerm = selectedServices[0].toLowerCase();
-                        return item.services && item.services.toLowerCase().includes(searchTerm);
+    
+                        newDataCame = false;
+                        allDataProcessed = true;
                     }
-                ];
-
-                // Filter hotel families
-                const newSource = allHotelFamilies.filter(item =>
-                    filters.every(filter => filter(item))
-                );
-
-                // Update room count display
-                dynamicRoomCount = newSource.length;
-                const countElement = document.querySelector(".book-count__api__content");
-                if (countElement) {
-                    countElement.textContent = dynamicRoomCount;
-                }
-
-                // Add index to each item
-                const indexedSource = newSource.map((item, i) => ({
-                    ...item,
-                    index: currentIndex + i
-                }));
-                currentIndex += newSource.length;
-
-                // Apply pagination
-                const pagedSource = indexedSource.slice(start, end);
-
-                // ============= UI UPDATE LOGIC =============
-                if (newSource.length > 0) {
-                    // Update price range - استفاده از newSource به جای allHotelFamilies
-                    const pricesSource = newSource
-                        .map(item => item.totalPrice ? parseFloat(item.totalPrice) : null)
-                        .filter(Boolean);
-
-
-                    // Update pagination UI
-                    if (InUpdatePaging) {
-                        const container = document.querySelector(".book-paging__cards__container");
-                        if (container) {
-                            const nextPage = container.querySelector(".book-nextpage");
-                            const prevPage = container.querySelector(".book-prevpage");
-
-                            if (prevPage) {
-                                prevPage.classList.add("book-hidden");
+    
+                    // ============= SORTING LOGIC =============
+                    if (allDataProcessed) {
+                        // Sort newSource if we have filtered data, otherwise sort all
+                        const sourceToSort = (selectedRoomTypes.length > 0 || selectedServices.length > 0)
+                            ? [...allHotelFamilies]
+                            : allHotelFamilies;
+    
+                        sourceToSort.sort((a, b) => {
+                            const priceA = a.totalPrice ? parseFloat(a.totalPrice) : Infinity;
+                            const priceB = b.totalPrice ? parseFloat(b.totalPrice) : Infinity;
+    
+                            if (currentSort.order === "ascend") {
+                                return priceA - priceB;
+                            } else {
+                                return priceB - priceA;
                             }
-
-                            const roundedNumber = Math.ceil(currentIndex / 10);
-                            const activePage = 0;
-
-                            const arrayPaging = Array.from({ length: roundedNumber }, (_, i) => ({
-                                index: i,
-                                page: i + 1,
-                                isActive: i === activePage,
-                                isVisible: true
-                            }));
-
-                            if (nextPage) {
-                                nextPage.classList.toggle("book-hidden", arrayPaging.length <= 1);
-                            }
-
-                            args.context.setAsSource("hotel.paging", arrayPaging);
+                        });
+    
+                        // Update allHotelFamilies with sorted data
+                        if (selectedRoomTypes.length === 0 && selectedServices.length === 0) {
+                            allHotelFamilies = sourceToSort;
                         }
                     }
-
-                    // ============= FILTER UPDATE LOGIC =============
-                    if (InUpdateFiltering) {
-                        const filteringSource = allHotelFamilies;
-
-                        // استخراج نام اتاق‌های یونیک
-                        const allRoomTypes = [];
-                        filteringSource.forEach(item => {
-                            item.availablerooms.forEach(room => {
-                                if (room.info.room) {
-                                    allRoomTypes.push({
-                                        name: room.info.room,
-                                        price: item.totalPrice || 0
-                                    });
+    
+    
+                    const filters = [
+                        // فیلتر براساس نام اتاق (جستجو با includes)
+                        item => {
+                            if (!selectedRoomTypes.length) return true;
+                            const searchTerm = selectedRoomTypes[0].toLowerCase();
+                            const hasMatch = item.availablerooms.some(room => {
+                                const roomName = room.info.room || '';
+                                return roomName.toLowerCase().includes(searchTerm);
+                            });
+                            return hasMatch;
+                        },
+                        // فیلتر براساس خدمات (جستجو با includes)
+                        item => {
+                            if (!selectedServices.length) return true;
+                            const searchTerm = selectedServices[0].toLowerCase();
+                            return item.services && item.services.toLowerCase().includes(searchTerm);
+                        }
+                    ];
+    
+                    // Filter hotel families
+                    const newSource = allHotelFamilies.filter(item =>
+                        filters.every(filter => filter(item))
+                    );
+    
+                    // Update room count display
+                    dynamicRoomCount = newSource.length;
+                    const countElement = document.querySelector(".book-count__api__content");
+                    if (countElement) {
+                        countElement.textContent = dynamicRoomCount;
+                    }
+    
+                    // Add index to each item
+                    const indexedSource = newSource.map((item, i) => ({
+                        ...item,
+                        index: currentIndex + i
+                    }));
+                    currentIndex += newSource.length;
+    
+                    // Apply pagination
+                    const pagedSource = indexedSource.slice(start, end);
+    
+                    // ============= UI UPDATE LOGIC =============
+                    if (newSource.length > 0) {
+                        // Update price range - استفاده از newSource به جای allHotelFamilies
+                        const pricesSource = newSource
+                            .map(item => item.totalPrice ? parseFloat(item.totalPrice) : null)
+                            .filter(Boolean);
+    
+    
+                        // Update pagination UI
+                        if (InUpdatePaging) {
+                            const container = document.querySelector(".book-paging__cards__container");
+                            if (container) {
+                                const nextPage = container.querySelector(".book-nextpage");
+                                const prevPage = container.querySelector(".book-prevpage");
+    
+                                if (prevPage) {
+                                    prevPage.classList.add("book-hidden");
+                                }
+    
+                                const roundedNumber = Math.ceil(currentIndex / 10);
+                                const activePage = 0;
+    
+                                const arrayPaging = Array.from({ length: roundedNumber }, (_, i) => ({
+                                    index: i,
+                                    page: i + 1,
+                                    isActive: i === activePage,
+                                    isVisible: true
+                                }));
+    
+                                if (nextPage) {
+                                    nextPage.classList.toggle("book-hidden", arrayPaging.length <= 1);
+                                }
+    
+                                args.context.setAsSource("hotel.paging", arrayPaging);
+                            }
+                        }
+    
+                        // ============= FILTER UPDATE LOGIC =============
+                        if (InUpdateFiltering) {
+                            const filteringSource = allHotelFamilies;
+    
+                            // استخراج نام اتاق‌های یونیک
+                            const allRoomTypes = [];
+                            filteringSource.forEach(item => {
+                                item.availablerooms.forEach(room => {
+                                    if (room.info.room) {
+                                        allRoomTypes.push({
+                                            name: room.info.room,
+                                            price: item.totalPrice || 0
+                                        });
+                                    }
+                                });
+                            });
+    
+                            // حذف تکراری‌ها و انتخاب ارزان‌ترین قیمت برای هر نوع اتاق
+                            const roomTypeMap = {};
+                            allRoomTypes.forEach(room => {
+                                if (!roomTypeMap[room.name] || roomTypeMap[room.name].price > room.price) {
+                                    roomTypeMap[room.name] = room;
                                 }
                             });
-                        });
-
-                        // حذف تکراری‌ها و انتخاب ارزان‌ترین قیمت برای هر نوع اتاق
-                        const roomTypeMap = {};
-                        allRoomTypes.forEach(room => {
-                            if (!roomTypeMap[room.name] || roomTypeMap[room.name].price > room.price) {
-                                roomTypeMap[room.name] = room;
-                            }
-                        });
-
-                        const uniqueRoomTypes = Object.values(roomTypeMap)
-                            .sort((a, b) => a.price - b.price)
-                            .map(room => ({ Name: room.name }));
-
-                        args.context.setAsSource("hotel.roomtypes", uniqueRoomTypes);
-
-                        // استخراج خدمات یونیک
-                        const allServices = filteringSource
-                            .map(item => ({ Name: item.services }))
-                            .filter(item => item.Name);
-
-                        const uniqueServices = allServices.filter((item, index, self) =>
-                            index === self.findIndex(t => t.Name === item.Name)
-                        );
-
-                        args.context.setAsSource("hotel.services", uniqueServices);
-                    }
-
-                    // Update hotel list
-                    args.context.setAsSource("hotel.updated", pagedSource, { keyFieldName: "optionId" });
-                    InUpdateUIProcess = false;
-
-                } else {
-                    // ============= NO RESULTS HANDLING =============
-                    InUpdateUIProcess = false;
-
-                    // Display no rooms found message
-                    const listContainer = document.querySelector(".book-list__cards__container");
-                    if (listContainer) {
-                        listContainer.innerHTML = `
-              <div class="book-text-center">
-                  <div>هیچ اتاقی با فیلترهای انتخابی یافت نشد</div>
-                  <div class="book-text-zinc-900 book-text-xs book-mt-2">لطفاً فیلترها را تغییر دهید</div>
-              </div>
-          `;
-                    }
-
-                    // Hide pagination controls when no results
-                    const container = document.querySelector(".book-paging__cards__container");
-                    if (container) {
-                        const buttons = container.querySelectorAll(".book-paging__container:not(.book-nextpage):not(.book-prevpage)");
-                        const nextPage = container.querySelector(".book-nextpage");
-                        const prevPage = container.querySelector(".book-prevpage");
-
-                        if (prevPage) prevPage.classList.add("book-hidden");
-                        if (nextPage) nextPage.classList.add("book-hidden");
-                        buttons.forEach(button => button.remove());
+    
+                            const uniqueRoomTypes = Object.values(roomTypeMap)
+                                .sort((a, b) => a.price - b.price)
+                                .map(room => ({ Name: room.name }));
+    
+                            args.context.setAsSource("hotel.roomtypes", uniqueRoomTypes);
+    
+                            // استخراج خدمات یونیک
+                            const allServices = filteringSource
+                                .map(item => ({ Name: item.services }))
+                                .filter(item => item.Name);
+    
+                            const uniqueServices = allServices.filter((item, index, self) =>
+                                index === self.findIndex(t => t.Name === item.Name)
+                            );
+    
+                            args.context.setAsSource("hotel.services", uniqueServices);
+                        }
+    
+                        // Update hotel list
+                        args.context.setAsSource("hotel.updated", pagedSource, { keyFieldName: "optionId" });
+                        InUpdateUIProcess = false;
+    
+                    } else {
+                        // ============= NO RESULTS HANDLING =============
+                        InUpdateUIProcess = false;
+    
+                        // Display no rooms found message
+                        const listContainer = document.querySelector(".book-list__cards__container");
+                        if (listContainer) {
+                            listContainer.innerHTML = `
+                  <div class="book-text-center">
+                      <div>هیچ اتاقی با فیلترهای انتخابی یافت نشد</div>
+                      <div class="book-text-zinc-900 book-text-xs book-mt-2">لطفاً فیلترها را تغییر دهید</div>
+                  </div>
+              `;
+                        }
+    
+                        // Hide pagination controls when no results
+                        const container = document.querySelector(".book-paging__cards__container");
+                        if (container) {
+                            const buttons = container.querySelectorAll(".book-paging__container:not(.book-nextpage):not(.book-prevpage)");
+                            const nextPage = container.querySelector(".book-nextpage");
+                            const prevPage = container.querySelector(".book-prevpage");
+    
+                            if (prevPage) prevPage.classList.add("book-hidden");
+                            if (nextPage) nextPage.classList.add("book-hidden");
+                            buttons.forEach(button => button.remove());
+                        }
                     }
                 }
+            };
+    
+            const renderPaging = async (element) => {
+                try {
+                    const { index, page, isActive, isVisible } = element;
+                    const nextPage = pagingContainer?.querySelector(".book-nextpage");
+                    const prevPage = pagingContainer?.querySelector(".book-prevpage");
+    
+                    // Show next button if there are more than 5 pages
+                    if (index >= 5 && nextPage?.classList.contains("book-hidden")) {
+                        nextPage.classList.remove("book-hidden");
+                    }
+                    // Show previous button if not on the first active page
+                    if (index > 0 && isActive && prevPage?.classList.contains("book-hidden")) {
+                        prevPage.classList.remove("book-hidden");
+                    }
+                    // Render button with active/visible styling
+                    return ` <li  bc-value="${index}" bc-name="cms.page" bc-triggers="click"
+                              class="book-flex book-items-center book-justify-center book-w-12 book-h-12 book-text-zinc-900 book-rounded-xl book-bg-zinc-100 book-transition-all book-duration-300 hover:book-bg-primary-50 ${isActive ? ' book-active__paging' : ' book-bg-white'}">
+                             ${page}
+                          </li>`;
+                } catch (error) {
+                    console.error(`renderPaging: ${error.message}`);
+                    return "";
+                }
+            };
+    
+            const showRules = () => {
+                console.log('showRules');
             }
-        };
-
-        const renderPaging = async (element) => {
-            try {
-                const { index, page, isActive, isVisible } = element;
-                const nextPage = pagingContainer?.querySelector(".book-nextpage");
-                const prevPage = pagingContainer?.querySelector(".book-prevpage");
-
-                // Show next button if there are more than 5 pages
-                if (index >= 5 && nextPage?.classList.contains("book-hidden")) {
-                    nextPage.classList.remove("book-hidden");
-                }
-                // Show previous button if not on the first active page
-                if (index > 0 && isActive && prevPage?.classList.contains("book-hidden")) {
-                    prevPage.classList.remove("book-hidden");
-                }
-                // Render button with active/visible styling
-                return ` <li  bc-value="${index}" bc-name="cms.page" bc-triggers="click"
-                          class="book-flex book-items-center book-justify-center book-w-12 book-h-12 book-text-zinc-900 book-rounded-xl book-bg-zinc-100 book-transition-all book-duration-300 hover:book-bg-primary-50 ${isActive ? ' book-active__paging' : ' book-bg-white'}">
-                         ${page}
-                      </li>`;
-            } catch (error) {
-                console.error(`renderPaging: ${error.message}`);
-                return "";
-            }
-        };
-
-        const showRules = () => {
-            console.log('showRules');
-        }
-    </script>
+        </script>
 
 
 </body>

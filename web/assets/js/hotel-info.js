@@ -1,4 +1,6 @@
 const onrenderedApiGallery = async () => {
+  galleryImgLoader = document.querySelector(".gallery-img-loader")
+  galleryImgLoader.style.display = "none"
   const smallGalleryEl = document.querySelector('.hotel-small-img-gallery')
   const bigGalleryEl = document.querySelector('.hotel-big-img-gallery')
   if (!smallGalleryEl || !bigGalleryEl) {
@@ -155,8 +157,36 @@ document.addEventListener('DOMContentLoaded', () => {
     setActiveTab(0)
 
     tabs.forEach((tab, i) => {
-      tab.addEventListener('click', () => setActiveTab(i))
-    })
+      tab.addEventListener('click', () => {
+    
+        setActiveTab(i);
+    
+        const targetSelector = tab.getAttribute("data-target");
+    
+        if (targetSelector) {
+          const target = document.querySelector(targetSelector);
+    
+          if (target) {
+            const offset = 60; 
+    
+            const elementPosition = target.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.scrollY - offset;
+    
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: "smooth"
+            });
+    
+          } else {
+            console.warn("⚠️ No element found for:", targetSelector);
+          }
+    
+        } else {
+          console.warn("⚠️ This tab has NO data-target");
+        }
+    
+      });
+    });
 
     tabsContainer.addEventListener('scroll', () => {
       const activeIndex = [...tabs].findIndex((tab) =>

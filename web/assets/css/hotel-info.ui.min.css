@@ -354,6 +354,10 @@ body {
     cursor: pointer;
 }
 
+.book-pointer-events-none {
+    pointer-events: none;
+}
+
 .book-select-none {
     -webkit-user-select: none;
     -moz-user-select: none;
