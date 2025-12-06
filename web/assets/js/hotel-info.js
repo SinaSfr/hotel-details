@@ -204,35 +204,52 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 })
 
-document.addEventListener('DOMContentLoaded', () => {
-  const selectBtn = document.querySelector('.room-select-btn')
-  const optionsMenu = document.querySelector('.room-options')
-  const options = document.querySelectorAll('.room-option')
-  const selectText = document.querySelector('.room-select-text')
-  const icon = selectBtn ? selectBtn.querySelector('svg') : null
+document.addEventListener('click', (event) => {
+  const selectBtn = event.target.closest('.room-select-btn');
+  if (selectBtn) {
+    event.stopPropagation();
 
-  if (selectBtn && optionsMenu && selectText && icon) {
-    selectBtn.addEventListener('click', (e) => {
-      e.stopPropagation()
-      optionsMenu.classList.toggle('book-hidden')
-      icon.classList.toggle('book-rotate-180')
-    })
+    const container = selectBtn.parentElement; 
+    const optionsMenu = container.querySelector('.room-options');
+    const icon = selectBtn.querySelector('.close-room-btn');
 
-    options.forEach((option) => {
-      option.addEventListener('click', () => {
-        selectText.textContent = option.textContent.trim()
-        optionsMenu.classList.add('book-hidden')
-        icon.classList.remove('book-rotate-180')
-      })
-    })
+    if (!optionsMenu || !icon) return;
 
-    document.addEventListener('click', (e) => {
-      if (!selectBtn.contains(e.target) && !optionsMenu.contains(e.target)) {
-        optionsMenu.classList.add('book-hidden')
-        icon.classList.remove('book-rotate-180')
-      }
-    })
-  } else {
-    console.warn('Some elements are missing in the DOM.')
+    document.querySelectorAll('.room-options').forEach((menu) => {
+      if (menu !== optionsMenu) menu.classList.add('book-hidden');
+    });
+    document.querySelectorAll('.close-room-btn').forEach((ic) => {
+      if (ic !== icon) ic.classList.remove('book-rotate-180');
+    });
+
+    optionsMenu.classList.toggle('book-hidden');
+    icon.classList.toggle('book-rotate-180');
+    return;
   }
-})
+
+  const option = event.target.closest('.room-option');
+  if (option) {
+    const optionsMenu = option.closest('.room-options');
+    const container = optionsMenu ? optionsMenu.parentElement : null;
+    const selectText = container ? container.querySelector('.room-select-text') : null;
+    const icon = container ? container.querySelector('.close-room-btn') : null;
+
+    if (selectText) {
+      selectText.textContent = option.textContent.trim();
+    }
+    if (optionsMenu) {
+      optionsMenu.classList.add('book-hidden');
+    }
+    if (icon) {
+      icon.classList.remove('book-rotate-180');
+    }
+    return;
+  }
+
+  document.querySelectorAll('.room-options').forEach((menu) => {
+    menu.classList.add('book-hidden');
+  });
+  document.querySelectorAll('.close-room-btn').forEach((icon) => {
+    icon.classList.remove('book-rotate-180');
+  });
+});

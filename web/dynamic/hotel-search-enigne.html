@@ -1,0 +1,224 @@
+<div id="r-hotel" class="r-hotel module-form relative" data-module="hotel">
+    <form action="/Tem3_Hotel_Search.bc?lid=2" method="post" data-form="hotel" id="hotelSearch"
+        onsubmit="form_search_isSubmited(this,event)"
+        class="form-search formhotel flex gap-2 max-xl:block max-xl:gap-0">
+        <input type="hidden" name="persiancurrent" class="persiancurrent" value="">
+        <input value="" class="locationId from" type="hidden" name="cityid" aria-label="locationId">
+
+        <div
+            class="date__searched__container Basis_Date_Box w-1/3 flex border-type-1 rounded-type-1 max-xl:w-full max-xl:mb-4">
+            <div class="reserve-field departure-date w-auto h-20 relative">
+                <div class="h-full px-2 mr-[40px]">
+                    <label class="label-dates label-fdate-hotel float-right w-full relative" for="fromdate2">
+                        <svg width="15" height="15" class="align-middle">
+                            <use xlink:href="images/sprite-icons.svg#engine-departurecalendar-icon"></use>
+                        </svg>
+                        <span class="label-text text-sm">Date</span>
+                        <svg class="down-icon float-left align-middle mt-2 absolute right-0 top-0 h-2 hidden" width="15"
+                            height="8">
+                            <use xlink:href="images/sprite-icons.svg#engine-down-icon"></use>
+                        </svg>
+                    </label>
+                    <p class="auto-fit clear-both text-base text-textColor"><span class="selected-day"></span><span
+                            class="selected-month"></span></p>
+
+                    <input type="text" aria-label="Check in" value="" data-role="depart"
+                        class="js-date-input departure__date Basis_Date start_date text-textColor cursor-pointer h-full pt-12 w-full text-left bg-inherit leading-6 float-left absolute top-0 right-0 text-sm px-2 max-xl:text-base"
+                        readonly="" name="fdate" id="fromdate2" required="" placeholder="">
+                    <input value="" class="mstring_date mstring_fdate" type="hidden" aria-label="mstring_fdate">
+
+                    <div class="clr"></div>
+                </div>
+            </div>
+            <div class="reserve-field return-date w-1/2 h-20 relative">
+                <div class="h-full px-2">
+                    <label class="label-dates label-tdate-hotel float-right w-full relative" for="todate2">
+                        <svg width="15" height="15" class="align-middle">
+                            <use xlink:href="images/sprite-icons.svg#engine-returncalendar-icon"></use>
+                        </svg>
+                        <span class="label-text text-sm">Check out</span>
+                        <svg class="down-icon float-left align-middle mt-2 absolute right-0 top-0 h-2 hidden" width="15"
+                            height="8">
+                            <use xlink:href="images/sprite-icons.svg#engine-down-icon"></use>
+                        </svg>
+                    </label>
+                    <p class="auto-fit clear-both text-base text-textColor pt-[23px]"><span
+                            class="selected-day"></span><span class="selected-month"></span></p>
+
+                    <input type="text" aria-label="Check out" value="" data-role="return"
+                        class="js-date-input arrival__date Basis_Date end_date text-textColor cursor-pointer h-full pt-12 w-full text-left bg-inherit leading-6 float-left absolute top-0 right-0 text-sm px-2 max-xl:text-base"
+                        readonly="" name="tdate" id="todate2" required="" placeholder="">
+                    <input value="" class="mstring_date mstring_tdate" type="hidden" aria-label="mstring_tdate">
+
+                    <div class="clr"></div>
+                </div>
+            </div>
+        </div>
+        <div class="reserve-field passengers-field cursor-pointer w-1/3 h-20 relative max-xl:w-full max-xl:mb-4">
+            <div onclick="show_passengerbox(this)"
+                class="show-passengers-dropdown show-passengers-dropdown-hotel border-type-1 cursor-pointer h-full rounded-type-1 px-2">
+                <label class="label-passengers label-passengers-hotel float-right w-full cursor-pointer"
+                    for="passenger1">
+                    <svg width="15" height="15" class="align-middle">
+                        <use xlink:href="images/sprite-icons.svg#engine-passenger-icon"></use>
+                    </svg>
+                    <span class="label-text text-sm">Passengers</span>
+                    <svg class="down-icon h-full float-right align-middle mt-2" width="15" height="8">
+                        <use xlink:href="images/sprite-icons.svg#engine-down-icon"></use>
+                    </svg>
+                </label>
+                <div class="cursor-pointer">
+                    <span class="passenger-counts room-count inline-block text-textColor h-6 leading-6 text-sm"><span
+                            class="count min-w-3 inline-block">1</span> Room</span><span
+                        class="passenger-counts adult-count inline-block text-textColor h-6 leading-6 text-sm ml-2"><span
+                            class="count min-w-3 inline-block">2</span> Adult</span><span
+                        class="passenger-counts child-count inline-block text-textColor h-6 leading-6 text-sm ml-2 hidden"><span
+                            class="count min-w-3 inline-block">0</span> Child</span>
+                </div>
+            </div>
+            <div class="passengerbox hidden-box hidden bg-white w-full absolute z-20 border-type-1 rounded-type-1 p-2">
+                <div class="close-passenger-box w-5 h-5 leading-5 mb-4 clear-both text-center text-textColor cursor-pointer text-sm float-right hover:text-red-600"
+                    onclick="close_passenger(this)">
+                    <svg width="15" height="15" class="align-middle">
+                        <use xlink:href="images/sprite-icons.svg#engine-close-icon"></use>
+                    </svg>
+                </div>
+                <div class="passenger-item room-passenger-item clear-both w-full mb-4 relative">
+                    <label for="passenger-roomcount1"
+                        class="label-passengerroom label-passengerroom-hotel first-room-type first-room-type-label float-left text-sm leading-8 text-textColor"><span
+                            class="room-tlt-icon mr-1 hidden"><svg class="align-middle" width="15" height="15">
+                                <use xlink:href="images/sprite-icons.svg#engine-room-icon"></use>
+                            </svg></span><span>Room</span></label>
+                    <ul class="float-right h-8 leading-8">
+                        <li
+                            class="second-room-type block w-auto h-8 leading-8 text-center hover:text-primary cursor-pointer clear-both hover:text-add-room-hover-color">
+                            <div class="h-full leading-8" onclick="Add_Room_Count(this)"><span>Add another room</span>
+                            </div>
+                        </li>
+                        <li
+                            class="plus-count first-room-type inline-block w-8 h-8 leading-8 text-center hover:text-primary radius-type-1 border-type-1 cursor-pointer hover:text-add-room-hover-color">
+                            <div class="h-full leading-8" onclick="Change_Room_Count(this)">
+                                <span class="count-icon-simple">+</span>
+                                <span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10">
+                                        <use xlink:href="images/sprite-icons.svg#engine-plus-icon"></use>
+                                    </svg></span>
+                            </div>
+                        </li>
+                        <li
+                            class="first-room-type first-room-type-count inline-block w-8 h-8 leading-8 text-center hover:text-primary">
+                            <input id="passenger-roomcount1" type="text"
+                                class="roomcount w-full text-center max-xl:text-base" maxlength="4000" value="1"
+                                readonly="">
+                        </li>
+                        <li
+                            class="first-room-type minus-count deactive-change-button inline-block w-8 h-8 leading-8 text-center hover:text-primary radius-type-1 border-type-1 cursor-pointer hover:text-remove-room-hover-color">
+                            <div class="h-full leading-8" onclick="Change_Room_Count(this)">
+                                <span class="count-icon-simple">-</span>
+                                <span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10">
+                                        <use xlink:href="images/sprite-icons.svg#engine-minus-icon"></use>
+                                    </svg></span>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="clr"></div>
+                </div>
+                <div class="Rooms">
+                    <div class="contentRoom">
+                        <div class="numberOfRoom text-sm text-primary float-left clear-both w-full mb-4 text-left">
+                            Room<span class="ml-1">1</span></div>
+                        <div class="passenger-item adult-passenger-item clear-both w-full mb-4 relative">
+                            <label for="passenger-room-adultcount1"
+                                class="label-passengeradult label-passengeradult-hotel float-left text-sm leading-8 text-textColor"><span
+                                    class="adult-tlt-icon mr-1 hidden"><svg class="align-middle" width="15" height="15">
+                                        <use xlink:href="images/sprite-icons.svg#engine-adult-icon"></use>
+                                    </svg></span><span>Adult</span><span class="exp-age text-grays-400 ml-2">(12 years
+                                    and
+                                    up)</span></label>
+                            <ul class="float-right h-8 leading-8">
+                                <li
+                                    class="plus-count inline-block w-8 h-8 leading-8 text-center hover:text-primary radius-type-1 border-type-1 cursor-pointer">
+                                    <div class="h-full leading-8" onclick="Change_AdultCount(this)">
+                                        <span class="count-icon-simple">+</span>
+                                        <span class="count-icon-svg hidden"><svg class="align-middle" width="10"
+                                                height="10">
+                                                <use xlink:href="images/sprite-icons.svg#engine-plus-icon"></use>
+                                            </svg></span>
+                                    </div>
+                                </li>
+                                <li class="inline-block w-8 h-8 leading-8 text-center hover:text-primary"><input
+                                        id="passenger-room-adultcount1" type="text"
+                                        class="adultcount w-full text-center max-xl:text-base"
+                                        name="_root.rooms__1.adultcount" maxlength="4000" value="2" readonly=""></li>
+                                <li
+                                    class="minus-count inline-block w-8 h-8 leading-8 text-center hover:text-primary radius-type-1 border-type-1 cursor-pointer">
+                                    <div class="h-full leading-8" onclick="Change_AdultCount(this)">
+                                        <span class="count-icon-simple">-</span>
+                                        <span class="count-icon-svg hidden"><svg class="align-middle" width="10"
+                                                height="10">
+                                                <use xlink:href="images/sprite-icons.svg#engine-minus-icon"></use>
+                                            </svg></span>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="clr"></div>
+                        </div>
+                        <div class="passenger-item child-passenger-item clear-both w-full mb-4 relative">
+                            <label for="passenger-room-childcount1"
+                                class="label-passengerchild label-passengerchild-hotel float-left text-sm leading-8 text-textColor"><span
+                                    class="child-tlt-icon mr-1 hidden"><svg class="align-middle" width="15" height="15">
+                                        <use xlink:href="images/sprite-icons.svg#engine-child-icon"></use>
+                                    </svg></span><span>Child</span><span class="exp-age text-grays-400 ml-2">(0 to 12
+                                    years)</span></label>
+                            <ul class="float-right h-8 leading-8">
+                                <li
+                                    class="plus-count inline-block w-8 h-8 leading-8 text-center hover:text-primary radius-type-1 border-type-1 cursor-pointer">
+                                    <div class="h-full leading-8" onclick="Change_ChildCount(this)">
+                                        <span class="count-icon-simple">+</span>
+                                        <span class="count-icon-svg hidden"><svg class="align-middle" width="10"
+                                                height="10">
+                                                <use xlink:href="images/sprite-icons.svg#engine-plus-icon"></use>
+                                            </svg></span>
+                                    </div>
+                                </li>
+                                <li class="inline-block w-8 h-8 leading-8 text-center hover:text-primary"><input
+                                        id="passenger-room-childcount1" type="text"
+                                        class="childcount w-full text-center max-xl:text-base" maxlength="4000"
+                                        value="0" readonly=""></li>
+                                <li
+                                    class="minus-count deactive-change-button inline-block w-8 h-8 leading-8 text-center hover:text-primary radius-type-1 border-type-1 cursor-pointer">
+                                    <div class="h-full leading-8" onclick="Change_ChildCount(this)">
+                                        <span class="count-icon-simple">-</span>
+                                        <span class="count-icon-svg hidden"><svg class="align-middle" width="10"
+                                                height="10">
+                                                <use xlink:href="images/sprite-icons.svg#engine-minus-icon"></use>
+                                            </svg></span>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="clr"></div>
+                        </div>
+                        <input type="hidden" name="_root.rooms__1.childcountandage" class="childcountandage" value="0"
+                            aria-label="childcountandage">
+                        <div class="section-select-age clear-both"></div>
+                    </div>
+                </div>
+                <div class="confirm-passenger hidden w-full h-8 leading-8 text-center hover:text-primary radius-type-1 border-type-1 cursor-pointer text-sm clear-both"
+                    onclick="close_passenger(this)">
+                    <span class="confirmpass-tlt-icon mr-1 hidden"><svg class="align-middle" width="15" height="15">
+                            <use xlink:href="images/sprite-icons.svg#engine-confirmpass-icon"></use>
+                        </svg></span><span>confirm</span>
+                </div>
+                <div class="clr"></div>
+            </div>
+        </div>
+
+        <div class="reserve-search w-auto h-20 max-xl:w-full">
+            <button type="submit"
+                class="search-hotel flex items-center justify-center gap-2 w-full h-full m-auto px-3 rounded-type-1 bg-bgColor-100 cursor-pointer hover:bg-secondary hover:text-search-button-hover-color hover:text-search-hotel-hover-color"><span>Search</span>
+                <svg width="32" height="33" class="align-middle">
+                    <use xlink:href="images/sprite-icons.svg#engine-search-icon"></use>
+                </svg>
+            </button>
+        </div>
+    </form>
+</div>
