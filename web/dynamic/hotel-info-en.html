@@ -46,6 +46,33 @@
     .book-bg-primary-600 {
         background-color: var(--primary-600);
     }
+
+    .book-pt-2 {
+        padding-top: 0.5rem;
+    }
+
+    .book-grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .book-border-zinc-600 {
+        --tw-border-opacity: 1;
+        border-color: rgb(82 82 91 / var(--tw-border-opacity, 1))
+            /* #52525b */
+        ;
+    }
+
+    .book-gap-1 {
+        gap: 0.25rem
+            /* 4px */
+        ;
+    }
+
+    .book-max-h-80 {
+        max-height: 20rem
+            /* 320px */
+        ;
+    }
 </style>
 
 <body class="book-bg-zinc-50">
@@ -381,7 +408,7 @@
                             <div class="">
                                 <input type="text" bc-name="cms.roomtypes" bc-value="" bc-triggers="keyup"
                                     class="book-placeholder-zinc-600 book-bg-transparent book-w-52 book-h-12 book-bg-zinc-100 book-rounded-xl book-px-3 book-py-px book-outline-none"
-                                    name="" id="" placeholder="نام اتاق">
+                                    name="" id="" placeholder="نام اتاق" />
                             </div>
                         </div>
                         <div class="book-relative book-flex book-items-center book-gap-2">
@@ -436,74 +463,82 @@
                             </layout>
                             <face>
                                 <script type="text/template">
-                                        <div
-                                        class="book-flex book-gap-6 book-border book-border-solid book-border-zinc-200 book-rounded-xl book-py-5 book-px-6">
-                                            {{ return await renderAvailableRooms($data)}}
-                                        <div class="book-flex-1">
-                                                {{
-                                                    return `<div class="book-hotel__rules book-flex-1 book-flex book-items-center book-justify-center book-cursor-pointer" onclick="showRules(this,'${$data.optionId}')">
-                                                        <svg width="57" height="48">
-                                                            <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-document"></use>
-                                                        </svg>
-                                                        <span class="book-text-blue-600 book-text-xs">قوانين اتاق</span>
-                                                    </div>`
-                                                }}
-                                                
-                                            <div id="book-hotel__rules__modal"
+                                <div
+                                    class="book-flex book-gap-6 book-border book-border-solid book-border-zinc-200 book-rounded-xl book-py-5 book-px-6">
+                                    {{ return await renderAvailableRooms($data)}}
+                                    <div class="book-flex-1">
+                                        {{
+                                        return `<div
+                                            class="book-hotel__rules book-flex-1 book-flex book-items-center book-justify-center book-cursor-pointer"
+                                            onclick="showRules(this,'${$data.optionId}')">
+                                            <svg width="57" height="48">
+                                                <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-document">
+                                                </use>
+                                            </svg>
+                                            <span class="book-text-blue-600 book-text-xs">قوانين اتاق</span>
+                                        </div>`
+                                        }}
+
+                                        <div id="book-hotel__rules__modal"
                                             class="book-fixed book-inset-0 book-z-50 book-hidden book-flex book-items-center book-justify-center book-bg-black/40 book-backdrop-blur-sm">
-                                         <div class="book-w-full book-max-w-xl book-mx-4">
-                                           <div class="book-bg-white book-rounded-2xl book-shadow-lg book-overflow-hidden">
-                                       
-                                             <div class="book-flex book-items-center book-justify-between book-px-6 book-py-4 book-border-b book-border-zinc-200">
-                                               <h2 class="book-text-sm book-font-bold book-text-zinc-800">
-                                                 قوانین اتاق
-                                               </h2>
-                                               <button type="button"
-                                                       class="book-hotel__close__rules book-inline-flex book-items-center book-justify-center book-w-8 book-h-8 book-rounded-full book-text-zinc-500 hover:book-bg-zinc-100 hover:book-text-zinc-700 book-transition"
-                                                       >
-                                                       <svg width="24" height="24">
-                                                        <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-close">
-                                                        </use>
-                                                    </svg>
-                                               </button>
-                                             </div>
-                                       
-                                             <div id="book-hotel__rules__content"
-                                                  class="book-max-h-[60vh] book-overflow-y-auto book-px-6 book-py-4 book-text-sm book-leading-relaxed book-text-zinc-700">
-                                               <div class="book-text-center book-py-6 book-text-xs book-text-zinc-400">
-                                                 در حال بارگذاری قوانین اتاق...
-                                               </div>
-                                             </div>
-                                       
-                                             <div class="book-flex book-justify-end book-gap-2 book-px-6 book-py-4 book-border-t book-border-zinc-100">
-                                               <button type="button"
-                                                       class="book-hotel__close__rules book-inline-flex book-items-center book-justify-center book-rounded-lg book-px-4 book-py-2 book-text-xs book-font-medium book-text-zinc-700 book-bg-zinc-100 hover:book-bg-zinc-200 book-transition-all"
-                                                       >
-                                                 بستن
-                                               </button>
-                                             </div>
-                                       
-                                           </div>
-                                         </div>
-                                       </div>
-                                            <div class="book-flex book-flex-col book-gap-1 book-items-center book-mt-1.5">
-                                                <h3 class="book-text-xs book-text-zinc-900">قیمت نهایی:</h3>
-                                                {{
-                                                    return `<p class="book-text-zinc-900 book-font-bold book-text-xl">
-                                                        <span class="book-price__check__currency" data-original-price="${$data.totalCom}">${await priceWithCurrency($data.totalCom)}</span>
-                                                        <span
-                                                            class="book-text-zinc-500 book-text-xs book-font-normal book-unit__check__currency">ریال</span>
-                                                    </p>`
-                                                }}
-                                            </div>
-                                            <div class="book-mt-4">
-                                                <button
-                                                    class="book-w-full book-h-12 book-flex book-items-center book-justify-center book-rounded-xl book-bg-primary-300 book-text-white book-font-medium book-transition-all book-duration-300 hover:book-bg-primary-900">رزرو
-                                                    اتاق</button>
+                                            <div class="book-w-full book-max-w-xl book-mx-4">
+                                                <div
+                                                    class="book-bg-white book-rounded-2xl book-shadow-lg book-overflow-hidden">
+
+                                                    <div
+                                                        class="book-flex book-items-center book-justify-between book-px-6 book-py-4 book-border-b book-border-zinc-200">
+                                                        <h2 class="book-text-sm book-font-bold book-text-zinc-800">
+                                                            قوانین اتاق
+                                                        </h2>
+                                                        <button type="button"
+                                                            class="book-hotel__close__rules book-inline-flex book-items-center book-justify-center book-w-8 book-h-8 book-rounded-full book-text-zinc-500 hover:book-bg-zinc-100 hover:book-text-zinc-700 book-transition">
+                                                            <svg width="24" height="24">
+                                                                <use
+                                                                    href="/booking/images/sprite-hotelDetails-icons.svg#icon-close">
+                                                                </use>
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+
+                                                    <div id="book-hotel__rules__content"
+                                                        class="book-max-h-[60vh] book-overflow-y-auto book-px-6 book-py-4 book-text-sm book-leading-relaxed book-text-zinc-700">
+                                                        <div
+                                                            class="book-text-center book-py-6 book-text-xs book-text-zinc-400">
+                                                            در حال بارگذاری قوانین اتاق...
+                                                        </div>
+                                                    </div>
+
+                                                    <div
+                                                        class="book-flex book-justify-end book-gap-2 book-px-6 book-py-4 book-border-t book-border-zinc-100">
+                                                        <button type="button"
+                                                            class="book-hotel__close__rules book-inline-flex book-items-center book-justify-center book-rounded-lg book-px-4 book-py-2 book-text-xs book-font-medium book-text-zinc-700 book-bg-zinc-100 hover:book-bg-zinc-200 book-transition-all">
+                                                            بستن
+                                                        </button>
+                                                    </div>
+
+                                                </div>
                                             </div>
                                         </div>
+                                        <div class="book-flex book-flex-col book-gap-1 book-items-center book-mt-1.5">
+                                            <h3 class="book-text-xs book-text-zinc-900">قیمت نهایی:</h3>
+                                            {{
+                                            return `<p class="book-text-zinc-900 book-font-bold book-text-xl">
+                                                <span class="book-price__check__currency"
+                                                    data-original-price="${$data.totalCom}">${await
+                                                    priceWithCurrency($data.totalCom)}</span>
+                                                <span
+                                                    class="book-text-zinc-500 book-text-xs book-font-normal book-unit__check__currency">ریال</span>
+                                            </p>`
+                                            }}
+                                        </div>
+                                        <div class="book-mt-4">
+                                            <button
+                                                class="book-w-full book-h-12 book-flex book-items-center book-justify-center book-rounded-xl book-bg-primary-300 book-text-white book-font-medium book-transition-all book-duration-300 hover:book-bg-primary-900">رزرو
+                                                اتاق</button>
+                                        </div>
                                     </div>
-                                    </script>
+                                </div>
+                            </script>
                             </face>
                         </basis>
 
@@ -742,12 +777,14 @@
                         <form action="/Tem3_Hotel_Search.bc?lid=2" method="post" data-form="hotel" id="hotelSearch"
                             onsubmit="form_search_isSubmited(this,event)"
                             class="form-search formhotel book-flex book-flex-col book-bg-white book-p-4 book-rounded-xl book-mt-3">
-                            <input type="hidden" name="persiancurrent" class="persiancurrent" value="">
-                            <input value="" class="locationId from" type="hidden" name="cityid" aria-label="locationId">
+                            <input type="hidden" name="persiancurrent" class="persiancurrent" value="" />
+                            <input value="" class="locationId from" type="hidden" name="cityid"
+                                aria-label="locationId" />
 
                             <div
                                 class="date__searched__container Basis_Date_Box book-bg-zinc-100 book-rounded-xl book-px-3 book-py-2">
-                                <div class="book-hotel__date__picker book-flex book-items-center book-justify-between">
+                                <div
+                                    class="book-hotel__date__picker book-flex book-items-center book-justify-between book-cursor-pointer">
                                     <div class="book-flex book-flex-col book-gap-1">
                                         <h2 class="book-font-medium book-text-zinc-900">تاریخ انتخابی</h2>
                                         <span
@@ -768,9 +805,10 @@
                                         <div class="h-full px-2">
                                             <input type="text" aria-label="Check in" value="" data-role="depart"
                                                 class="js-date-input departure__date Basis_Date start_date book-cursor-pointer book-h-full book-w-full book-text-left book-absolute book-top-0 -book-right-3"
-                                                readonly="" name="fdate" id="fromdate2" required="" placeholder="Date">
+                                                readonly="" name="fdate" id="fromdate2" required=""
+                                                placeholder="تاریخ رفت" />
                                             <input value="" class="mstring_date mstring_fdate" type="hidden"
-                                                aria-label="mstring_fdate">
+                                                aria-label="mstring_fdate" />
 
                                             <div class="clr"></div>
                                         </div>
@@ -781,9 +819,9 @@
                                             <input type="text" aria-label="Check out" value="" data-role="return"
                                                 class="js-date-input arrival__date Basis_Date end_date book-cursor-pointer book-h-full book-w-full book-text-left book-absolute book-top-0 -book-right-3"
                                                 readonly="" name="tdate" id="todate2" required=""
-                                                placeholder="Check out">
+                                                placeholder="تاریخ برگشت" />
                                             <input value="" class="mstring_date mstring_tdate" type="hidden"
-                                                aria-label="mstring_tdate">
+                                                aria-label="mstring_tdate" />
 
                                             <div class="clr"></div>
                                         </div>
@@ -792,19 +830,21 @@
 
                             </div>
                             <div
-                                class="reserve-field passengers-field book-cursor-pointer book-bg-zinc-100 book-rounded-xl book-px-3 book-py-2 book-mt-2">
+                                class="reserve-field passengers-field book-relative book-cursor-pointer book-bg-zinc-100 book-rounded-xl book-px-3 book-py-2 book-mt-2 book-max-h-80 book-overflow-y-auto">
                                 <div onclick="show_passengerbox(this)"
                                     class="show-passengers-dropdown show-passengers-dropdown-hotel book-flex book-items-center book-justify-between book-cursor-pointer">
                                     <div class="book-flex book-flex-col book-justify-between book-cursor-pointer">
                                         <span class="label-text text-sm">مسافران</span>
-                                        <div>
+                                        <div class="book-flex book-items-center book-gap-2">
                                             <span
-                                                class="passenger-counts room-count inline-block text-textColor h-6 leading-6 text-sm"><span
-                                                    class="count min-w-3 inline-block">1</span>اتاق</span><span
-                                                class="passenger-counts adult-count inline-block text-textColor h-6 leading-6 text-sm ml-2"><span
-                                                    class="count min-w-3 inline-block">2</span>بزرگسال</span><span
-                                                class="passenger-counts child-count inline-block text-textColor h-6 leading-6 text-sm ml-2 hidden"><span
-                                                    class="count min-w-3 inline-block">0</span>کودک</span>
+                                                class="passenger-counts room-count book-flex book-items-center book-gap-1"><span
+                                                    class="count">1</span>اتاق</span>
+                                            <span
+                                                class="passenger-counts adult-count book-flex book-items-center book-gap-1"><span
+                                                    class="count">2</span>بزرگسال</span>
+                                            <span
+                                                class="passenger-counts child-count hidden book-flex book-items-center book-gap-1"><span
+                                                    class="count">0</span>کودک</span>
                                         </div>
                                     </div>
                                     <label class="label-passengers label-passengers-hotel book-cursor-pointer"
@@ -817,30 +857,26 @@
                                     </label>
                                 </div>
                                 <div
-                                    class="passengerbox hidden-box book-w-[310px] book-absolute book-right-0 book-left-0 book-p-4 book-top-full book-bg-white book-rounded-lg book-overflow-x-hidden book-shadow-lg">
-                                    <div class="close-passenger-box w-5 h-5 leading-5 mb-4 clear-both text-center text-textColor cursor-pointer text-sm float-right hover:text-red-600"
-                                        onclick="close_passenger(this)">
-                                        <svg width="15" height="15" class="align-middle">
-                                            <use xlink:href="images/sprite-icons.svg#engine-close-icon"></use>
-                                        </svg>
-                                    </div>
-                                    <div class="passenger-item room-passenger-item book-flex book-items-center book-justify-between">
+                                    class="passengerbox hidden-box book-hidden book-w-[310px] book-p-4 book-overflow-hidden book-max-h-0 book-transition-all book-duration-300">
+                                    <div
+                                        class="passenger-item room-passenger-item book-flex book-items-center book-justify-between">
                                         <label for="passenger-roomcount1"
                                             class="label-passengerroom label-passengerroom-hotel first-room-type first-room-type-label float-left text-sm leading-8 text-textColor"><span
                                                 class="room-tlt-icon mr-1 hidden"><svg class="align-middle" width="15"
                                                     height="15">
                                                     <use xlink:href="images/sprite-icons.svg#engine-room-icon"></use>
                                                 </svg></span><span>اتاق</span></label>
-                                        <ul class="book-h-auto book-leading-normal book-flex book-items-center book-justify-between">
+                                        <ul
+                                            class="book-h-auto book-leading-normal book-flex book-items-center book-justify-between">
                                             <!-- <li
                                                 class="second-room-type block w-auto h-8 leading-8 text-center hover:text-primary cursor-pointer clear-both hover:text-add-room-hover-color">
-                                                <div class="h-full leading-8" onclick="Add_Room_Count(this)"><span>Add
+                                                <div class="" onclick="Add_Room_Count(this)"><span>Add
                                                         another room</span>
                                                 </div>
                                             </li> -->
                                             <li
                                                 class="plus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
-                                                <div class="h-full leading-8" onclick="Change_Room_Count(this)">
+                                                <div class="" onclick="Change_Room_Count(this)">
                                                     <span class="count-icon-simple book-text-white
                                                     book-text-2xl">+</span>
                                                     <span class="count-icon-svg hidden"><svg class="align-middle"
@@ -850,15 +886,14 @@
                                                         </svg></span>
                                                 </div>
                                             </li>
-                                            <li
-                                                class="first-room-type first-room-type-count inline-block w-8 h-8 leading-8 text-center hover:text-primary">
+                                            <li class="first-room-type first-room-type-count book-w-6 book-h-6">
                                                 <input id="passenger-roomcount1" type="text"
                                                     class="roomcount w-full text-center max-xl:text-base"
-                                                    maxlength="4000" value="1" readonly="">
+                                                    maxlength="4000" value="1" readonly="" />
                                             </li>
                                             <li
                                                 class="first-room-type minus-count deactive-change-button book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
-                                                <div class="h-full leading-8" onclick="Change_Room_Count(this)">
+                                                <div class="" onclick="Change_Room_Count(this)">
                                                     <span class="count-icon-simple book-text-white
                                                     book-text-2xl">-</span>
                                                     <span class="count-icon-svg hidden"><svg class="align-middle"
@@ -870,27 +905,27 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="Rooms">
-                                        <div class="contentRoom">
-                                            <div
-                                                class="numberOfRoom">
+                                    <div class="Rooms book-mt-4">
+                                        <div class="contentRoom book-flex book-flex-col book-gap-2">
+                                            <div class="numberOfRoom">
                                                 اتاق<span class="ml-1">1</span></div>
                                             <div
                                                 class="passenger-item adult-passenger-item book-w-full book-flex book-justify-between">
                                                 <label for="passenger-room-adultcount1"
-                                                    class="label-passengeradult label-passengeradult-hotel float-left text-sm leading-8 text-textColor"><span
+                                                    class="label-passengeradult label-passengeradult-hotel"><span
                                                         class="adult-tlt-icon mr-1 hidden"><svg class="align-middle"
                                                             width="15" height="15">
                                                             <use xlink:href="images/sprite-icons.svg#engine-adult-icon">
                                                             </use>
-                                                        </svg></span><span>بزرگسال</span><span
-                                                        class="exp-age text-grays-400 ml-2">(12 سال به بالا)</span></label>
+                                                        </svg></span><span>بزرگسال</span><span class="exp-age">(12 سال
+                                                        به بالا)</span></label>
                                                 <ul
                                                     class="book-h-auto book-leading-normal book-flex book-items-center book-justify-between">
                                                     <li
                                                         class="plus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
-                                                        <div class="book-h-full" onclick="Change_AdultCount(this)">
-                                                            <span class="count-icon-simple">+</span>
+                                                        <div class="" onclick="Change_AdultCount(this)">
+                                                            <span class="count-icon-simple book-text-white
+                                                            book-text-2xl">+</span>
                                                             <span class="count-icon-svg hidden"><svg
                                                                     class="align-middle" width="10" height="10">
                                                                     <use
@@ -899,17 +934,17 @@
                                                                 </svg></span>
                                                         </div>
                                                     </li>
-                                                    <li
-                                                        class="inline-block w-8 h-8 leading-8 text-center hover:text-primary">
+                                                    <li class="book-w-6 book-h-6">
                                                         <input id="passenger-room-adultcount1" type="text"
                                                             class="adultcount w-full text-center max-xl:text-base"
                                                             name="_root.rooms__1.adultcount" maxlength="4000" value="2"
-                                                            readonly="">
+                                                            readonly="" />
                                                     </li>
                                                     <li
                                                         class="minus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
-                                                        <div class="book-h-full" onclick="Change_AdultCount(this)">
-                                                            <span class="count-icon-simple">-</span>
+                                                        <div class="" onclick="Change_AdultCount(this)">
+                                                            <span class="count-icon-simple book-text-white
+                                                            book-text-2xl">-</span>
                                                             <span class="count-icon-svg hidden"><svg
                                                                     class="align-middle" width="10" height="10">
                                                                     <use
@@ -923,18 +958,18 @@
                                             <div
                                                 class="passenger-item child-passenger-item book-w-full book-flex book-justify-between">
                                                 <label for="passenger-room-childcount1"
-                                                    class="label-passengerchild label-passengerchild-hotel float-left text-sm leading-8 text-textColor"><span
+                                                    class="label-passengerchild label-passengerchild-hotel"><span
                                                         class="child-tlt-icon mr-1 hidden"><svg class="align-middle"
                                                             width="15" height="15">
                                                             <use xlink:href="images/sprite-icons.svg#engine-child-icon">
                                                             </use>
-                                                        </svg></span><span>کودک</span><span
-                                                        class="exp-age text-grays-400 ml-2">(0 تا 12 سال)</span></label>
+                                                        </svg></span><span>کودک</span><span class="exp-age">(0 تا 12
+                                                        سال)</span></label>
                                                 <ul
                                                     class="book-h-auto book-leading-normal book-flex book-items-center book-justify-between">
                                                     <li
                                                         class="plus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
-                                                        <div class="h-full" onclick="Change_ChildCount(this)">
+                                                        <div class="" onclick="Change_ChildCount(this)">
                                                             <span class="count-icon-simple book-text-white
                                                             book-text-2xl">+</span>
                                                             <span class="count-icon-svg hidden"><svg
@@ -945,15 +980,14 @@
                                                                 </svg></span>
                                                         </div>
                                                     </li>
-                                                    <li
-                                                        class="inline-block w-8 h-8 leading-8 text-center hover:text-primary">
+                                                    <li class="book-w-6 book-h-6">
                                                         <input id="passenger-room-childcount1" type="text"
                                                             class="childcount w-full text-center max-xl:text-base"
-                                                            maxlength="4000" value="0" readonly="">
+                                                            maxlength="4000" value="0" readonly="" />
                                                     </li>
                                                     <li
                                                         class="minus-count deactive-change-button book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
-                                                        <div class="book-h-full" onclick="Change_ChildCount(this)">
+                                                        <div class="" onclick="Change_ChildCount(this)">
                                                             <span class="count-icon-simple book-text-white
                                                             book-text-2xl">-</span>
                                                             <span class="count-icon-svg hidden"><svg
@@ -967,8 +1001,8 @@
                                                 </ul>
                                             </div>
                                             <input type="hidden" name="_root.rooms__1.childcountandage"
-                                                class="childcountandage" value="0" aria-label="childcountandage">
-                                            <div class="section-select-age clear-both"></div>
+                                                class="childcountandage" value="0" aria-label="childcountandage" />
+                                            <div class="section-select-age book-grid book-grid-cols-2 book-gap-2"></div>
                                         </div>
                                     </div>
                                     <div class="confirm-passenger book-flex book-items-center book-justify-center book-mt-6  book-bg-primary-600 book-text-white book-rounded-lg book-font-medium book-h-12         book-transition-all book-duration-300 hover:book-bg-secondary-600 hover:book-text-white"
@@ -976,7 +1010,7 @@
                                         <span class="confirmpass-tlt-icon mr-1 hidden"><svg class="align-middle"
                                                 width="15" height="15">
                                                 <use xlink:href="images/sprite-icons.svg#engine-confirmpass-icon"></use>
-                                            </svg></span><span>confirm</span>
+                                            </svg></span><span>تایید</span>
                                     </div>
                                     <div class="clr"></div>
                                 </div>
@@ -984,7 +1018,7 @@
 
                             <div class="reserve-search">
                                 <button type="submit"
-                                    class="search-hotel book-w-full book-h-14 book-flex book-items-center book-justify-center book-rounded-xl book-bg-primary-300 book-text-white book-font-medium book-mt-16 book-transition-all book-duration-300 hover:book-bg-primary-900"><span>Search</span>
+                                    class="search-hotel book-w-full book-h-14 book-flex book-items-center book-justify-center book-rounded-xl book-bg-primary-300 book-text-white book-font-medium book-mt-16 book-transition-all book-duration-300 hover:book-bg-primary-900"><span>جستحو</span>
                                 </button>
                             </div>
                         </form>
@@ -1501,6 +1535,49 @@
                 return '';
             }
         };
+        // const renderAvailableRooms = async (element) => {
+        //     try {
+        //         if (!element || !Array.isArray(element.availablerooms)) {
+        //             console.warn("⚠️ renderAvailableRooms: no availablerooms found");
+        //             return "";
+        //         }
+
+        //         const serviceLabel = element.services;
+
+        //         const roomsHtml = element.availablerooms
+        //             .map((room, index) => {
+        //                 const info = room.info || {};
+        //                 const roomName = info.room || "";
+        //                 const availability = info.availability || "";
+        //                 const availabilityLabel = availability
+        //                     ? availability.charAt(0).toUpperCase() + availability.slice(1)
+        //                     : "";
+
+        //                 const paddingClass = index > 0 ? " book-pt-6" : "";
+
+        //                 return `
+        // <div class="${paddingClass}">
+        //   <h3 class="book-text-zinc-900 book-mb-3">${roomName}</h3>
+        //   <div class="book-flex book-gap-2">
+        //     <span
+        //         class="book-bg-primary-50 book-text-primary-800 book-text-xs book-rounded-3xl book-py-1 book-px-3">${serviceLabel}</span>
+        //     <span
+        //         class="book-bg-specialcolor-1 book-text-specialcolor-2 book-text-xs book-rounded-3xl book-py-1 book-px-4">${availabilityLabel}</span>
+        //   </div>
+        // </div>`;
+        //             })
+        //             .join("");
+
+        //         return `
+        // <div class="book-flex-[2.75] book-flex book-flex-col book-justify-center book-gap-6 book-divide-y book-divide-dashed book-divide-zinc-300">
+        // ${roomsHtml}
+        // </div>`;
+        //     } catch (error) {
+        //         console.error(`renderAvailableRooms: ${error.message}`);
+        //         return "";
+        //     }
+        // };
+
         const renderAvailableRooms = async (element) => {
             try {
                 if (!element || !Array.isArray(element.availablerooms)) {
@@ -1509,6 +1586,8 @@
                 }
 
                 const serviceLabel = element.services;
+
+                const { currency_unit, currency_cost_number, floatdigit } = getCurrencyUnitFromStorage();
 
                 const roomsHtml = element.availablerooms
                     .map((room, index) => {
@@ -1521,28 +1600,338 @@
 
                         const paddingClass = index > 0 ? " book-pt-6" : "";
 
+                        // اضافه کردن ورودی‌های مخفی با استفاده از جاوااسکریپت معمولی
+                        const hiddenInputs = `
+                    ${renderOptionId(element)}
+                    ${renderadults(element)}
+                    ${renderchildwithbed(element)}
+                    ${renderchildwithoutbed(element)}
+                    ${renderinfant(element)}
+                    ${renderroomid(element)}
+                    ${renderid(element)}
+                    ${renderproviderId(element)}
+                    ${renderprovider(element)}
+                    ${renderhotelidRooms(element)}
+                    ${rendernightsRooms(element)}
+                    ${rendersupplierRooms(element)}
+                    ${renderFlightIdOtherRooms('[##cms.form.FlightId|cms.form.idProduct##]')}
+                    <input type="hidden" value="${currency_unit}" name="rate-unit" class="rate-unit" />
+                    <input type="hidden" value="${currency_cost_number}" name="rate-cost" class="rate-cost" />
+                    <input type="hidden" value="${floatdigit}" name="rate-floatdigit" class="rate-floatdigit" />
+                    <input type="hidden" value="[##cms.form.sid|(2)##]" name="sid" />
+                    <input type="hidden" value="[##cms.form.inscountry##]" name="inscountry" />
+                    <input type="hidden" value="[##cms.form.fsupplier##]" name="fsupplier" />
+                    <input type="hidden" value="[##cms.form.hsupplier##]" name="hsupplier" />
+                    <input type="hidden" value="[##cms.form.checkin##]" name="checkin" />
+                    <input type="hidden" value="[##cms.form.checkout##]" name="checkout" />
+                    <input type="hidden" value="[##cms.form.from##]" name="from" />
+                    <input type="hidden" value="[##cms.form.to##]" name="to" />
+                    <input type="hidden" value="[##cms.form.DepartureCity##]" name="DepartureCity" />
+                    <input type="hidden" value="[##cms.form.DestinationCity##]" name="DestinationCity" />
+                    <input type="hidden" value="[##cms.form.Hotel-Date|(0)##]" name="Hotel-Date" />
+                    <input type="hidden" value="[##cms.form.FlightClass##]" name="FlightClass" />
+                    <input type="hidden" value="[##cms.form.cityid##]" name="cityid" />
+                    <input type="hidden" value="[##cms.form.coHotel##]" name="coHotel" />
+                    <input type="hidden" value='[##cms.json.header|cms.form.roomSearch##]' name="roomSearch" />
+                    <input type="hidden" value="[##cms.form.fdate##]" name="fdate" />
+                    <input type="hidden" value="[##cms.form.tdate##]" name="tdate" />
+                `;
+
                         return `
-<div class="${paddingClass}">
-  <h3 class="book-text-zinc-900 book-mb-3">${roomName}</h3>
-  <div class="book-flex book-gap-2">
-    <span
-        class="book-bg-primary-50 book-text-primary-800 book-text-xs book-rounded-3xl book-py-1 book-px-3">${serviceLabel}</span>
-    <span
-        class="book-bg-specialcolor-1 book-text-specialcolor-2 book-text-xs book-rounded-3xl book-py-1 book-px-4">${availabilityLabel}</span>
-  </div>
-</div>`;
+                <div class="${paddingClass}">
+                  <h3 class="book-text-zinc-900 book-mb-3">${roomName}</h3>
+                  <div class="book-flex book-gap-2">
+                    <span class="book-bg-primary-50 book-text-primary-800 book-text-xs book-rounded-3xl book-py-1 book-px-3">${serviceLabel}</span>
+                    <span class="book-bg-specialcolor-1 book-text-specialcolor-2 book-text-xs book-rounded-3xl book-py-1 book-px-4">${availabilityLabel}</span>
+                  </div>
+                  ${hiddenInputs}
+                </div>`;
                     })
                     .join("");
 
                 return `
-<div class="book-flex-[2.75] book-flex book-flex-col book-justify-center book-gap-6 book-divide-y book-divide-dashed book-divide-zinc-300">
-${roomsHtml}
-</div>`;
+        <div class="book-flex-[2.75] book-flex book-flex-col book-justify-center book-gap-6 book-divide-y book-divide-dashed book-divide-zinc-300">
+        ${roomsHtml}
+        </div>`;
             } catch (error) {
                 console.error(`renderAvailableRooms: ${error.message}`);
                 return "";
             }
         };
+
+        const renderAction = (element) => {
+            let type_module = '[##cms.form.type_module|cms.form.key##]';
+            let clid = '[##cms.form.clid|(1)##]';
+            if (type_module == 6) {
+                if (clid == 1) {
+                    return "/Client_Show_FH_ver.2.bc"
+                } else if (clid == 2) {
+                    return "/Client_Show_FH_En_ver.2.bc"
+                } else if (clid == 3) {
+                    return "/Client_Show_FH_Ar_ver.2.bc"
+                }
+
+            } else {
+                if (clid == 1) {
+                    return "/Client_Show_Hotel_ver.2.bc"
+                } else if (clid == 2) {
+                    return "/Client_Show_Hotel_En_ver.2.bc"
+                } else if (clid == 3) {
+                    return "/Client_Show_Hotel_Ar_ver.2.bc"
+                }
+
+            }
+        };
+
+        function renderOptionId(element) {
+            // ایجاد ورودی مخفی به صورت جاوااسکریپت
+            let input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'optionId';
+            input.value = element.optionId || ''; // در صورتی که optionId وجود نداشته باشد، مقدار خالی برمی‌گرداند
+
+            return input.outerHTML; // برگرداندن ورودی به عنوان یک عنصر DOM
+        }
+
+        function renderUnit(currency_unit) {
+            if (currency_unit === '') {
+                let moneytype = '[##cms.form.moneytype##]';  // وقتی currency_unit خالی باشد، مقدار پیش‌فرض را برمی‌گرداند
+                return moneytype;
+            } else {
+                return currency_unit;  // اگر currency_unit مقدار داشته باشد، همان مقدار را باز می‌گرداند
+            }
+        }
+        function renderadults(element) {
+            let lenavailablerooms = element.availablerooms.length;
+            let indents = [];
+
+            for (let i = 0; i < lenavailablerooms; i++) {
+                let idx = i;
+
+                // ایجاد ورودی مخفی به صورت جاوااسکریپت
+                let input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = `_root.rooms__${idx}.adults`;
+                input.value = element.availablerooms[i].info.adults;
+
+                // اضافه کردن به آرایه به صورت کد HTML
+                indents.push(input.outerHTML);  // استفاده از outerHTML
+            }
+
+            return indents.join('');  // بازگشت به صورت یک رشته HTML
+        }
+
+        function renderchildwithbed(element) {
+            let lenavailablerooms = element.availablerooms.length;
+            let indents = [];
+
+            for (let i = 0; i < lenavailablerooms; i++) {
+                let idx = i;
+
+                // ایجاد ورودی مخفی برای childwithbed به صورت جاوااسکریپت
+                let input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = `_root.rooms__${idx}.childwithbed`;
+                input.value = element.availablerooms[i].info.withbed;
+
+                // اضافه کردن به آرایه به صورت کد HTML
+                indents.push(input.outerHTML);  // استفاده از outerHTML
+            }
+
+            return indents.join('');  // بازگشت به صورت یک رشته HTML
+        }
+
+
+        function renderchildwithoutbed(element) {
+            let lenavailablerooms = element.availablerooms.length;
+            let indents = [];
+
+            for (let i = 0; i < lenavailablerooms; i++) {
+                let idx = i;
+
+                // ایجاد ورودی مخفی برای childwithoutbed به صورت جاوااسکریپت
+                let input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = `_root.rooms__${idx}.childwithoutbed`;
+                input.value = element.availablerooms[i].info.withoutbed;
+
+                // اضافه کردن به آرایه به صورت کد HTML
+                indents.push(input.outerHTML);  // استفاده از outerHTML
+            }
+
+            return indents.join('');  // بازگشت به صورت یک رشته HTML
+        }
+
+
+        function renderinfant(element) {
+            let lenavailablerooms = element.availablerooms.length;
+            let indents = [];
+
+            for (let i = 0; i < lenavailablerooms; i++) {
+                let idx = i;
+
+                // ایجاد ورودی مخفی برای infant به صورت جاوااسکریپت
+                let input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = `_root.rooms__${idx}.infant`;
+                input.value = element.availablerooms[i].info.infant;
+
+                // اضافه کردن به آرایه به صورت کد HTML
+                indents.push(input.outerHTML);  // استفاده از outerHTML
+            }
+
+            return indents.join('');  // بازگشت به صورت یک رشته HTML
+        }
+
+        function renderroomid(element) {
+            let lenavailablerooms = element.availablerooms.length;
+            let indents = [];
+
+            for (let i = 0; i < lenavailablerooms; i++) {
+                let idx = i;
+
+                // ایجاد ورودی مخفی برای roomid به صورت جاوااسکریپت
+                let input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = `_root.rooms__${idx}.roomid`;
+                input.value = element.availablerooms[i].info.roomid;
+
+                // اضافه کردن به آرایه به صورت کد HTML
+                indents.push(input.outerHTML);  // استفاده از outerHTML
+            }
+
+            return indents.join('');  // بازگشت به صورت یک رشته HTML
+        }
+
+        function renderid(element) {
+            let id = element.id;
+
+            if (typeof id === 'string') {
+                return `<input type="hidden" value="${id}" name="productid" />`;
+            } else if (typeof id === 'object' && id !== null) {
+                return `<input type="hidden" value="${id.hotelId}" name="productid" />`;
+            }
+
+            return '';  // در صورتی که id نه رشته باشد و نه شیء، رشته خالی برگردانده می‌شود
+        }
+
+
+        function renderprovider(element) {
+            let provider = element.id.provider;
+
+            if (provider === undefined) {
+                return ''; // در صورت عدم وجود provider، رشته خالی برمی‌گردد
+            } else {
+                // ایجاد ورودی مخفی برای provider به صورت جاوااسکریپت
+                let input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'mainprovider';
+                input.value = JSON.stringify(provider);
+
+                return input.outerHTML; // استفاده از outerHTML برای بازگشت کد HTML ورودی
+            }
+        }
+        function renderproviderId(element) {
+            let provider = element.id.provider;
+
+            // ایجاد ورودی مخفی برای provider
+            let input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'provider';
+            input.className = 'provider'; // تنظیم کلاس برای ورودی
+
+            if (provider === undefined) {
+                input.value = '0'; // اگر provider وجود ندارد، مقدار را 0 قرار می‌دهیم
+            } else {
+                let providerId = provider.provider_id; // اگر provider وجود دارد، provider_id را می‌گیریم
+                input.value = providerId || '0'; // اگر provider_id وجود ندارد، مقدار 0 قرار می‌دهیم
+            }
+
+            return input; // برگرداندن ورودی به عنوان یک عنصر DOM
+        }
+
+        function renderproviderId(element) {
+            let provider = element.id.provider;
+
+            // ایجاد ورودی مخفی برای provider به صورت جاوااسکریپت
+            let input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'provider';
+            input.className = 'provider'; // تنظیم کلاس برای ورودی
+
+            if (provider === undefined) {
+                input.value = '0'; // اگر provider وجود ندارد، مقدار را 0 قرار می‌دهیم
+            } else {
+                let providerId = provider.provider_id; // اگر provider وجود دارد، provider_id را می‌گیریم
+                input.value = providerId || '0'; // اگر provider_id وجود ندارد، مقدار 0 قرار می‌دهیم
+            }
+
+            return input.outerHTML; // استفاده از outerHTML برای بازگشت کد HTML ورودی
+        }
+
+        function renderhotelidRooms(element) {
+            let hotelIdFamily = element.id.hotelId;
+
+            // بررسی اینکه آیا hotelIdFamily وجود دارد یا خیر
+            if (hotelIdFamily === undefined) {
+                return `<input type="hidden" value="${element.hotelid}" name="hotelid" />`; // اگر hotelIdFamily وجود ندارد، از element.hotelid استفاده می‌کنیم
+            } else {
+                return `<input type="hidden" value="${hotelIdFamily}" name="hotelid" />`; // اگر hotelIdFamily موجود است، آن را استفاده می‌کنیم
+            }
+        }
+
+
+        function rendernightsRooms(element) {
+            let hotelIdFamily = element.id.hotelId;
+
+            // ایجاد ورودی مخفی برای nights به صورت جاوااسکریپت
+            let input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'nightLink'; // تنظیم نام ورودی
+            input.value = element.nights; // مقدار ورودی را nights قرار می‌دهیم
+
+            return input.outerHTML; // استفاده از outerHTML برای بازگشت کد HTML ورودی
+        }
+        function rendersupplierRooms(element) {
+            let hotelIdFamily = element.id.hotelId;
+
+            // ایجاد ورودی مخفی برای supplier به صورت جاوااسکریپت
+            let input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'supplier'; // تنظیم نام ورودی
+            input.value = element.supplier; // تنظیم مقدار ورودی به supplier
+
+            return input.outerHTML; // استفاده از outerHTML برای بازگشت کد HTML ورودی
+        }
+
+        function renderFlightIdOtherRooms(element) {
+            if (element === '') {
+                return ''; // اگر element خالی است، رشته خالی باز می‌گردد
+            } else {
+                let inputs = '';
+
+                if (element.indexOf('value') > -1) {
+                    // اگر مقدار 'value' در element باشد
+                    let parsedElement = JSON.parse(element);
+                    inputs = `
+                <input type="hidden" value="${element}" name="idws" />
+                <input type="hidden" value="${parsedElement.value}" name="idvalue" />
+                <input type="hidden" value="${parsedElement.provider.provider_id}" name="fprovider" />
+                <input type="hidden" value="${JSON.stringify(parsedElement.provider)}" name="fmainprovider" />
+            `;
+                } else {
+                    // در غیر این صورت
+                    inputs = `
+                <input type="hidden" value="${element}" name="idnows" />
+                <input type="hidden" value="0" name="fprovider" />
+            `;
+                }
+
+                return inputs; // برگرداندن ورودی‌های مخفی به عنوان یک رشته HTML
+            }
+        }
+
+
 
         const getCurrencyUnitFromStorage = (key = 'currencyObject') => {
             const EMPTY = {
@@ -2323,42 +2712,40 @@ ${roomsHtml}
             const icon = e.closest(".reserve-field").querySelector(".down-icon");
             if (element) {
                 if (window.innerWidth > 1024) {
-                    if (element.classList.contains("hidden")) {
-                        element.classList.remove("hidden");
-                        element.style.opacity = 0;
-                        element.style.transition = "opacity 0.7s";
-                        requestAnimationFrame(() => {
-                            requestAnimationFrame(() => {
-                                element.style.opacity = 1;
-                            });
-                        });
+                    if (element.classList.contains("book-hidden")) {
+                        element.classList.remove("book-hidden");
+                        element.style.maxHeight = '0px';
+                        void element.offsetHeight;
+                        element.style.maxHeight = element.scrollHeight * 6 + 'px';
+
                         if (window.innerWidth < 1024) {
                             element.classList.add("fixed-passengerbox");
-                            document.querySelector("body").classList.add("overflow-hidden");
+                            document.querySelector("body").classList.add("book-overflow-hidden");
                         }
                     } else {
-                        element.style.opacity = 0;
+                        element.style.maxHeight = '0px';
                         element.addEventListener(
                             "transitionend",
                             () => {
-                                element.classList.add("hidden");
+                                element.classList.add("book-hidden");
                             },
                             { once: true }
                         );
                     }
                 } else {
-                    element.classList.toggle("hidden");
-                    // add this code in mobile
+                    element.classList.toggle("book-hidden");
                     if (window.innerWidth < 1024) {
                         element.classList.add("fixed-passengerbox");
-                        document.querySelector("body").classList.add("overflow-hidden");
+                        document.querySelector("body").classList.add("book-overflow-hidden");
                     }
                 }
             }
             if (icon) {
-                icon.classList.toggle("rotate");
+                icon.classList.toggle("book-rotate-180");
             }
         }
+
+
 
         function close_passenger(e) {
             if (window.innerWidth > 1024) {
@@ -2366,12 +2753,12 @@ ${roomsHtml}
                 e.closest(".hidden-box").addEventListener(
                     "transitionend",
                     () => {
-                        e.closest(".hidden-box").classList.add("hidden");
+                        e.closest(".hidden-box").classList.add("book-hidden");
                     },
                     { once: true }
                 );
             } else {
-                e.closest(".hidden-box").classList.add("hidden");
+                e.closest(".hidden-box").classList.add("book-hidden");
             }
             let passBox = e.closest(".reserve-field");
             let icon = e.closest(".reserve-field").querySelector(".down-icon");
@@ -2380,15 +2767,15 @@ ${roomsHtml}
                 if (nextDiv && nextDiv.classList.contains("reserve-field")) {
                     let hiddenBox = nextDiv.querySelector(".hidden-box");
                     if (hiddenBox) {
-                        hiddenBox.classList.remove("hidden");
+                        hiddenBox.classList.remove("book-hidden");
                     }
                 }
             }
             if (icon) {
-                icon.classList.remove("rotate");
+                icon.classList.remove("book-rotate-180");
             }
-            if (document.querySelector("body").classList.contains("overflow-hidden")) {
-                document.querySelector("body").classList.remove("overflow-hidden");
+            if (document.querySelector("body").classList.contains("book-overflow-hidden")) {
+                document.querySelector("body").classList.remove("book-overflow-hidden");
             }
         }
 
@@ -2417,54 +2804,52 @@ ${roomsHtml}
                         new_adult = number_diff;
                     }
                     let newRoom = document.createElement("div");
-                    newRoom.className = "contentRoom";
+                    newRoom.className = "contentRoom book-flex book-flex-col book-gap-2 book-border-t book-border-solid book-border-zinc-200 book-pt-2";
                     newRoom.innerHTML = `
-          <div class="numberOfRoom text-sm text-primary float-right clear-both w-1/2 mb-4 text-right">اتاق ${s}</div>
-          <div class="deleteRoom text-sm warningColor-100 float-left w-1/2 mb-4 text-left cursor-pointer hover:text-remove-room-hover-color" onclick="remove_Room(this)">حذف اتاق</div>
-            <div class="passenger-item adult-passenger-item clear-both w-full mb-4 relative">
-              <label for="passenger-room-adultcount${s}" class="float-right text-sm leading-8 text-textColor">
-                <span>بزرگسال</span><span class="exp-age text-grays-400 mr-2">(12 سال به بالا)</span>
+          <div class="numberOfRoom">اتاق ${s}</div>
+          <div class="deleteRoom book-hidden book-cursor-pointer" onclick="remove_Room(this)">حذف اتاق</div>
+            <div class="passenger-item adult-passenger-item book-w-full book-flex book-justify-between">
+              <label for="passenger-room-adultcount${s}" class="">
+                <span>بزرگسال</span><span class="exp-age">(12 سال به بالا)</span>
               </label>
-              <ul class="float-left h-8 leading-8">
-                <li class="plus-count inline-block w-8 h-8 leading-8 text-center hover:text-primary radius-type-1 border-type-1 cursor-pointer">
-                  <div class="h-full leading-8" onclick="Change_AdultCount(this)">
-                    <span class="count-icon-simple">+</span><span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10"><use xlink:href="images/sprite-icons.svg#engine-plus-icon"></use></svg></span>
+              <ul class="book-h-auto book-leading-normal book-flex book-items-center book-justify-between">
+                <li class="plus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
+                  <div class="" onclick="Change_AdultCount(this)">
+                    <span class="count-icon-simple book-text-white book-text-2xl">+</span><span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10"><use xlink:href="images/sprite-icons.svg#engine-plus-icon"></use></svg></span>
                   </div>
                 </li>
-                <li class="inline-block w-8 h-8 leading-8 text-center hover:text-primary">
-                  <input id="passenger-room-adultcount${s}" type="text" class="adultcount w-full text-center" name="_root.rooms__${s}.adultcount" maxlength="4000" value=${new_adult} readonly>
+                <li class="book-w-6 book-h-6">
+                  <input id="passenger-room-adultcount${s}" type="text" class="adultcount w-full text-center" name="_root.rooms__${s}.adultcount" maxlength="4000" value=${new_adult} readonly />
                 </li>
-                <li class="minus-count inline-block w-8 h-8 leading-8 text-center hover:text-primary radius-type-1 border-type-1 cursor-pointer">
-                  <div class="h-full leading-8" onclick="Change_AdultCount(this)">
-                    <span class="count-icon-simple">-</span><span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10"><use xlink:href="images/sprite-icons.svg#engine-minus-icon"></use></svg></span>
+                <li class="minus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
+                  <div class="" onclick="Change_AdultCount(this)">
+                    <span class="count-icon-simple book-text-white book-text-2xl">-</span><span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10"><use xlink:href="images/sprite-icons.svg#engine-minus-icon"></use></svg></span>
                   </div>
                 </li>
               </ul>
-              <div class="clr"></div>
             </div>
-            <div class="passenger-item child-passenger-item clear-both w-full mb-4 relative">
-              <label for="passenger-room-childcount${s}" class="float-right text-sm leading-8 text-textColor">
-                <span>کودک</span><span class="exp-age text-grays-400 mr-2">(0 تا 12 سال)</span>
+            <div class="passenger-item child-passenger-item book-w-full book-flex book-justify-between">
+              <label for="passenger-room-childcount${s}" class="">
+                <span>کودک</span><span class="exp-age">(0 تا 12 سال)</span>
               </label>
-              <ul class="float-left h-8 leading-8">
-                <li class="plus-count inline-block w-8 h-8 leading-8 text-center hover:text-primary radius-type-1 border-type-1 cursor-pointer">
-                  <div class="h-full leading-8" onclick="Change_ChildCount(this)">
-                    <span class="count-icon-simple">+</span><span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10"><use xlink:href="images/sprite-icons.svg#engine-plus-icon"></use></svg></span>
+              <ul class="book-h-auto book-leading-normal book-flex book-items-center book-justify-between">
+                <li class="plus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
+                  <div class="" onclick="Change_ChildCount(this)">
+                    <span class="count-icon-simple book-text-white book-text-2xl">+</span><span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10"><use xlink:href="images/sprite-icons.svg#engine-plus-icon"></use></svg></span>
                   </div>
                 </li>
-                <li class="inline-block w-8 h-8 leading-8 text-center hover:text-primary">
-                  <input id="passenger-room-childcount${s}" type="text" class="childcount w-full text-center" maxlength="4000" value="0" readonly>
+                <li class="book-w-6 book-h-6">
+                  <input id="passenger-room-childcount${s}" type="text" class="childcount w-full text-center" maxlength="4000" value="0" readonly />
                 </li>
-                <li class="minus-count inline-block w-8 h-8 leading-8 text-center hover:text-primary radius-type-1 border-type-1 cursor-pointer">
-                  <div class="h-full leading-8" onclick="Change_ChildCount(this)">
-                    <span class="count-icon-simple">-</span><span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10"><use xlink:href="images/sprite-icons.svg#engine-minus-icon"></use></svg></span>
+                <li class="minus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
+                  <div class="" onclick="Change_ChildCount(this)">
+                    <span class="count-icon-simple book-text-white book-text-2xl">-</span><span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10"><use xlink:href="images/sprite-icons.svg#engine-minus-icon"></use></svg></span>
                   </div>
                 </li>
               </ul>
-              <div class="clr"></div>
             </div>
             <input type="hidden" name="_root.rooms__${s}.childcountandage" class="childcountandage" />
-            <div class="section-select-age clear-both"></div>
+            <div class="section-select-age book-grid book-grid-cols-2 book-gap-2"></div>
         `;
                     roomsContainer.appendChild(newRoom);
                     const adult_cont_new = newRoom.querySelector(".adultcount").value;
@@ -2524,54 +2909,52 @@ ${roomsHtml}
                         new_adult = number_diff;
                     }
                     let newRoom = document.createElement("div");
-                    newRoom.className = "contentRoom";
+                    newRoom.className = "contentRoom book-flex book-flex-col book-gap-2";
                     newRoom.innerHTML = `
-          <div class="numberOfRoom text-sm text-primary float-right clear-both w-1/2 mb-4 text-right">اتاق ${s}</div>
-          <div class="deleteRoom text-sm warningColor-100 float-left w-1/2 mb-4 text-left cursor-pointer hover:text-remove-room-hover-color" onclick="remove_Room(this)">حذف اتاق</div>
-            <div class="passenger-item adult-passenger-item clear-both w-full mb-4 relative">
-              <label for="passenger-room-adultcount${s}" class="float-right text-sm leading-8 text-textColor">
-                <span>بزرگسال</span><span class="exp-age text-grays-400 mr-2">(12 سال به بالا)</span>
+          <div class="numberOfRoom">اتاق ${s}</div>
+          <div class="deleteRoom book-hidden book-cursor-pointer" onclick="remove_Room(this)">حذف اتاق</div>
+            <div class="passenger-item adult-passenger-item book-w-full book-flex book-justify-between">
+              <label for="passenger-room-adultcount${s}" class="">
+                <span>بزرگسال</span><span class="exp-age">(12 سال به بالا)</span>
               </label>
-              <ul class="float-left h-8 leading-8">
-                <li class="plus-count inline-block w-8 h-8 leading-8 text-center hover:text-primary radius-type-1 border-type-1 cursor-pointer">
-                  <div class="h-full leading-8" onclick="Change_AdultCount(this)">
-                    <span class="count-icon-simple">+</span><span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10"><use xlink:href="images/sprite-icons.svg#engine-plus-icon"></use></svg></span>
+              <ul class="book-h-auto book-leading-normal book-flex book-items-center book-justify-between">
+                <li class="plus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
+                  <div class="" onclick="Change_AdultCount(this)">
+                    <span class="count-icon-simple book-text-white book-text-2xl">+</span><span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10"><use xlink:href="images/sprite-icons.svg#engine-plus-icon"></use></svg></span>
                   </div>
                 </li>
-                <li class="inline-block w-8 h-8 leading-8 text-center hover:text-primary">
-                  <input id="passenger-room-adultcount${s}" type="text" class="adultcount w-full text-center" name="_root.rooms__${s}.adultcount" maxlength="4000" value=${new_adult} readonly>
+                <li class="book-w-6 book-h-6">
+                  <input id="passenger-room-adultcount${s}" type="text" class="adultcount w-full text-center" name="_root.rooms__${s}.adultcount" maxlength="4000" value=${new_adult} readonly />
                 </li>
-                <li class="minus-count inline-block w-8 h-8 leading-8 text-center hover:text-primary radius-type-1 border-type-1 cursor-pointer">
-                  <div class="h-full leading-8" onclick="Change_AdultCount(this)">
-                    <span class="count-icon-simple">-</span><span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10"><use xlink:href="images/sprite-icons.svg#engine-minus-icon"></use></svg></span>
+                <li class="minus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
+                  <div class="" onclick="Change_AdultCount(this)">
+                    <span class="count-icon-simple book-text-white book-text-2xl">-</span><span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10"><use xlink:href="images/sprite-icons.svg#engine-minus-icon"></use></svg></span>
                   </div>
                 </li>
               </ul>
-              <div class="clr"></div>
             </div>
-            <div class="passenger-item child-passenger-item clear-both w-full mb-4 relative">
-              <label for="passenger-room-childcount${s}" class="float-right text-sm leading-8 text-textColor">
-                <span>کودک</span><span class="exp-age text-grays-400 mr-2">(0 تا 12 سال)</span>
+            <div class="passenger-item child-passenger-item book-w-full book-flex book-justify-between">
+              <label for="passenger-room-childcount${s}" class="">
+                <span>کودک</span><span class="exp-age">(0 تا 12 سال)</span>
               </label>
-              <ul class="float-left h-8 leading-8">
-                <li class="plus-count inline-block w-8 h-8 leading-8 text-center hover:text-primary radius-type-1 border-type-1 cursor-pointer">
-                  <div class="h-full leading-8" onclick="Change_ChildCount(this)">
-                    <span class="count-icon-simple">+</span><span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10"><use xlink:href="images/sprite-icons.svg#engine-plus-icon"></use></svg></span>
+              <ul class="book-h-auto book-leading-normal book-flex book-items-center book-justify-between">
+                <li class="plus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
+                  <div class="" onclick="Change_ChildCount(this)">
+                    <span class="count-icon-simple book-text-white book-text-2xl">+</span><span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10"><use xlink:href="images/sprite-icons.svg#engine-plus-icon"></use></svg></span>
                   </div>
                 </li>
-                <li class="inline-block w-8 h-8 leading-8 text-center hover:text-primary">
-                  <input id="passenger-room-childcount${s}" type="text" class="childcount w-full text-center" maxlength="4000" value="0" readonly>
+                <li class="book-w-6 book-h-6">
+                  <input id="passenger-room-childcount${s}" type="text" class="childcount w-full text-center" maxlength="4000" value="0" readonly />
                 </li>
-                <li class="minus-count inline-block w-8 h-8 leading-8 text-center hover:text-primary radius-type-1 border-type-1 cursor-pointer">
-                  <div class="h-full leading-8" onclick="Change_ChildCount(this)">
-                    <span class="count-icon-simple">-</span><span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10"><use xlink:href="images/sprite-icons.svg#engine-minus-icon"></use></svg></span>
+                <li class="minus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
+                  <div class="" onclick="Change_ChildCount(this)">
+                    <span class="count-icon-simple book-text-white book-text-2xl">-</span><span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10"><use xlink:href="images/sprite-icons.svg#engine-minus-icon"></use></svg></span>
                   </div>
                 </li>
               </ul>
-              <div class="clr"></div>
             </div>
             <input type="hidden" name="_root.rooms__${s}.childcountandage" class="childcountandage" />
-            <div class="section-select-age clear-both"></div>
+            <div class="section-select-age book-grid book-grid-cols-2 book-gap-2"></div>
         `;
                     roomsContainer.appendChild(newRoom);
                     const adult_cont_new = newRoom.querySelector(".adultcount").value;
@@ -2719,11 +3102,11 @@ ${roomsHtml}
                     for (let i = 1; i <= updatedCount; i++) {
                         const e = document.createElement("div");
                         e.className =
-                            "createChildDropdown mb-4 w-full float-right clear-both";
+                            "createChildDropdown book-mb-4";
                         e.innerHTML = `
-            <label for="select-age${i}" class="float-right text-sm leading-8 text-textColor">سن کودک ${ordinalWords[i - 1] || i
+            <label for="select-age${i}" class="">سن کودک ${ordinalWords[i - 1] || i
                             }</label>
-            <select class="select-age float-left w-full rounded-type-1 bg-bgColor-100 h-8 leading-8 px-2" id="select-age${i}">
+            <select class="select-age book-w-full book-border book-border-solid book-border-zinc-600 book-rounded-lg book-px-3 book-h-8" id="select-age${i}">
               <option value="1">تا 1 سال</option>
               <option value="2">1 تا 2</option>
               <option value="3">2 تا 3</option>
@@ -2881,11 +3264,8 @@ ${roomsHtml}
             }
 
             const openDropdown = () => {
-                // اول max-height رو صفر کن تا ترنزیشن درست تریگر بشه
                 dropdownWrapper.style.maxHeight = '0px';
-                // فورس رفلوی برای تکرار ترنزیشن
                 void dropdownWrapper.offsetHeight;
-                // حالا ارتفاع واقعی محتوا
                 const fullHeight = dropdownWrapper.scrollHeight;
                 dropdownWrapper.style.maxHeight = fullHeight + 'px';
 
@@ -2909,7 +3289,6 @@ ${roomsHtml}
                 }
             });
 
-            // کلیک بیرون رو هندل نمی‌کنیم، طبق خواسته‌ات
         });
 
 
