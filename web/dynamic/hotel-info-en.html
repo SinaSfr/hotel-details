@@ -79,7 +79,7 @@
     <!-- Header -->
     <basis core="call" file="header.inc" lid="2" pageindex="[##cms.cms.pageindex|(1)##]"></basis>
     <basis core="callback" run="atclient"
-        triggers="hotel.list cms.page cms.nextpage cms.prevpage cms.services cms.roomtypes" method="manipulation">
+        triggers="room.list cms.page cms.nextpage cms.prevpage cms.services cms.roomtypes" method="manipulation">
     </basis>
     <!-- Main-->
     <main>
@@ -463,8 +463,8 @@
                             </layout>
                             <face>
                                 <script type="text/template">
-                                <div
-                                    class="book-flex book-gap-6 book-border book-border-solid book-border-zinc-200 book-rounded-xl book-py-5 book-px-6">
+                                <form method="post" action=""
+                                    class="book-hotel__room book-flex book-gap-6 book-border book-border-solid book-border-zinc-200 book-rounded-xl book-py-5 book-px-6">
                                     {{ return await renderAvailableRooms($data)}}
                                     <div class="book-flex-1">
                                         {{
@@ -537,7 +537,7 @@
                                                 اتاق</button>
                                         </div>
                                     </div>
-                                </div>
+                                </form>
                             </script>
                             </face>
                         </basis>
@@ -576,6 +576,18 @@
 
 
                     <section class="book-bg-white book-rounded-xl book-py-6 book-px-8 book-mt-3">
+                        <div class="book-shrink-0 book-flex book-flex-col book-items-center book-gap-4">
+                            <div class="book-flex-1 book-flex book-flex-col book-items-center book-gap-2">
+                                <h3 class="book-text-zinc-900">ساعت ورود</h3>
+                                <span
+                                    class="book-hotel__checkin__time book-flex book-items-center book-justify-center book-w-full book-bg-primary-50 book-rounded-full book-text-sm book-text-zinc-900 book-py-2"></span>
+                            </div>
+                            <div class="book-flex-1 book-flex book-flex-col book-items-center book-gap-2">
+                                <h3 class="book-text-zinc-900">ساعت خروج</h3>
+                                <span
+                                    class="book-hotel__checkout__time book-flex book-items-center book-justify-center book-w-full book-bg-primary-50 book-rounded-full book-text-sm book-text-zinc-900 book-py-2"></span>
+                            </div>
+                        </div>
                         <h2
                             class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
                             اماکن اطراف هتل</h2>
@@ -648,7 +660,7 @@
                             </div>
                         </div>
                     </section>
-                    <section class="book-bg-white book-rounded-xl book-py-6 book-px-8 book-mt-3">
+                    <!-- <section class="book-bg-white book-rounded-xl book-py-6 book-px-8 book-mt-3">
 
                         <h2 id="section-rules"
                             class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
@@ -686,50 +698,7 @@
                                 </div>
                             </div>
                         </div>
-                    </section>
-                    <section class="book-bg-white book-rounded-xl book-py-6 book-px-3 book-mt-3">
-                        <h2 id="section-comments"
-                            class="book-text-zinc-900 book-font-bold book-text-xl book-border-b book-border-solid book-border-zinc-200 -book-mx-3 book-px-3 book-pb-6 book-mb-6">
-                            نظر کاربران</h2>
-                        <div class="book-flex book-flex-col book-gap-8">
-                            <div class="book-flex book-items-start book-gap-6">
-                                <span
-                                    class="book-shrink-0 book-flex book-items-center book-justify-center book-w-16 book-h-16 book-bg-zinc-100 book-rounded-full">
-                                    <svg width="24" height="24">
-                                        <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-user">
-                                        </use>
-                                    </svg>
-                                </span>
-                                <div class="book-flex book-flex-col book-gap-2">
-                                    <h3 class="book-font-medium book-text-zinc-900">محسن حیدری</h3>
-                                    <p class="book-text-zinc-600 book-text-xs book-leading-6">متنی آزمایشی و بی‌معنی در
-                                        صنعت
-                                        چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود. طراح گرافیک از
-                                        این متن به عنوان عنصری از ترکیب بندی برای پر کردن صفحه و ارایه اولیه شکل ظاهری و
-                                        کلی طرح
-                                        سفارش گرفته شده استفاده می نماید</p>
-                                </div>
-                            </div>
-                            <div class="book-flex book-items-start book-gap-6">
-                                <span
-                                    class="book-shrink-0 book-flex book-items-center book-justify-center book-w-16 book-h-16 book-bg-zinc-100 book-rounded-full">
-                                    <svg width="24" height="24">
-                                        <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-user">
-                                        </use>
-                                    </svg>
-                                </span>
-                                <div class="book-flex book-flex-col book-gap-2">
-                                    <h3 class="book-font-medium book-text-zinc-900">محسن حیدری</h3>
-                                    <p class="book-text-zinc-600 book-text-xs book-leading-6">متنی آزمایشی و بی‌معنی در
-                                        صنعت
-                                        چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود. طراح گرافیک از
-                                        این متن به عنوان عنصری از ترکیب بندی برای پر کردن صفحه و ارایه اولیه شکل ظاهری و
-                                        کلی طرح
-                                        سفارش گرفته شده استفاده می نماید</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
+                    </section> -->
                 </div>
                 <aside class="book-w-[358px] book-h-fit book-sticky book-top-0">
                     <section class="book-relative book-rounded-xl book-overflow-hidden">
@@ -742,45 +711,15 @@
                             class="book-absolute book-inset-0 book-bg-black/20 book-w-full book-h-full book-pointer-events-none">
                         </div>
                     </section>
-
-                    <!-- <section class="book-bg-white book-p-4 book-rounded-xl book-mt-3">
-                        <div
-                            class="book-flex book-items-center book-justify-between book-bg-zinc-100 book-rounded-xl book-px-3 book-py-2">
-                            <div class="book-flex book-flex-col book-gap-1">
-                                <h2 class="book-font-medium book-text-zinc-900">تاریخ انتخابی</h2>
-                                <span class="book-flex book-items-center book-gap-2 book-text-zinc-500 book-text-sm">
-                                    <span>3 شب</span> <span>1402/12/12</span> تا <span>1402/12/15</span>
-                                </span>
-                            </div>
-                            <svg width="48" height="48" class="book-text-zinc-500">
-                                <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-chevron-down">
-                                </use>
-                            </svg>
-                        </div>
-                        <div
-                            class="book-flex book-items-center book-justify-between book-bg-zinc-100 book-rounded-xl book-px-3 book-py-2 book-mt-2">
-                            <div class="book-flex book-flex-col book-gap-1">
-                                <h2 class="book-font-medium book-text-zinc-900">تعداد مسافران</h2>
-                                <span class="book-flex book-items-center book-gap-2 book-text-zinc-500 book-text-sm">
-                                    1 بزرگسال/1 اتاق
-                                </span>
-                            </div>
-                            <svg width="48" height="48" class="book-text-zinc-500">
-                                <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-chevron-down">
-                                </use>
-                            </svg>
-                        </div>
-                        <button
-                            class="book-w-full book-h-14 book-flex book-items-center book-justify-center book-rounded-xl book-bg-primary-300 book-text-white book-font-medium book-mt-16 book-transition-all book-duration-300 hover:book-bg-primary-900">جستجو</button>
-                    </section> -->
                     <div id="r-hotel" class="r-hotel module-form relative" data-module="hotel">
                         <form action="/Tem3_Hotel_Search.bc?lid=2" method="post" data-form="hotel" id="hotelSearch"
                             onsubmit="form_search_isSubmited(this,event)"
                             class="form-search formhotel book-flex book-flex-col book-bg-white book-p-4 book-rounded-xl book-mt-3">
                             <input type="hidden" name="persiancurrent" class="persiancurrent" value="" />
-                            <input value="" class="locationId from" type="hidden" name="cityid"
+                            <input value="[##cms.form.cityid##]" class="locationId from" type="hidden" name="cityid"
                                 aria-label="locationId" />
-
+                            <input id="departure2" type="hidden" class="departure text-value" aria-label="departure"
+                                value="[##cms.form.coHotel##]" name="coHotel" />
                             <div
                                 class="date__searched__container Basis_Date_Box book-bg-zinc-100 book-rounded-xl book-px-3 book-py-2">
                                 <div
@@ -789,7 +728,10 @@
                                         <h2 class="book-font-medium book-text-zinc-900">تاریخ انتخابی</h2>
                                         <span
                                             class="book-flex book-items-center book-gap-2 book-text-zinc-500 book-text-sm">
-                                            <span>3 شب</span> <span>1402/12/12</span> تا <span>1402/12/15</span>
+                                            <span><span class="book-hotel__day">3</span> شب</span>
+                                            <span class="book-hotel__fdate">1402/12/12</span>
+                                            تا
+                                            <span class="book-hotel__tdate">1402/12/15</span>
                                         </span>
                                     </div>
                                     <svg width="48" height="48"
@@ -1266,7 +1208,7 @@
                 const rawText = await response.text();
                 const fixedText = rawText.replace(/'/g, '"');
                 const result = JSON.parse(fixedText);
-                $bc.setSource("hotel.list", result)
+                $bc.setSource("room.list", result)
             } catch (error) {
                 console.error("runApiLogic error: " + error.message);
             }
@@ -1587,7 +1529,8 @@
 
                 const serviceLabel = element.services;
 
-                const { currency_unit, currency_cost_number, floatdigit } = getCurrencyUnitFromStorage();
+                const { currency_cost_number, floatdigit } = getCurrencyUnitFromStorage();
+                const currency_unit = renderUnit("");
 
                 const roomsHtml = element.availablerooms
                     .map((room, index) => {
@@ -1602,40 +1545,31 @@
 
                         // اضافه کردن ورودی‌های مخفی با استفاده از جاوااسکریپت معمولی
                         const hiddenInputs = `
-                    ${renderOptionId(element)}
-                    ${renderadults(element)}
-                    ${renderchildwithbed(element)}
-                    ${renderchildwithoutbed(element)}
-                    ${renderinfant(element)}
-                    ${renderroomid(element)}
-                    ${renderid(element)}
-                    ${renderproviderId(element)}
-                    ${renderprovider(element)}
-                    ${renderhotelidRooms(element)}
-                    ${rendernightsRooms(element)}
-                    ${rendersupplierRooms(element)}
-                    ${renderFlightIdOtherRooms('[##cms.form.FlightId|cms.form.idProduct##]')}
-                    <input type="hidden" value="${currency_unit}" name="rate-unit" class="rate-unit" />
-                    <input type="hidden" value="${currency_cost_number}" name="rate-cost" class="rate-cost" />
-                    <input type="hidden" value="${floatdigit}" name="rate-floatdigit" class="rate-floatdigit" />
+                        ${renderOptionId(element)}
+                        ${renderadults(element)}
+                        ${renderchildwithbed(element)}
+                        ${renderchildwithoutbed(element)}
+                        ${renderinfant(element)}
+                        ${renderroomid(element)}
+                        ${renderid(element)} 
+                        ${renderproviderId(element)} 
+                        ${renderprovider(element)} 
+                        ${renderhotelidRooms(element)}
+                        ${rendernightsRooms(element)} 
+                        ${rendersupplierRooms(element)} 
+                    <input type="hidden" value="${currency_unit}" name="rate-unit" class="rate-unit" /> 
+                    <input type="hidden" value="${currency_cost_number}" name="rate-cost" class="rate-cost" /> 
+                    <input type="hidden" value="${floatdigit}" name="rate-floatdigit" class="rate-floatdigit" /> 
                     <input type="hidden" value="[##cms.form.sid|(2)##]" name="sid" />
-                    <input type="hidden" value="[##cms.form.inscountry##]" name="inscountry" />
-                    <input type="hidden" value="[##cms.form.fsupplier##]" name="fsupplier" />
-                    <input type="hidden" value="[##cms.form.hsupplier##]" name="hsupplier" />
-                    <input type="hidden" value="[##cms.form.checkin##]" name="checkin" />
-                    <input type="hidden" value="[##cms.form.checkout##]" name="checkout" />
-                    <input type="hidden" value="[##cms.form.from##]" name="from" />
-                    <input type="hidden" value="[##cms.form.to##]" name="to" />
-                    <input type="hidden" value="[##cms.form.DepartureCity##]" name="DepartureCity" />
-                    <input type="hidden" value="[##cms.form.DestinationCity##]" name="DestinationCity" />
                     <input type="hidden" value="[##cms.form.Hotel-Date|(0)##]" name="Hotel-Date" />
-                    <input type="hidden" value="[##cms.form.FlightClass##]" name="FlightClass" />
-                    <input type="hidden" value="[##cms.form.cityid##]" name="cityid" />
-                    <input type="hidden" value="[##cms.form.coHotel##]" name="coHotel" />
-                    <input type="hidden" value='[##cms.json.header|cms.form.roomSearch##]' name="roomSearch" />
-                    <input type="hidden" value="[##cms.form.fdate##]" name="fdate" />
-                    <input type="hidden" value="[##cms.form.tdate##]" name="tdate" />
+                    <input type="hidden" value="[##cms.form.cityid##]" name="cityid" /> 
+                    <input type="hidden" value="[##cms.form.coHotel##]" name="coHotel" /> 
+                    <input type="hidden" value='[##cms.json.header|cms.form.roomSearch##]' name="roomSearch" /> 
+                    <input type="hidden" value="[##cms.form.fdate##]" name="fdate" /> 
+                    <input type="hidden" value="[##cms.form.tdate##]" name="tdate" /> 
                 `;
+
+                        setActionForAllForms();
 
                         return `
                 <div class="${paddingClass}">
@@ -1644,7 +1578,7 @@
                     <span class="book-bg-primary-50 book-text-primary-800 book-text-xs book-rounded-3xl book-py-1 book-px-3">${serviceLabel}</span>
                     <span class="book-bg-specialcolor-1 book-text-specialcolor-2 book-text-xs book-rounded-3xl book-py-1 book-px-4">${availabilityLabel}</span>
                   </div>
-                  ${hiddenInputs}
+                        ${hiddenInputs}
                 </div>`;
                     })
                     .join("");
@@ -1683,22 +1617,51 @@
             }
         };
 
+        const setActionForAllForms = () => {
+            const roomFormContainer = document.querySelector('.book-list__cards__container');
+
+            if (!roomFormContainer) {
+                console.warn('⚠️ book-list__cards__container not found!');
+                return;
+            }
+
+            const roomForms = roomFormContainer.querySelectorAll('.book-hotel__room');
+
+            roomForms.forEach(form => {
+                const formAction = renderAction(); 
+                form.setAttribute('action', formAction);
+            });
+        };
+
+        const roomMutationObserver = new MutationObserver(() => {
+            const roomFormContainer = document.querySelector('.book-list__cards__container');
+
+            if (roomFormContainer) {
+                setActionForAllForms();
+                roomMutationObserver.disconnect();
+            }
+        });
+
+        roomMutationObserver.observe(document.body, { childList: true, subtree: true });
+
+
         function renderOptionId(element) {
-            // ایجاد ورودی مخفی به صورت جاوااسکریپت
-            let input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = 'optionId';
-            input.value = element.optionId || ''; // در صورتی که optionId وجود نداشته باشد، مقدار خالی برمی‌گرداند
+            let optionId = element.optionId;
 
-            return input.outerHTML; // برگرداندن ورودی به عنوان یک عنصر DOM
+            if (typeof optionId === 'string') {
+                return `<input type="hidden" value="${optionId}" name="optionId" />`;
+            } else if (typeof optionId === 'object' && optionId !== null) {
+                return `<input type="hidden" value="${optionId.someProperty}" name="optionId" />`;
+            }
+
+            return '';
         }
-
         function renderUnit(currency_unit) {
             if (currency_unit === '') {
-                let moneytype = '[##cms.form.moneytype##]';  // وقتی currency_unit خالی باشد، مقدار پیش‌فرض را برمی‌گرداند
+                let moneytype = '[##cms.form.moneytype##]';
                 return moneytype;
             } else {
-                return currency_unit;  // اگر currency_unit مقدار داشته باشد، همان مقدار را باز می‌گرداند
+                return currency_unit;
             }
         }
         function renderadults(element) {
@@ -1706,19 +1669,18 @@
             let indents = [];
 
             for (let i = 0; i < lenavailablerooms; i++) {
-                let idx = i;
+                let adults = element.availablerooms[i].info.adults;
 
-                // ایجاد ورودی مخفی به صورت جاوااسکریپت
-                let input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = `_root.rooms__${idx}.adults`;
-                input.value = element.availablerooms[i].info.adults;
-
-                // اضافه کردن به آرایه به صورت کد HTML
-                indents.push(input.outerHTML);  // استفاده از outerHTML
+                if (typeof adults === 'number') {
+                    indents.push(`<input type="hidden" name="_root.rooms__${i}.adults" value="${adults}" />`);
+                } else if (Array.isArray(adults)) {
+                    adults.forEach(adult => {
+                        indents.push(`<input type="hidden" name="_root.rooms__${i}.adults" value="${adult}" />`);
+                    });
+                }
             }
 
-            return indents.join('');  // بازگشت به صورت یک رشته HTML
+            return indents.join('');
         }
 
         function renderchildwithbed(element) {
@@ -1726,19 +1688,18 @@
             let indents = [];
 
             for (let i = 0; i < lenavailablerooms; i++) {
-                let idx = i;
+                let withbed = element.availablerooms[i].info.withbed;
 
-                // ایجاد ورودی مخفی برای childwithbed به صورت جاوااسکریپت
-                let input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = `_root.rooms__${idx}.childwithbed`;
-                input.value = element.availablerooms[i].info.withbed;
-
-                // اضافه کردن به آرایه به صورت کد HTML
-                indents.push(input.outerHTML);  // استفاده از outerHTML
+                if (typeof withbed === 'number') {
+                    indents.push(`<input type="hidden" name="_root.rooms__${i}.childwithbed" value="${withbed}" />`);
+                } else if (Array.isArray(withbed)) {
+                    withbed.forEach(bed => {
+                        indents.push(`<input type="hidden" name="_root.rooms__${i}.childwithbed" value="${bed}" />`);
+                    });
+                }
             }
 
-            return indents.join('');  // بازگشت به صورت یک رشته HTML
+            return indents.join('');
         }
 
 
@@ -1747,19 +1708,18 @@
             let indents = [];
 
             for (let i = 0; i < lenavailablerooms; i++) {
-                let idx = i;
+                let withoutbed = element.availablerooms[i].info.withoutbed;
 
-                // ایجاد ورودی مخفی برای childwithoutbed به صورت جاوااسکریپت
-                let input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = `_root.rooms__${idx}.childwithoutbed`;
-                input.value = element.availablerooms[i].info.withoutbed;
-
-                // اضافه کردن به آرایه به صورت کد HTML
-                indents.push(input.outerHTML);  // استفاده از outerHTML
+                if (typeof withoutbed === 'number') {
+                    indents.push(`<input type="hidden" name="_root.rooms__${i}.childwithoutbed" value="${withoutbed}" />`);
+                } else if (Array.isArray(withoutbed)) {
+                    withoutbed.forEach(bed => {
+                        indents.push(`<input type="hidden" name="_root.rooms__${i}.childwithoutbed" value="${bed}" />`);
+                    });
+                }
             }
 
-            return indents.join('');  // بازگشت به صورت یک رشته HTML
+            return indents.join('');
         }
 
 
@@ -1768,19 +1728,18 @@
             let indents = [];
 
             for (let i = 0; i < lenavailablerooms; i++) {
-                let idx = i;
+                let infant = element.availablerooms[i].info.infant;
 
-                // ایجاد ورودی مخفی برای infant به صورت جاوااسکریپت
-                let input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = `_root.rooms__${idx}.infant`;
-                input.value = element.availablerooms[i].info.infant;
-
-                // اضافه کردن به آرایه به صورت کد HTML
-                indents.push(input.outerHTML);  // استفاده از outerHTML
+                if (typeof infant === 'number') {
+                    indents.push(`<input type="hidden" name="_root.rooms__${i}.infant" value="${infant}" />`);
+                } else if (Array.isArray(infant)) {
+                    infant.forEach(child => {
+                        indents.push(`<input type="hidden" name="_root.rooms__${i}.infant" value="${child}" />`);
+                    });
+                }
             }
 
-            return indents.join('');  // بازگشت به صورت یک رشته HTML
+            return indents.join('');
         }
 
         function renderroomid(element) {
@@ -1788,19 +1747,14 @@
             let indents = [];
 
             for (let i = 0; i < lenavailablerooms; i++) {
-                let idx = i;
+                let roomid = element.availablerooms[i].info.roomid;
 
-                // ایجاد ورودی مخفی برای roomid به صورت جاوااسکریپت
-                let input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = `_root.rooms__${idx}.roomid`;
-                input.value = element.availablerooms[i].info.roomid;
-
-                // اضافه کردن به آرایه به صورت کد HTML
-                indents.push(input.outerHTML);  // استفاده از outerHTML
+                if (typeof roomid === 'string' || typeof roomid === 'number') {
+                    indents.push(`<input type="hidden" name="_root.rooms__${i}.roomid" value="${roomid}" />`);
+                }
             }
 
-            return indents.join('');  // بازگشت به صورت یک رشته HTML
+            return indents.join('');
         }
 
         function renderid(element) {
@@ -1812,133 +1766,58 @@
                 return `<input type="hidden" value="${id.hotelId}" name="productid" />`;
             }
 
-            return '';  // در صورتی که id نه رشته باشد و نه شیء، رشته خالی برگردانده می‌شود
+            return '';
         }
 
+
+        function renderproviderId(element) {
+            let provider = element.id.provider;
+
+            let providerId = (provider && provider.provider_id) || '0';
+
+            return `<input type="hidden" name="provider" class="provider" value="${providerId}" />`;
+        }
 
         function renderprovider(element) {
             let provider = element.id.provider;
 
             if (provider === undefined) {
-                return ''; // در صورت عدم وجود provider، رشته خالی برمی‌گردد
+                return '';
             } else {
-                // ایجاد ورودی مخفی برای provider به صورت جاوااسکریپت
-                let input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = 'mainprovider';
-                input.value = JSON.stringify(provider);
-
-                return input.outerHTML; // استفاده از outerHTML برای بازگشت کد HTML ورودی
+                return `<input type="hidden" name="mainprovider" value='${JSON.stringify(provider)}' />`;
             }
-        }
-        function renderproviderId(element) {
-            let provider = element.id.provider;
-
-            // ایجاد ورودی مخفی برای provider
-            let input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = 'provider';
-            input.className = 'provider'; // تنظیم کلاس برای ورودی
-
-            if (provider === undefined) {
-                input.value = '0'; // اگر provider وجود ندارد، مقدار را 0 قرار می‌دهیم
-            } else {
-                let providerId = provider.provider_id; // اگر provider وجود دارد، provider_id را می‌گیریم
-                input.value = providerId || '0'; // اگر provider_id وجود ندارد، مقدار 0 قرار می‌دهیم
-            }
-
-            return input; // برگرداندن ورودی به عنوان یک عنصر DOM
-        }
-
-        function renderproviderId(element) {
-            let provider = element.id.provider;
-
-            // ایجاد ورودی مخفی برای provider به صورت جاوااسکریپت
-            let input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = 'provider';
-            input.className = 'provider'; // تنظیم کلاس برای ورودی
-
-            if (provider === undefined) {
-                input.value = '0'; // اگر provider وجود ندارد، مقدار را 0 قرار می‌دهیم
-            } else {
-                let providerId = provider.provider_id; // اگر provider وجود دارد، provider_id را می‌گیریم
-                input.value = providerId || '0'; // اگر provider_id وجود ندارد، مقدار 0 قرار می‌دهیم
-            }
-
-            return input.outerHTML; // استفاده از outerHTML برای بازگشت کد HTML ورودی
         }
 
         function renderhotelidRooms(element) {
             let hotelIdFamily = element.id.hotelId;
 
-            // بررسی اینکه آیا hotelIdFamily وجود دارد یا خیر
             if (hotelIdFamily === undefined) {
-                return `<input type="hidden" value="${element.hotelid}" name="hotelid" />`; // اگر hotelIdFamily وجود ندارد، از element.hotelid استفاده می‌کنیم
+                return `<input type="hidden" value="${element.hotelid}" name="hotelid" />`;
             } else {
-                return `<input type="hidden" value="${hotelIdFamily}" name="hotelid" />`; // اگر hotelIdFamily موجود است، آن را استفاده می‌کنیم
+                return `<input type="hidden" value="${hotelIdFamily}" name="hotelid" />`;
             }
         }
 
 
         function rendernightsRooms(element) {
-            let hotelIdFamily = element.id.hotelId;
+            let nights = element.nights;
 
-            // ایجاد ورودی مخفی برای nights به صورت جاوااسکریپت
-            let input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = 'nightLink'; // تنظیم نام ورودی
-            input.value = element.nights; // مقدار ورودی را nights قرار می‌دهیم
-
-            return input.outerHTML; // استفاده از outerHTML برای بازگشت کد HTML ورودی
+            return `<input type="hidden" name="nightLink" value="${nights}" />`;
         }
         function rendersupplierRooms(element) {
-            let hotelIdFamily = element.id.hotelId;
+            let supplier = element.supplier;
 
-            // ایجاد ورودی مخفی برای supplier به صورت جاوااسکریپت
-            let input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = 'supplier'; // تنظیم نام ورودی
-            input.value = element.supplier; // تنظیم مقدار ورودی به supplier
-
-            return input.outerHTML; // استفاده از outerHTML برای بازگشت کد HTML ورودی
-        }
-
-        function renderFlightIdOtherRooms(element) {
-            if (element === '') {
-                return ''; // اگر element خالی است، رشته خالی باز می‌گردد
-            } else {
-                let inputs = '';
-
-                if (element.indexOf('value') > -1) {
-                    // اگر مقدار 'value' در element باشد
-                    let parsedElement = JSON.parse(element);
-                    inputs = `
-                <input type="hidden" value="${element}" name="idws" />
-                <input type="hidden" value="${parsedElement.value}" name="idvalue" />
-                <input type="hidden" value="${parsedElement.provider.provider_id}" name="fprovider" />
-                <input type="hidden" value="${JSON.stringify(parsedElement.provider)}" name="fmainprovider" />
-            `;
-                } else {
-                    // در غیر این صورت
-                    inputs = `
-                <input type="hidden" value="${element}" name="idnows" />
-                <input type="hidden" value="0" name="fprovider" />
-            `;
-                }
-
-                return inputs; // برگرداندن ورودی‌های مخفی به عنوان یک رشته HTML
-            }
+            return `<input type="hidden" name="supplier" value="${supplier}" />`;
         }
 
 
 
         const getCurrencyUnitFromStorage = (key = 'currencyObject') => {
             const EMPTY = {
-                currency_unit: null,
-                currency_cost: null,
-                currency_cost_number: null,
-                floatdigit: null,
+                currency_unit: '',
+                currency_cost: '',
+                currency_cost_number: '',
+                floatdigit: '',
             };
 
             try {
@@ -2075,7 +1954,7 @@
             // ============= INITIALIZATION =============
             let currentIndex = 0;
             let start = 0;
-            let end = 10; // نمایش 10 اتاق در هر صفحه
+            let end = 2; // نمایش 10 اتاق در هر صفحه
             let dynamicRoomCount = 0;
 
             // ============= PAGINATION HANDLERS =============
@@ -2102,8 +1981,8 @@
                 }
 
                 // Calculate pagination range
-                start = currentValue * 10;
-                end = start + 10;
+                start = currentValue * 2;
+                end = start + 2;
 
                 // Toggle previous button visibility
                 if (prevButton) {
@@ -2157,8 +2036,8 @@
                 }
 
                 // Update pagination range
-                start = nextValue * 10;
-                end = start + 10;
+                start = nextValue * 2;
+                end = start + 2;
 
             } else if (args.source.id === 'cms.prevpage') {
                 mustUpdate = true;
@@ -2197,10 +2076,10 @@
                 }
 
                 // Update pagination range
-                start = prevValue * 10;
-                end = start + 10;
+                start = prevValue * 2;
+                end = start + 2;
 
-            } else if (args.source.id === "hotel.list") {
+            } else if (args.source.id === "room.list") {
                 newDataCame = true;
                 allDataProcessed = false;
             } else if (args.source.id === 'cms.roomtypes') {
@@ -2250,7 +2129,7 @@
 
                 // Collect new hotel families and reset for new searches
                 if (newDataCame) {
-                    const source = args.context.tryToGetSource("hotel.list");
+                    const source = args.context.tryToGetSource("room.list");
 
                     // Reset data for new searches
                     if (source.rows[0]?.isNewSearch) {
@@ -2353,7 +2232,7 @@
                                 prevPage.classList.add("book-hidden");
                             }
 
-                            const roundedNumber = Math.ceil(currentIndex / 10);
+                            const roundedNumber = Math.ceil(currentIndex / 2);
                             const activePage = 0;
 
                             const arrayPaging = Array.from({ length: roundedNumber }, (_, i) => ({
@@ -3291,6 +3170,56 @@
 
         });
 
+        document.addEventListener("DOMContentLoaded", () => {
+            const dateInputs = document.querySelectorAll(".js-date-input");
+
+            if (dateInputs.length === 0) {
+                return;
+            }
+
+            function calculateDateDifference(startDate, endDate) {
+                const start = new Date(startDate);
+                const end = new Date(endDate);
+
+                if (start > end) {
+                    return 0;
+                }
+
+                const timeDifference = end - start;
+                return timeDifference / (1000 * 3600 * 24);
+            }
+
+            function updateDateFields() {
+                const startDateInput = document.querySelector(".js-date-input.start_date");
+                const endDateInput = document.querySelector(".js-date-input.end_date");
+
+                const startDateJalali = startDateInput.getAttribute("data-jalali");
+                const startDateGregorian = startDateInput.getAttribute("data-gregorian");
+
+                const endDateJalali = endDateInput.getAttribute("data-jalali");
+                const endDateGregorian = endDateInput.getAttribute("data-gregorian");
+
+                document.querySelector(".book-hotel__fdate").innerText = startDateJalali;
+                document.querySelector(".book-hotel__tdate").innerText = endDateJalali;
+
+                const dayDifference = calculateDateDifference(startDateGregorian, endDateGregorian);
+                document.querySelector(".book-hotel__day").innerText = dayDifference;
+            }
+
+            const dateInputsObserver = new MutationObserver(() => {
+                updateDateFields();
+            });
+
+
+            dateInputs.forEach(input => {
+                dateInputsObserver.observe(input, {
+                    attributes: true,
+                    attributeFilter: ['data-jalali', 'data-gregorian'],
+                });
+            });
+
+            updateDateFields();
+        });
 
     </script>
 
