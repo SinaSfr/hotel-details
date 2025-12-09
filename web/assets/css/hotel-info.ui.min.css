@@ -987,9 +987,9 @@ body {
         linear-gradient(#e2e8f0 176px, transparent 0),
         linear-gradient(#e8e8f0 176px, transparent 0),
         linear-gradient(#e2e8f0 176px, transparent 0),
-        linear-gradient(#e2e8f0 550px, transparent 0),
+        linear-gradient(#e2e8f0 552px, transparent 0),
         linear-gradient(#ffffff 100%, transparent 0);
-    background-size: 640px 100%, 360px 176px, 360px 176px, 360px 176px, 900px 550px, 100% 100%;
+    background-size: 640px 100%, 360px 176px, 360px 176px, 360px 176px, 910px 552px, 100% 100%;
     background-position: 0 0, 0px 0px, 0px 188px, 0px 376px, 372px 0px, 0 0;
     animation: skeleton-animation 2000ms infinite;
 }

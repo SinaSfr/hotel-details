@@ -158,35 +158,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     tabs.forEach((tab, i) => {
       tab.addEventListener('click', () => {
-    
-        setActiveTab(i);
-    
-        const targetSelector = tab.getAttribute("data-target");
-    
+        setActiveTab(i)
+
+        const targetSelector = tab.getAttribute("data-target")
+
         if (targetSelector) {
-          const target = document.querySelector(targetSelector);
-    
+          const target = document.querySelector(targetSelector)
+
           if (target) {
-            const offset = 60; 
-    
-            const elementPosition = target.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.scrollY - offset;
-    
+            const offset = 60
+
+            // استفاده از offsetTop برای موقعیت دقیق‌تر
+            const elementPosition = target.offsetTop
+            const offsetPosition = elementPosition + window.scrollY - offset
+
             window.scrollTo({
               top: offsetPosition,
               behavior: "smooth"
-            });
-    
+            })
           } else {
-            console.warn("⚠️ No element found for:", targetSelector);
+            console.warn("⚠️ No element found for:", targetSelector)
           }
-    
         } else {
-          console.warn("⚠️ This tab has NO data-target");
+          console.warn("⚠️ This tab has NO data-target")
         }
-    
-      });
-    });
+      })
+    })
 
     tabsContainer.addEventListener('scroll', () => {
       const activeIndex = [...tabs].findIndex((tab) =>
@@ -203,6 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
   })
 })
+
 
 document.addEventListener('click', (event) => {
   const selectBtn = event.target.closest('.room-select-btn');

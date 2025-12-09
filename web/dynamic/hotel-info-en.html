@@ -90,64 +90,68 @@
                 class="book-text-zinc-700 book-text-xs book-transition-all book-duration-300 hover:book-text-primary-300">
                 صفحه اصلی / مشاهده هتل / هتل مجلل درویشی در مشهد </div>
             <section class="book-relative book-mt-6">
-                <div class="book-flex book-gap-3">
+                <div>
                     <div class="gallery-img-loader book-w-full"></div>
-                    <basis core="print" datamembername="api.gallery" run="atclient" onrendered="onrenderedApiGallery">
-                        <layout>
-                            <script type="text/template">
-                                <div class="book-flex-[2.53] swiper hotel-big-img-gallery book-select-none book-pb-10">
-                                    <div class="swiper-pagination"></div>
-                                    <div class="swiper-wrapper">
-                                        @child
+                    <div class="book-flex book-gap-3">
+                        <basis core="print" datamembername="api.gallery" run="atclient"
+                            onrendered="onrenderedApiGallery">
+                            <layout>
+                                <script type="text/template">
+                                    <div class="book-flex-[2.53] swiper hotel-big-img-gallery book-select-none book-pb-10">
+                                        <div class="swiper-pagination"></div>
+                                        <div class="swiper-wrapper">
+                                            @child
+                                        </div>
+                                        <div
+                                            class="swiper-button-next-custom book-absolute book-z-10 book-left-4 book-top-1/2 -book-translate-y-1/2 book-w-14 book-h-14 book-flex book-items-center book-justify-center book-bg-zinc-900 backdrop-blur-md book-rounded-full book-shadow-lg book-transition-all book-duration-300 hover:book-bg-primary-600">
+                                            <svg width="32" height="32" class="book-text-white">
+                                                <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-chevron-left">
+                                                </use>
+                                            </svg>
+                                        </div>
+                                        <div
+                                            class="swiper-button-prev-custom book-absolute book-z-10 book-right-4 book-top-1/2 -book-translate-y-1/2 book-w-14 book-h-14 book-flex book-items-center book-justify-center book-bg-zinc-900 backdrop-blur-md book-rounded-full book-shadow-lg book-transition-all book-duration-300 hover:book-bg-primary-600">
+                                            <svg width="32" height="32" class="book-text-white">
+                                                <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-chevron-right">
+                                                </use>
+                                            </svg>
+                                        </div>
                                     </div>
-                                    <div
-                                        class="swiper-button-next-custom book-absolute book-z-10 book-left-4 book-top-1/2 -book-translate-y-1/2 book-w-14 book-h-14 book-flex book-items-center book-justify-center book-bg-zinc-900 backdrop-blur-md book-rounded-full book-shadow-lg book-transition-all book-duration-300 hover:book-bg-primary-600">
-                                        <svg width="32" height="32" class="book-text-white">
-                                            <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-chevron-left">
-                                            </use>
-                                        </svg>
+                                </script>
+                            </layout>
+                            <face>
+                                <script type="text/template">
+                                    <div class="swiper-slide">
+                                        <img src="@originalImage@"
+                                            class="book-w-full book-h-[552px] book-object-cover book-rounded-xl" alt=""
+                                            width="908" height="552" />
                                     </div>
-                                    <div
-                                        class="swiper-button-prev-custom book-absolute book-z-10 book-right-4 book-top-1/2 -book-translate-y-1/2 book-w-14 book-h-14 book-flex book-items-center book-justify-center book-bg-zinc-900 backdrop-blur-md book-rounded-full book-shadow-lg book-transition-all book-duration-300 hover:book-bg-primary-600">
-                                        <svg width="32" height="32" class="book-text-white">
-                                            <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-chevron-right">
-                                            </use>
-                                        </svg>
-                                    </div>
-                                </div>
-                            </script>
-                        </layout>
-                        <face>
-                            <script type="text/template">
-                                <div class="swiper-slide">
-                                    <img src="@originalImage@"
-                                        class="book-w-full book-h-[552px] book-object-cover book-rounded-xl" alt=""
-                                        width="908" height="552" />
-                                </div>
-                            </script>
-                        </face>
-                    </basis>
+                                </script>
+                            </face>
+                        </basis>
 
-                    <basis core="print" datamembername="api.gallery" run="atclient" onrendered="onrenderedApiGallery">
-                        <layout>
-                            <script type="text/template">
-                                <div thumbsSlider="" class="book-flex-1 swiper hotel-small-img-gallery book-h-[552px]">
-                                    <div class="swiper-wrapper book-flex-col book-justify-between">
-                                        @child
+                        <basis core="print" datamembername="api.gallery" run="atclient"
+                            onrendered="onrenderedApiGallery">
+                            <layout>
+                                <script type="text/template">
+                                    <div thumbsSlider="" class="book-flex-1 swiper hotel-small-img-gallery book-h-[552px]">
+                                        <div class="swiper-wrapper book-flex-col book-justify-between">
+                                            @child
+                                        </div>
                                     </div>
-                                </div>
-                            </script>
-                        </layout>
-                        <face>
-                            <script type="text/template">
-                                <div class="swiper-slide !book-w-full book-h-fit book-cursor-pointer">
-                                    <img src="@originalImage@" alt=""
-                                        class="book-w-full book-h-44 book-object-cover book-rounded-xl" width="358"
-                                        height="176" loading="lazy"/>
-                                </div>
-                            </script>
-                        </face>
-                    </basis>
+                                </script>
+                            </layout>
+                            <face>
+                                <script type="text/template">
+                                    <div class="swiper-slide !book-w-full book-h-fit book-cursor-pointer">
+                                        <img src="@originalImage@" alt=""
+                                            class="book-w-full book-h-44 book-object-cover book-rounded-xl" width="358"
+                                            height="176" loading="lazy"/>
+                                    </div>
+                                </script>
+                            </face>
+                        </basis>
+                    </div>
                 </div>
                 <!-- Popup Modal -->
                 <div id="hotelPopupModalGallery"
@@ -211,22 +215,22 @@
                         <section class="book-mt-28">
                             <h2 class="book-font-bold book-text-xl book-text-primary-400">ارتباط با هتل</h2>
                             <div class="book-flex book-flex-col book-gap-1 book-mt-3">
-                                <div class="book-flex book-items-center book-gap-1">
-                                    <svg width="48" height="48">
+                                <div class="book-hotel__website__wrapper book-hidden book-items-center book-gap-1">
+                                    <svg width="48" height="48" class="book-shrink-0">
                                         <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-site">
                                         </use>
                                     </svg>
                                     <span class="book-hotel__website book-text-sm book-text-zinc-900"></span>
                                 </div>
-                                <div class="book-flex book-items-center book-gap-1">
-                                    <svg width="48" height="48">
+                                <div class="book-hotel__address__wrapper book-hidden book-items-center book-gap-1">
+                                    <svg width="48" height="48" class="book-shrink-0">
                                         <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-location">
                                         </use>
                                     </svg>
                                     <span class="book-hotel__address book-text-sm book-text-zinc-900"></span>
                                 </div>
-                                <div class="book-flex book-items-center book-gap-1">
-                                    <svg width="48" height="48">
+                                <div class="book-hotel__phones__wrapper book-hidden book-items-center book-gap-1">
+                                    <svg width="48" height="48" class="book-shrink-0">
                                         <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-phone">
                                         </use>
                                     </svg>
@@ -234,8 +238,8 @@
 
                                     </div>
                                 </div>
-                                <div class="book-flex book-items-center book-gap-1">
-                                    <svg width="48" height="48">
+                                <div class="book-hotel__email__wrapper book-hidden book-items-center book-gap-1">
+                                    <svg width="48" height="48" class="book-shrink-0">
                                         <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-mail">
                                         </use>
                                     </svg>
@@ -243,8 +247,8 @@
                                         class="book-hotel__email book-relative book-group book-text-sm book-text-zinc-900 book-transition-all book-duration-300 hover:book-text-primary-300">
                                     </span>
                                 </div>
-                                <div class="book-flex book-items-center book-gap-1">
-                                    <svg width="48" height="48">
+                                <div class="book-hotel__fax__wrapper book-hidden book-items-center book-gap-1">
+                                    <svg width="48" height="48" class="book-shrink-0">
                                         <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-telephone">
                                         </use>
                                     </svg>
@@ -256,129 +260,12 @@
                         </section>
                     </div>
                     <section>
-                        <div class="book-bg-white book-rounded-xl book-pt-6 book-mt-8">
-                            <div class="tabs book-relative book-overflow-hidden">
-                                <div
-                                    class="tabs-container book-flex book-items-center book-gap-10 book-overflow-x-auto book-pb-3 book-px-3">
-                                    <button data-target="#section-amenities"
-                                        class="book-relative book-group book-text-zinc-900 book-font-medium book-transition-all book-duration-300 hover:book-text-primary-300">امکانات
-                                        <span
-                                            class="book-absolute book-bottom-[-11px] book-right-0 book-w-0 book-transition-all book-duration-300 book-h-px book-bg-primary-300 group-hover:book-w-full"></span>
-                                    </button>
-                                    <button data-target="#section-rooms"
-                                        class="book-relative book-group book-text-zinc-900 book-font-medium book-transition-all book-duration-300 hover:book-text-primary-300">اتاق
-                                        ها
-                                        <span
-                                            class="book-absolute book-bottom-[-11px] book-right-0 book-w-0 book-transition-all book-duration-300 book-h-px book-bg-primary-300 group-hover:book-w-full"></span>
-                                    </button>
-                                    <button data-target="#section-rules"
-                                        class="book-relative book-group book-text-zinc-900 book-font-medium book-transition-all book-duration-300 hover:book-text-primary-300">قوانین
-                                        و
-                                        مقررات
-                                        <span
-                                            class="book-absolute book-bottom-[-11px] book-right-0 book-w-0 book-transition-all book-duration-300 book-h-px book-bg-primary-300 group-hover:book-w-full"></span>
-                                    </button>
-                                    <button data-target="#section-comments"
-                                        class="book-relative book-group book-text-zinc-900 book-font-medium book-transition-all book-duration-300 hover:book-text-primary-300">نظر
-                                        کاربران
-                                        <span
-                                            class="book-absolute book-bottom-[-11px] book-right-0 book-w-0 book-transition-all book-duration-300 book-h-px book-bg-primary-300 group-hover:book-w-full"></span>
-                                    </button>
-                                </div>
-                                <div
-                                    class="active-line book-absolute book-bottom-0 book-h-0.5 book-bg-primary-300 book-transition-all book-duration-300">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="book-bg-white book-rounded-xl book-px-8 book-py-6 book-mt-3">
+                        <div class="book-bg-white book-rounded-xl book-px-8 book-py-6 book-mt-8">
                             <h2 id="section-amenities"
                                 class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
                                 امکانات</h2>
                             <div class="book-hotel__facilities grid book-grid-cols-3 book-gap-2">
-                                <!-- <div class="book-flex book-items-start book-gap-2 book-break-inside-avoid book-mb-4">
-                                    <svg width="24" height="24">
-                                        <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-wifi">
-                                        </use>
-                                    </svg>
-                                    <div class="book-flex book-flex-col book-gap-2">
-                                        <h3 class="book-font-medium book-text-zinc-900">اینترنت</h3>
-                                        <span class="book-text-xs book-text-zinc-600">اینترنت رایگان</span>
-                                    </div>
-                                </div>
-                                <div class="book-flex book-items-start book-gap-2 book-break-inside-avoid book-mb-4">
-                                    <svg width="24" height="24">
-                                        <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-parking">
-                                        </use>
-                                    </svg>
-                                    <div class="book-flex book-flex-col book-gap-2">
-                                        <h3 class="book-font-medium book-text-zinc-900">پارکینگ</h3>
-                                        <span class="book-text-xs book-text-zinc-600">با پارکینگ</span>
-                                    </div>
-                                </div>
-                                <div class="book-flex book-items-start book-gap-2 book-break-inside-avoid book-mb-4">
-                                    <svg width="24" height="24">
-                                        <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-tick">
-                                        </use>
-                                    </svg>
-                                    <div class="book-flex book-flex-col book-gap-2">
-                                        <h3 class="book-font-medium book-text-zinc-900">دیگر خدمات</h3>
-                                        <span class="book-text-xs book-text-zinc-600">خدمات نظافت روزانه</span>
-                                    </div>
-                                </div>
-                                <div class="book-flex book-items-start book-gap-2 book-break-inside-avoid book-mb-4">
-                                    <svg width="24" height="24">
-                                        <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-bath">
-                                        </use>
-                                    </svg>
-                                    <div class="book-flex book-flex-col book-gap-2">
-                                        <h3 class="book-font-medium book-text-zinc-900">سرویس بهداشتی</h3>
-                                        <div class="book-flex book-flex-col book-gap-1">
-                                            <span class="book-text-xs book-text-zinc-600">دستشویی ایرانی</span>
-                                            <span class="book-text-xs book-text-zinc-600">دستشویی ایرانی</span>
-                                            <span class="book-text-xs book-text-zinc-600">دستشویی ایرانی</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="book-flex book-items-start book-gap-2 book-break-inside-avoid book-mb-4">
-                                    <svg width="24" height="24">
-                                        <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-food">
-                                        </use>
-                                    </svg>
-                                    <div class="book-flex book-flex-col book-gap-2">
-                                        <h3 class="book-font-medium book-text-zinc-900">سرو غذا</h3>
-                                        <div class="book-flex book-flex-col book-gap-1">
-                                            <span class="book-text-xs book-text-zinc-600">صبحانه سلف سرویس</span>
-                                            <span class="book-text-xs book-text-zinc-600">سرو نهار در اتاق</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="book-flex book-items-start book-gap-2 book-break-inside-avoid book-mb-4">
-                                    <svg width="24" height="24">
-                                        <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-bed">
-                                        </use>
-                                    </svg>
-                                    <div class="book-flex book-flex-col book-gap-2">
-                                        <h3 class="book-font-medium book-text-zinc-900">اتاق</h3>
-                                        <div class="book-flex book-flex-col book-gap-1">
-                                            <span class="book-text-xs book-text-zinc-600">تخت دو نفره</span>
-                                            <span class="book-text-xs book-text-zinc-600">تخت دو نفره</span>
-                                            <span class="book-text-xs book-text-zinc-600">تخت دو نفره</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="book-flex book-items-start book-gap-2 book-break-inside-avoid book-mb-4">
-                                    <svg width="24" height="24">
-                                        <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-ventilation">
-                                        </use>
-                                    </svg>
-                                    <div class="book-flex book-flex-col book-gap-2">
-                                        <h3 class="book-font-medium book-text-zinc-900">تهویه</h3>
-                                        <div class="book-flex book-flex-col book-gap-1">
-                                            <span class="book-text-xs book-text-zinc-600">سرمایشی کولر اسپلیت</span>
-                                            <span class="book-text-xs book-text-zinc-600">گرمایشی شوفاژ</span>
-                                        </div>
-                                    </div>
-                                </div> -->
+
                             </div>
                         </div>
                     </section>
@@ -411,42 +298,39 @@
                                     name="" id="" placeholder="نام اتاق" />
                             </div>
                         </div>
-                        <div class="book-relative book-flex book-items-center book-gap-2">
+                        <div class="book-flex book-items-center book-gap-2">
                             <h3 class="book-text-sm">خدمات اتاق:</h3>
 
-                            <button
-                                class="room-select-btn book-w-60 book-flex book-items-center book-justify-between book-bg-zinc-100 book-rounded-xl book-px-3 book-py-px book-transition-all book-duration-300">
-                                <span class="room-select-text book-text-zinc-600">-</span>
-                                <svg width="48" height="48"
-                                    class="close-room-btn book-text-zinc-500 book-transition-all book-duration-300">
-                                    <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-chevron-down"></use>
-                                </svg>
-                            </button>
-                            <basis core="print" datamembername="hotel.services" run="atclient">
-                                <layout>
-                                    <script type="text/template">
+                            <div class="book-relative">
+                                <button
+                                    class="room-select-btn book-w-60 book-flex book-items-center book-justify-between book-bg-zinc-100 book-rounded-xl book-px-3 book-py-px book-transition-all book-duration-300">
+                                    <span class="room-select-text book-text-zinc-600">-</span>
+                                    <svg width="48" height="48"
+                                        class="close-room-btn book-text-zinc-500 book-transition-all book-duration-300">
+                                        <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-chevron-down">
+                                        </use>
+                                    </svg>
+                                </button>
+                                <basis core="print" datamembername="hotel.services" run="atclient">
+                                    <layout>
+                                        <script type="text/template">
                                         <ul
                                         class="room-options book-absolute book-top-full book-left-0 book-right-0 book-bg-white book-rounded-xl book-shadow-lg book-mt-2 book-overflow-hidden book-z-10 book-hidden">
                                        @child
                                      
                                     </ul>
                                    </script>
-                                </layout>
-                                <face>
-                                    <script type="text/template">
+                                    </layout>
+                                    <face>
+                                        <script type="text/template">
                                         <li bc-value="@Name@" bc-name="cms.services" bc-triggers="click"
                                         class="room-option book-px-3 book-py-2 book-text-sm book-text-zinc-700 hover:book-bg-zinc-100 book-cursor-pointer">
                                         @Name@</li>
                                     </script>
-                                </face>
-                            </basis>
-
-
-
+                                    </face>
+                                </basis>
+                            </div>
                         </div>
-                        <button
-                            class="book-w-28 book-h-12 book-flex book-items-center book-justify-center book-rounded-xl book-bg-primary-300 book-text-white book-font-medium book-transition-all book-duration-300 hover:book-bg-primary-900">اعمال
-                            فيلتر</button>
                     </section>
 
                     <section class="book-bg-white book-rounded-xl book-px-8 book-py-6 book-mt-3">
@@ -522,13 +406,10 @@
                                         <div class="book-flex book-flex-col book-gap-1 book-items-center book-mt-1.5">
                                             <h3 class="book-text-xs book-text-zinc-900">قیمت نهایی:</h3>
                                             {{
-                                            return `<p class="book-text-zinc-900 book-font-bold book-text-xl">
-                                                <span class="book-price__check__currency"
+                                            return `
+                                                <div
                                                     data-original-price="${$data.totalCom}">${await
-                                                    priceWithCurrency($data.totalCom)}</span>
-                                                <span
-                                                    class="book-text-zinc-500 book-text-xs book-font-normal book-unit__check__currency">ریال</span>
-                                            </p>`
+                                                    priceWithCurrency($data.totalCom)}</div>`
                                             }}
                                         </div>
                                         <div class="book-mt-4">
@@ -542,9 +423,10 @@
                             </face>
                         </basis>
 
-                        <ul class="book-flex book-items-center book-justify-center book-gap-1 book-mt-8 book-dir-ltr">
-                            <li
-                                class="book-flex book-items-center book-justify-center book-w-12 book-h-12 book-rounded-xl book-bg-zinc-800 book-mr-3 book-transition-all book-duration-300 hover:book-bg-primary-600">
+                        <ul
+                            class="book-paging__cards__container book-flex book-items-center book-justify-center book-gap-1 book-mt-8 book-dir-ltr">
+                            <li bc-name="cms.prevpage" bc-triggers="click"
+                                class="book-prevpage book-flex book-items-center book-justify-center book-w-12 book-h-12 book-rounded-xl book-bg-zinc-800 book-mr-3 book-cursor-pointer book-transition-all book-duration-300 hover:book-bg-primary-600">
                                 <svg width="24" height="24" class="book-text-white">
                                     <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-chevron-left"></use>
                                 </svg>
@@ -564,8 +446,8 @@
                             </basis>
 
 
-                            <li
-                                class="book-flex book-items-center book-justify-center book-w-12 book-h-12 book-rounded-xl book-bg-zinc-800 book-ml-3 book-transition-all book-duration-300 hover:book-bg-primary-600">
+                            <li bc-name="cms.nextpage" bc-triggers="click"
+                                class="book-nextpage book-flex book-items-center book-justify-center book-w-12 book-h-12 book-rounded-xl book-bg-zinc-800 book-ml-3 book-cursor-pointer book-transition-all book-duration-300 hover:book-bg-primary-600">
                                 <svg width="24" height="24" class="book-text-white">
                                     <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-chevron-right"></use>
                                 </svg>
@@ -730,7 +612,7 @@
                                             class="book-flex book-items-center book-gap-2 book-text-zinc-500 book-text-sm">
                                             <span><span class="book-hotel__day">3</span> شب</span>
                                             <span class="book-hotel__fdate">1402/12/12</span>
-                                            تا
+                                            <span class="book-hotel__till-text"></span>
                                             <span class="book-hotel__tdate">1402/12/15</span>
                                         </span>
                                     </div>
@@ -746,7 +628,7 @@
                                         class="reserve-field departure-date book-flex-1 book-flex book-relative book-items-center book-justify-between book-bg-white book-rounded-xl book-px-3 book-h-12">
                                         <div class="h-full px-2">
                                             <input type="text" aria-label="Check in" value="" data-role="depart"
-                                                class="js-date-input departure__date Basis_Date start_date book-cursor-pointer book-h-full book-w-full book-text-left book-absolute book-top-0 -book-right-3"
+                                                class="js-date-input departure__date Basis_Date start_date book-cursor-pointer book-h-full book-w-full book-absolute book-top-0"
                                                 readonly="" name="fdate" id="fromdate2" required=""
                                                 placeholder="تاریخ رفت" />
                                             <input value="" class="mstring_date mstring_fdate" type="hidden"
@@ -759,7 +641,7 @@
                                         class="reserve-field return-date book-flex-1 book-flex book-relative book-items-center book-justify-between book-bg-white book-rounded-xl book-px-3 book-h-12">
                                         <div class="h-full px-2">
                                             <input type="text" aria-label="Check out" value="" data-role="return"
-                                                class="js-date-input arrival__date Basis_Date end_date book-cursor-pointer book-h-full book-w-full book-text-left book-absolute book-top-0 -book-right-3"
+                                                class="js-date-input arrival__date Basis_Date end_date book-cursor-pointer book-h-full book-w-full book-absolute book-top-0"
                                                 readonly="" name="tdate" id="todate2" required=""
                                                 placeholder="تاریخ برگشت" />
                                             <input value="" class="mstring_date mstring_tdate" type="hidden"
@@ -1377,6 +1259,9 @@
                 if (website) {
                     const websiteElement = document.querySelector('.book-hotel__website');
                     if (websiteElement) websiteElement.textContent = website;
+                    const websiteElementWrapper = document.querySelector('.book-hotel__website__wrapper');
+                    if (websiteElementWrapper) websiteElementWrapper.classList.remove("book-hidden");
+                    if (websiteElementWrapper) websiteElementWrapper.classList.add("book-flex");
                 }
 
                 // Set address - propertyid: 1379
@@ -1384,20 +1269,26 @@
                 if (address) {
                     const addressElement = document.querySelector('.book-hotel__address');
                     if (addressElement) addressElement.textContent = address;
+                    const addressElementWrapper = document.querySelector('.book-hotel__address__wrapper');
+                    if (addressElementWrapper) addressElementWrapper.classList.remove("book-hidden");
+                    if (addressElementWrapper) addressElementWrapper.classList.add("book-flex");
                 }
 
                 // Set phone number - propertyid: 1380
                 const phone = findPropertySingle(data, 1380);
                 if (phone) {
-                    const phoneContainer = document.querySelector('.book-hotel__phones');
-                    if (phoneContainer) {
-                        phoneContainer.innerHTML = `
+                    const phoneElement = document.querySelector('.book-hotel__phones');
+                    if (phoneElement) {
+                        phoneElement.innerHTML = `
               <span class="book-relative book-group book-text-sm book-text-zinc-900 book-transition-all book-duration-300 hover:book-text-primary-300">
                   ${phone}
                   <span class="book-absolute -book-bottom-1 book-right-0 book-w-0 book-transition-all book-duration-300 book-h-px book-bg-primary-300 group-hover:book-w-full"></span>
               </span>
           `;
                     }
+                    const phoneElementWrapper = document.querySelector('.book-hotel__phones__wrapper');
+                    if (phoneElementWrapper) phoneElementWrapper.classList.remove("book-hidden");
+                    if (phoneElementWrapper) phoneElementWrapper.classList.add("book-flex");
                 }
 
                 // Set email - propertyid: 1383
@@ -1405,6 +1296,9 @@
                 if (email) {
                     const emailElement = document.querySelector('.book-hotel__email');
                     if (emailElement) emailElement.textContent = email;
+                    const emailElementWrapper = document.querySelector('.book-hotel__email__wrapper');
+                    if (emailElementWrapper) emailElementWrapper.classList.remove("book-hidden");
+                    if (emailElementWrapper) emailElementWrapper.classList.add("book-flex");
                 }
 
                 // Set fax number - propertyid: 1381
@@ -1412,6 +1306,9 @@
                 if (fax) {
                     const faxElement = document.querySelector('.book-hotel__fax');
                     if (faxElement) faxElement.textContent = fax;
+                    const faxElementWrapper = document.querySelector('.book-hotel__fax__wrapper');
+                    if (faxElementWrapper) faxElementWrapper.classList.remove("book-hidden");
+                    if (faxElementWrapper) faxElementWrapper.classList.add("book-flex");
                 }
 
                 // Set check-in time - propertyid: 1376
@@ -1628,7 +1525,7 @@
             const roomForms = roomFormContainer.querySelectorAll('.book-hotel__room');
 
             roomForms.forEach(form => {
-                const formAction = renderAction(); 
+                const formAction = renderAction();
                 form.setAttribute('action', formAction);
             });
         };
@@ -1872,61 +1769,73 @@
             }
         };
         const priceWithCurrency = (amount, opts = {}) => {
-            try {
-                const a = Number(amount);
-                if (!Number.isFinite(a)) return opts.as === 'number' ? 0 : '0';
+    try {
+        const a = Number(amount);
+        if (!Number.isFinite(a)) return opts.as === 'number' ? 0 : '0';
 
-                const { currency_cost_number, floatdigit } = getCurrencyUnitFromStorage();
+        const { currency_cost_number, floatdigit } = getCurrencyUnitFromStorage();
+        const { currency_unit } = getCurrencyUnitFromStorage();
+        const unit = currency_unit && String(currency_unit).trim() ? String(currency_unit).trim() : "ریال";
 
-                const rate = Number.isFinite(opts.rate)
-                    ? Number(opts.rate)
-                    : Number.isFinite(currency_cost_number) ? currency_cost_number : 1;
+        const rate = Number.isFinite(opts.rate)
+            ? Number(opts.rate)
+            : Number.isFinite(currency_cost_number) ? currency_cost_number : 1;
 
-                let x = a * rate;
+        let x = a * rate;
 
-                // Apply floatdigit following renderTotal logic
-                if (floatdigit !== null && floatdigit !== undefined && floatdigit !== '') {
-                    if (floatdigit >= 0) {
-                        const toString_x = x.toString();
-                        if (toString_x.indexOf('.') > -1) {
-                            const fixed = x.toFixed(floatdigit);
-                            const parts = fixed.split('.');
-                            // If decimal part contains only zeros, show one decimal place
-                            if (parts[1] && /^0+$/.test(parts[1])) {
-                                x = parseFloat(x.toFixed(1));
-                            } else {
-                                x = parseFloat(fixed);
-                            }
-                        } else {
-                            x = parseFloat(x.toFixed(floatdigit));
-                        }
+        // Apply floatdigit following renderTotal logic
+        if (floatdigit !== null && floatdigit !== undefined && floatdigit !== '') {
+            if (floatdigit >= 0) {
+                const toString_x = x.toString();
+                if (toString_x.indexOf('.') > -1) {
+                    const fixed = x.toFixed(floatdigit);
+                    const parts = fixed.split('.');
+                    // If decimal part contains only zeros, show one decimal place
+                    if (parts[1] && /^0+$/.test(parts[1])) {
+                        x = parseFloat(x.toFixed(1));
                     } else {
-                        // Negative floatdigit
-                        const multiplier = Math.pow(10, Math.abs(floatdigit));
-                        x = Math.round(x / multiplier) * multiplier;
+                        x = parseFloat(fixed);
                     }
+                } else {
+                    x = parseFloat(x.toFixed(floatdigit));
                 }
-
-                if (opts.as === 'number') return x;
-
-                // Format with comma separator
-                const useGrouping = opts.group !== false;
-                const hasDigits = floatdigit !== null && floatdigit !== undefined && floatdigit !== '';
-
-                const nf = new Intl.NumberFormat(opts.locale || undefined,
-                    hasDigits && floatdigit >= 0
-                        ? {
-                            minimumFractionDigits: opts.fixed ? Math.max(0, floatdigit) : 0,
-                            maximumFractionDigits: Math.max(0, floatdigit),
-                            useGrouping
-                        }
-                        : { useGrouping }
-                );
-                return nf.format(x);
-            } catch {
-                return opts.as === 'number' ? 0 : '0';
+            } else {
+                // Negative floatdigit
+                const multiplier = Math.pow(10, Math.abs(floatdigit));
+                x = Math.round(x / multiplier) * multiplier;
             }
-        };
+        }
+
+        if (opts.as === 'number') return x;
+
+        // Format with comma separator
+        const useGrouping = opts.group !== false;
+        const hasDigits = floatdigit !== null && floatdigit !== undefined && floatdigit !== '';
+
+        const nf = new Intl.NumberFormat(opts.locale || undefined,
+            hasDigits && floatdigit >= 0
+                ? {
+                    minimumFractionDigits: opts.fixed ? Math.max(0, floatdigit) : 0,
+                    maximumFractionDigits: Math.max(0, floatdigit),
+                    useGrouping
+                }
+                : { useGrouping }
+        );
+
+        const formattedPrice = nf.format(x);
+
+        // If unit is provided, append it to the formatted price
+        const priceSpan = `<span class="book-price__check__currency book-text-zinc-900 book-font-bold book-text-xl">${formattedPrice}</span>`;
+        const unitSpan = `<span class="book-unit__check__currency book-text-zinc-500 book-text-xs book-font-normal">${unit}</span>`;
+
+        return priceSpan + " " + unitSpan;
+
+        return formattedPrice;
+
+    } catch {
+        return opts.as === 'number' ? 0 : '0';
+    }
+};
 
         /**
          * Global state for hotel room filtering, sorting, and pagination
@@ -1964,39 +1873,48 @@
                 InUpdateFiltering = false;
 
                 const currentValue = parseInt(args.source.rows[0].value);
+                console.log('cms.page', currentValue);
                 const prevButton = document.querySelector(".book-prevpage");
                 const nextButton = document.querySelector(".book-nextpage");
                 const pagingContainer = document.querySelector(".book-paging__cards__container");
+
+                const totalPages = Math.ceil(pagingContainer.children.length / 2);
 
                 // Update active page styling
                 const activeButton = document.querySelector(".book-active__paging");
                 if (activeButton) {
                     activeButton.classList.remove("book-active__paging");
-                    activeButton.classList.add("book-bg-white");
+                    activeButton.classList.remove("book-bg-primary-50");
+                    activeButton.classList.remove("book-text-primary-800");
+                    activeButton.classList.add("book-bg-zinc-100");
+                    activeButton.classList.add("book-text-zinc-900");
                 }
+
                 const newActive = pagingContainer.querySelector(`[bc-value="${currentValue}"]`);
                 if (newActive) {
                     newActive.classList.add("book-active__paging");
-                    newActive.classList.remove("book-bg-white");
+                    newActive.classList.add("book-bg-primary-50");
+                    newActive.classList.add("book-text-primary-800");
+                    newActive.classList.remove("book-bg-zinc-100");
+                    newActive.classList.remove("book-text-zinc-900");
                 }
 
                 // Calculate pagination range
                 start = currentValue * 2;
                 end = start + 2;
 
-                // Toggle previous button visibility
+                // Toggle previous button visibility based on current page and total pages
                 if (prevButton) {
-                    prevButton.classList.toggle("book-hidden", currentValue === 0);
+                    prevButton.classList.toggle("book-hidden", currentValue <= 1); // Hide prev if it's on the first page
                 }
 
-                // Toggle next button visibility
-                const allButtons = Array.from(document.querySelectorAll(".book-paging__container:not(.book-prevpage):not(.book-nextpage)"));
-                const lastButton = allButtons[allButtons.length - 1];
-                if (nextButton && newActive) {
-                    nextButton.classList.toggle("book-hidden", newActive === lastButton);
+                // Toggle next button visibility based on current page and total pages
+                if (nextButton) {
+                    nextButton.classList.toggle("book-hidden", currentValue >= totalPages - 1); // Hide next if it's on the last page
                 }
 
             } else if (args.source.id === 'cms.nextpage') {
+
                 mustUpdate = true;
                 InUpdatePaging = false;
                 InUpdateFiltering = false;
@@ -2005,40 +1923,49 @@
                 const nextButton = document.querySelector(".book-nextpage");
                 const activeButton = document.querySelector(".book-active__paging");
                 const currentValue = parseInt(activeButton.getAttribute("bc-value"));
+                const pagingContainer = document.querySelector(".book-paging__cards__container");
                 const nextValue = currentValue + 1;
                 const nextPage = document.querySelector(`.book-paging__cards__container [bc-value="${nextValue}"]`);
+                const totalPages = Math.ceil(pagingContainer.children.length / 2);
 
                 if (nextPage) {
                     // Update active page styling
                     activeButton.classList.remove("book-active__paging");
-                    activeButton.classList.add("bg-white");
+                    activeButton.classList.remove("book-bg-primary-50");
+                    activeButton.classList.remove("book-text-primary-800");
+                    activeButton.classList.add("book-bg-zinc-100");
+                    activeButton.classList.add("book-text-zinc-900");
+
                     nextPage.classList.add("book-active__paging");
-                    nextPage.classList.remove("bg-white");
+                    nextPage.classList.remove("book-text-zinc-900");
+                    nextPage.classList.remove("book-bg-zinc-100");
+                    nextPage.classList.add("book-bg-primary-50");
+                    nextPage.classList.add("book-text-primary-800");
 
                     // Show next page if hidden
                     if (nextPage.classList.contains("book-hidden")) {
                         nextPage.classList.remove("book-hidden");
-                        const firstVisible = document.querySelector(".book-paging__container:not(.hidden):not(.book-prevpage):not(.book-nextpage)");
+                        const firstVisible = document.querySelector(".book-paging__cards__container:not(.hidden):not(.book-prevpage):not(.book-nextpage)");
                         if (firstVisible) firstVisible.classList.add("book-hidden");
                     }
 
                     // Show previous button if not on first page
-                    if (prevButton) {
-                        prevButton.classList.toggle("book-hidden", nextValue === 0);
+                    if (nextButton) {
+                        if (nextValue >= totalPages) {
+                            console.log("dadad");
+                            nextButton.classList.add("book-hidden"); // Hide next if we're on the last page
+                        } else {
+                            nextButton.classList.remove("book-hidden"); // Show next if we're not on the last page
+                        }
                     }
-                }
-
-                // Toggle next button visibility
-                const allButtons = Array.from(document.querySelectorAll(".book-paging__container:not(.book-prevpage):not(.book-nextpage)"));
-                const lastButton = allButtons[allButtons.length - 1];
-                if (nextButton && nextPage) {
-                    nextButton.classList.toggle("book-hidden", nextPage === lastButton);
+                    if (prevButton) {
+                        prevButton.classList.toggle("book-hidden", nextValue === 1);
+                    }
                 }
 
                 // Update pagination range
                 start = nextValue * 2;
                 end = start + 2;
-
             } else if (args.source.id === 'cms.prevpage') {
                 mustUpdate = true;
                 InUpdatePaging = false;
@@ -2048,27 +1975,37 @@
                 const nextButton = document.querySelector(".book-nextpage");
                 const activeButton = document.querySelector(".book-active__paging");
                 const currentValue = parseInt(activeButton.getAttribute("bc-value"));
+                console.log('cms.prevpage', currentValue);
                 const prevValue = currentValue - 1;
+                console.log('prevvalue', prevValue);
                 const prevPage = document.querySelector(`.book-paging__cards__container [bc-value="${prevValue}"]`);
 
                 if (prevPage) {
                     // Update active page styling
                     activeButton.classList.remove("book-active__paging");
-                    activeButton.classList.add("bg-white");
+                    activeButton.classList.remove("book-bg-primary-50");
+                    activeButton.classList.remove("book-text-primary-800");
+                    activeButton.classList.add("book-bg-zinc-100");
+                    activeButton.classList.add("book-text-zinc-900");
+
+                    // Add active class and update styles for the new active button (prevPage)
                     prevPage.classList.add("book-active__paging");
-                    prevPage.classList.remove("bg-white");
+                    prevPage.classList.remove("book-text-zinc-900");
+                    prevPage.classList.remove("book-bg-zinc-100");
+                    prevPage.classList.add("book-bg-primary-50");
+                    prevPage.classList.add("book-text-primary-800");
 
                     // Show previous page if hidden
                     if (prevPage.classList.contains("book-hidden")) {
                         prevPage.classList.remove("book-hidden");
-                        const allButtons = Array.from(document.querySelectorAll(".book-paging__container:not(.book-prevpage):not(.book-nextpage)"));
+                        const allButtons = Array.from(document.querySelectorAll(".book-paging__cards__container:not(.book-prevpage):not(.book-nextpage)"));
                         const lastVisible = allButtons.reverse().find(btn => !btn.classList.contains("book-hidden"));
                         if (lastVisible) lastVisible.classList.add("book-hidden");
                     }
 
                     // Toggle previous and next button visibility
                     if (prevButton) {
-                        prevButton.classList.toggle("book-hidden", prevValue === 0);
+                        prevButton.classList.toggle("book-hidden", prevValue === 1);
                     }
                     if (nextButton) {
                         nextButton.classList.remove("book-hidden");
@@ -2078,7 +2015,6 @@
                 // Update pagination range
                 start = prevValue * 2;
                 end = start + 2;
-
             } else if (args.source.id === "room.list") {
                 newDataCame = true;
                 allDataProcessed = false;
@@ -2241,7 +2177,7 @@
                                 isActive: i === activePage,
                                 isVisible: true
                             }));
-
+                            console.log("arrayPaging", arrayPaging);
                             if (nextPage) {
                                 nextPage.classList.toggle("book-hidden", arrayPaging.length <= 1);
                             }
@@ -2329,28 +2265,34 @@
 
         const renderPaging = async (element) => {
             try {
+                const pagingContainer = document.querySelector(".book-paging__cards__container");
                 const { index, page, isActive, isVisible } = element;
                 const nextPage = pagingContainer?.querySelector(".book-nextpage");
                 const prevPage = pagingContainer?.querySelector(".book-prevpage");
 
-                // Show next button if there are more than 5 pages
+                const totalPages = Math.ceil(pagingContainer.children.length / 2);
+
                 if (index >= 5 && nextPage?.classList.contains("book-hidden")) {
                     nextPage.classList.remove("book-hidden");
                 }
+
                 // Show previous button if not on the first active page
                 if (index > 0 && isActive && prevPage?.classList.contains("book-hidden")) {
                     prevPage.classList.remove("book-hidden");
                 }
+
                 // Render button with active/visible styling
-                return ` <li  bc-value="${index}" bc-name="cms.page" bc-triggers="click"
-                          class="book-flex book-items-center book-justify-center book-w-12 book-h-12 book-text-zinc-900 book-rounded-xl book-bg-zinc-100 book-transition-all book-duration-300 hover:book-bg-primary-50 ${isActive ? ' book-active__paging' : ' book-bg-white'}">
-                         ${page}
-                      </li>`;
+                return `<li  bc-value="${index + 1}" bc-name="cms.page" bc-triggers="click"
+                      class="book-flex book-items-center book-justify-center book-w-12 book-h-12 book-rounded-xl book-transition-all book-duration-300 hover:book-bg-primary-50 book-cursor-pointer ${isActive ? 'book-active__paging book-bg-primary-50 book-text-primary-800' : 'book-bg-zinc-100 book-text-zinc-900'}">
+                      ${page}
+                  </li>`;
             } catch (error) {
                 console.error(`renderPaging: ${error.message}`);
                 return "";
             }
         };
+
+
 
         const openRoomRulesModal = () => {
             const modal = document.getElementById('book-hotel__rules__modal');
@@ -2358,30 +2300,25 @@
             modal.classList.remove('book-hidden');
         };
 
-        // بستن مدال قوانین اتاق
         const closeRoomRulesModal = () => {
             const modal = document.getElementById('book-hotel__rules__modal');
             if (!modal) return;
             modal.classList.add('book-hidden');
         };
 
-        // هندل کلیک روی دکمه‌های بستن و پس‌زمینه
         document.addEventListener('click', (event) => {
-            // دکمه‌های بستن
             const closeBtn = event.target.closest('.book-hotel__close__rules');
             if (closeBtn) {
                 closeRoomRulesModal();
                 return;
             }
 
-            // کلیک روی پس‌زمینه (خود لایه‌ی تیره، نه کارت وسط)
             const modal = document.getElementById('book-hotel__rules__modal');
             if (modal && event.target === modal) {
                 closeRoomRulesModal();
             }
         });
 
-        // بستن با ESC
         document.addEventListener('keydown', (event) => {
             if (event.key === 'Escape') {
                 closeRoomRulesModal();
@@ -3171,55 +3108,67 @@
         });
 
         document.addEventListener("DOMContentLoaded", () => {
-            const dateInputs = document.querySelectorAll(".js-date-input");
+    const dateInputs = document.querySelectorAll(".js-date-input");
 
-            if (dateInputs.length === 0) {
-                return;
+    if (dateInputs.length === 0) {
+        return;
+    }
+
+    function calculateDateDifference(startDate, endDate) {
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+
+        if (start > end) {
+            return 0;
+        }
+
+        const timeDifference = end - start;
+        return timeDifference / (1000 * 3600 * 24);
+    }
+
+    function updateDateFields() {
+        const startDateInput = document.querySelector(".js-date-input.start_date");
+        const endDateInput = document.querySelector(".js-date-input.end_date");
+
+        const startDateJalali = startDateInput.getAttribute("data-jalali");
+        const startDateGregorian = startDateInput.getAttribute("data-gregorian");
+
+        const endDateJalali = endDateInput.getAttribute("data-jalali");
+        const endDateGregorian = endDateInput.getAttribute("data-gregorian");
+
+        document.querySelector(".book-hotel__fdate").innerText = startDateJalali;
+        document.querySelector(".book-hotel__tdate").innerText = endDateJalali;
+
+        const dayDifference = calculateDateDifference(startDateGregorian, endDateGregorian);
+        document.querySelector(".book-hotel__day").innerText = dayDifference;
+
+        // Add "تا" before end date when the tdate is populated
+        const tdate = document.querySelector(".book-hotel__tdate");
+        const tillText = document.querySelector(".book-hotel__till-text");
+
+        if (tdate && tdate.innerText.trim() !== "") {
+            if (tillText) {
+                tillText.innerText = " تا";
             }
+        } else{
+            tillText.innerText = "";
+        }
+    }
 
-            function calculateDateDifference(startDate, endDate) {
-                const start = new Date(startDate);
-                const end = new Date(endDate);
+    const dateInputsObserver = new MutationObserver(() => {
+        updateDateFields();
+    });
 
-                if (start > end) {
-                    return 0;
-                }
-
-                const timeDifference = end - start;
-                return timeDifference / (1000 * 3600 * 24);
-            }
-
-            function updateDateFields() {
-                const startDateInput = document.querySelector(".js-date-input.start_date");
-                const endDateInput = document.querySelector(".js-date-input.end_date");
-
-                const startDateJalali = startDateInput.getAttribute("data-jalali");
-                const startDateGregorian = startDateInput.getAttribute("data-gregorian");
-
-                const endDateJalali = endDateInput.getAttribute("data-jalali");
-                const endDateGregorian = endDateInput.getAttribute("data-gregorian");
-
-                document.querySelector(".book-hotel__fdate").innerText = startDateJalali;
-                document.querySelector(".book-hotel__tdate").innerText = endDateJalali;
-
-                const dayDifference = calculateDateDifference(startDateGregorian, endDateGregorian);
-                document.querySelector(".book-hotel__day").innerText = dayDifference;
-            }
-
-            const dateInputsObserver = new MutationObserver(() => {
-                updateDateFields();
-            });
-
-
-            dateInputs.forEach(input => {
-                dateInputsObserver.observe(input, {
-                    attributes: true,
-                    attributeFilter: ['data-jalali', 'data-gregorian'],
-                });
-            });
-
-            updateDateFields();
+    dateInputs.forEach(input => {
+        dateInputsObserver.observe(input, {
+            attributes: true,
+            attributeFilter: ['data-jalali', 'data-gregorian'],
         });
+    });
+
+    updateDateFields();
+});
+
 
     </script>
 
