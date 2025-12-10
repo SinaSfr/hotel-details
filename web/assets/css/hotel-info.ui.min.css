@@ -991,10 +991,10 @@ body {
         linear-gradient(#ffffff 100%, transparent 0);
     background-size: 640px 100%, 360px 176px, 360px 176px, 360px 176px, 910px 552px, 100% 100%;
     background-position: 0 0, 0px 0px, 0px 188px, 0px 376px, 372px 0px, 0 0;
-    animation: skeleton-animation 2000ms infinite;
+    animation: gallery-img-skeleton-animation 2000ms infinite;
 }
 
-@keyframes skeleton-animation {
+@keyframes gallery-img-skeleton-animation {
     to {
         background-position: 100% 0, 0px 0px, 0px 188px, 0px 376px, 372px 0px, 0 0;
     }

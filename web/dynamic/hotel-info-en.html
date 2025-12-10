@@ -73,6 +73,49 @@
             /* 320px */
         ;
     }
+
+    .\!book-bottom-0 {
+        bottom: 0px !important;
+    }
+
+    .hotel-content-skeleton-loader:after {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background-repeat: no-repeat;
+        background-image: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%),
+            linear-gradient(#aaaaaa 16px, transparent 0),
+            linear-gradient(#aaaaaa 16px, transparent 0),
+            linear-gradient(#aaaaaa 30px, transparent 0),
+            linear-gradient(#aaaaaa 20px, transparent 0),
+            linear-gradient(#aaaaaa 16px, transparent 0),
+            linear-gradient(#aaaaaa 30px, transparent 0),
+            linear-gradient(#aaaaaa 32px, transparent 0),
+            linear-gradient(#ffffff 100%, transparent 0);
+        background-size: 449px 100%, 600px 16px, 700px 16px, 750px 30px, 600px 20px, 800px 16px, 898px 30px, 700px 32px, 100% 100%;
+        background-position: 0 0, 298px 32px, 198px 59px, 148px 86px, 298px 127px, 98px 201px, 0px 228px, 198px 158px, 0 0;
+        animation: hotel-content-skeleton-animation 2000ms infinite;
+    }
+
+    @keyframes hotel-content-skeleton-animation {
+        to {
+            background-position: 100% 0, 298px 32px, 198px 59px, 148px 86px, 298px 127px, 98px 201px, 0px 228px, 198px 158px, 0 0;
+        }
+    }
+
+    .book-bg-transparent {
+        background-color: transparent;
+    }
+
+    .book-leading-8 {
+        line-height: 2rem
+            /* 32px */
+        ;
+    }
 </style>
 
 <body class="book-bg-zinc-50">
@@ -86,9 +129,13 @@
         <!-- Commands / Requests -->
         <basis core="call" file="hotel/info/commands" lid="2"></basis>
         <div class="max-xl:book-w-[97%] xl:book-max-w-7xl book-mx-auto book-my-5">
-            <div
-                class="book-text-zinc-700 book-text-xs book-transition-all book-duration-300 hover:book-text-primary-300">
-                صفحه اصلی / مشاهده هتل / هتل مجلل درویشی در مشهد </div>
+            <div class="relative flex items-center justify-center gap-1">
+                <a href="/"
+                    class="book-text-zinc-700 book-text-xs book-transition-all book-duration-300 hover:book-text-primary-300">صفحه
+                    اصلی</a>
+                <span>/</span>
+                <span class="book-hotel__title"></span>
+            </div>
             <section class="book-relative book-mt-6">
                 <div>
                     <div class="gallery-img-loader book-w-full"></div>
@@ -98,7 +145,7 @@
                             <layout>
                                 <script type="text/template">
                                     <div class="book-flex-[2.53] swiper hotel-big-img-gallery book-select-none book-pb-10">
-                                        <div class="swiper-pagination"></div>
+                                        <div class="swiper-pagination !book-bottom-0"></div>
                                         <div class="swiper-wrapper">
                                             @child
                                         </div>
@@ -220,7 +267,7 @@
                                         <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-site">
                                         </use>
                                     </svg>
-                                    <span class="book-hotel__website book-text-sm book-text-zinc-900"></span>
+                                    <a href="" class="book-hotel__website book-text-sm book-text-zinc-900"></a>
                                 </div>
                                 <div class="book-hotel__address__wrapper book-hidden book-items-center book-gap-1">
                                     <svg width="48" height="48" class="book-shrink-0">
@@ -264,9 +311,29 @@
                             <h2 id="section-amenities"
                                 class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
                                 امکانات</h2>
-                            <div class="book-hotel__facilities grid book-grid-cols-3 book-gap-2">
+                            <div class="book-hotel__facilities book-grid book-grid-cols-3 book-gap-2">
 
                             </div>
+                        </div>
+                    </section>
+                    <section class="book-bg-white book-rounded-xl book-py-6 book-px-8 book-mt-3">
+                        <div class="book-shrink-0 book-flex book-items-center book-gap-4 book-mb-4">
+                            <div class="book-flex-1 book-flex book-flex-col book-items-center book-gap-2">
+                                <h3 class="book-text-zinc-900">ساعت ورود</h3>
+                                <span
+                                    class="book-hotel__checkin__time book-flex book-items-center book-justify-center book-w-full book-bg-primary-50 book-rounded-full book-text-sm book-text-zinc-900 book-py-2"></span>
+                            </div>
+                            <div class="book-flex-1 book-flex book-flex-col book-items-center book-gap-2">
+                                <h3 class="book-text-zinc-900">ساعت خروج</h3>
+                                <span
+                                    class="book-hotel__checkout__time book-flex book-items-center book-justify-center book-w-full book-bg-primary-50 book-rounded-full book-text-sm book-text-zinc-900 book-py-2"></span>
+                            </div>
+                        </div>
+                        <h2
+                            class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
+                            امکانات اتاق</h2>
+                        <div class="book-room__facilities book-grid book-grid-cols-3 book-gap-y-8">
+
                         </div>
                     </section>
                     <section class="book-bg-zinc-800 book-rounded-xl book-px-6 book-py-3 book-mt-6">
@@ -294,7 +361,7 @@
                             <h3 class="book-text-sm">نام اتاق:</h3>
                             <div class="">
                                 <input type="text" bc-name="cms.roomtypes" bc-value="" bc-triggers="keyup"
-                                    class="book-placeholder-zinc-600 book-bg-transparent book-w-52 book-h-12 book-bg-zinc-100 book-rounded-xl book-px-3 book-py-px book-outline-none"
+                                    class="book-placeholder-zinc-600 book-w-52 book-h-12 book-bg-zinc-100 book-rounded-xl book-px-3 book-py-px book-outline-none"
                                     name="" id="" placeholder="نام اتاق" />
                             </div>
                         </div>
@@ -341,6 +408,7 @@
                             <layout>
                                 <script type="text/template">
                                         <div class="book-list__cards__container book-flex book-flex-col book-gap-4">
+                                            
                                             @child
                                         </div>
                                     </script>
@@ -407,7 +475,7 @@
                                             <h3 class="book-text-xs book-text-zinc-900">قیمت نهایی:</h3>
                                             {{
                                             return `
-                                                <div
+                                                <div class="book-flex book-items-center book-gap-1"
                                                     data-original-price="${$data.totalCom}">${await
                                                     priceWithCurrency($data.totalCom)}</div>`
                                             }}
@@ -456,92 +524,6 @@
                         </ul>
                     </section>
 
-
-                    <section class="book-bg-white book-rounded-xl book-py-6 book-px-8 book-mt-3">
-                        <div class="book-shrink-0 book-flex book-flex-col book-items-center book-gap-4">
-                            <div class="book-flex-1 book-flex book-flex-col book-items-center book-gap-2">
-                                <h3 class="book-text-zinc-900">ساعت ورود</h3>
-                                <span
-                                    class="book-hotel__checkin__time book-flex book-items-center book-justify-center book-w-full book-bg-primary-50 book-rounded-full book-text-sm book-text-zinc-900 book-py-2"></span>
-                            </div>
-                            <div class="book-flex-1 book-flex book-flex-col book-items-center book-gap-2">
-                                <h3 class="book-text-zinc-900">ساعت خروج</h3>
-                                <span
-                                    class="book-hotel__checkout__time book-flex book-items-center book-justify-center book-w-full book-bg-primary-50 book-rounded-full book-text-sm book-text-zinc-900 book-py-2"></span>
-                            </div>
-                        </div>
-                        <h2
-                            class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
-                            اماکن اطراف هتل</h2>
-                        <div class="book-grid book-grid-cols-3 book-gap-y-8">
-                            <div class="book-flex book-items-center book-gap-1">
-                                <svg width="48" height="48">
-                                    <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-shop">
-                                    </use>
-                                </svg>
-                                <div class="book-flex book-flex-col book-gap-1">
-                                    <h3 class="book-font-medium book-text-zinc-900">فروشگاه</h3>
-                                    <span class="book-text-xs book-text-zinc-600">10 مترو نزدیک به هتل</span>
-                                </div>
-                            </div>
-                            <div class="book-flex book-items-center book-gap-1">
-                                <svg width="48" height="48">
-                                    <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-tree">
-                                    </use>
-                                </svg>
-                                <div class="book-flex book-flex-col book-gap-1">
-                                    <h3 class="book-font-medium book-text-zinc-900">پارک</h3>
-                                    <span class="book-text-xs book-text-zinc-600">2 پارک نزدیک هتل</span>
-                                </div>
-                            </div>
-                            <div class="book-flex book-items-center book-gap-1">
-                                <svg width="48" height="48">
-                                    <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-bag">
-                                    </use>
-                                </svg>
-                                <div class="book-flex book-flex-col book-gap-1">
-                                    <h3 class="book-font-medium book-text-zinc-900">مرکز خرید</h3>
-                                    <span class="book-text-xs book-text-zinc-600">10 مترو نزدیک به هتل</span>
-                                </div>
-                            </div>
-                            <div class="book-flex book-items-center book-gap-1">
-                                <svg width="48" height="48">
-                                    <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-bus">
-                                    </use>
-                                </svg>
-                                <div class="book-flex book-flex-col book-gap-1">
-                                    <h3 class="book-font-medium book-text-zinc-900">اتوبوس</h3>
-                                    <div class="book-flex book-flex-col book-gap-1">
-                                        <span class="book-text-xs book-text-zinc-600">2 اتوبوس نزدیک هتل</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="book-flex book-items-center book-gap-1">
-                                <svg width="48" height="48">
-                                    <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-subway">
-                                    </use>
-                                </svg>
-                                <div class="book-flex book-flex-col book-gap-1">
-                                    <h3 class="book-font-medium book-text-zinc-900">مترو</h3>
-                                    <div class="book-flex book-flex-col book-gap-1">
-                                        <span class="book-text-xs book-text-zinc-600">10 مترو نزدیک به هتل</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="book-flex book-items-center book-gap-1">
-                                <svg width="48" height="48">
-                                    <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-building">
-                                    </use>
-                                </svg>
-                                <div class="book-flex book-flex-col book-gap-1">
-                                    <h3 class="book-font-medium book-text-zinc-900">مكان هاي دیدنی</h3>
-                                    <div class="book-flex book-flex-col book-gap-1">
-                                        <span class="book-text-xs book-text-zinc-600">10 مکان تفریحی نزدیک به هتل</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
                     <!-- <section class="book-bg-white book-rounded-xl book-py-6 book-px-8 book-mt-3">
 
                         <h2 id="section-rules"
@@ -610,7 +592,9 @@
                                         <h2 class="book-font-medium book-text-zinc-900">تاریخ انتخابی</h2>
                                         <span
                                             class="book-flex book-items-center book-gap-2 book-text-zinc-500 book-text-sm">
-                                            <span><span class="book-hotel__day">3</span> شب</span>
+                                            <span class="book-hotel__nights">
+                                                <span class="book-hotel__day"></span>
+                                            </span>
                                             <span class="book-hotel__fdate">1402/12/12</span>
                                             <span class="book-hotel__till-text"></span>
                                             <span class="book-hotel__tdate">1402/12/15</span>
@@ -626,9 +610,9 @@
                                     class="book-date__dropdown-wrapper book-max-h-0 book-flex book-gap-2 book-transition-all book-duration-300 book-overflow-hidden book-mt-2">
                                     <div
                                         class="reserve-field departure-date book-flex-1 book-flex book-relative book-items-center book-justify-between book-bg-white book-rounded-xl book-px-3 book-h-12">
-                                        <div class="h-full px-2">
+                                        <div>
                                             <input type="text" aria-label="Check in" value="" data-role="depart"
-                                                class="js-date-input departure__date Basis_Date start_date book-cursor-pointer book-h-full book-w-full book-absolute book-top-0"
+                                                class="js-date-input departure__date Basis_Date start_date book-cursor-pointer book-h-full book-w-full"
                                                 readonly="" name="fdate" id="fromdate2" required=""
                                                 placeholder="تاریخ رفت" />
                                             <input value="" class="mstring_date mstring_fdate" type="hidden"
@@ -639,9 +623,9 @@
                                     </div>
                                     <div
                                         class="reserve-field return-date book-flex-1 book-flex book-relative book-items-center book-justify-between book-bg-white book-rounded-xl book-px-3 book-h-12">
-                                        <div class="h-full px-2">
+                                        <div class="">
                                             <input type="text" aria-label="Check out" value="" data-role="return"
-                                                class="js-date-input arrival__date Basis_Date end_date book-cursor-pointer book-h-full book-w-full book-absolute book-top-0"
+                                                class="js-date-input arrival__date Basis_Date end_date book-cursor-pointer book-h-full book-w-full"
                                                 readonly="" name="tdate" id="todate2" required=""
                                                 placeholder="تاریخ برگشت" />
                                             <input value="" class="mstring_date mstring_tdate" type="hidden"
@@ -667,11 +651,11 @@
                                                 class="passenger-counts adult-count book-flex book-items-center book-gap-1"><span
                                                     class="count">2</span>بزرگسال</span>
                                             <span
-                                                class="passenger-counts child-count hidden book-flex book-items-center book-gap-1"><span
+                                                class="passenger-counts child-count book-hidden book-flex book-items-center book-gap-1"><span
                                                     class="count">0</span>کودک</span>
                                         </div>
                                     </div>
-                                    <label class="label-passengers label-passengers-hotel book-cursor-pointer"
+                                    <label class="label-passengers label-passengers-hotel book-flex book-cursor-pointer"
                                         for="passenger1">
                                         <svg class="down-icon book-h-full" width="48" height="48">
                                             <use
@@ -686,7 +670,7 @@
                                         class="passenger-item room-passenger-item book-flex book-items-center book-justify-between">
                                         <label for="passenger-roomcount1"
                                             class="label-passengerroom label-passengerroom-hotel first-room-type first-room-type-label float-left text-sm leading-8 text-textColor"><span
-                                                class="room-tlt-icon mr-1 hidden"><svg class="align-middle" width="15"
+                                                class="room-tlt-icon book-hidden"><svg class="align-middle" width="15"
                                                     height="15">
                                                     <use xlink:href="images/sprite-icons.svg#engine-room-icon"></use>
                                                 </svg></span><span>اتاق</span></label>
@@ -700,10 +684,11 @@
                                             </li> -->
                                             <li
                                                 class="plus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
-                                                <div class="" onclick="Change_Room_Count(this)">
+                                                <div class="book-h-full book-leading-8"
+                                                    onclick="Change_Room_Count(this)">
                                                     <span class="count-icon-simple book-text-white
                                                     book-text-2xl">+</span>
-                                                    <span class="count-icon-svg hidden"><svg class="align-middle"
+                                                    <span class="count-icon-svg book-hidden"><svg class="align-middle"
                                                             width="10" height="10">
                                                             <use xlink:href="images/sprite-icons.svg#engine-plus-icon">
                                                             </use>
@@ -712,15 +697,16 @@
                                             </li>
                                             <li class="first-room-type first-room-type-count book-w-6 book-h-6">
                                                 <input id="passenger-roomcount1" type="text"
-                                                    class="roomcount w-full text-center max-xl:text-base"
+                                                    class="roomcount book-w-full book-text-center book-bg-transparent"
                                                     maxlength="4000" value="1" readonly="" />
                                             </li>
                                             <li
                                                 class="first-room-type minus-count deactive-change-button book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
-                                                <div class="" onclick="Change_Room_Count(this)">
+                                                <div class="book-h-full book-leading-8"
+                                                    onclick="Change_Room_Count(this)">
                                                     <span class="count-icon-simple book-text-white
                                                     book-text-2xl">-</span>
-                                                    <span class="count-icon-svg hidden"><svg class="align-middle"
+                                                    <span class="count-icon-svg book-hidden"><svg class="align-middle"
                                                             width="10" height="10">
                                                             <use xlink:href="images/sprite-icons.svg#engine-minus-icon">
                                                             </use>
@@ -737,7 +723,7 @@
                                                 class="passenger-item adult-passenger-item book-w-full book-flex book-justify-between">
                                                 <label for="passenger-room-adultcount1"
                                                     class="label-passengeradult label-passengeradult-hotel"><span
-                                                        class="adult-tlt-icon mr-1 hidden"><svg class="align-middle"
+                                                        class="adult-tlt-icon book-hidden"><svg class="align-middle"
                                                             width="15" height="15">
                                                             <use xlink:href="images/sprite-icons.svg#engine-adult-icon">
                                                             </use>
@@ -747,10 +733,11 @@
                                                     class="book-h-auto book-leading-normal book-flex book-items-center book-justify-between">
                                                     <li
                                                         class="plus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
-                                                        <div class="" onclick="Change_AdultCount(this)">
+                                                        <div class="book-h-full book-leading-8"
+                                                            onclick="Change_AdultCount(this)">
                                                             <span class="count-icon-simple book-text-white
                                                             book-text-2xl">+</span>
-                                                            <span class="count-icon-svg hidden"><svg
+                                                            <span class="count-icon-svg book-hidden"><svg
                                                                     class="align-middle" width="10" height="10">
                                                                     <use
                                                                         xlink:href="images/sprite-icons.svg#engine-plus-icon">
@@ -760,16 +747,17 @@
                                                     </li>
                                                     <li class="book-w-6 book-h-6">
                                                         <input id="passenger-room-adultcount1" type="text"
-                                                            class="adultcount w-full text-center max-xl:text-base"
+                                                            class="adultcount book-w-full book-text-center book-bg-transparent"
                                                             name="_root.rooms__1.adultcount" maxlength="4000" value="2"
                                                             readonly="" />
                                                     </li>
                                                     <li
                                                         class="minus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
-                                                        <div class="" onclick="Change_AdultCount(this)">
+                                                        <div class="book-h-full book-leading-8"
+                                                            onclick="Change_AdultCount(this)">
                                                             <span class="count-icon-simple book-text-white
                                                             book-text-2xl">-</span>
-                                                            <span class="count-icon-svg hidden"><svg
+                                                            <span class="count-icon-svg book-hidden"><svg
                                                                     class="align-middle" width="10" height="10">
                                                                     <use
                                                                         xlink:href="images/sprite-icons.svg#engine-minus-icon">
@@ -783,7 +771,7 @@
                                                 class="passenger-item child-passenger-item book-w-full book-flex book-justify-between">
                                                 <label for="passenger-room-childcount1"
                                                     class="label-passengerchild label-passengerchild-hotel"><span
-                                                        class="child-tlt-icon mr-1 hidden"><svg class="align-middle"
+                                                        class="child-tlt-icon book-hidden"><svg class="align-middle"
                                                             width="15" height="15">
                                                             <use xlink:href="images/sprite-icons.svg#engine-child-icon">
                                                             </use>
@@ -793,10 +781,11 @@
                                                     class="book-h-auto book-leading-normal book-flex book-items-center book-justify-between">
                                                     <li
                                                         class="plus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
-                                                        <div class="" onclick="Change_ChildCount(this)">
+                                                        <div class="book-h-full book-leading-8"
+                                                            onclick="Change_ChildCount(this)">
                                                             <span class="count-icon-simple book-text-white
                                                             book-text-2xl">+</span>
-                                                            <span class="count-icon-svg hidden"><svg
+                                                            <span class="count-icon-svg book-hidden"><svg
                                                                     class="align-middle" width="10" height="10">
                                                                     <use
                                                                         xlink:href="images/sprite-icons.svg#engine-plus-icon">
@@ -806,15 +795,16 @@
                                                     </li>
                                                     <li class="book-w-6 book-h-6">
                                                         <input id="passenger-room-childcount1" type="text"
-                                                            class="childcount w-full text-center max-xl:text-base"
+                                                            class="childcount book-w-full book-text-center book-bg-transparent"
                                                             maxlength="4000" value="0" readonly="" />
                                                     </li>
                                                     <li
                                                         class="minus-count deactive-change-button book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
-                                                        <div class="" onclick="Change_ChildCount(this)">
+                                                        <div class="book-h-full book-leading-8"
+                                                            onclick="Change_ChildCount(this)">
                                                             <span class="count-icon-simple book-text-white
                                                             book-text-2xl">-</span>
-                                                            <span class="count-icon-svg hidden"><svg
+                                                            <span class="count-icon-svg book-hidden"><svg
                                                                     class="align-middle" width="10" height="10">
                                                                     <use
                                                                         xlink:href="images/sprite-icons.svg#engine-minus-icon">
@@ -831,7 +821,7 @@
                                     </div>
                                     <div class="confirm-passenger book-flex book-items-center book-justify-center book-mt-6  book-bg-primary-600 book-text-white book-rounded-lg book-font-medium book-h-12         book-transition-all book-duration-300 hover:book-bg-secondary-600 hover:book-text-white"
                                         onclick="close_passenger(this)">
-                                        <span class="confirmpass-tlt-icon mr-1 hidden"><svg class="align-middle"
+                                        <span class="confirmpass-tlt-icon book-hidden"><svg class="align-middle"
                                                 width="15" height="15">
                                                 <use xlink:href="images/sprite-icons.svg#engine-confirmpass-icon"></use>
                                             </svg></span><span>تایید</span>
@@ -909,6 +899,7 @@
                         optionId: "[##cms.form.optionId-hotel##]",
                         usedforids: "[##cms.form.encoded_usedforid##]",
                         sid: "[##cms.form.sid##]",
+                        clid: "[##cms.form.clid##]",
                         dmnid: "[##cms.cms.domainid##]"
                     };
 
@@ -1013,16 +1004,25 @@
 
                         const updatedData = jsonObject.map(item => {
                             const updatedItem = { ...item };
+
                             if (updatedItem.largeIMG) {
-                                updatedItem.originalImage = updatedItem.largeIMG;
+                                let url = updatedItem.largeIMG;
+
+                                // اگر دامنه نداشت و با / شروع نمی‌شد، یه / به اولش اضافه کن
+                                const hasDomain = url.startsWith('http://') || url.startsWith('https://');
+
+                                if (!hasDomain && !url.startsWith('/')) {
+                                    url = '/' + url;
+                                }
+
+                                updatedItem.originalImage = url;
                                 delete updatedItem.largeIMG;
                             }
+
                             return updatedItem;
                         });
 
-
                         $bc.setSource("api.gallery", updatedData);
-
 
                     } catch (error) {
                         console.error('error:', error);
@@ -1033,7 +1033,7 @@
                     try {
                         const formData = new FormData();
                         formData.append('optionId', '[##cms.form.optionId-hotel##]');
-                        formData.append('sid', window.cmsData.sid);
+                        formData.append('clid', window.cmsData.clid);
 
                         const response = await fetch('/Client_Hotel_Info_Json.bc', {
                             method: 'POST',
@@ -1045,12 +1045,13 @@
                         }
 
                         const responseText = await response.text();
-
                         const correctedJsonText = responseText.replace(/'/g, '"');
 
                         try {
                             const jsonObject = JSON.parse(correctedJsonText);
-                            console.log(jsonObject)
+                            console.log('raw json:', jsonObject);
+
+                            // ⬅️ همون JSON اصلی (بدون simplify) رو ذخیره می‌کنیم
                             $bc.setSource("api.info", correctedJsonText);
                         } catch (jsonError) {
                             console.error('Invalid JSON:', jsonError);
@@ -1104,8 +1105,13 @@
          * @param {number} propertyId - ID of the property to find
          * @returns {string|null} - Property value text or null if not found
          */
-        function findPropertySingle(data, propertyId) {
+
+        function normalizeRawJSON(data) {
             try {
+                if (data && data.rows && Array.isArray(data.rows)) {
+                    data = data.rows;
+                }
+
                 if (typeof data === "string") {
                     data = JSON.parse(data);
                 }
@@ -1115,90 +1121,284 @@
                 }
 
                 if (!Array.isArray(data)) {
-                    console.warn("Data is not a valid array:", data);
+                    console.warn("normalizeRawJSON: data is not an array", data);
+                    return [];
+                }
+
+                return data;
+            } catch (e) {
+                console.error("normalizeRawJSON: invalid JSON", e);
+                return [];
+            }
+        }
+
+        function normalizeRestfulAnswers(answers) {
+            if (!Array.isArray(answers)) return [];
+
+            const flat = [];
+
+            answers.forEach(val => {
+                if (Array.isArray(val)) {
+                    val.forEach(v => flat.push(v));
+                } else {
+                    flat.push(val);
+                }
+            });
+
+            return flat.map(v => ({
+                text: String(v)
+            }));
+        }
+
+
+        function restfulToUnifiedSections(arr) {
+            const allProps = [];
+
+            arr.forEach(item => {
+                if (item && item.properties && !Array.isArray(item.properties) && typeof item.properties === "object") {
+                    Object.entries(item.properties).forEach(([title, obj]) => {
+                        const answers = obj?.answers ?? [];
+                        const normalized = normalizeRestfulAnswers(answers);
+                        allProps.push({
+                            title,
+                            answer: normalized
+                        });
+                    });
+                }
+            });
+
+            return [
+                {
+                    title: "مشخصات هتل",
+                    properties: allProps
+                }
+            ];
+        }
+
+        function externalToUnifiedSections(sections) {
+            if (!Array.isArray(sections)) return [];
+
+            return sections.map(section => ({
+                title: section.title,
+                properties: Array.isArray(section.properties)
+                    ? section.properties.map(p => ({
+                        title: p.title,
+                        answer: Array.isArray(p.answer)
+                            ? p.answer.map(a => ({
+                                text: String(
+                                    (a && typeof a === "object" && "text" in a)
+                                        ? a.text
+                                        : a
+                                )
+                            }))
+                            : []
+                    }))
+                    : []
+            }));
+        }
+
+        function unifyHotelData(data) {
+            const raw = normalizeRawJSON(data);
+            if (!raw.length) return [];
+
+            const first = raw[0];
+
+            if (first && Array.isArray(first.properties)) {
+                return externalToUnifiedSections(raw);
+            }
+
+            if (first && first.properties && !Array.isArray(first.properties)) {
+                return restfulToUnifiedSections(raw);
+            }
+
+            if (first && typeof first.title === "string" && Array.isArray(first.properties)) {
+                return externalToUnifiedSections(raw);
+            }
+
+            console.warn("unifyHotelData: unknown structure", raw);
+            return [];
+        }
+        function getCurrentLang() {
+            const clid = Number(window.cmsData?.clid);
+
+            if (clid === 2) return "en";
+            if (clid === 3) return "ar";
+            return "fa";
+        }
+        function getPropertyValue(data, propTitles, sectionTitles = null) {
+            try {
+                const sections = unifyHotelData(data);
+                if (!sections.length) return null;
+
+                const lang = getCurrentLang(); // "fa" | "en" | "ar"
+
+                // 🔹 عنوان پراپرتی
+                let propTitle;
+                if (typeof propTitles === "string") {
+                    propTitle = propTitles.trim();
+                } else if (propTitles && typeof propTitles === "object") {
+                    propTitle =
+                        propTitles[lang] ||
+                        propTitles.fa ||
+                        Object.values(propTitles)[0];
+                    propTitle = String(propTitle).trim();
+                } else {
                     return null;
                 }
 
-                for (const section of data) {
-                    if (Array.isArray(section.properties)) {
+                let sectionTitle = null;
+                if (typeof sectionTitles === "string") {
+                    sectionTitle = sectionTitles.trim();
+                } else if (sectionTitles && typeof sectionTitles === "object") {
+                    sectionTitle =
+                        sectionTitles[lang] ||
+                        sectionTitles.fa ||
+                        Object.values(sectionTitles)[0];
+                    sectionTitle = String(sectionTitle).trim();
+                }
 
-                        let property = section.properties.find(p => String(p.prpId) === String(propertyId));
+                for (const section of sections) {
+                    if (sectionTitle && String(section.title).trim() !== sectionTitle) {
+                        continue;
+                    }
 
-                        if (property) {
-                            const value = property.answers?.[0]?.parts?.[0]?.values?.[0]?.value ?? null;
-                            return value ? String(value).trim() : null;
-                        }
+                    if (!Array.isArray(section.properties)) continue;
 
-                        property = section.properties.find(p => String(p.propertyid) === String(propertyId));
+                    const property = section.properties.find(
+                        p => String(p.title).trim() === propTitle
+                    );
 
-                        if (property) {
-                            const value = property.answer?.[0]?.text ?? null;
-                            return value ? String(value).trim() : null;
-                        }
+                    if (property) {
+                        const answers = property.answer;
+                        if (!Array.isArray(answers) || !answers.length) return null;
+
+                        const first = answers[0];
+                        const raw = (first && typeof first === "object" && "text" in first)
+                            ? first.text
+                            : first;
+
+                        const value = raw != null ? String(raw).trim() : "";
+                        return value || null;
                     }
                 }
 
-                console.warn(`Property with propertyId = ${propertyId} not found.`);
                 return null;
-
             } catch (error) {
-                console.error("Error in findPropertySingle:", error);
+                console.error("Error in getPropertyValue:", error);
                 return null;
             }
         }
 
-        function findPropertyList(data, propertyId) {
+        // لیست مقادیر
+        function getPropertyValues(data, propTitles, sectionTitles = null) {
             try {
-                if (typeof data === "string") {
-                    data = JSON.parse(data);
-                }
+                const sections = unifyHotelData(data);
+                if (!sections.length) return [];
 
-                if (Array.isArray(data) && data.length === 1 && typeof data[0].value === "string") {
-                    data = JSON.parse(data[0].value);
-                }
+                const lang = getCurrentLang();
 
-                if (!Array.isArray(data)) {
-                    console.warn("Data is not a valid array:", data);
+                let propTitle;
+                if (typeof propTitles === "string") {
+                    propTitle = propTitles.trim();
+                } else if (propTitles && typeof propTitles === "object") {
+                    propTitle =
+                        propTitles[lang] ||
+                        propTitles.fa ||
+                        Object.values(propTitles)[0];
+                    propTitle = String(propTitle).trim();
+                } else {
                     return [];
                 }
 
-                for (const section of data) {
+                let sectionTitle = null;
+                if (typeof sectionTitles === "string") {
+                    sectionTitle = sectionTitles.trim();
+                } else if (sectionTitles && typeof sectionTitles === "object") {
+                    sectionTitle =
+                        sectionTitles[lang] ||
+                        sectionTitles.fa ||
+                        Object.values(sectionTitles)[0];
+                    sectionTitle = String(sectionTitle).trim();
+                }
+
+                for (const section of sections) {
+                    if (sectionTitle && String(section.title).trim() !== sectionTitle) {
+                        continue;
+                    }
+
                     if (!Array.isArray(section.properties)) continue;
 
                     const property = section.properties.find(
-                        p => String(p.propertyid) === String(propertyId)
+                        p => String(p.title).trim() === propTitle
                     );
 
                     if (property && Array.isArray(property.answer)) {
                         return property.answer
-                            .map(a => a.text?.trim())
+                            .map(a => {
+                                const raw = (a && typeof a === "object" && "text" in a)
+                                    ? a.text
+                                    : a;
+                                return raw != null ? String(raw).trim() : "";
+                            })
                             .filter(Boolean);
                     }
                 }
 
                 return [];
-
             } catch (error) {
-                console.error("Error in findPropertyList:", error);
+                console.error("Error in getPropertyValues:", error);
                 return [];
             }
         }
 
-        function getSectionHTML(data, sectionTitle) {
-            if (Array.isArray(data) && data.length === 1 && typeof data[0].value === "string") {
-                data = JSON.parse(data[0].value);
+        function getSectionHTML(data, sectionTitles) {
+            try {
+                const sections = unifyHotelData(data);
+                console.log(sections);
+                if (!sections.length) return "";
+
+                const lang = getCurrentLang(); // "fa" | "en" | "ar"
+
+                // 🔹 انتخاب عنوان سکشن بر اساس زبان
+                let secTitle = null;
+                if (typeof sectionTitles === "string") {
+                    secTitle = sectionTitles.trim();
+                } else if (sectionTitles && typeof sectionTitles === "object") {
+                    secTitle =
+                        sectionTitles[lang] ||
+                        sectionTitles.fa ||
+                        Object.values(sectionTitles)[0]; // fallback
+                    secTitle = String(secTitle).trim();
+                } else {
+                    return "";
+                }
+
+                const section = sections.find(
+                    sec => String(sec.title).trim() === secTitle
+                );
+
+                if (!section || !Array.isArray(section.properties) || !section.properties.length) {
+                    return "";
+                }
+
+                const prop = section.properties[0];
+                if (!prop) return "";
+
+                if (Array.isArray(prop.answer) && prop.answer.length > 0) {
+                    const first = prop.answer[0];
+                    const raw = (first && typeof first === "object" && "text" in first)
+                        ? first.text
+                        : first;
+                    return raw != null ? String(raw) : "";
+                }
+
+                return prop.title ? String(prop.title) : "";
+            } catch (e) {
+                console.error("Error in getSectionHTML:", e);
+                return "";
             }
-
-            if (!Array.isArray(data)) return "";
-
-            const section = data.find(sec => sec.title === sectionTitle);
-            if (!section) return "";
-
-            const prop = section.properties?.[0];
-            if (!prop?.title) return "";
-
-            return prop.title;
         }
+
 
 
 
@@ -1216,10 +1416,10 @@
                 // Generate star icons
                 for (let i = 0; i < stars; i++) {
                     starsHtml += `
-          <svg width="24" height="24">
-              <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-golden-star"></use>
-          </svg>
-      `;
+              <svg width="24" height="24">
+                  <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-golden-star"></use>
+              </svg>
+          `;
                 }
                 return starsHtml;
             } catch (error) {
@@ -1238,123 +1438,315 @@
             try {
                 // Extract data from args
                 const data = args.source?.rows || args.source;
-                // Set hotel title - propertyid: 1360
-                const hotelTitle = findPropertySingle(data, 1360);
+                console.log(data);
+                const HOTEL_FIELD_TITLES = {
+                    // عنوان / نام هتل
+                    name: {
+                        prop: { fa: "عنوان", en: "Hotel Name" },
+                        section: { fa: "مشخصات هتل", en: "General specifications" }
+                    },
+
+                    // درجه / ستاره هتل
+                    rating: {
+                        prop: { fa: "درجه", en: "star rating" },
+                        section: { fa: "مشخصات هتل", en: "General specifications" }
+                    },
+
+                    // کشور
+                    country: {
+                        prop: { fa: "کشور", en: "country" },
+                        section: { fa: "مشخصات هتل", en: "Connections" }
+                    },
+
+                    // شهر
+                    city: {
+                        prop: { fa: "شهر", en: "city" },
+                        section: { fa: "مشخصات هتل", en: "Connections" }
+                    },
+
+                    // آدرس
+                    address: {
+                        prop: { fa: "آدرس", en: "Address" },
+                        section: { fa: "مشخصات هتل", en: "contact" }
+                    },
+
+                    // تلفن
+                    phone: {
+                        prop: { fa: "تلفن", en: "Phone" },
+                        section: { fa: "مشخصات هتل", en: "contact" }
+                    },
+
+                    // فکس
+                    fax: {
+                        prop: { fa: "فکس", en: "Fax" },
+                        section: { fa: "مشخصات هتل", en: "contact" }
+                    },
+
+                    // وب‌سایت
+                    website: {
+                        prop: { fa: "وب سایت", en: "Website" }, // عنوان انگلیسی رو خودمون تعریف می‌کنیم
+                        section: { fa: "مشخصات هتل", en: "contact" }
+                    },
+
+                    // ایمیل
+                    email: {
+                        prop: { fa: "ایمیل", en: "Email" },
+                        section: { fa: "مشخصات هتل", en: "contact" }
+                    },
+
+                    // زمان تحویل گرفتن (Check-in)
+                    checkin: {
+                        prop: { fa: "زمان تحویل گرفتن", en: "Check-in time" },
+                        section: { fa: "مشخصات هتل", en: "General specifications" }
+                    },
+
+                    // زمان تحویل دادن (Check-out)
+                    checkout: {
+                        prop: { fa: "زمان تحویل دادن", en: "Check-out time" },
+                        section: { fa: "مشخصات هتل", en: "General specifications" }
+                    },
+
+                    // امکانات هتل (لیست)
+                    facilities: {
+                        prop: { fa: "امکانات هتل", en: "hotel facilities" },
+                        section: { fa: "مشخصات هتل", en: "Facilities" }
+                    },
+
+                    roomFacilities: {
+                        prop: { fa: "امکانات اتاق", en: "room facilities" },
+                        section: { fa: "مشخصات هتل", en: "Facilities" }
+                    },
+
+                    // GPS
+                    gps: {
+                        prop: { fa: "GPS", en: "GPS" },
+                        section: { fa: "مشخصات هتل", en: "Hotel space" }
+                    },
+
+                    // توضیحات (HTML)
+                    description: {
+                        // برای توضیحات، عنوان سکشن مهم‌تر از عنوان پراپرتی‌ه
+                        section: { fa: "توضیحات", en: "Description" }
+                    }
+                };
+
+                const hotelTitle = getPropertyValue(
+                    data,
+                    HOTEL_FIELD_TITLES.name.prop,
+                    HOTEL_FIELD_TITLES.name.section
+                );
                 if (hotelTitle) {
-                    const titleElement = document.querySelector('.book-hotel__title');
-                    if (titleElement) titleElement.textContent = hotelTitle;
+                    document.querySelectorAll('.book-hotel__title')
+                        .forEach(el => el.textContent = hotelTitle);
                 }
 
-                // Set hotel rating (stars) - propertyid: 1361
-                const hotelRating = findPropertySingle(data, 1361);
-                if (hotelRating) {
+                const hotelRatingRaw = getPropertyValue(
+                    data,
+                    HOTEL_FIELD_TITLES.rating.prop,
+                    HOTEL_FIELD_TITLES.rating.section
+                );
+                if (hotelRatingRaw) {
+                    const hotelRating = Number(hotelRatingRaw);
+
                     const starsContainer = document.querySelector('.book-hotel__stars');
                     if (starsContainer) {
                         starsContainer.innerHTML = generateStars(hotelRating);
                     }
                 }
 
-                // Set website - propertyid: 1382
-                const website = findPropertySingle(data, 1382);
+                const website = getPropertyValue(
+                    data,
+                    HOTEL_FIELD_TITLES.website.prop,
+                    HOTEL_FIELD_TITLES.website.section
+                );
                 if (website) {
                     const websiteElement = document.querySelector('.book-hotel__website');
-                    if (websiteElement) websiteElement.textContent = website;
+                    if (websiteElement) {
+                        websiteElement.textContent = website;
+                        websiteElement.setAttribute('href', website);
+                    }
+
                     const websiteElementWrapper = document.querySelector('.book-hotel__website__wrapper');
-                    if (websiteElementWrapper) websiteElementWrapper.classList.remove("book-hidden");
-                    if (websiteElementWrapper) websiteElementWrapper.classList.add("book-flex");
+                    if (websiteElementWrapper) {
+                        websiteElementWrapper.classList.remove("book-hidden");
+                        websiteElementWrapper.classList.add("book-flex");
+                    }
                 }
 
-                // Set address - propertyid: 1379
-                const address = findPropertySingle(data, 1379);
+                const address = getPropertyValue(
+                    data,
+                    HOTEL_FIELD_TITLES.address.prop,
+                    HOTEL_FIELD_TITLES.address.section
+                );
                 if (address) {
                     const addressElement = document.querySelector('.book-hotel__address');
-                    if (addressElement) addressElement.textContent = address;
+                    if (addressElement) {
+                        addressElement.textContent = address;
+                    }
+
                     const addressElementWrapper = document.querySelector('.book-hotel__address__wrapper');
-                    if (addressElementWrapper) addressElementWrapper.classList.remove("book-hidden");
-                    if (addressElementWrapper) addressElementWrapper.classList.add("book-flex");
+                    if (addressElementWrapper) {
+                        addressElementWrapper.classList.remove("book-hidden");
+                        addressElementWrapper.classList.add("book-flex");
+                    }
                 }
 
-                // Set phone number - propertyid: 1380
-                const phone = findPropertySingle(data, 1380);
+                const phone = getPropertyValue(
+                    data,
+                    HOTEL_FIELD_TITLES.phone.prop,
+                    HOTEL_FIELD_TITLES.phone.section
+                );
+
                 if (phone) {
                     const phoneElement = document.querySelector('.book-hotel__phones');
                     if (phoneElement) {
                         phoneElement.innerHTML = `
-              <span class="book-relative book-group book-text-sm book-text-zinc-900 book-transition-all book-duration-300 hover:book-text-primary-300">
-                  ${phone}
-                  <span class="book-absolute -book-bottom-1 book-right-0 book-w-0 book-transition-all book-duration-300 book-h-px book-bg-primary-300 group-hover:book-w-full"></span>
-              </span>
-          `;
+                <span class="book-relative book-group book-text-sm book-text-zinc-900 book-transition-all book-duration-300 hover:book-text-primary-300">
+                    ${phone}
+                    <span class="book-absolute -book-bottom-1 book-right-0 book-w-0 book-transition-all book-duration-300 book-h-px book-bg-primary-300 group-hover:book-w-full"></span>
+                </span>
+            `;
                     }
+
                     const phoneElementWrapper = document.querySelector('.book-hotel__phones__wrapper');
-                    if (phoneElementWrapper) phoneElementWrapper.classList.remove("book-hidden");
-                    if (phoneElementWrapper) phoneElementWrapper.classList.add("book-flex");
+                    if (phoneElementWrapper) {
+                        phoneElementWrapper.classList.remove("book-hidden");
+                        phoneElementWrapper.classList.add("book-flex");
+                    }
                 }
 
-                // Set email - propertyid: 1383
-                const email = findPropertySingle(data, 1383);
+                const email = getPropertyValue(
+                    data,
+                    HOTEL_FIELD_TITLES.email.prop,
+                    HOTEL_FIELD_TITLES.email.section
+                );
+
                 if (email) {
                     const emailElement = document.querySelector('.book-hotel__email');
-                    if (emailElement) emailElement.textContent = email;
+                    if (emailElement) {
+                        emailElement.textContent = email;
+                        emailElement.setAttribute('href', `mailto:${email}`);
+                    }
+
                     const emailElementWrapper = document.querySelector('.book-hotel__email__wrapper');
-                    if (emailElementWrapper) emailElementWrapper.classList.remove("book-hidden");
-                    if (emailElementWrapper) emailElementWrapper.classList.add("book-flex");
+                    if (emailElementWrapper) {
+                        emailElementWrapper.classList.remove("book-hidden");
+                        emailElementWrapper.classList.add("book-flex");
+                    }
                 }
 
-                // Set fax number - propertyid: 1381
-                const fax = findPropertySingle(data, 1381);
+                const fax = getPropertyValue(
+                    data,
+                    HOTEL_FIELD_TITLES.fax.prop,
+                    HOTEL_FIELD_TITLES.fax.section
+                );
                 if (fax) {
                     const faxElement = document.querySelector('.book-hotel__fax');
-                    if (faxElement) faxElement.textContent = fax;
-                    const faxElementWrapper = document.querySelector('.book-hotel__fax__wrapper');
-                    if (faxElementWrapper) faxElementWrapper.classList.remove("book-hidden");
-                    if (faxElementWrapper) faxElementWrapper.classList.add("book-flex");
-                }
+                    if (faxElement) {
+                        faxElement.textContent = fax;
+                    }
 
-                // Set check-in time - propertyid: 1376
-                const checkIn = findPropertySingle(data, 1376);
+                    const faxElementWrapper = document.querySelector('.book-hotel__fax__wrapper');
+                    if (faxElementWrapper) {
+                        faxElementWrapper.classList.remove("book-hidden");
+                        faxElementWrapper.classList.add("book-flex");
+                    }
+                }
+                // زمان تحویل گرفتن (Check-in)
+                const checkIn = getPropertyValue(
+                    data,
+                    HOTEL_FIELD_TITLES.checkin.prop,
+                    HOTEL_FIELD_TITLES.checkin.section
+                );
+
                 if (checkIn) {
                     const checkInElement = document.querySelector('.book-hotel__checkin__time');
-                    if (checkInElement) checkInElement.textContent = checkIn;
+                    if (checkInElement) {
+                        checkInElement.textContent = checkIn;
+                    }
                 }
 
-                // Set check-out time - propertyid: 1377
-                const checkOut = findPropertySingle(data, 1377);
+
+                const checkOut = getPropertyValue(
+                    data,
+                    HOTEL_FIELD_TITLES.checkout.prop,
+                    HOTEL_FIELD_TITLES.checkout.section
+                );
                 if (checkOut) {
                     const checkOutElement = document.querySelector('.book-hotel__checkout__time');
-                    if (checkOutElement) checkOutElement.textContent = checkOut;
+                    if (checkOutElement) {
+                        checkOutElement.textContent = checkOut;
+                    }
                 }
 
-                const facilities = findPropertyList(data, 1367);
-                if (facilities) {
+                const facilities = getPropertyValues(
+                    data,
+                    HOTEL_FIELD_TITLES.facilities.prop,
+                    HOTEL_FIELD_TITLES.facilities.section
+                );
+                if (facilities && facilities.length) {
                     const facilitiesContainer = document.querySelector('.book-hotel__facilities');
 
-                    facilities.forEach(item => {
-                        const wrapper = document.createElement("div");
-                        wrapper.className = "book-flex book-items-center book-gap-2 book-break-inside-avoid book-mb-4";
+                    if (facilitiesContainer) {
+                        facilities.forEach(item => {
+                            const wrapper = document.createElement("div");
+                            wrapper.className = "book-flex book-items-center book-gap-2";
 
-                        const icon = `
-        <svg class="book-shrink-0" width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path fill-rule="evenodd" clip-rule="evenodd"
-                d="M15.993 10.222L11.375 14.84C11.228 14.987 11.037 15.06 10.845 15.06C10.652 15.06 10.461 14.987 10.314 14.84L8.005 12.531C7.712 12.238 7.712 11.763 8.005 11.47C8.298 11.177 8.772 11.177 9.065 11.47L10.845 13.249L14.932 9.161C15.225 8.868 15.7 8.868 15.993 9.161C16.286 9.454 16.286 9.929 15.993 10.222ZM12 2.5C6.762 2.5 2.5 6.762 2.5 12C2.5 17.239 6.762 21.5 12 21.5C17.238 21.5 21.5 17.239 21.5 12C21.5 6.762 17.238 2.5 12 2.5Z"
-                fill="#18181B" />
-        </svg>
-    `;
+                            const icon = `
+                    <svg class="book-shrink-0" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M15.993 10.222L11.375 14.84C11.228 14.987 11.037 15.06 10.845 15.06C10.652 15.06 10.461 14.987 10.314 14.84L8.005 12.531C7.712 12.238 7.712 11.763 8.005 11.47C8.298 11.177 8.772 11.177 9.065 11.47L10.845 13.249L14.932 9.161C15.225 8.868 15.7 8.868 15.993 9.161C16.286 9.454 16.286 9.929 15.993 10.222ZM12 2.5C6.762 2.5 2.5 6.762 2.5 12C2.5 17.239 6.762 21.5 12 21.5C17.238 21.5 21.5 17.239 21.5 12C21.5 6.762 17.238 2.5 12 2.5Z"
+                            fill="#18181B" />
+                    </svg>
+                `;
 
-                        wrapper.innerHTML = `
-        ${icon}
-        <div class="book-flex book-flex-col book-gap-2">
-            <span class="book-text-xs book-text-zinc-600">${item}</span>
-        </div>
-    `;
+                            wrapper.innerHTML = `
+                    ${icon}
+                        <span class="book-text-xs book-text-zinc-600">${item}</span>
+                `;
 
-                        facilitiesContainer.appendChild(wrapper);
-                    });
-
+                            facilitiesContainer.appendChild(wrapper);
+                        });
+                    }
                 }
 
-                const location = findPropertySingle(data, 1378);
-                if (location) {
+                const roomFacilities = getPropertyValues(
+                    data,
+                    HOTEL_FIELD_TITLES.roomFacilities.prop,
+                    HOTEL_FIELD_TITLES.roomFacilities.section
+                );
+                if (roomFacilities && roomFacilities.length) {
+                    const roomFacilitiesContainer = document.querySelector('.book-room__facilities');
+
+                    if (roomFacilitiesContainer) {
+                        roomFacilities.forEach(item => {
+                            const wrapper = document.createElement("div");
+                            wrapper.className = "book-flex book-items-center book-gap-1";
+
+                            const icon = `
+                    <svg class="book-shrink-0" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M15.993 10.222L11.375 14.84C11.228 14.987 11.037 15.06 10.845 15.06C10.652 15.06 10.461 14.987 10.314 14.84L8.005 12.531C7.712 12.238 7.712 11.763 8.005 11.47C8.298 11.177 8.772 11.177 9.065 11.47L10.845 13.249L14.932 9.161C15.225 8.868 15.7 8.868 15.993 9.161C16.286 9.454 16.286 9.929 15.993 10.222ZM12 2.5C6.762 2.5 2.5 6.762 2.5 12C2.5 17.239 6.762 21.5 12 21.5C17.238 21.5 21.5 17.239 21.5 12C21.5 6.762 17.238 2.5 12 2.5Z"
+                            fill="#18181B" />
+                    </svg>
+                `;
+
+                            wrapper.innerHTML = `
+                    ${icon}
+                        <span class="book-text-xs book-text-zinc-600">${item}</span>
+                `;
+
+                            roomFacilitiesContainer.appendChild(wrapper);
+                        });
+                    }
+                }
+
+                const locationValue = getPropertyValue(
+                    data,
+                    HOTEL_FIELD_TITLES.gps.prop,
+                    HOTEL_FIELD_TITLES.gps.section
+                );
+                if (locationValue) {
                     const [lat, lng] = location.split(' ');
                     const locationElement = document.querySelector('.book-hotel__location');
                     if (locationElement) {
@@ -1362,9 +1754,15 @@
                     }
                 }
 
-                const description = getSectionHTML(data, "توضیحات");
+                const description = getSectionHTML(
+                    data,
+                    HOTEL_FIELD_TITLES.description.section
+                );
                 if (description) {
-                    document.querySelector('.book-hotel__description').innerHTML = description;
+                    const descElement = document.querySelector('.book-hotel__description');
+                    if (descElement) {
+                        descElement.innerHTML = description;
+                    }
                 }
 
 
@@ -1442,48 +1840,48 @@
 
                         // اضافه کردن ورودی‌های مخفی با استفاده از جاوااسکریپت معمولی
                         const hiddenInputs = `
-                        ${renderOptionId(element)}
-                        ${renderadults(element)}
-                        ${renderchildwithbed(element)}
-                        ${renderchildwithoutbed(element)}
-                        ${renderinfant(element)}
-                        ${renderroomid(element)}
-                        ${renderid(element)} 
-                        ${renderproviderId(element)} 
-                        ${renderprovider(element)} 
-                        ${renderhotelidRooms(element)}
-                        ${rendernightsRooms(element)} 
-                        ${rendersupplierRooms(element)} 
-                    <input type="hidden" value="${currency_unit}" name="rate-unit" class="rate-unit" /> 
-                    <input type="hidden" value="${currency_cost_number}" name="rate-cost" class="rate-cost" /> 
-                    <input type="hidden" value="${floatdigit}" name="rate-floatdigit" class="rate-floatdigit" /> 
-                    <input type="hidden" value="[##cms.form.sid|(2)##]" name="sid" />
-                    <input type="hidden" value="[##cms.form.Hotel-Date|(0)##]" name="Hotel-Date" />
-                    <input type="hidden" value="[##cms.form.cityid##]" name="cityid" /> 
-                    <input type="hidden" value="[##cms.form.coHotel##]" name="coHotel" /> 
-                    <input type="hidden" value='[##cms.json.header|cms.form.roomSearch##]' name="roomSearch" /> 
-                    <input type="hidden" value="[##cms.form.fdate##]" name="fdate" /> 
-                    <input type="hidden" value="[##cms.form.tdate##]" name="tdate" /> 
-                `;
+                            ${renderOptionId(element)}
+                            ${renderadults(element)}
+                            ${renderchildwithbed(element)}
+                            ${renderchildwithoutbed(element)}
+                            ${renderinfant(element)}
+                            ${renderroomid(element)}
+                            ${renderid(element)} 
+                            ${renderproviderId(element)} 
+                            ${renderprovider(element)} 
+                            ${renderhotelidRooms(element)}
+                            ${rendernightsRooms(element)} 
+                            ${rendersupplierRooms(element)} 
+                        <input type="hidden" value="${currency_unit}" name="rate-unit" class="rate-unit" /> 
+                        <input type="hidden" value="${currency_cost_number}" name="rate-cost" class="rate-cost" /> 
+                        <input type="hidden" value="${floatdigit}" name="rate-floatdigit" class="rate-floatdigit" /> 
+                        <input type="hidden" value="[##cms.form.sid|(2)##]" name="sid" />
+                        <input type="hidden" value="[##cms.form.Hotel-Date|(0)##]" name="Hotel-Date" />
+                        <input type="hidden" value="[##cms.form.cityid##]" name="cityid" /> 
+                        <input type="hidden" value="[##cms.form.coHotel##]" name="coHotel" /> 
+                        <input type="hidden" value='[##cms.json.header|cms.form.roomSearch##]' name="roomSearch" /> 
+                        <input type="hidden" value="[##cms.form.fdate##]" name="fdate" /> 
+                        <input type="hidden" value="[##cms.form.tdate##]" name="tdate" /> 
+                    `;
 
                         setActionForAllForms();
 
                         return `
-                <div class="${paddingClass}">
-                  <h3 class="book-text-zinc-900 book-mb-3">${roomName}</h3>
-                  <div class="book-flex book-gap-2">
-                    <span class="book-bg-primary-50 book-text-primary-800 book-text-xs book-rounded-3xl book-py-1 book-px-3">${serviceLabel}</span>
-                    <span class="book-bg-specialcolor-1 book-text-specialcolor-2 book-text-xs book-rounded-3xl book-py-1 book-px-4">${availabilityLabel}</span>
-                  </div>
-                        ${hiddenInputs}
-                </div>`;
+                    <div class="${paddingClass}">
+                      <h3 class="book-text-zinc-900 book-mb-3">${roomName}</h3>
+                      <div class="book-flex book-gap-2">
+                        <span class="book-bg-primary-50 book-text-primary-800 book-text-xs book-rounded-3xl book-py-1 book-px-3">${serviceLabel}</span>
+                        <span class="book-bg-specialcolor-1 book-text-specialcolor-2 book-text-xs book-rounded-3xl book-py-1 book-px-4">${availabilityLabel}</span>
+                      </div>
+                            ${hiddenInputs}
+                    </div>`;
                     })
                     .join("");
 
                 return `
-        <div class="book-flex-[2.75] book-flex book-flex-col book-justify-center book-gap-6 book-divide-y book-divide-dashed book-divide-zinc-300">
-        ${roomsHtml}
-        </div>`;
+            <div class="book-flex-[2.75] book-flex book-flex-col book-justify-center book-gap-6 book-divide-y book-divide-dashed book-divide-zinc-300">
+            ${roomsHtml}
+            </div>`;
             } catch (error) {
                 console.error(`renderAvailableRooms: ${error.message}`);
                 return "";
@@ -1493,24 +1891,12 @@
         const renderAction = (element) => {
             let type_module = '[##cms.form.type_module|cms.form.key##]';
             let clid = '[##cms.form.clid|(1)##]';
-            if (type_module == 6) {
-                if (clid == 1) {
-                    return "/Client_Show_FH_ver.2.bc"
-                } else if (clid == 2) {
-                    return "/Client_Show_FH_En_ver.2.bc"
-                } else if (clid == 3) {
-                    return "/Client_Show_FH_Ar_ver.2.bc"
-                }
-
-            } else {
-                if (clid == 1) {
-                    return "/Client_Show_Hotel_ver.2.bc"
-                } else if (clid == 2) {
-                    return "/Client_Show_Hotel_En_ver.2.bc"
-                } else if (clid == 3) {
-                    return "/Client_Show_Hotel_Ar_ver.2.bc"
-                }
-
+            if (clid == 1) {
+                return "/Client_Show_Hotel_ver.2.bc"
+            } else if (clid == 2) {
+                return "/Client_Show_Hotel_En_ver.2.bc"
+            } else if (clid == 3) {
+                return "/Client_Show_Hotel_Ar_ver.2.bc"
             }
         };
 
@@ -1567,12 +1953,26 @@
 
             for (let i = 0; i < lenavailablerooms; i++) {
                 let adults = element.availablerooms[i].info.adults;
-
+                console.log(adults);
+                console.log(typeof adults);
                 if (typeof adults === 'number') {
+                    console.log('adults');
                     indents.push(`<input type="hidden" name="_root.rooms__${i}.adults" value="${adults}" />`);
                 } else if (Array.isArray(adults)) {
                     adults.forEach(adult => {
                         indents.push(`<input type="hidden" name="_root.rooms__${i}.adults" value="${adult}" />`);
+                    });
+                } else if (typeof adults === 'string') {
+
+                    const adultsList = adults
+                        .split(',')
+                        .map(a => a.trim())
+                        .filter(a => a !== '');
+
+                    adultsList.forEach(adult => {
+                        indents.push(
+                            `<input type="hidden" name="_root.rooms__${i}.adults" value="${adult}" />`
+                        );
                     });
                 }
             }
@@ -1769,73 +2169,73 @@
             }
         };
         const priceWithCurrency = (amount, opts = {}) => {
-    try {
-        const a = Number(amount);
-        if (!Number.isFinite(a)) return opts.as === 'number' ? 0 : '0';
+            try {
+                const a = Number(amount);
+                if (!Number.isFinite(a)) return opts.as === 'number' ? 0 : '0';
 
-        const { currency_cost_number, floatdigit } = getCurrencyUnitFromStorage();
-        const { currency_unit } = getCurrencyUnitFromStorage();
-        const unit = currency_unit && String(currency_unit).trim() ? String(currency_unit).trim() : "ریال";
+                const { currency_cost_number, floatdigit } = getCurrencyUnitFromStorage();
+                const { currency_unit } = getCurrencyUnitFromStorage();
+                const unit = currency_unit && String(currency_unit).trim() ? String(currency_unit).trim() : "ریال";
 
-        const rate = Number.isFinite(opts.rate)
-            ? Number(opts.rate)
-            : Number.isFinite(currency_cost_number) ? currency_cost_number : 1;
+                const rate = Number.isFinite(opts.rate)
+                    ? Number(opts.rate)
+                    : Number.isFinite(currency_cost_number) ? currency_cost_number : 1;
 
-        let x = a * rate;
+                let x = a * rate;
 
-        // Apply floatdigit following renderTotal logic
-        if (floatdigit !== null && floatdigit !== undefined && floatdigit !== '') {
-            if (floatdigit >= 0) {
-                const toString_x = x.toString();
-                if (toString_x.indexOf('.') > -1) {
-                    const fixed = x.toFixed(floatdigit);
-                    const parts = fixed.split('.');
-                    // If decimal part contains only zeros, show one decimal place
-                    if (parts[1] && /^0+$/.test(parts[1])) {
-                        x = parseFloat(x.toFixed(1));
+                // Apply floatdigit following renderTotal logic
+                if (floatdigit !== null && floatdigit !== undefined && floatdigit !== '') {
+                    if (floatdigit >= 0) {
+                        const toString_x = x.toString();
+                        if (toString_x.indexOf('.') > -1) {
+                            const fixed = x.toFixed(floatdigit);
+                            const parts = fixed.split('.');
+                            // If decimal part contains only zeros, show one decimal place
+                            if (parts[1] && /^0+$/.test(parts[1])) {
+                                x = parseFloat(x.toFixed(1));
+                            } else {
+                                x = parseFloat(fixed);
+                            }
+                        } else {
+                            x = parseFloat(x.toFixed(floatdigit));
+                        }
                     } else {
-                        x = parseFloat(fixed);
+                        // Negative floatdigit
+                        const multiplier = Math.pow(10, Math.abs(floatdigit));
+                        x = Math.round(x / multiplier) * multiplier;
                     }
-                } else {
-                    x = parseFloat(x.toFixed(floatdigit));
                 }
-            } else {
-                // Negative floatdigit
-                const multiplier = Math.pow(10, Math.abs(floatdigit));
-                x = Math.round(x / multiplier) * multiplier;
+
+                if (opts.as === 'number') return x;
+
+                // Format with comma separator
+                const useGrouping = opts.group !== false;
+                const hasDigits = floatdigit !== null && floatdigit !== undefined && floatdigit !== '';
+
+                const nf = new Intl.NumberFormat(opts.locale || undefined,
+                    hasDigits && floatdigit >= 0
+                        ? {
+                            minimumFractionDigits: opts.fixed ? Math.max(0, floatdigit) : 0,
+                            maximumFractionDigits: Math.max(0, floatdigit),
+                            useGrouping
+                        }
+                        : { useGrouping }
+                );
+
+                const formattedPrice = nf.format(x);
+
+                // If unit is provided, append it to the formatted price
+                const priceSpan = `<span class="book-price__check__currency book-text-zinc-900 book-font-bold book-text-xl">${formattedPrice}</span>`;
+                const unitSpan = `<span class="book-unit__check__currency book-text-zinc-500 book-text-xs book-font-normal">${unit}</span>`;
+
+                return priceSpan + " " + unitSpan;
+
+                return formattedPrice;
+
+            } catch {
+                return opts.as === 'number' ? 0 : '0';
             }
-        }
-
-        if (opts.as === 'number') return x;
-
-        // Format with comma separator
-        const useGrouping = opts.group !== false;
-        const hasDigits = floatdigit !== null && floatdigit !== undefined && floatdigit !== '';
-
-        const nf = new Intl.NumberFormat(opts.locale || undefined,
-            hasDigits && floatdigit >= 0
-                ? {
-                    minimumFractionDigits: opts.fixed ? Math.max(0, floatdigit) : 0,
-                    maximumFractionDigits: Math.max(0, floatdigit),
-                    useGrouping
-                }
-                : { useGrouping }
-        );
-
-        const formattedPrice = nf.format(x);
-
-        // If unit is provided, append it to the formatted price
-        const priceSpan = `<span class="book-price__check__currency book-text-zinc-900 book-font-bold book-text-xl">${formattedPrice}</span>`;
-        const unitSpan = `<span class="book-unit__check__currency book-text-zinc-500 book-text-xs book-font-normal">${unit}</span>`;
-
-        return priceSpan + " " + unitSpan;
-
-        return formattedPrice;
-
-    } catch {
-        return opts.as === 'number' ? 0 : '0';
-    }
-};
+        };
 
         /**
          * Global state for hotel room filtering, sorting, and pagination
@@ -2241,11 +2641,11 @@
                     const listContainer = document.querySelector(".book-list__cards__container");
                     if (listContainer) {
                         listContainer.innerHTML = `
-              <div class="book-text-center">
-                  <div>هیچ اتاقی با فیلترهای انتخابی یافت نشد</div>
-                  <div class="book-text-zinc-900 book-text-xs book-mt-2">لطفاً فیلترها را تغییر دهید</div>
-              </div>
-          `;
+                  <div class="book-text-center">
+                      <div>هیچ اتاقی با فیلترهای انتخابی یافت نشد</div>
+                      <div class="book-text-zinc-900 book-text-xs book-mt-2">لطفاً فیلترها را تغییر دهید</div>
+                  </div>
+              `;
                     }
 
                     // Hide pagination controls when no results
@@ -2283,9 +2683,9 @@
 
                 // Render button with active/visible styling
                 return `<li  bc-value="${index + 1}" bc-name="cms.page" bc-triggers="click"
-                      class="book-flex book-items-center book-justify-center book-w-12 book-h-12 book-rounded-xl book-transition-all book-duration-300 hover:book-bg-primary-50 book-cursor-pointer ${isActive ? 'book-active__paging book-bg-primary-50 book-text-primary-800' : 'book-bg-zinc-100 book-text-zinc-900'}">
-                      ${page}
-                  </li>`;
+                          class="book-flex book-items-center book-justify-center book-w-12 book-h-12 book-rounded-xl book-transition-all book-duration-300 hover:book-bg-primary-50 book-cursor-pointer ${isActive ? 'book-active__paging book-bg-primary-50 book-text-primary-800' : 'book-bg-zinc-100 book-text-zinc-900'}">
+                          ${page}
+                      </li>`;
             } catch (error) {
                 console.error(`renderPaging: ${error.message}`);
                 return "";
@@ -2344,10 +2744,10 @@
                 }
 
                 container.innerHTML = `
-            <div class="book-text-center book-py-6 book-text-xs book-text-zinc-400">
-                در حال بارگذاری قوانین اتاق...
-            </div>
-        `;
+                <div class="book-text-center book-py-6 book-text-xs book-text-zinc-400">
+                    در حال بارگذاری قوانین اتاق...
+                </div>
+            `;
 
                 const providerId = window.cmsData && window.cmsData.provider
                     ? Number(window.cmsData.provider)
@@ -2622,51 +3022,51 @@
                     let newRoom = document.createElement("div");
                     newRoom.className = "contentRoom book-flex book-flex-col book-gap-2 book-border-t book-border-solid book-border-zinc-200 book-pt-2";
                     newRoom.innerHTML = `
-          <div class="numberOfRoom">اتاق ${s}</div>
-          <div class="deleteRoom book-hidden book-cursor-pointer" onclick="remove_Room(this)">حذف اتاق</div>
-            <div class="passenger-item adult-passenger-item book-w-full book-flex book-justify-between">
-              <label for="passenger-room-adultcount${s}" class="">
-                <span>بزرگسال</span><span class="exp-age">(12 سال به بالا)</span>
-              </label>
-              <ul class="book-h-auto book-leading-normal book-flex book-items-center book-justify-between">
-                <li class="plus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
-                  <div class="" onclick="Change_AdultCount(this)">
-                    <span class="count-icon-simple book-text-white book-text-2xl">+</span><span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10"><use xlink:href="images/sprite-icons.svg#engine-plus-icon"></use></svg></span>
-                  </div>
-                </li>
-                <li class="book-w-6 book-h-6">
-                  <input id="passenger-room-adultcount${s}" type="text" class="adultcount w-full text-center" name="_root.rooms__${s}.adultcount" maxlength="4000" value=${new_adult} readonly />
-                </li>
-                <li class="minus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
-                  <div class="" onclick="Change_AdultCount(this)">
-                    <span class="count-icon-simple book-text-white book-text-2xl">-</span><span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10"><use xlink:href="images/sprite-icons.svg#engine-minus-icon"></use></svg></span>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="passenger-item child-passenger-item book-w-full book-flex book-justify-between">
-              <label for="passenger-room-childcount${s}" class="">
-                <span>کودک</span><span class="exp-age">(0 تا 12 سال)</span>
-              </label>
-              <ul class="book-h-auto book-leading-normal book-flex book-items-center book-justify-between">
-                <li class="plus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
-                  <div class="" onclick="Change_ChildCount(this)">
-                    <span class="count-icon-simple book-text-white book-text-2xl">+</span><span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10"><use xlink:href="images/sprite-icons.svg#engine-plus-icon"></use></svg></span>
-                  </div>
-                </li>
-                <li class="book-w-6 book-h-6">
-                  <input id="passenger-room-childcount${s}" type="text" class="childcount w-full text-center" maxlength="4000" value="0" readonly />
-                </li>
-                <li class="minus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
-                  <div class="" onclick="Change_ChildCount(this)">
-                    <span class="count-icon-simple book-text-white book-text-2xl">-</span><span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10"><use xlink:href="images/sprite-icons.svg#engine-minus-icon"></use></svg></span>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <input type="hidden" name="_root.rooms__${s}.childcountandage" class="childcountandage" />
-            <div class="section-select-age book-grid book-grid-cols-2 book-gap-2"></div>
-        `;
+              <div class="numberOfRoom">اتاق ${s}</div>
+              <div class="deleteRoom book-hidden book-cursor-pointer" onclick="remove_Room(this)">حذف اتاق</div>
+                <div class="passenger-item adult-passenger-item book-w-full book-flex book-justify-between">
+                  <label for="passenger-room-adultcount${s}" class="">
+                    <span>بزرگسال</span><span class="exp-age">(12 سال به بالا)</span>
+                  </label>
+                  <ul class="book-h-auto book-leading-normal book-flex book-items-center book-justify-between">
+                    <li class="plus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
+                      <div class="book-h-full book-leading-8" onclick="Change_AdultCount(this)">
+                        <span class="count-icon-simple book-text-white book-text-2xl">+</span><span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10"><use xlink:href="images/sprite-icons.svg#engine-plus-icon"></use></svg></span>
+                      </div>
+                    </li>
+                    <li class="book-w-6 book-h-6">
+                      <input id="passenger-room-adultcount${s}" type="text" class="adultcount book-w-full book-text-center book-bg-transparent" name="_root.rooms__${s}.adultcount" maxlength="4000" value=${new_adult} readonly />
+                    </li>
+                    <li class="minus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
+                      <div class="book-h-full book-leading-8" onclick="Change_AdultCount(this)">
+                        <span class="count-icon-simple book-text-white book-text-2xl">-</span><span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10"><use xlink:href="images/sprite-icons.svg#engine-minus-icon"></use></svg></span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="passenger-item child-passenger-item book-w-full book-flex book-justify-between">
+                  <label for="passenger-room-childcount${s}" class="">
+                    <span>کودک</span><span class="exp-age">(0 تا 12 سال)</span>
+                  </label>
+                  <ul class="book-h-auto book-leading-normal book-flex book-items-center book-justify-between">
+                    <li class="plus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
+                      <div class="book-h-full book-leading-8" onclick="Change_ChildCount(this)">
+                        <span class="count-icon-simple book-text-white book-text-2xl">+</span><span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10"><use xlink:href="images/sprite-icons.svg#engine-plus-icon"></use></svg></span>
+                      </div>
+                    </li>
+                    <li class="book-w-6 book-h-6">
+                      <input id="passenger-room-childcount${s}" type="text" class="childcount book-w-full book-text-center book-bg-transparent" maxlength="4000" value="0" readonly />
+                    </li>
+                    <li class="minus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
+                      <div class="book-h-full book-leading-8" onclick="Change_ChildCount(this)">
+                        <span class="count-icon-simple book-text-white book-text-2xl">-</span><span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10"><use xlink:href="images/sprite-icons.svg#engine-minus-icon"></use></svg></span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <input type="hidden" name="_root.rooms__${s}.childcountandage" class="childcountandage" />
+                <div class="section-select-age book-grid book-grid-cols-2 book-gap-2"></div>
+            `;
                     roomsContainer.appendChild(newRoom);
                     const adult_cont_new = newRoom.querySelector(".adultcount").value;
                     const sum_passenger_second =
@@ -2727,51 +3127,51 @@
                     let newRoom = document.createElement("div");
                     newRoom.className = "contentRoom book-flex book-flex-col book-gap-2";
                     newRoom.innerHTML = `
-          <div class="numberOfRoom">اتاق ${s}</div>
-          <div class="deleteRoom book-hidden book-cursor-pointer" onclick="remove_Room(this)">حذف اتاق</div>
-            <div class="passenger-item adult-passenger-item book-w-full book-flex book-justify-between">
-              <label for="passenger-room-adultcount${s}" class="">
-                <span>بزرگسال</span><span class="exp-age">(12 سال به بالا)</span>
-              </label>
-              <ul class="book-h-auto book-leading-normal book-flex book-items-center book-justify-between">
-                <li class="plus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
-                  <div class="" onclick="Change_AdultCount(this)">
-                    <span class="count-icon-simple book-text-white book-text-2xl">+</span><span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10"><use xlink:href="images/sprite-icons.svg#engine-plus-icon"></use></svg></span>
-                  </div>
-                </li>
-                <li class="book-w-6 book-h-6">
-                  <input id="passenger-room-adultcount${s}" type="text" class="adultcount w-full text-center" name="_root.rooms__${s}.adultcount" maxlength="4000" value=${new_adult} readonly />
-                </li>
-                <li class="minus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
-                  <div class="" onclick="Change_AdultCount(this)">
-                    <span class="count-icon-simple book-text-white book-text-2xl">-</span><span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10"><use xlink:href="images/sprite-icons.svg#engine-minus-icon"></use></svg></span>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="passenger-item child-passenger-item book-w-full book-flex book-justify-between">
-              <label for="passenger-room-childcount${s}" class="">
-                <span>کودک</span><span class="exp-age">(0 تا 12 سال)</span>
-              </label>
-              <ul class="book-h-auto book-leading-normal book-flex book-items-center book-justify-between">
-                <li class="plus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
-                  <div class="" onclick="Change_ChildCount(this)">
-                    <span class="count-icon-simple book-text-white book-text-2xl">+</span><span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10"><use xlink:href="images/sprite-icons.svg#engine-plus-icon"></use></svg></span>
-                  </div>
-                </li>
-                <li class="book-w-6 book-h-6">
-                  <input id="passenger-room-childcount${s}" type="text" class="childcount w-full text-center" maxlength="4000" value="0" readonly />
-                </li>
-                <li class="minus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
-                  <div class="" onclick="Change_ChildCount(this)">
-                    <span class="count-icon-simple book-text-white book-text-2xl">-</span><span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10"><use xlink:href="images/sprite-icons.svg#engine-minus-icon"></use></svg></span>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <input type="hidden" name="_root.rooms__${s}.childcountandage" class="childcountandage" />
-            <div class="section-select-age book-grid book-grid-cols-2 book-gap-2"></div>
-        `;
+              <div class="numberOfRoom">اتاق ${s}</div>
+              <div class="deleteRoom book-hidden book-cursor-pointer" onclick="remove_Room(this)">حذف اتاق</div>
+                <div class="passenger-item adult-passenger-item book-w-full book-flex book-justify-between">
+                  <label for="passenger-room-adultcount${s}" class="">
+                    <span>بزرگسال</span><span class="exp-age">(12 سال به بالا)</span>
+                  </label>
+                  <ul class="book-h-auto book-leading-normal book-flex book-items-center book-justify-between">
+                    <li class="plus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
+                      <div class="book-h-full book-leading-8" onclick="Change_AdultCount(this)">
+                        <span class="count-icon-simple book-text-white book-text-2xl">+</span><span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10"><use xlink:href="images/sprite-icons.svg#engine-plus-icon"></use></svg></span>
+                      </div>
+                    </li>
+                    <li class="book-w-6 book-h-6">
+                      <input id="passenger-room-adultcount${s}" type="text" class="adultcount book-w-full book-text-center book-bg-transparent" name="_root.rooms__${s}.adultcount" maxlength="4000" value=${new_adult} readonly />
+                    </li>
+                    <li class="minus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
+                      <div class="book-h-full book-leading-8" onclick="Change_AdultCount(this)">
+                        <span class="count-icon-simple book-text-white book-text-2xl">-</span><span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10"><use xlink:href="images/sprite-icons.svg#engine-minus-icon"></use></svg></span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="passenger-item child-passenger-item book-w-full book-flex book-justify-between">
+                  <label for="passenger-room-childcount${s}" class="">
+                    <span>کودک</span><span class="exp-age">(0 تا 12 سال)</span>
+                  </label>
+                  <ul class="book-h-auto book-leading-normal book-flex book-items-center book-justify-between">
+                    <li class="plus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
+                      <div class="book-h-full book-leading-8" onclick="Change_ChildCount(this)">
+                        <span class="count-icon-simple book-text-white book-text-2xl">+</span><span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10"><use xlink:href="images/sprite-icons.svg#engine-plus-icon"></use></svg></span>
+                      </div>
+                    </li>
+                    <li class="book-w-6 book-h-6">
+                      <input id="passenger-room-childcount${s}" type="text" class="childcount book-w-full book-text-center book-bg-transparent" maxlength="4000" value="0" readonly />
+                    </li>
+                    <li class="minus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
+                      <div class="book-h-full book-leading-8" onclick="Change_ChildCount(this)">
+                        <span class="count-icon-simple book-text-white book-text-2xl">-</span><span class="count-icon-svg hidden"><svg class="align-middle" width="10" height="10"><use xlink:href="images/sprite-icons.svg#engine-minus-icon"></use></svg></span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <input type="hidden" name="_root.rooms__${s}.childcountandage" class="childcountandage" />
+                <div class="section-select-age book-grid book-grid-cols-2 book-gap-2"></div>
+            `;
                     roomsContainer.appendChild(newRoom);
                     const adult_cont_new = newRoom.querySelector(".adultcount").value;
                     const sum_passenger_second =
@@ -2920,22 +3320,22 @@
                         e.className =
                             "createChildDropdown book-mb-4";
                         e.innerHTML = `
-            <label for="select-age${i}" class="">سن کودک ${ordinalWords[i - 1] || i
+                <label for="select-age${i}" class="">سن کودک ${ordinalWords[i - 1] || i
                             }</label>
-            <select class="select-age book-w-full book-border book-border-solid book-border-zinc-600 book-rounded-lg book-px-3 book-h-8" id="select-age${i}">
-              <option value="1">تا 1 سال</option>
-              <option value="2">1 تا 2</option>
-              <option value="3">2 تا 3</option>
-              <option value="4">3 تا 4</option>
-              <option value="5">4 تا 5</option>
-              <option value="6">5 تا 6</option>
-              <option value="7">6 تا 7</option>
-              <option value="8">7 تا 8</option>
-              <option value="9">8 تا 9</option>
-              <option value="10">9 تا 10</option>
-              <option value="11">10 تا 11</option>
-              <option value="12">11 تا 12</option>
-            </select>`;
+                <select class="select-age book-w-full book-border book-border-solid book-border-zinc-600 book-rounded-lg book-px-3 book-h-8" id="select-age${i}">
+                  <option value="1">تا 1 سال</option>
+                  <option value="2">1 تا 2</option>
+                  <option value="3">2 تا 3</option>
+                  <option value="4">3 تا 4</option>
+                  <option value="5">4 تا 5</option>
+                  <option value="6">5 تا 6</option>
+                  <option value="7">6 تا 7</option>
+                  <option value="8">7 تا 8</option>
+                  <option value="9">8 تا 9</option>
+                  <option value="10">9 تا 10</option>
+                  <option value="11">10 تا 11</option>
+                  <option value="12">11 تا 12</option>
+                </select>`;
                         sectionSelectAge.appendChild(e);
                     }
                 } else if (currentCount > updatedCount) {
@@ -3108,66 +3508,77 @@
         });
 
         document.addEventListener("DOMContentLoaded", () => {
-    const dateInputs = document.querySelectorAll(".js-date-input");
+            const dateInputs = document.querySelectorAll(".js-date-input");
 
-    if (dateInputs.length === 0) {
-        return;
-    }
-
-    function calculateDateDifference(startDate, endDate) {
-        const start = new Date(startDate);
-        const end = new Date(endDate);
-
-        if (start > end) {
-            return 0;
-        }
-
-        const timeDifference = end - start;
-        return timeDifference / (1000 * 3600 * 24);
-    }
-
-    function updateDateFields() {
-        const startDateInput = document.querySelector(".js-date-input.start_date");
-        const endDateInput = document.querySelector(".js-date-input.end_date");
-
-        const startDateJalali = startDateInput.getAttribute("data-jalali");
-        const startDateGregorian = startDateInput.getAttribute("data-gregorian");
-
-        const endDateJalali = endDateInput.getAttribute("data-jalali");
-        const endDateGregorian = endDateInput.getAttribute("data-gregorian");
-
-        document.querySelector(".book-hotel__fdate").innerText = startDateJalali;
-        document.querySelector(".book-hotel__tdate").innerText = endDateJalali;
-
-        const dayDifference = calculateDateDifference(startDateGregorian, endDateGregorian);
-        document.querySelector(".book-hotel__day").innerText = dayDifference;
-
-        // Add "تا" before end date when the tdate is populated
-        const tdate = document.querySelector(".book-hotel__tdate");
-        const tillText = document.querySelector(".book-hotel__till-text");
-
-        if (tdate && tdate.innerText.trim() !== "") {
-            if (tillText) {
-                tillText.innerText = " تا";
+            if (dateInputs.length === 0) {
+                return;
             }
-        } else{
-            tillText.innerText = "";
-        }
-    }
 
-    const dateInputsObserver = new MutationObserver(() => {
-        updateDateFields();
-    });
+            function calculateDateDifference(startDate, endDate) {
+                const start = new Date(startDate);
+                const end = new Date(endDate);
 
-    dateInputs.forEach(input => {
-        dateInputsObserver.observe(input, {
-            attributes: true,
-            attributeFilter: ['data-jalali', 'data-gregorian'],
+                if (start > end) {
+                    return 0;
+                }
+
+                const timeDifference = end - start;
+                return timeDifference / (1000 * 3600 * 24);
+            }
+
+            function updateDateFields() {
+                const startDateInput = document.querySelector(".js-date-input.start_date");
+                const endDateInput = document.querySelector(".js-date-input.end_date");
+
+                if (!startDateInput || !endDateInput) return;
+
+                const startDateJalali = startDateInput.getAttribute("data-jalali") || "";
+                const startDateGregorian = startDateInput.getAttribute("data-gregorian") || "";
+
+                const endDateJalali = endDateInput.getAttribute("data-jalali") || "";
+                const endDateGregorian = endDateInput.getAttribute("data-gregorian") || "";
+
+                const fdate = document.querySelector(".book-hotel__fdate");
+                const tdate = document.querySelector(".book-hotel__tdate");
+                const nightsElem = document.querySelector(".book-hotel__nights");
+                const tillText = document.querySelector(".book-hotel__till-text");
+
+                if (fdate) fdate.innerText = startDateJalali;
+                if (tdate) tdate.innerText = endDateJalali;
+
+                if (startDateGregorian && endDateGregorian) {
+                    const dayDifference = calculateDateDifference(startDateGregorian, endDateGregorian);
+
+                    if (nightsElem) {
+                        nightsElem.innerText = dayDifference ? `${dayDifference} شب` : "";
+                    }
+                } else {
+                    if (nightsElem) {
+                        nightsElem.innerText = "";
+                    }
+                }
+
+                if (tdate && tdate.innerText.trim() !== "") {
+                    if (tillText) tillText.innerText = " تا";
+                } else {
+                    if (tillText) tillText.innerText = "";
+                }
+            }
+
+            const dateInputsObserver = new MutationObserver(() => {
+                updateDateFields();
+            });
+
+            dateInputs.forEach(input => {
+                dateInputsObserver.observe(input, {
+                    attributes: true,
+                    attributeFilter: ['data-jalali', 'data-gregorian'],
+                });
+            });
+
+            updateDateFields();
         });
-    });
 
-    updateDateFields();
-});
 
 
     </script>
