@@ -12,191 +12,63 @@
         type="text/css" rel="stylesheet" />
 </head>
 
-<style>
-    .book-rotate-180 {
-        transform: rotate(180deg);
-    }
-
-    .book-max-h-0 {
-        max-height: 0px;
-    }
-
-    .book-text-left {
-        text-align: left;
-    }
-
-    .-book-right-3 {
-        right: -0.75rem
-            /* -12px */
-        ;
-    }
-
-    .book-w-6 {
-        width: 1.5rem
-            /* 24px */
-        ;
-    }
-
-    .book-h-6 {
-        height: 1.5rem
-            /* 24px */
-        ;
-    }
-
-    .book-bg-primary-600 {
-        background-color: var(--primary-600);
-    }
-
-    .book-pt-2 {
-        padding-top: 0.5rem;
-    }
-
-    .book-grid-cols-2 {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .book-border-zinc-600 {
-        --tw-border-opacity: 1;
-        border-color: rgb(82 82 91 / var(--tw-border-opacity, 1))
-            /* #52525b */
-        ;
-    }
-
-    .book-gap-1 {
-        gap: 0.25rem
-            /* 4px */
-        ;
-    }
-
-    .book-max-h-80 {
-        max-height: 20rem
-            /* 320px */
-        ;
-    }
-
-    .\!book-bottom-0 {
-        bottom: 0px !important;
-    }
-
-    .hotel-content-loader:after {
-        content: '';
-        display: block;
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        left: 0;
-        top: 0;
-        background-repeat: no-repeat;
-        background-image: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%),
-            linear-gradient(#aaaaaa 16px, transparent 0),
-            linear-gradient(#aaaaaa 16px, transparent 0),
-            linear-gradient(#aaaaaa 30px, transparent 0),
-            linear-gradient(#aaaaaa 20px, transparent 0),
-            linear-gradient(#aaaaaa 16px, transparent 0),
-            linear-gradient(#aaaaaa 30px, transparent 0),
-            linear-gradient(#aaaaaa 32px, transparent 0),
-            linear-gradient(#ffffff 100%, transparent 0);
-        background-size: 449px 100%, 600px 16px, 700px 16px, 750px 30px, 600px 20px, 800px 16px, 898px 30px, 700px 32px, 100% 100%;
-        background-position: 0 0, 298px 32px, 198px 59px, 148px 86px, 298px 127px, 98px 201px, 0px 228px, 198px 158px, 0 0;
-        animation: hotel-content-animation 2000ms infinite;
-    }
-
-    @keyframes hotel-content-animation {
-        to {
-            background-position: 100% 0, 298px 32px, 198px 59px, 148px 86px, 298px 127px, 98px 201px, 0px 228px, 198px 158px, 0 0;
-        }
-    }
-
-    .book-bg-transparent {
-    background-color: transparent;
-}
-.book-leading-8 {
-    line-height: 2rem /* 32px */;
-}
-</style>
-
 <body class="book-bg-zinc-50">
-    <!-- Header -->
-    <basis core="call" file="header.inc" lid="1" pageindex="[##cms.cms.pageindex|(1)##]"></basis>
+    <basis core="call" file="header.inc" lid="1" pageindex="[##cms.cms.pageindex|(2)##]"></basis>
     <basis core="callback" run="atclient"
         triggers="room.list cms.page cms.nextpage cms.prevpage cms.services cms.roomtypes" method="manipulation">
     </basis>
-    <!-- Main-->
     <main>
         <!-- Commands / Requests -->
         <basis core="call" file="hotel/info/commands" lid="1"></basis>
-        <div class="max-xl:book-w-[97%] xl:book-max-w-7xl book-mx-auto book-my-5">
-            <div class="relative flex items-center justify-center gap-1">
-                <a href="/"
-                    class="book-text-zinc-700 book-text-xs book-transition-all book-duration-300 hover:book-text-primary-300">صفحه
-                    اصلی</a>
-                <span>/</span>
-                <span class="book-hotel__title"></span>
-            </div>
+        <div class="max-lg:book-w-[90%] book-mx-auto book-mt-16">
+            <div class="book-text-zinc-700 book-text-xs">
+                صفحه اصلی / مشاهده هتل / هتل مجلل درویشی در مشهد </div>
             <section class="book-relative book-mt-6">
-                <div>
-                    <div class="gallery-img-loader book-w-full"></div>
-                    <div class="book-flex book-gap-3">
-                        <basis core="print" datamembername="api.gallery" run="atclient"
-                            onrendered="onrenderedApiGallery">
-                            <layout>
-                                <script type="text/template">
-                                    <div class="book-flex-[2.53] swiper hotel-big-img-gallery book-select-none book-pb-10">
-                                        <div class="swiper-pagination !book-bottom-0"></div>
-                                        <div class="swiper-wrapper">
-                                            @child
-                                        </div>
-                                        <div
-                                            class="swiper-button-next-custom book-absolute book-z-10 book-left-4 book-top-1/2 -book-translate-y-1/2 book-w-14 book-h-14 book-flex book-items-center book-justify-center book-bg-zinc-900 backdrop-blur-md book-rounded-full book-shadow-lg book-transition-all book-duration-300 hover:book-bg-primary-600">
-                                            <svg width="32" height="32" class="book-text-white">
-                                                <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-chevron-left">
-                                                </use>
-                                            </svg>
-                                        </div>
-                                        <div
-                                            class="swiper-button-prev-custom book-absolute book-z-10 book-right-4 book-top-1/2 -book-translate-y-1/2 book-w-14 book-h-14 book-flex book-items-center book-justify-center book-bg-zinc-900 backdrop-blur-md book-rounded-full book-shadow-lg book-transition-all book-duration-300 hover:book-bg-primary-600">
-                                            <svg width="32" height="32" class="book-text-white">
-                                                <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-chevron-right">
-                                                </use>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                </script>
-                            </layout>
-                            <face>
-                                <script type="text/template">
-                                    <div class="swiper-slide">
-                                        <img src="@originalImage@"
-                                            class="book-w-full book-h-[552px] book-object-cover book-rounded-xl" alt=""
-                                            width="908" height="552" />
-                                    </div>
-                                </script>
-                            </face>
-                        </basis>
+                <basis core="print" datamembername="api.gallery" run="atclient" onrendered="onrenderedApiGallery">
+                    <layout>
+                        <script type="text/template">
+                            <div class="swiper hotel-big-img-gallery book-select-none">
+                                <div class="swiper-wrapper">
+                                    @child
+                                </div>
+                            </div>
+                        </script>
+                    </layout>
+                    <face>
+                        <script type="text/template">
+                            <div class="swiper-slide">
+                                <img src="@originalImage@"
+                                    class="book-w-full book-h-44 book-object-cover book-rounded" alt="" width="288"
+                                    height="176" />
+                            </div>
+                        </script>
+                    </face>
+                </basis>
 
-                        <basis core="print" datamembername="api.gallery" run="atclient"
-                            onrendered="onrenderedApiGallery">
-                            <layout>
-                                <script type="text/template">
-                                    <div thumbsSlider="" class="book-flex-1 swiper hotel-small-img-gallery book-h-[552px]">
-                                        <div class="swiper-wrapper book-flex-col book-justify-between">
-                                            @child
-                                        </div>
-                                    </div>
-                                </script>
-                            </layout>
-                            <face>
-                                <script type="text/template">
-                                    <div class="swiper-slide !book-w-full book-h-fit book-cursor-pointer">
-                                        <img src="@originalImage@" alt=""
-                                            class="book-w-full book-h-44 book-object-cover book-rounded-xl" width="358"
-                                            height="176" loading="lazy"/>
-                                    </div>
-                                </script>
-                            </face>
-                        </basis>
-                    </div>
-                </div>
+
+                <basis core="print" datamembername="api.gallery" run="atclient" onrendered="onrenderedApiGallery">
+                    <layout>
+                        <script type="text/template">
+                        <div thumbsSlider="" class="swiper hotel-small-img-gallery book-mt-2">
+                            <div class="swiper-wrapper">
+                                @child
+                            </div>
+                        </div>
+                    </script>
+                    </layout>
+                    <face>
+                        <script type="text/template">
+                        <div class="swiper-slide book-cursor-pointer">
+                            <img src="@originalImage@" alt=""
+                                class="book-w-full book-h-14 book-object-cover book-rounded" width="91" height="56"
+                                loading="lazy">
+                        </div>
+                    </script>
+                    </face>
+                </basis>
+
+                <div class="swiper-pagination !-book-bottom-9"></div>
+
                 <!-- Popup Modal -->
                 <div id="hotelPopupModalGallery"
                     class="popup-modal book-fixed book-inset-0 book-z-50 book-bg-black book-bg-opacity-70 book-justify-center book-items-center book-hidden">
@@ -204,12 +76,13 @@
                         class="popup-content book-relative book-flex book-items-center book-justify-center book-border-4 book-border-solid book-border-white book-rounded-3xl book-h-[520px] book-max-w-7xl book-overflow-hidden">
 
                         <div
-                            class="book-absolute book-top-0 book-left-0 book-right-0 book-flex book-items-center book-justify-end book-px-6 book-py-3 book-z-20">
+                            class="book-absolute book-top-0 book-left-0 book-right-0 book-flex book-items-center book-justify-between book-px-6 book-py-3 book-z-20">
+                            <h2 class="text-lg font-semibold text-zinc-800 dark:text-zinc-100">گالری تصاویر</h2>
                             <button id="closePopupGallery"
-                                class="book-flex book-items-center book-justify-center book-w-12 book-h-12 book-bg-white/30 book-backdrop-blur-md book-rounded-full book-text-white book-transition-all book-duration-300 hover:book-bg-primary-600">
-                                <svg width="24" height="24" class="book-text-white">
-                                    <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-close">
-                                    </use>
+                                class="book-flex book-items-center book-justify-center book-w-12 book-h-12 book-bg-white/30 book-backdrop-blur-md book-rounded-full book-text-white book-transition-all book-duration-300 hover:book-bg-secondary-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+                                    fill="none" class="stroke-current">
+                                    <path d="M6 6l12 12M18 6L6 18" stroke-width="2" stroke-linecap="round" />
                                 </svg>
                             </button>
                         </div>
@@ -220,627 +93,461 @@
                             </div>
 
                             <div
-                                class="swiper-button-next-popup book-flex book-items-center book-justify-center book-absolute book-top-1/2 book-left-6 book-z-10 book-w-12 book-h-12 book-bg-white/30 -book-translate-y-1/2 backdrop-blur-md book-rounded-full book-text-white book-shadow-lg book-transition-all book-duration-300 hover:book-bg-primary-600">
-                                <svg width="32" height="32" class="book-text-white">
-                                    <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-chevron-left">
-                                    </use>
-                                </svg>
+                                class="swiper-button-next book-w-12 book-h-12 after:book-text-2xl book-bg-white/30 backdrop-blur-md book-rounded-full book-text-white book-shadow-lg">
                             </div>
                             <div
-                                class="swiper-button-prev-popup book-flex book-items-center book-justify-center book-absolute book-top-1/2 book-right-6 book-z-10 book-w-12 book-h-12 book-bg-white/30 -book-translate-y-1/2 backdrop-blur-md book-rounded-full book-text-white book-shadow-lg book-transition-all book-duration-300 hover:book-bg-primary-600">
-                                <svg width="32" height="32" class="book-text-white">
-                                    <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-chevron-right">
-                                    </use>
-                                </svg>
+                                class="swiper-button-prev w-12 h-12 after:text-2xl bg-white/30 backdrop-blur-md rounded-full text-white shadow-lg">
                             </div>
                         </div>
 
                         <div
-                            class="book-absolute book-bottom-0 book-left-0 book-right-0 book-px-6 book-py-3 book-rounded-3xl book-bg-gradient-to-t book-from-black/80 book-to-transparent book-flex book-items-center book-justify-between book-text-3xl book-text-white book-z-20">
-                            <span class="gallery-img-count">1 / 5</span>
+                            class="book-absolute book-bottom-0 book-left-0 book-right-0 book-px-6 book-py-3 book-rounded-3xl book-bg-gradient-to-t book-from-black/80 book-to-transparent book-flex book-items-center book-justify-between book-text-sm book-text-white book-z-20">
+                            <span class="gallery-img-count text-3xl">1 / 5</span>
                         </div>
                     </div>
 
                 </div>
             </section>
-            <div class="book-flex book-gap-6 book-mt-12">
-                <div class="hotel-content-wrapper-loader book-flex-1 book-flex book-flex-col book-gap-4">
-                    <div class="hotel-content-loader book-relative book-h-full"></div>
-                    <div class="hotel-content-loader book-relative book-h-full"></div>
-                    <div class="hotel-content-loader book-relative book-h-full"></div>
-                </div>
-                <div class="book-hotel__content book-hidden book-flex-1">
-                    <div class="book-bg-white book-p-6 book-rounded-xl">
-                        <section>
-                            <div class="book-flex book-items-center book-justify-between">
-                                <h1 class="book-hotel__title book-font-bold book-text-zinc-900 book-text-2xl"></h1>
-                                <div class="book-hotel__stars book-flex book-items-center book-gap-0.5">
-                                </div>
-                            </div>
-                            <div
-                                class="book-hotel__description book-text-sm book-text-zinc-900 book-mt-9 book-leading-6">
-                            </div>
-                        </section>
-                        <section class="book-mt-28">
-                            <h2 class="book-font-bold book-text-xl book-text-primary-400">ارتباط با هتل</h2>
-                            <div class="book-flex book-flex-col book-gap-1 book-mt-3">
-                                <div class="book-hotel__website__wrapper book-hidden book-items-center book-gap-1">
-                                    <svg width="48" height="48" class="book-shrink-0">
-                                        <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-site">
-                                        </use>
-                                    </svg>
-                                    <a href="" class="book-hotel__website book-text-sm book-text-zinc-900"></a>
-                                </div>
-                                <div class="book-hotel__address__wrapper book-hidden book-items-center book-gap-1">
-                                    <svg width="48" height="48" class="book-shrink-0">
-                                        <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-location">
-                                        </use>
-                                    </svg>
-                                    <span class="book-hotel__address book-text-sm book-text-zinc-900"></span>
-                                </div>
-                                <div class="book-hotel__phones__wrapper book-hidden book-items-center book-gap-1">
-                                    <svg width="48" height="48" class="book-shrink-0">
-                                        <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-phone">
-                                        </use>
-                                    </svg>
-                                    <div class="book-hotel__phones book-flex book-gap-5">
-
-                                    </div>
-                                </div>
-                                <div class="book-hotel__email__wrapper book-hidden book-items-center book-gap-1">
-                                    <svg width="48" height="48" class="book-shrink-0">
-                                        <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-mail">
-                                        </use>
-                                    </svg>
-                                    <span
-                                        class="book-hotel__email book-relative book-group book-text-sm book-text-zinc-900 book-transition-all book-duration-300 hover:book-text-primary-300">
-                                    </span>
-                                </div>
-                                <div class="book-hotel__fax__wrapper book-hidden book-items-center book-gap-1">
-                                    <svg width="48" height="48" class="book-shrink-0">
-                                        <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-telephone">
-                                        </use>
-                                    </svg>
-                                    <span
-                                        class="book-hotel__fax book-relative book-group book-text-sm book-font-medium book-text-zinc-900 book-transition-all book-duration-300 hover:book-text-primary-300">
-                                    </span>
-                                </div>
-                            </div>
-                        </section>
+            <div class="book-bg-white book-px-3 book-py-6 book-rounded-xl book-mt-12">
+                <section>
+                    <h1 class="ook-hotel__title book-font-medium book-text-zinc-900 book-text-sm book-mb-1.5">
+                    </h1>
+                    <div class="book-hotel__stars book-flex book-items-center book-gap-0.5">
                     </div>
-                    <section>
-                        <div class="book-bg-white book-rounded-xl book-px-8 book-py-6 book-mt-8">
-                            <h2
-                                class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
-                                امکانات</h2>
-                            <div class="book-hotel__facilities book-grid book-grid-cols-3 book-gap-2">
-
-                            </div>
-                        </div>
-                    </section>
-                    <section class="book-bg-white book-rounded-xl book-py-6 book-px-8 book-mt-3">
-                        <div class="book-shrink-0 book-flex book-items-center book-gap-4 book-mb-4">
-                            <div class="book-flex-1 book-flex book-flex-col book-items-center book-gap-2">
-                                <h3 class="book-text-zinc-900">ساعت ورود</h3>
-                                <span
-                                    class="book-hotel__checkin__time book-flex book-items-center book-justify-center book-w-full book-bg-primary-50 book-rounded-full book-text-sm book-text-zinc-900 book-py-2"></span>
-                            </div>
-                            <div class="book-flex-1 book-flex book-flex-col book-items-center book-gap-2">
-                                <h3 class="book-text-zinc-900">ساعت خروج</h3>
-                                <span
-                                    class="book-hotel__checkout__time book-flex book-items-center book-justify-center book-w-full book-bg-primary-50 book-rounded-full book-text-sm book-text-zinc-900 book-py-2"></span>
-                            </div>
-                        </div>
-                        <h2
-                            class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
-                            امکانات اتاق</h2>
-                        <div class="book-room__facilities book-grid book-grid-cols-3 book-gap-y-8">
-
-                        </div>
-                    </section>
-                    <section class="book-bg-zinc-800 book-rounded-xl book-px-6 book-py-3 book-mt-6">
-                        <div class="book-flex book-justify-between book-gap-3">
-                            <p class="book-flex book-items-center book-gap-2 book-text-white">تعداد
-                                کودک:<span>[##cms.form.hotel_info_childcount##]</span>
-                            </p>
-                            <p class="book-flex book-items-center book-gap-2 book-text-white">تعداد
-                                بزرگسال:<span>[##cms.form.hotel_info_adultcount##]</span></p>
-                            <p class="book-flex book-items-center book-gap-2 book-text-white">تعداد
-                                اتاق:<span>[##cms.form.hotel_info_roomcount##]</span>
-                            </p>
-                            <p class="book-flex book-items-center book-gap-2 book-text-white">
-                                تاریخ:<span>[##cms.form.fdate##]</span> -
-                                <span>[##cms.form.tdate##]</span>
-                            </p>
-                        </div>
-                    </section>
-
-
-                    <section
-                        class="book-flex book-items-center book-justify-between book-bg-white book-rounded-xl book-mt-8 book-py-2 book-pr-6 book-pl-2">
-                        <h2 class="book-font-medium book-text-zinc-900">فیلتر بر اساس:</h2>
-                        <div class="book-flex book-items-center book-gap-2">
-                            <h3 class="book-text-sm">نام اتاق:</h3>
-                            <div class="">
-                                <input type="text" bc-name="cms.roomtypes" bc-value="" bc-triggers="keyup"
-                                    class="book-placeholder-zinc-600 book-w-52 book-h-12 book-bg-zinc-100 book-rounded-xl book-px-3 book-py-px book-outline-none"
-                                    name="" id="" placeholder="نام اتاق" />
-                            </div>
-                        </div>
-                        <div class="book-flex book-items-center book-gap-2">
-                            <h3 class="book-text-sm">خدمات اتاق:</h3>
-
-                            <div class="book-relative">
-                                <button
-                                    class="room-select-btn book-w-60 book-flex book-items-center book-justify-between book-bg-zinc-100 book-rounded-xl book-px-3 book-py-px book-transition-all book-duration-300">
-                                    <span class="room-select-text book-text-zinc-600">-</span>
-                                    <svg width="48" height="48"
-                                        class="close-room-btn book-text-zinc-500 book-transition-all book-duration-300">
-                                        <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-chevron-down">
-                                        </use>
-                                    </svg>
-                                </button>
-                                <basis core="print" datamembername="hotel.services" run="atclient">
-                                    <layout>
-                                        <script type="text/template">
-                                        <ul
-                                        class="room-options book-absolute book-top-full book-left-0 book-right-0 book-bg-white book-rounded-xl book-shadow-lg book-mt-2 book-overflow-hidden book-z-10 book-hidden">
-                                       @child
-                                     
-                                    </ul>
-                                   </script>
-                                    </layout>
-                                    <face>
-                                        <script type="text/template">
-                                        <li bc-value="@Name@" bc-name="cms.services" bc-triggers="click"
-                                        class="room-option book-px-3 book-py-2 book-text-sm book-text-zinc-700 hover:book-bg-zinc-100 book-cursor-pointer">
-                                        @Name@</li>
-                                    </script>
-                                    </face>
-                                </basis>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="book-bg-white book-rounded-xl book-px-8 book-py-6 book-mt-3">
-                        <h2 id="section-rooms"
-                            class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
-                            اتاق ها</h2>
-                        <basis core="print" datamembername="hotel.updated" run="atclient">
-                            <layout>
-                                <script type="text/template">
-                                        <div class="book-list__cards__container book-flex book-flex-col book-gap-4">
-                                            
-                                            @child
-                                        </div>
-                                    </script>
-                            </layout>
-                            <face>
-                                <script type="text/template">
-                                <form method="post" action=""
-                                    class="book-hotel__room book-flex book-gap-6 book-border book-border-solid book-border-zinc-200 book-rounded-xl book-py-5 book-px-6">
-                                    {{ return await renderAvailableRooms($data)}}
-                                    <div class="book-flex-1">
-                                        {{
-                                        return `<div
-                                            class="book-hotel__rules book-flex-1 book-flex book-items-center book-justify-center book-cursor-pointer"
-                                            onclick="showRules(this,'${$data.optionId}')">
-                                            <svg width="57" height="48">
-                                                <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-document">
-                                                </use>
-                                            </svg>
-                                            <span class="book-text-blue-600 book-text-xs">قوانين اتاق</span>
-                                        </div>`
-                                        }}
-
-                                        <div id="book-hotel__rules__modal"
-                                            class="book-fixed book-inset-0 book-z-50 book-hidden book-flex book-items-center book-justify-center book-bg-black/40 book-backdrop-blur-sm">
-                                            <div class="book-w-full book-max-w-xl book-mx-4">
-                                                <div
-                                                    class="book-bg-white book-rounded-2xl book-shadow-lg book-overflow-hidden">
-
-                                                    <div
-                                                        class="book-flex book-items-center book-justify-between book-px-6 book-py-4 book-border-b book-border-zinc-200">
-                                                        <h2 class="book-text-sm book-font-bold book-text-zinc-800">
-                                                            قوانین اتاق
-                                                        </h2>
-                                                        <button type="button"
-                                                            class="book-hotel__close__rules book-inline-flex book-items-center book-justify-center book-w-8 book-h-8 book-rounded-full book-text-zinc-500 hover:book-bg-zinc-100 hover:book-text-zinc-700 book-transition">
-                                                            <svg width="24" height="24">
-                                                                <use
-                                                                    href="/booking/images/sprite-hotelDetails-icons.svg#icon-close">
-                                                                </use>
-                                                            </svg>
-                                                        </button>
-                                                    </div>
-
-                                                    <div id="book-hotel__rules__content"
-                                                        class="book-max-h-[60vh] book-overflow-y-auto book-px-6 book-py-4 book-text-sm book-leading-relaxed book-text-zinc-700">
-                                                        <div
-                                                            class="book-text-center book-py-6 book-text-xs book-text-zinc-400">
-                                                            در حال بارگذاری قوانین اتاق...
-                                                        </div>
-                                                    </div>
-
-                                                    <div
-                                                        class="book-flex book-justify-end book-gap-2 book-px-6 book-py-4 book-border-t book-border-zinc-100">
-                                                        <button type="button"
-                                                            class="book-hotel__close__rules book-inline-flex book-items-center book-justify-center book-rounded-lg book-px-4 book-py-2 book-text-xs book-font-medium book-text-zinc-700 book-bg-zinc-100 hover:book-bg-zinc-200 book-transition-all">
-                                                            بستن
-                                                        </button>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="book-flex book-flex-col book-gap-1 book-items-center book-mt-1.5">
-                                            <h3 class="book-text-xs book-text-zinc-900">قیمت نهایی:</h3>
-                                            {{
-                                            return `
-                                                <div class="book-flex book-items-center book-gap-1"
-                                                    data-original-price="${$data.totalCom}">${await
-                                                    priceWithCurrency($data.totalCom)}</div>`
-                                            }}
-                                        </div>
-                                        <div class="book-mt-4">
-                                            <button
-                                                class="book-w-full book-h-12 book-flex book-items-center book-justify-center book-rounded-xl book-bg-primary-300 book-text-white book-font-medium book-transition-all book-duration-300 hover:book-bg-primary-900">رزرو
-                                                اتاق</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </script>
-                            </face>
-                        </basis>
-
-                        <ul
-                            class="book-paging__cards__container book-flex book-items-center book-justify-center book-gap-1 book-mt-8 book-dir-ltr">
-                            <li bc-name="cms.prevpage" bc-triggers="click"
-                                class="book-prevpage book-flex book-items-center book-justify-center book-w-12 book-h-12 book-rounded-xl book-bg-zinc-800 book-mr-3 book-cursor-pointer book-transition-all book-duration-300 hover:book-bg-primary-600">
-                                <svg width="24" height="24" class="book-text-white">
-                                    <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-chevron-left"></use>
-                                </svg>
-
-                            </li>
-                            <basis core="print" datamembername="hotel.paging" run="atclient">
-                                <layout>
-                                    <script type="text/template">@child</script>
-                                </layout>
-                                <face>
-                                    <script type="text/template">
-            {{
-                return await renderPaging($data)
-            }}
-        </script>
-                                </face>
-                            </basis>
-
-
-                            <li bc-name="cms.nextpage" bc-triggers="click"
-                                class="book-nextpage book-flex book-items-center book-justify-center book-w-12 book-h-12 book-rounded-xl book-bg-zinc-800 book-ml-3 book-cursor-pointer book-transition-all book-duration-300 hover:book-bg-primary-600">
-                                <svg width="24" height="24" class="book-text-white">
-                                    <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-chevron-right"></use>
-                                </svg>
-
-                            </li>
-                        </ul>
-                    </section>
-
-                    <!-- <section class="book-bg-white book-rounded-xl book-py-6 book-px-8 book-mt-3">
-
-                        <h2 id="section-rules"
-                            class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
-                            قوانین و مقررات</h2>
-                        <div class="book-flex book-gap-6 book-divide-x book-divide-x-reverse book-divide-zinc-200">
-                            <div class="book-shrink-0 book-flex book-flex-col book-items-center book-gap-4">
-                                <div class="book-flex-1 book-flex book-flex-col book-items-center book-gap-2">
-                                    <h3 class="book-text-zinc-900">ساعت ورود</h3>
-                                    <span
-                                        class="book-hotel__checkin__time book-flex book-items-center book-justify-center book-w-full book-bg-primary-50 book-rounded-full book-text-sm book-text-zinc-900 book-py-2"></span>
-                                </div>
-                                <div class="book-flex-1 book-flex book-flex-col book-items-center book-gap-2">
-                                    <h3 class="book-text-zinc-900">ساعت خروج</h3>
-                                    <span
-                                        class="book-hotel__checkout__time book-flex book-items-center book-justify-center book-w-full book-bg-primary-50 book-rounded-full book-text-sm book-text-zinc-900 book-py-2"></span>
-                                </div>
-                            </div>
-                            <div class="book-pr-6">
-                                <h3 class="book-text-zinc-900 book-font-medium book-mb-3">نکات ضروری</h3>
-                                <div class="book-text-zinc-600 book-text-xs book-leading-6">
-                                    خدمات ویژه هتل الماس ۲ مشهد:
-                                    پذیرایی صبحانه بوفه در طبقه هفده
-                                    ترانسفر رفت از هتل به حرم رایگان است.
-                                    ترانسفر هتل، رایگان است.
-                                    ترانسفر رفت و برگشت (فرودگاهی و راه آهن) از ساعت 12 شب تا 6 صبح انجام نمی‌شود.
-                                    مجموعه آبی هتل (استخر، سونا و جکوزی)، رایگان است.
-                                    ترانسفر استقبال و بدرقه فرودگاهی، رایگان است.
-                                    اینترنت در لابی و تمام اتاق‌ها به صورت نامحدود و رایگان است.
-                                    رزرو اتاق‌های VIP، به همراه پذیرایی میوه و شیرینی به صورت روزانه در اتاق است.
-                                    پذیرایی صبحانه در اتاق به صورت روم سرویس، مشمول شارژ هزینه صبحانه و پذیرایی خواهد
-                                    بود.
-                                    اتاق‌های برلیان و اتاق‌های یک تخته و دو تخته یاقوت، با توجه به ساختمان‌سازی، فاقد
-                                    ویو است و
-                                    دارای شیشه‌های مشجر است.
-                                </div>
-                            </div>
-                        </div>
-                    </section> -->
-                </div>
-                <aside class="book-w-[358px] book-h-fit book-sticky book-top-0">
-                    <section class="book-relative book-rounded-xl book-overflow-hidden">
-                        <iframe width="358" height="305" loading="lazy"
-                            class="book-hotel__location book-w-full book-h-[305px] book-object-cover"
-                            referrerpolicy="no-referrer-when-downgrade"
-                            src="https://www.google.com/maps?q=41.003941,28.968703&output=embed">
-                        </iframe>
-                        <div
-                            class="book-absolute book-inset-0 book-bg-black/20 book-w-full book-h-full book-pointer-events-none">
-                        </div>
-                    </section>
-                    <div id="r-hotel" class="r-hotel module-form relative" data-module="hotel">
-                        <form action="/Tem3_Hotel_Search.bc?lid=2" method="post" data-form="hotel" id="hotelSearch"
-                            onsubmit="form_search_isSubmited(this,event)"
-                            class="form-search formhotel book-flex book-flex-col book-bg-white book-p-4 book-rounded-xl book-mt-3">
-                            <input type="hidden" name="persiancurrent" class="persiancurrent" value="" />
-                            <input value="[##cms.form.cityid##]" class="locationId from" type="hidden" name="cityid"
-                                aria-label="locationId" />
-                            <input id="departure2" type="hidden" class="departure text-value" aria-label="departure"
-                                value="[##cms.form.coHotel##]" name="coHotel" />
-                            <div
-                                class="date__searched__container Basis_Date_Box book-bg-zinc-100 book-rounded-xl book-px-3 book-py-2">
-                                <div
-                                    class="book-hotel__date__picker book-flex book-items-center book-justify-between book-cursor-pointer">
-                                    <div class="book-flex book-flex-col book-gap-1">
-                                        <h2 class="book-font-medium book-text-zinc-900">تاریخ انتخابی</h2>
-                                        <span
-                                            class="book-flex book-items-center book-gap-2 book-text-zinc-500 book-text-sm">
-                                            <span class="book-hotel__nights">
-                                                <span class="book-hotel__day"></span>
-                                            </span>
-                                            <span class="book-hotel__fdate">1402/12/12</span>
-                                            <span class="book-hotel__till-text"></span>
-                                            <span class="book-hotel__tdate">1402/12/15</span>
-                                        </span>
-                                    </div>
-                                    <svg width="48" height="48"
-                                        class="book-date__icon book-transition-all book-duration-300 book-text-zinc-500">
-                                        <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-chevron-down">
-                                        </use>
-                                    </svg>
-                                </div>
-                                <div
-                                    class="book-date__dropdown-wrapper book-max-h-0 book-flex book-gap-2 book-transition-all book-duration-300 book-overflow-hidden book-mt-2">
-                                    <div
-                                        class="reserve-field departure-date book-flex-1 book-flex book-relative book-items-center book-justify-between book-bg-white book-rounded-xl book-px-3 book-h-12">
-                                        <div>
-                                            <input type="text" aria-label="Check in" value="" data-role="depart"
-                                                class="js-date-input departure__date Basis_Date start_date book-cursor-pointer book-h-full book-w-full"
-                                                readonly="" name="fdate" id="fromdate2" required=""
-                                                placeholder="تاریخ رفت" />
-                                            <input value="" class="mstring_date mstring_fdate" type="hidden"
-                                                aria-label="mstring_fdate" />
-
-                                            <div class="clr"></div>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="reserve-field return-date book-flex-1 book-flex book-relative book-items-center book-justify-between book-bg-white book-rounded-xl book-px-3 book-h-12">
-                                        <div class="">
-                                            <input type="text" aria-label="Check out" value="" data-role="return"
-                                                class="js-date-input arrival__date Basis_Date end_date book-cursor-pointer book-h-full book-w-full"
-                                                readonly="" name="tdate" id="todate2" required=""
-                                                placeholder="تاریخ برگشت" />
-                                            <input value="" class="mstring_date mstring_tdate" type="hidden"
-                                                aria-label="mstring_tdate" />
-
-                                            <div class="clr"></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div
-                                class="reserve-field passengers-field book-relative book-cursor-pointer book-bg-zinc-100 book-rounded-xl book-px-3 book-py-2 book-mt-2 book-max-h-80 book-overflow-y-auto">
-                                <div onclick="show_passengerbox(this)"
-                                    class="show-passengers-dropdown show-passengers-dropdown-hotel book-flex book-items-center book-justify-between book-cursor-pointer">
-                                    <div class="book-flex book-flex-col book-justify-between book-cursor-pointer">
-                                        <span class="label-text text-sm">مسافران</span>
-                                        <div class="book-flex book-items-center book-gap-2">
-                                            <span
-                                                class="passenger-counts room-count book-flex book-items-center book-gap-1"><span
-                                                    class="count">1</span>اتاق</span>
-                                            <span
-                                                class="passenger-counts adult-count book-flex book-items-center book-gap-1"><span
-                                                    class="count">2</span>بزرگسال</span>
-                                            <span
-                                                class="passenger-counts child-count book-hidden book-flex book-items-center book-gap-1"><span
-                                                    class="count">0</span>کودک</span>
-                                        </div>
-                                    </div>
-                                    <label class="label-passengers label-passengers-hotel book-flex book-cursor-pointer"
-                                        for="passenger1">
-                                        <svg class="down-icon book-h-full" width="48" height="48">
-                                            <use
-                                                xlink:href="/booking/images/sprite-hotelDetails-icons.svg#icon-chevron-down">
-                                            </use>
-                                        </svg>
-                                    </label>
-                                </div>
-                                <div
-                                    class="passengerbox hidden-box book-hidden book-w-[310px] book-p-4 book-overflow-hidden book-max-h-0 book-transition-all book-duration-300">
-                                    <div
-                                        class="passenger-item room-passenger-item book-flex book-items-center book-justify-between">
-                                        <label for="passenger-roomcount1"
-                                            class="label-passengerroom label-passengerroom-hotel first-room-type first-room-type-label float-left text-sm leading-8 text-textColor"><span
-                                                class="room-tlt-icon book-hidden"><svg class="align-middle" width="15"
-                                                    height="15">
-                                                    <use xlink:href="images/sprite-icons.svg#engine-room-icon"></use>
-                                                </svg></span><span>اتاق</span></label>
-                                        <ul
-                                            class="book-h-auto book-leading-normal book-flex book-items-center book-justify-between">
-                                            <!-- <li
-                                                class="second-room-type block w-auto h-8 leading-8 text-center hover:text-primary cursor-pointer clear-both hover:text-add-room-hover-color">
-                                                <div class="" onclick="Add_Room_Count(this)"><span>Add
-                                                        another room</span>
-                                                </div>
-                                            </li> -->
-                                            <li
-                                                class="plus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
-                                                <div class="book-h-full book-leading-8" onclick="Change_Room_Count(this)">
-                                                    <span class="count-icon-simple book-text-white
-                                                    book-text-2xl">+</span>
-                                                    <span class="count-icon-svg book-hidden"><svg class="align-middle"
-                                                            width="10" height="10">
-                                                            <use xlink:href="images/sprite-icons.svg#engine-plus-icon">
-                                                            </use>
-                                                        </svg></span>
-                                                </div>
-                                            </li>
-                                            <li class="first-room-type first-room-type-count book-w-6 book-h-6">
-                                                <input id="passenger-roomcount1" type="text"
-                                                    class="roomcount book-w-full book-text-center book-bg-transparent"
-                                                    maxlength="4000" value="1" readonly="" />
-                                            </li>
-                                            <li
-                                                class="first-room-type minus-count deactive-change-button book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
-                                                <div class="book-h-full book-leading-8" onclick="Change_Room_Count(this)">
-                                                    <span class="count-icon-simple book-text-white
-                                                    book-text-2xl">-</span>
-                                                    <span class="count-icon-svg book-hidden"><svg class="align-middle"
-                                                            width="10" height="10">
-                                                            <use xlink:href="images/sprite-icons.svg#engine-minus-icon">
-                                                            </use>
-                                                        </svg></span>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="Rooms book-mt-4">
-                                        <div class="contentRoom book-flex book-flex-col book-gap-2">
-                                            <div class="numberOfRoom">
-                                                اتاق<span class="ml-1">1</span></div>
-                                            <div
-                                                class="passenger-item adult-passenger-item book-w-full book-flex book-justify-between">
-                                                <label for="passenger-room-adultcount1"
-                                                    class="label-passengeradult label-passengeradult-hotel"><span
-                                                        class="adult-tlt-icon book-hidden"><svg class="align-middle"
-                                                            width="15" height="15">
-                                                            <use xlink:href="images/sprite-icons.svg#engine-adult-icon">
-                                                            </use>
-                                                        </svg></span><span>بزرگسال</span><span class="exp-age">(12 سال
-                                                        به بالا)</span></label>
-                                                <ul
-                                                    class="book-h-auto book-leading-normal book-flex book-items-center book-justify-between">
-                                                    <li
-                                                        class="plus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
-                                                        <div class="book-h-full book-leading-8" onclick="Change_AdultCount(this)">
-                                                            <span class="count-icon-simple book-text-white
-                                                            book-text-2xl">+</span>
-                                                            <span class="count-icon-svg book-hidden"><svg
-                                                                    class="align-middle" width="10" height="10">
-                                                                    <use
-                                                                        xlink:href="images/sprite-icons.svg#engine-plus-icon">
-                                                                    </use>
-                                                                </svg></span>
-                                                        </div>
-                                                    </li>
-                                                    <li class="book-w-6 book-h-6">
-                                                        <input id="passenger-room-adultcount1" type="text"
-                                                            class="adultcount book-w-full book-text-center book-bg-transparent"
-                                                            name="_root.rooms__1.adultcount" maxlength="4000" value="2"
-                                                            readonly="" />
-                                                    </li>
-                                                    <li
-                                                        class="minus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
-                                                        <div class="book-h-full book-leading-8" onclick="Change_AdultCount(this)">
-                                                            <span class="count-icon-simple book-text-white
-                                                            book-text-2xl">-</span>
-                                                            <span class="count-icon-svg book-hidden"><svg
-                                                                    class="align-middle" width="10" height="10">
-                                                                    <use
-                                                                        xlink:href="images/sprite-icons.svg#engine-minus-icon">
-                                                                    </use>
-                                                                </svg></span>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div
-                                                class="passenger-item child-passenger-item book-w-full book-flex book-justify-between">
-                                                <label for="passenger-room-childcount1"
-                                                    class="label-passengerchild label-passengerchild-hotel"><span
-                                                        class="child-tlt-icon book-hidden"><svg class="align-middle"
-                                                            width="15" height="15">
-                                                            <use xlink:href="images/sprite-icons.svg#engine-child-icon">
-                                                            </use>
-                                                        </svg></span><span>کودک</span><span class="exp-age">(0 تا 12
-                                                        سال)</span></label>
-                                                <ul
-                                                    class="book-h-auto book-leading-normal book-flex book-items-center book-justify-between">
-                                                    <li
-                                                        class="plus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
-                                                        <div class="book-h-full book-leading-8" onclick="Change_ChildCount(this)">
-                                                            <span class="count-icon-simple book-text-white
-                                                            book-text-2xl">+</span>
-                                                            <span class="count-icon-svg book-hidden"><svg
-                                                                    class="align-middle" width="10" height="10">
-                                                                    <use
-                                                                        xlink:href="images/sprite-icons.svg#engine-plus-icon">
-                                                                    </use>
-                                                                </svg></span>
-                                                        </div>
-                                                    </li>
-                                                    <li class="book-w-6 book-h-6">
-                                                        <input id="passenger-room-childcount1" type="text"
-                                                            class="childcount book-w-full book-text-center book-bg-transparent"
-                                                            maxlength="4000" value="0" readonly="" />
-                                                    </li>
-                                                    <li
-                                                        class="minus-count deactive-change-button book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
-                                                        <div class="book-h-full book-leading-8" onclick="Change_ChildCount(this)">
-                                                            <span class="count-icon-simple book-text-white
-                                                            book-text-2xl">-</span>
-                                                            <span class="count-icon-svg book-hidden"><svg
-                                                                    class="align-middle" width="10" height="10">
-                                                                    <use
-                                                                        xlink:href="images/sprite-icons.svg#engine-minus-icon">
-                                                                    </use>
-                                                                </svg></span>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <input type="hidden" name="_root.rooms__1.childcountandage"
-                                                class="childcountandage" value="0" aria-label="childcountandage" />
-                                            <div class="section-select-age book-grid book-grid-cols-2 book-gap-2 book-mt-4"></div>
-                                        </div>
-                                    </div>
-                                    <div class="confirm-passenger book-flex book-items-center book-justify-center book-mt-6  book-bg-primary-600 book-text-white book-rounded-lg book-font-medium book-h-12         book-transition-all book-duration-300 hover:book-bg-secondary-600 hover:book-text-white"
-                                        onclick="close_passenger(this)">
-                                        <span class="confirmpass-tlt-icon book-hidden"><svg class="align-middle"
-                                                width="15" height="15">
-                                                <use xlink:href="images/sprite-icons.svg#engine-confirmpass-icon"></use>
-                                            </svg></span><span>تایید</span>
-                                    </div>
-                                    <div class="clr"></div>
-                                </div>
-                            </div>
-
-                            <div class="reserve-search">
-                                <button type="submit"
-                                    class="search-hotel book-w-full book-h-14 book-flex book-items-center book-justify-center book-rounded-xl book-bg-primary-300 book-text-white book-font-medium book-mt-16 book-transition-all book-duration-300 hover:book-bg-primary-900"><span>جستحو</span>
-                                </button>
-                            </div>
-                        </form>
+                    <div class="book-hotel__description book-text-xs book-text-zinc-900 book-mt-5 book-leading-6">
                     </div>
-                </aside>
+                </section>
+                <section class="book-mt-10">
+                    <h2 class="book-font-medium book-text-sm book-text-primary-400">ارتباط با هتل</h2>
+                    <div class="book-flex book-flex-col book-gap-1 book-mt-3">
+                        <div class="book-hotel__website__wrapper book-flex book-items-center book-gap-1">
+                            <svg width="48" height="48">
+                                <use href="../assets/images/book-sprite-icons.svg#icon-site">
+                                </use>
+                            </svg>
+                            <span class="book-hotel__website book-text-xs book-text-zinc-900"></span>
+                        </div>
+                        <div class="book-hotel__address__wrapper book-flex book-items-center book-gap-1">
+                            <svg width="48" height="48">
+                                <use href="../assets/images/book-sprite-icons.svg#icon-location">
+                                </use>
+                            </svg>
+                            <span class="book-hotel__address book-text-xs book-text-zinc-900"></span>
+                        </div>
+                        <div class="book-hotel__phones__wrapper book-flex book-items-center book-gap-1">
+                            <svg width="48" height="48">
+                                <use href="../assets/images/book-sprite-icons.svg#icon-phone">
+                                </use>
+                            </svg>
+                            <div class="book-hotel__phones book-flex-col book-gap-1">
+
+                            </div>
+                        </div>
+                        <div class="book-hotel__email__wrapper book-flex book-items-center book-gap-1">
+                            <svg width="48" height="48">
+                                <use href="../assets/images/book-sprite-icons.svg#icon-mail">
+                                </use>
+                            </svg>
+                            <span class="book-hotel__email book-text-xs book-text-zinc-900"></span>
+                        </div>
+                        <div class="book-hotel__fax__wrapper book-flex book-items-center book-gap-1">
+                            <svg width="48" height="48">
+                                <use href="../assets/images/book-sprite-icons.svg#icon-telephone">
+                                </use>
+                            </svg>
+                            <span class="book-hotel__fax book-text-xs book-text-zinc-900"></span>
+                        </div>
+                    </div>
+                </section>
             </div>
 
+            <section class="book-relative book-rounded-xl book-overflow-hidden book-mt-3">
+                <iframe width="288" height="144" loading="lazy"
+                    class="book-hotel__location book-w-full book-h-36 book-object-cover"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    src="https://www.google.com/maps?q=41.003941,28.968703&output=embed">
+                </iframe>
+                <div class="book-absolute book-inset-0 book-bg-black/20 book-w-full book-h-full"></div>
+            </section>
 
+            <section class="book-bg-white book-p-4 book-rounded-xl book-mt-3">
+                <div
+                    class="book-flex book-items-center book-justify-between book-bg-zinc-100 book-rounded-xl book-px-3 book-py-2">
+                    <div class="book-flex book-flex-col book-gap-1">
+                        <h2 class="book-font-medium book-text-sm book-text-zinc-900">تاریخ انتخابی</h2>
+                        <span class="book-flex book-items-center book-gap-2 book-text-zinc-500 book-text-xs">
+                            <span>3 شب</span> <span>1402/12/12</span> تا <span>1402/12/15</span>
+                        </span>
+                    </div>
+                    <svg width="48" height="48" class="book-text-zinc-500">
+                        <use href="../assets/images/book-sprite-icons.svg#icon-chevron-down">
+                        </use>
+                    </svg>
+                </div>
+                <div
+                    class="book-flex book-items-center book-justify-between book-bg-zinc-100 book-rounded-xl book-px-3 book-py-2 book-mt-2">
+                    <div class="book-flex book-flex-col book-gap-1">
+                        <h2 class="book-font-medium book-text-sm book-text-zinc-900">تعداد مسافران</h2>
+                        <span class="book-flex book-items-center book-gap-2 book-text-zinc-500 book-text-xs">
+                            1 بزرگسال/1 اتاق
+                        </span>
+                    </div>
+                    <svg width="48" height="48" class="book-text-zinc-500">
+                        <use href="../assets/images/book-sprite-icons.svg#icon-chevron-down">
+                        </use>
+                    </svg>
+                </div>
+                <button
+                    class="book-w-full book-h-14 book-flex book-items-center book-justify-center book-rounded-xl book-bg-primary-300 book-text-white book-font-medium book-mt-5">جستجو</button>
+            </section>
+
+            <section>
+                <div class="book-bg-white book-rounded-xl book-px-3 book-pb-6 book-pt-3 book-mt-3">
+                    <h2
+                        class="book-text-zinc-900 book-font-medium book-border-b book-border-solid book-border-zinc-200 -book-mx-3 book-px-3 book-pb-4 book-mb-4">
+                        امکانات</h2>
+                    <div class="book-hotel__facilities book-flex book-flex-col book-gap-6">
+                        <div class="book-flex book-items-start book-gap-2">
+                            <svg width="24" height="24">
+                                <use href="../assets/images/book-sprite-icons.svg#icon-wifi">
+                                </use>
+                            </svg>
+                            <div class="book-flex book-flex-col book-gap-2">
+                                <h3 class="book-font-medium book-text-sm book-text-zinc-900">اینترنت</h3>
+                                <span class="book-text-xs book-text-zinc-600">اینترنت رایگان</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="book-bg-zinc-800 book-rounded-xl book-px-6 book-py-2 book-mt-3">
+                <div class="book-flex book-flex-col book-gap-3">
+                    <p class="book-flex book-items-center book-gap-2 book-text-white">تعداد کودک:<span>0</span></p>
+                    <p class="book-flex book-items-center book-gap-2 book-text-white">تعداد بزرگسال:<span>0</span></p>
+                    <p class="book-flex book-items-center book-gap-2 book-text-white">تعداد اتاق:<span>0</span></p>
+                    <p class="book-flex book-items-center book-gap-2 book-text-white">تاریخ:<span>۱۴۰۴/۰۳/۰۲</span> -
+                        <span>۱۴۰۴/۰۲/۰۱</span>
+                    </p>
+                </div>
+            </section>
+
+            <section
+                class="book-flex book-flex-col book-gap-7 book-bg-white book-rounded-xl book-mt-3 book-py-2 book-px-3">
+                <h2 class="book-text-sm book-font-medium book-text-zinc-900">فیلتر بر اساس:</h2>
+                <div class="book-relative book-w-full book-max-w-sm">
+                    <h3 class="book-text-sm book-mb-2">خدمات اتاق:</h3>
+
+                    <button
+                        class="room-select-btn book-flex book-items-center book-justify-between book-bg-zinc-100 book-rounded-xl book-px-3 book-py-px book-w-full book-transition-all book-duration-300">
+                        <span class="room-select-text book-text-zinc-600">room_only</span>
+                        <svg width="48" height="48" class="book-text-zinc-500 book-transition-all book-duration-300">
+                            <use href="../assets/images/book-sprite-icons.svg#icon-chevron-down"></use>
+                        </svg>
+                    </button>
+
+                    <ul
+                        class="room-options book-absolute book-left-0 book-right-0 book-bg-white book-rounded-xl book-shadow-lg book-mt-2 book-overflow-hidden book-z-10 book-hidden">
+                        <li
+                            class="room-option book-px-3 book-py-2 book-text-sm book-text-zinc-700 hover:book-bg-zinc-100 book-cursor-pointer">
+                            Room Only</li>
+                        <li
+                            class="room-option book-px-3 book-py-2 book-text-sm book-text-zinc-700 hover:book-bg-zinc-100 book-cursor-pointer">
+                            Bed & Breakfast</li>
+                        <li
+                            class="room-option book-px-3 book-py-2 book-text-sm book-text-zinc-700 hover:book-bg-zinc-100 book-cursor-pointer">
+                            Half Board</li>
+                        <li
+                            class="room-option book-px-3 book-py-2 book-text-sm book-text-zinc-700 hover:book-bg-zinc-100 book-cursor-pointer">
+                            Full Board</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="book-text-sm book-mb-2">نام اتاق:</h3>
+                    <div class="book-bg-zinc-100 book-rounded-xl book-px-3 book-py-px">
+                        <input type="text"
+                            class="book-placeholder-zinc-600 book-bg-transparent book-h-12 book-outline-none" name=""
+                            id="" placeholder="نام اتاق">
+                    </div>
+                </div>
+                <button
+                    class="book-w-full book-h-12 book-flex book-items-center book-justify-center book-rounded-xl book-bg-primary-300 book-text-white book-font-medium">اعمال
+                    فيلتر</button>
+            </section>
+
+            <section class="book-bg-white book-rounded-xl book-px-3 book-pb-6 book-pt-3 book-mt-3">
+                <h2
+                    class="book-text-zinc-900 book-font-medium book-border-b book-border-solid book-border-zinc-200 -book-mx-3 book-px-3 book-pb-4 book-mb-4">
+                    اتاق ها</h2>
+                <div class="book-flex book-flex-col book-gap-4">
+                    <div class="book-border book-border-solid book-border-zinc-200 book-rounded-lg book-py-4 book-px-2">
+                        <div
+                            class="book-flex book-flex-col book-gap-6 book-divide-y book-divide-dashed book-divide-zinc-300">
+                            <div>
+                                <h3 class="book-text-xs book-text-zinc-900 book-mb-4">اتاق دو تخته دبل ( اقامت با
+                                    صبحانه)</h3>
+                                <div class="book-flex book-gap-2">
+                                    <span
+                                        class="book-bg-primary-50 book-text-primary-800 book-text-xs book-rounded-3xl book-py-1 book-px-3">صبحانه
+                                        سلف سرویس</span>
+                                    <span
+                                        class="book-bg-specialcolor-1 book-text-specialcolor-2 book-text-xs book-rounded-3xl book-py-1 book-px-4">Available</span>
+                                </div>
+                            </div>
+                            <div class="book-pt-6">
+                                <h3 class="book-text-xs book-text-zinc-900 book-mb-4">اتاق دو تخته دبل ( اقامت با
+                                    صبحانه)</h3>
+                                <div class="book-flex book-gap-2">
+                                    <span
+                                        class="book-bg-primary-50 book-text-primary-800 book-text-xs book-rounded-3xl book-py-1 book-px-3">صبحانه
+                                        سلف سرویس</span>
+                                    <span
+                                        class="book-bg-specialcolor-1 book-text-specialcolor-2 book-text-xs book-rounded-3xl book-py-1 book-px-4">Available</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="book-flex book-flex-col book-gap-1 book-items-center book-mt-6">
+                            <h3 class="book-text-xs book-text-zinc-900">قیمت نهایی:</h3>
+                            <p class="book-text-zinc-900 book-font-bold book-text-xl">1۲/200/000 <span
+                                    class="book-text-zinc-500 book-text-xs book-font-normal">تومان</span></p>
+                        </div>
+                        <div class="book-flex book-items-center book-gap-1.5 book-mt-4">
+                            <div class="book-flex-1 book-flex book-items-center">
+                                <svg width="57" height="48">
+                                    <use href="../assets/images/book-sprite-icons.svg#icon-document"></use>
+                                </svg>
+                                <span class="book-text-blue-600 book-text-xs">قوانين اتاق</span>
+                            </div>
+                            <button
+                                class="book-flex-1 book-h-12 book-flex book-items-center book-justify-center book-rounded-xl book-bg-primary-300 book-text-white book-font-medium">رزرو
+                                اتاق</button>
+                        </div>
+                    </div>
+                    <div class="book-border book-border-solid book-border-zinc-200 book-rounded-lg book-py-4 book-px-2">
+                        <div
+                            class="book-flex book-flex-col book-gap-6 book-divide-y book-divide-dashed book-divide-zinc-300">
+                            <div>
+                                <h3 class="book-text-xs book-text-zinc-900 book-mb-4">اتاق دو تخته دبل ( اقامت با
+                                    صبحانه)</h3>
+                                <div class="book-flex book-gap-2">
+                                    <span
+                                        class="book-bg-primary-50 book-text-primary-800 book-text-xs book-rounded-3xl book-py-1 book-px-3">صبحانه
+                                        سلف سرویس</span>
+                                    <span
+                                        class="book-bg-specialcolor-1 book-text-specialcolor-2 book-text-xs book-rounded-3xl book-py-1 book-px-4">Available</span>
+                                </div>
+                            </div>
+                            <div class="book-pt-6">
+                                <h3 class="book-text-xs book-text-zinc-900 book-mb-4">اتاق دو تخته دبل ( اقامت با
+                                    صبحانه)</h3>
+                                <div class="book-flex book-gap-2">
+                                    <span
+                                        class="book-bg-primary-50 book-text-primary-800 book-text-xs book-rounded-3xl book-py-1 book-px-3">صبحانه
+                                        سلف سرویس</span>
+                                    <span
+                                        class="book-bg-specialcolor-1 book-text-specialcolor-2 book-text-xs book-rounded-3xl book-py-1 book-px-4">Available</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="book-flex book-flex-col book-gap-1 book-items-center book-mt-6">
+                            <h3 class="book-text-xs book-text-zinc-900">قیمت نهایی:</h3>
+                            <p class="book-text-zinc-900 book-font-bold book-text-xl">1۲/200/000 <span
+                                    class="book-text-zinc-500 book-text-xs book-font-normal">تومان</span></p>
+                        </div>
+                        <div class="book-flex book-items-center book-gap-1.5 book-mt-4">
+                            <div class="book-flex-1 book-flex book-items-center">
+                                <svg width="57" height="48">
+                                    <use href="../assets/images/book-sprite-icons.svg#icon-document"></use>
+                                </svg>
+                                <span class="book-text-blue-600 book-text-xs">قوانين اتاق</span>
+                            </div>
+                            <button
+                                class="book-flex-1 book-h-12 book-flex book-items-center book-justify-center book-rounded-xl book-bg-primary-300 book-text-white book-font-medium">رزرو
+                                اتاق</button>
+                        </div>
+                    </div>
+                </div>
+                <ul class="book-flex book-items-center book-justify-center book-gap-1 book-mt-4 book-dir-ltr">
+                    <li
+                        class="book-flex book-items-center book-justify-center book-w-12 book-h-12 book-rounded-xl book-bg-zinc-800 book-mr-3">
+                        <svg width="24" height="24">
+                            <use href="../assets/images/book-sprite-icons.svg#icon-chevron-left"></use>
+                        </svg>
+
+                    </li>
+                    <li
+                        class="book-flex book-items-center book-justify-center book-w-12 book-h-12 book-text-zinc-900 book-rounded-xl book-bg-zinc-100">
+                        1
+                    </li>
+                    <li
+                        class="book-flex book-items-center book-justify-center book-w-12 book-h-12 book-text-primary-800 book-rounded-xl book-bg-primary-50">
+                        1
+                    </li>
+                    <li
+                        class="book-flex book-items-center book-justify-center book-w-12 book-h-12 book-text-zinc-900 book-rounded-xl book-bg-zinc-100">
+                        1
+                    </li>
+                    <li
+                        class="book-flex book-items-center book-justify-center book-w-12 book-h-12 book-rounded-xl book-bg-zinc-800 book-ml-3">
+                        <svg width="24" height="24">
+                            <use href="../assets/images/book-sprite-icons.svg#icon-chevron-right"></use>
+                        </svg>
+
+                    </li>
+                </ul>
+            </section>
+            <section class="book-bg-white book-rounded-xl book-py-6 book-px-3 book-mt-3">
+                <h2
+                    class="book-text-zinc-900 book-font-medium book-border-b book-border-solid book-border-zinc-200 -book-mx-3 book-px-3 book-pb-6 book-mb-6">
+                    اماکن اطراف هتل</h2>
+                <div class="book-flex book-flex-col book-gap-9">
+                    <div class="book-flex book-items-center book-gap-1">
+                        <svg width="48" height="48">
+                            <use href="../assets/images/book-sprite-icons.svg#icon-shop">
+                            </use>
+                        </svg>
+                        <div class="book-flex book-flex-col book-gap-1">
+                            <h3 class="book-font-medium book-text-sm book-text-zinc-900">فروشگاه</h3>
+                            <span class="book-text-xs book-text-zinc-600">10 مترو نزدیک به هتل</span>
+                        </div>
+                    </div>
+                    <div class="book-flex book-items-center book-gap-1">
+                        <svg width="48" height="48">
+                            <use href="../assets/images/book-sprite-icons.svg#icon-tree">
+                            </use>
+                        </svg>
+                        <div class="book-flex book-flex-col book-gap-1">
+                            <h3 class="book-font-medium book-text-sm book-text-zinc-900">پارک</h3>
+                            <span class="book-text-xs book-text-zinc-600">2 پارک نزدیک هتل</span>
+                        </div>
+                    </div>
+                    <div class="book-flex book-items-center book-gap-1">
+                        <svg width="48" height="48">
+                            <use href="../assets/images/book-sprite-icons.svg#icon-bag">
+                            </use>
+                        </svg>
+                        <div class="book-flex book-flex-col book-gap-1">
+                            <h3 class="book-font-medium book-text-sm book-text-zinc-900">مرکز خرید</h3>
+                            <span class="book-text-xs book-text-zinc-600">10 مترو نزدیک به هتل</span>
+                        </div>
+                    </div>
+                    <div class="book-flex book-items-center book-gap-1">
+                        <svg width="48" height="48">
+                            <use href="../assets/images/book-sprite-icons.svg#icon-bus">
+                            </use>
+                        </svg>
+                        <div class="book-flex book-flex-col book-gap-1">
+                            <h3 class="book-font-medium book-text-sm book-text-zinc-900">اتوبوس</h3>
+                            <div class="book-flex book-flex-col book-gap-1">
+                                <span class="book-text-xs book-text-zinc-600">2 اتوبوس نزدیک هتل</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book-flex book-items-center book-gap-1">
+                        <svg width="48" height="48">
+                            <use href="../assets/images/book-sprite-icons.svg#icon-subway">
+                            </use>
+                        </svg>
+                        <div class="book-flex book-flex-col book-gap-1">
+                            <h3 class="book-font-medium book-text-sm book-text-zinc-900">مترو</h3>
+                            <div class="book-flex book-flex-col book-gap-1">
+                                <span class="book-text-xs book-text-zinc-600">10 مترو نزدیک به هتل</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book-flex book-items-center book-gap-1">
+                        <svg width="48" height="48">
+                            <use href="../assets/images/book-sprite-icons.svg#icon-building">
+                            </use>
+                        </svg>
+                        <div class="book-flex book-flex-col book-gap-1">
+                            <h3 class="book-font-medium book-text-sm book-text-zinc-900">مكان هاي دیدنی</h3>
+                            <div class="book-flex book-flex-col book-gap-1">
+                                <span class="book-text-xs book-text-zinc-600">10 مکان تفریحی نزدیک به هتل</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="book-bg-white book-rounded-xl book-py-6 book-px-3 book-mt-3">
+                <div class="book-flex book-flex-col book-gap-6 book-divide-y book-divide-zinc-200">
+                    <h2 class="book-text-zinc-900 book-font-medium -book-mx-3 book-px-3">
+                        قوانین و مقررات</h2>
+                    <div class="book-flex book-items-center book-gap-4 book-pt-6">
+                        <div class="book-flex-1 book-flex book-flex-col book-items-center book-gap-2">
+                            <h3 class="book-text-zinc-900">ساعت خروج</h3>
+                            <span
+                                class="book-flex book-items-center book-justify-center book-w-full book-bg-primary-50 book-rounded-full book-text-sm book-text-zinc-900 book-py-2">12:00</span>
+                        </div>
+                        <div class="book-flex-1 book-flex book-flex-col book-items-center book-gap-2">
+                            <h3 class="book-text-zinc-900">ساعت ورود</h3>
+                            <span
+                                class="book-flex book-items-center book-justify-center book-w-full book-bg-primary-50 book-rounded-full book-text-sm book-text-zinc-900 book-py-2">12:00</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="book-text-zinc-900 book-font-medium book-mb-3 book-pt-6">نکات ضروری</h3>
+                        <div class="book-text-zinc-600 book-text-xs book-leading-6">
+                            خدمات ویژه هتل الماس ۲ مشهد:
+                            پذیرایی صبحانه بوفه در طبقه هفده
+                            ترانسفر رفت از هتل به حرم رایگان است.
+                            ترانسفر هتل، رایگان است.
+                            ترانسفر رفت و برگشت (فرودگاهی و راه آهن) از ساعت 12 شب تا 6 صبح انجام نمی‌شود.
+                            مجموعه آبی هتل (استخر، سونا و جکوزی)، رایگان است.
+                            ترانسفر استقبال و بدرقه فرودگاهی، رایگان است.
+                            اینترنت در لابی و تمام اتاق‌ها به صورت نامحدود و رایگان است.
+                            رزرو اتاق‌های VIP، به همراه پذیرایی میوه و شیرینی به صورت روزانه در اتاق است.
+                            پذیرایی صبحانه در اتاق به صورت روم سرویس، مشمول شارژ هزینه صبحانه و پذیرایی خواهد بود.
+                            اتاق‌های برلیان و اتاق‌های یک تخته و دو تخته یاقوت، با توجه به ساختمان‌سازی، فاقد ویو است و
+                            دارای شیشه‌های مشجر است.
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="book-bg-white book-rounded-xl book-py-6 book-px-3 book-mt-3">
+                <h2
+                    class="book-text-zinc-900 book-font-bold book-text-xl book-border-b book-border-solid book-border-zinc-200 -book-mx-3 book-px-3 book-pb-6 book-mb-6">
+                    نظر کاربران</h2>
+                <div class="book-flex book-flex-col book-gap-8">
+                    <div class="book-flex book-items-start book-gap-2">
+                        <span
+                            class="book-shrink-0 book-flex book-items-center book-justify-center book-w-9 book-h-9 book-bg-zinc-100 book-rounded-full">
+                            <svg width="16" height="16">
+                                <use href="../assets/images/book-sprite-icons.svg#icon-user">
+                                </use>
+                            </svg>
+                        </span>
+                        <div class="book-flex book-flex-col book-gap-2">
+                            <h3 class="book-text-sm book-text-zinc-900">محسن حیدری</h3>
+                            <p class="book-text-zinc-600 book-text-xs book-leading-6">متنی آزمایشی و بی‌معنی در صنعت
+                                چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود. طراح گرافیک از
+                                این متن به عنوان عنصری از ترکیب بندی برای پر کردن صفحه و ارایه اولیه شکل ظاهری و کلی طرح
+                                سفارش گرفته شده استفاده می نماید</p>
+                        </div>
+                    </div>
+                    <div class="book-flex book-items-start book-gap-2">
+                        <span
+                            class="book-shrink-0 book-flex book-items-center book-justify-center book-w-9 book-h-9 book-bg-zinc-100 book-rounded-full">
+                            <svg width="16" height="16">
+                                <use href="../assets/images/book-sprite-icons.svg#icon-user">
+                                </use>
+                            </svg>
+                        </span>
+                        <div class="book-flex book-flex-col book-gap-2">
+                            <h3 class="book-text-sm book-text-zinc-900">محسن حیدری</h3>
+                            <p class="book-text-zinc-600 book-text-xs book-leading-6">متنی آزمایشی و بی‌معنی در صنعت
+                                چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود. طراح گرافیک از
+                                این متن به عنوان عنصری از ترکیب بندی برای پر کردن صفحه و ارایه اولیه شکل ظاهری و کلی طرح
+                                سفارش گرفته شده استفاده می نماید</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
     </main>
+
     <!-- Footer-->
-    <basis core="call" file="footer.inc" lid="1" pageindex="[##cms.cms.pageindex|(1)##]"></basis>
+    <basis core="call" file="footer.inc" lid="1" pageindex="[##cms.cms.pageindex|(2)##]"></basis>
     <script src="[##cms.cms.cdn##]/_js/swiper-bundle.11.2.5.min.js" type="text/javascript"></script>
     <script src="[##cms.cms.cdn##]/booking/js/hotel-info.js?ver=[##cms.cms.date2##][##cms.cms.time2##]"
         type="text/javascript"></script>
@@ -1018,7 +725,7 @@
                             return updatedItem;
                         });
 
-                        console.log("updated data",updatedData)
+                        console.log("updated data", updatedData)
 
                         $bc.setSource("api.gallery", updatedData);
 
@@ -1238,7 +945,7 @@
                     propTitle =
                         propTitles[lang] ||
                         propTitles.fa ||
-                        Object.values(propTitles)[0]; 
+                        Object.values(propTitles)[0];
                     propTitle = String(propTitle).trim();
                 } else {
                     return null;
@@ -1773,7 +1480,7 @@
                 return '';
             }
         };
-       
+
         const renderAvailableRooms = async (element) => {
             try {
                 if (!element || !Array.isArray(element.availablerooms)) {
@@ -3533,7 +3240,6 @@
 
 
     </script>
-
 
 </body>
 
