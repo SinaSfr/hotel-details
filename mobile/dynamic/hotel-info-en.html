@@ -2,7 +2,7 @@
 <html lang="fa" dir="rtl">
 
 <head>
-    <basis core="call" file="book/taglist" lid="1"></basis>
+    <basis core="call" file="book/taglist" lid="2"></basis>
     <title>اطلاعات هتل</title>
     <meta name="description" content="اطلاعات هتل">
     <link href="[##cms.cms.cdn##]/_css/swiper-bundle.min.css" type="text/css" rel="stylesheet" />
@@ -65,12 +65,6 @@
 
     .book-h-6 {
         height: 1.5rem;
-    }
-
-    .book-h-8 {
-        height: 2rem
-            /* 32px */
-        ;
     }
 
     .book-max-w-xl {
@@ -156,111 +150,29 @@
     .book-pointer-events-none {
         pointer-events: none;
     }
-
     .\!book-w-fit {
-        width: fit-content !important;
-    }
-
-    .\!book-h-14 {
-        height: 3.5rem
-            /* 56px */
-            !important;
-    }
-
-    .book-pb-16 {
-        padding-bottom: 4rem
-            /* 64px */
-        ;
-    }
-
-    .book-max-h-80 {
-        max-height: 20rem
-            /* 320px */
-        ;
-    }
-
-    .gallery-img-loader {
-        position: relative;
-        height: 254px;
-    }
-
-    .gallery-img-loader:after {
-        content: '';
-        display: block;
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        left: 0;
-        top: 0;
-        background-repeat: no-repeat;
-        background-image: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%),
-            linear-gradient(#e8e8f0 176px, transparent 0),
-            linear-gradient(#e8e8f0 56px, transparent 0),
-            linear-gradient(#e8e8f0 56px, transparent 0),
-            linear-gradient(#e8e8f0 56px, transparent 0),
-            linear-gradient(#e8e8f0 56px, transparent 0),
-            linear-gradient(#ffffff 100%, transparent 0);
-        background-size: 187.5px 100%, 375px 176px, 85px 56px, 85px 56px, 85px 56px, 85px 56px, 100% 100%;
-        background-position: 0 0, 0px 4px, 285.5px 191px, 190px 191px, 96px 191px, 0px 191px, 0 0;
-        animation: gallery-img-skeleton-animation 2000ms infinite;
-    }
-
-    @keyframes gallery-img-skeleton-animation {
-        to {
-            background-position: 100% 0, 0px 4px, 285.5px 191px, 190px 191px, 96px 191px, 0px 191px, 0 0;
-        }
-    }
-
-
-
-    .hotel-content-loader {
-        position: relative;
-        height: 230px;
-    }
-
-    .hotel-content-loader:after {
-        content: '';
-        display: block;
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        left: 0;
-        top: 0;
-        background-repeat: no-repeat;
-        background-image: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%),
-            linear-gradient(#e8e8f0 16px, transparent 0),
-            linear-gradient(#e8e8f0 16px, transparent 0),
-            linear-gradient(#e8e8f0 16px, transparent 0),
-            linear-gradient(#e8e8f0 16px, transparent 0),
-            linear-gradient(#e8e8f0 16px, transparent 0),
-            linear-gradient(#e8e8f0 16px, transparent 0),
-            linear-gradient(#e8e8f0 16px, transparent 0),
-            linear-gradient(#ffffff 100%, transparent 0);
-        background-size: 168.5px 100%, 91px 16px, 215px 16px, 162px 16px, 257px 16px, 287px 16px, 162px 16px, 315px 16px, 100% 100%;
-        background-position: 0 0, 237px 16px, 113px 45px, 165px 74px, 71px 103px, 41px 132px, 165px 161px, 13px 190px, 0 0;
-        animation: hotel-content-animation 2000ms infinite;
-    }
-
-    @keyframes hotel-content-animation {
-        to {
-            background-position: 100% 0, 237px 16px, 113px 45px, 165px 74px, 71px 103px, 41px 132px, 165px 161px, 13px 190px, 0 0;
-        }
-    }
+    width: fit-content !important;
+}
+.\!book-h-14 {
+    height: 3.5rem /* 56px */ !important;
+}
+.book-pb-16 {
+    padding-bottom: 4rem /* 64px */;
+}
 </style>
 
 <body class="book-bg-zinc-50">
-    <basis core="call" file="header.inc" lid="1" pageindex="[##cms.cms.pageindex|(2)##]"></basis>
+    <basis core="call" file="header.inc" lid="2" pageindex="[##cms.cms.pageindex|(2)##]"></basis>
     <basis core="callback" run="atclient"
         triggers="room.list cms.page cms.nextpage cms.prevpage cms.services cms.roomtypes" method="manipulation">
     </basis>
     <main>
         <!-- Commands / Requests -->
-        <basis core="call" file="hotel/info/commands" lid="1"></basis>
+        <basis core="call" file="hotel/info/commands" lid="2"></basis>
         <div class="max-lg:book-w-[90%] book-mx-auto book-mt-16">
             <div class="book-text-zinc-700 book-text-xs">
                 صفحه اصلی / مشاهده هتل / هتل مجلل درویشی در مشهد </div>
             <section class="book-relative book-mt-6">
-                <div class="gallery-img-loader book-w-full"></div>
                 <basis core="print" datamembername="api.gallery" run="atclient" onrendered="onrenderedApiGallery">
                     <layout>
                         <script type="text/template">
@@ -303,6 +215,7 @@
                     </script>
                     </face>
                 </basis>
+
                 <!-- Popup Modal -->
                 <div id="hotelPopupModalGallery"
                     class="popup-modal book-fixed book-inset-0 book-z-50 book-bg-black book-bg-opacity-70 book-justify-center book-items-center book-hidden">
@@ -342,8 +255,13 @@
 
                 </div>
             </section>
-            <div class="hotel-content-loader book-relative book-h-full book-mt-12"></div>
-            <div class="book-hotel__content book-hidden book-bg-white book-px-3 book-py-6 book-rounded-xl book-mt-12">
+            <div class="book-hotel__content"></div>
+            <div class="hotel-content-wrapper-loader book-flex-1 book-flex book-flex-col book-gap-4">
+                <div class="hotel-content-loader book-relative book-h-full"></div>
+                <div class="hotel-content-loader book-relative book-h-full"></div>
+                <div class="hotel-content-loader book-relative book-h-full"></div>
+            </div>
+            <div class="book-bg-white book-px-3 book-py-6 book-rounded-xl book-mt-12">
                 <section>
                     <h1 class="book-hotel__title book-font-medium book-text-zinc-900 book-text-sm book-mb-1.5">
                     </h1>
@@ -493,7 +411,7 @@
                             </label>
                         </div>
                         <div
-                            class="passengerbox hidden-box book-hidden book-p-4 book-overflow-hidden book-max-h-0 book-transition-all book-duration-300">
+                            class="passengerbox hidden-box book-hidden book-w-[310px] book-p-4 book-overflow-hidden book-max-h-0 book-transition-all book-duration-300">
                             <div
                                 class="passenger-item room-passenger-item book-flex book-items-center book-justify-between">
                                 <label for="passenger-roomcount1"
@@ -662,9 +580,7 @@
             </div>
 
             <section>
-                <div class="hotel-content-loader book-relative book-h-full"></div>
-                <div
-                    class="book-hotel__content book-hidden book-bg-white book-rounded-xl book-px-3 book-pb-6 book-pt-3 book-mt-3">
+                <div class="book-bg-white book-rounded-xl book-px-3 book-pb-6 book-pt-3 book-mt-3">
                     <h2
                         class="book-text-zinc-900 book-font-medium book-border-b book-border-solid book-border-zinc-200 -book-mx-3 book-px-3 book-pb-4 book-mb-4">
                         امکانات</h2>
@@ -673,28 +589,6 @@
 
                         </div>
                     </div>
-                </div>
-            </section>
-            <div class="hotel-content-loader book-relative book-h-full"></div>
-            <section
-                class="book-hotel__content book-hidden book-bg-white book-rounded-xl book-py-6 book-px-3 book-mt-3">
-                <div class="book-flex book-items-center book-gap-4 book-mb-6">
-                    <div class="book-flex-1 book-flex book-flex-col book-items-center book-gap-2">
-                        <h3 class="book-text-zinc-900">ساعت خروج</h3>
-                        <span
-                            class="book-hotel__checkout__time book-flex book-items-center book-justify-center book-w-full book-bg-primary-50 book-rounded-full book-text-sm book-text-zinc-900 book-py-2"></span>
-                    </div>
-                    <div class="book-flex-1 book-flex book-flex-col book-items-center book-gap-2">
-                        <h3 class="book-text-zinc-900">ساعت ورود</h3>
-                        <span
-                            class="book-hotel__checkin__time book-flex book-items-center book-justify-center book-w-full book-bg-primary-50 book-rounded-full book-text-sm book-text-zinc-900 book-py-2"></span>
-                    </div>
-                </div>
-                <h2
-                    class="book-text-zinc-900 book-font-medium book-border-b book-border-solid book-border-zinc-200 -book-mx-3 book-px-3 book-pb-6 book-mb-6">
-                    امکانات اتاق</h2>
-                <div class="book-room__facilities book-flex book-flex-col book-gap-9">
-
                 </div>
             </section>
             <section class="book-bg-zinc-800 book-rounded-xl book-px-6 book-py-2 book-mt-3">
@@ -877,11 +771,54 @@
                     </li>
                 </ul>
             </section>
+            <section class="book-bg-white book-rounded-xl book-py-6 book-px-3 book-mt-3">
+                <h2
+                    class="book-text-zinc-900 book-font-medium book-border-b book-border-solid book-border-zinc-200 -book-mx-3 book-px-3 book-pb-6 book-mb-6">
+                    امکانات اتاق</h2>
+                <div class="book-room__facilities book-flex book-flex-col book-gap-9">
+
+                </div>
+            </section>
+            <section class="book-bg-white book-rounded-xl book-py-6 book-px-3 book-mt-3">
+                <div class="book-flex book-flex-col book-gap-6 book-divide-y book-divide-zinc-200">
+                    <h2 class="book-text-zinc-900 book-font-medium -book-mx-3 book-px-3">
+                        قوانین و مقررات</h2>
+                    <div class="book-flex book-items-center book-gap-4 book-pt-6">
+                        <div class="book-flex-1 book-flex book-flex-col book-items-center book-gap-2">
+                            <h3 class="book-text-zinc-900">ساعت خروج</h3>
+                            <span
+                                class="book-flex book-items-center book-justify-center book-w-full book-bg-primary-50 book-rounded-full book-text-sm book-text-zinc-900 book-py-2">12:00</span>
+                        </div>
+                        <div class="book-flex-1 book-flex book-flex-col book-items-center book-gap-2">
+                            <h3 class="book-text-zinc-900">ساعت ورود</h3>
+                            <span
+                                class="book-flex book-items-center book-justify-center book-w-full book-bg-primary-50 book-rounded-full book-text-sm book-text-zinc-900 book-py-2">12:00</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="book-text-zinc-900 book-font-medium book-mb-3 book-pt-6">نکات ضروری</h3>
+                        <div class="book-text-zinc-600 book-text-xs book-leading-6">
+                            خدمات ویژه هتل الماس ۲ مشهد:
+                            پذیرایی صبحانه بوفه در طبقه هفده
+                            ترانسفر رفت از هتل به حرم رایگان است.
+                            ترانسفر هتل، رایگان است.
+                            ترانسفر رفت و برگشت (فرودگاهی و راه آهن) از ساعت 12 شب تا 6 صبح انجام نمی‌شود.
+                            مجموعه آبی هتل (استخر، سونا و جکوزی)، رایگان است.
+                            ترانسفر استقبال و بدرقه فرودگاهی، رایگان است.
+                            اینترنت در لابی و تمام اتاق‌ها به صورت نامحدود و رایگان است.
+                            رزرو اتاق‌های VIP، به همراه پذیرایی میوه و شیرینی به صورت روزانه در اتاق است.
+                            پذیرایی صبحانه در اتاق به صورت روم سرویس، مشمول شارژ هزینه صبحانه و پذیرایی خواهد بود.
+                            اتاق‌های برلیان و اتاق‌های یک تخته و دو تخته یاقوت، با توجه به ساختمان‌سازی، فاقد ویو است و
+                            دارای شیشه‌های مشجر است.
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
     </main>
 
     <!-- Footer-->
-    <basis core="call" file="footer.inc" lid="1" pageindex="[##cms.cms.pageindex|(2)##]"></basis>
+    <basis core="call" file="footer.inc" lid="2" pageindex="[##cms.cms.pageindex|(2)##]"></basis>
     <script src="[##cms.cms.cdn##]/_js/swiper-bundle.11.2.5.min.js" type="text/javascript"></script>
     <script src="[##cms.cms.cdn##]/booking/js/hotel-info.js?ver=[##cms.cms.date2##][##cms.cms.time2##]"
         type="text/javascript"></script>
@@ -1792,33 +1729,14 @@
                     }
                 }
 
-
-                if (window.innerWidth < 1024) {
-                    const hotelContents = document.querySelectorAll(".book-hotel__content");
-                    const hotelLoaders = document.querySelectorAll(".hotel-content-loader");
-
-                    hotelLoaders.forEach((loader) => {
-                        loader.classList.add("book-hidden");
-                    });
-
-                    hotelContents.forEach((content) => {
-                        content.classList.remove("book-hidden");
-                    });
-                } else {
-                    const hotelInfoContent = document.querySelector(".book-hotel__content");
-                    const hotelContentWrapperLoader = document.querySelector(".hotel-content-wrapper-loader");
-
-                    if (hotelContentWrapperLoader) {
-                        hotelContentWrapperLoader.classList.remove("book-flex");
-                        hotelContentWrapperLoader.classList.add("book-hidden");
-                    }
-                    if (hotelInfoContent) {
-                        hotelInfoContent.classList.remove("book-hidden");
-                    }
-                }
+                const hotelInfoContent = document.querySelector(".book-hotel__content");
+                const hotelContentWrapperLoader = document.querySelector(".hotel-content-wrapper-loader");
+                hotelContentWrapperLoader.classList.remove("book-flex");
+                hotelContentWrapperLoader.classList.add("book-hidden");
+                hotelInfoContent.classList.remove("book-hidden");
 
             } catch (error) {
-                console.error("setInfo error:", error);
+                console.error("setInfo error:", error);       // بهترین حالت
                 console.error("stack:", error?.stack);
                 return '';
             }
@@ -3000,25 +2918,33 @@
             const element = e.closest(".reserve-field").querySelector(".hidden-box");
             const icon = e.closest(".reserve-field").querySelector(".down-icon");
             if (element) {
-                if (element.classList.contains("book-hidden")) {
-                    element.classList.remove("book-hidden");
-                    element.style.maxHeight = '0px';
-                    void element.offsetHeight;
-                    element.style.maxHeight = element.scrollHeight * 6 + 'px';
+                if (window.innerWidth > 1024) {
+                    if (element.classList.contains("book-hidden")) {
+                        element.classList.remove("book-hidden");
+                        element.style.maxHeight = '0px';
+                        void element.offsetHeight;
+                        element.style.maxHeight = element.scrollHeight * 6 + 'px';
 
-                    if (window.innerWidth < 1024) {
-                        element.classList.add("fixed-passengerbox");
+                        if (window.innerWidth < 1024) {
+                            element.classList.add("fixed-passengerbox");
+                            document.querySelector("body").classList.add("book-overflow-hidden");
+                        }
+                    } else {
+                        element.style.maxHeight = '0px';
+                        element.addEventListener(
+                            "transitionend",
+                            () => {
+                                element.classList.add("book-hidden");
+                            },
+                            { once: true }
+                        );
                     }
                 } else {
-                    element.style.maxHeight = '0px';
-                    element.addEventListener(
-                        "transitionend",
-                        () => {
-                            element.classList.add("book-hidden");
-                        },
-                        { once: true }
-                    );
-
+                    element.classList.toggle("book-hidden");
+                    if (window.innerWidth < 1024) {
+                        element.classList.add("fixed-passengerbox");
+                        document.querySelector("body").classList.add("book-overflow-hidden");
+                    }
                 }
             }
             if (icon) {

@@ -108,10 +108,16 @@
     }
 
     .book-bg-transparent {
-    background-color: transparent;
-}
-.book-leading-8 {
-    line-height: 2rem /* 32px */;
+        background-color: transparent;
+    }
+
+    .book-leading-8 {
+        line-height: 2rem
+            /* 32px */
+        ;
+    }
+    .book-text-center {
+    text-align: center;
 }
 </style>
 
@@ -418,21 +424,9 @@
                             <face>
                                 <script type="text/template">
                                 <form method="post" action=""
-                                    class="book-hotel__room book-flex book-gap-6 book-border book-border-solid book-border-zinc-200 book-rounded-xl book-py-5 book-px-6">
+                                    class="book-hotel__room book-flex book-items-center book-gap-6 book-border book-border-solid book-border-zinc-200 book-rounded-xl book-py-5 book-px-6">
                                     {{ return await renderAvailableRooms($data)}}
                                     <div class="book-flex-1">
-                                        {{
-                                        return `<div
-                                            class="book-hotel__rules book-flex-1 book-flex book-items-center book-justify-center book-cursor-pointer"
-                                            onclick="showRules(this,'${$data.optionId}')">
-                                            <svg width="57" height="48">
-                                                <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-document">
-                                                </use>
-                                            </svg>
-                                            <span class="book-text-blue-600 book-text-xs">قوانين اتاق</span>
-                                        </div>`
-                                        }}
-
                                         <div id="book-hotel__rules__modal"
                                             class="book-fixed book-inset-0 book-z-50 book-hidden book-flex book-items-center book-justify-center book-bg-black/40 book-backdrop-blur-sm">
                                             <div class="book-w-full book-max-w-xl book-mx-4">
@@ -526,45 +520,6 @@
                         </ul>
                     </section>
 
-                    <!-- <section class="book-bg-white book-rounded-xl book-py-6 book-px-8 book-mt-3">
-
-                        <h2 id="section-rules"
-                            class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
-                            قوانین و مقررات</h2>
-                        <div class="book-flex book-gap-6 book-divide-x book-divide-x-reverse book-divide-zinc-200">
-                            <div class="book-shrink-0 book-flex book-flex-col book-items-center book-gap-4">
-                                <div class="book-flex-1 book-flex book-flex-col book-items-center book-gap-2">
-                                    <h3 class="book-text-zinc-900">ساعت ورود</h3>
-                                    <span
-                                        class="book-hotel__checkin__time book-flex book-items-center book-justify-center book-w-full book-bg-primary-50 book-rounded-full book-text-sm book-text-zinc-900 book-py-2"></span>
-                                </div>
-                                <div class="book-flex-1 book-flex book-flex-col book-items-center book-gap-2">
-                                    <h3 class="book-text-zinc-900">ساعت خروج</h3>
-                                    <span
-                                        class="book-hotel__checkout__time book-flex book-items-center book-justify-center book-w-full book-bg-primary-50 book-rounded-full book-text-sm book-text-zinc-900 book-py-2"></span>
-                                </div>
-                            </div>
-                            <div class="book-pr-6">
-                                <h3 class="book-text-zinc-900 book-font-medium book-mb-3">نکات ضروری</h3>
-                                <div class="book-text-zinc-600 book-text-xs book-leading-6">
-                                    خدمات ویژه هتل الماس ۲ مشهد:
-                                    پذیرایی صبحانه بوفه در طبقه هفده
-                                    ترانسفر رفت از هتل به حرم رایگان است.
-                                    ترانسفر هتل، رایگان است.
-                                    ترانسفر رفت و برگشت (فرودگاهی و راه آهن) از ساعت 12 شب تا 6 صبح انجام نمی‌شود.
-                                    مجموعه آبی هتل (استخر، سونا و جکوزی)، رایگان است.
-                                    ترانسفر استقبال و بدرقه فرودگاهی، رایگان است.
-                                    اینترنت در لابی و تمام اتاق‌ها به صورت نامحدود و رایگان است.
-                                    رزرو اتاق‌های VIP، به همراه پذیرایی میوه و شیرینی به صورت روزانه در اتاق است.
-                                    پذیرایی صبحانه در اتاق به صورت روم سرویس، مشمول شارژ هزینه صبحانه و پذیرایی خواهد
-                                    بود.
-                                    اتاق‌های برلیان و اتاق‌های یک تخته و دو تخته یاقوت، با توجه به ساختمان‌سازی، فاقد
-                                    ویو است و
-                                    دارای شیشه‌های مشجر است.
-                                </div>
-                            </div>
-                        </div>
-                    </section> -->
                 </div>
                 <aside class="book-w-[358px] book-h-fit book-sticky book-top-0">
                     <section class="book-relative book-rounded-xl book-overflow-hidden">
@@ -686,7 +641,8 @@
                                             </li> -->
                                             <li
                                                 class="plus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
-                                                <div class="book-h-full book-leading-8" onclick="Change_Room_Count(this)">
+                                                <div class="book-h-full book-leading-8"
+                                                    onclick="Change_Room_Count(this)">
                                                     <span class="count-icon-simple book-text-white
                                                     book-text-2xl">+</span>
                                                     <span class="count-icon-svg book-hidden"><svg class="align-middle"
@@ -703,7 +659,8 @@
                                             </li>
                                             <li
                                                 class="first-room-type minus-count deactive-change-button book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
-                                                <div class="book-h-full book-leading-8" onclick="Change_Room_Count(this)">
+                                                <div class="book-h-full book-leading-8"
+                                                    onclick="Change_Room_Count(this)">
                                                     <span class="count-icon-simple book-text-white
                                                     book-text-2xl">-</span>
                                                     <span class="count-icon-svg book-hidden"><svg class="align-middle"
@@ -733,7 +690,8 @@
                                                     class="book-h-auto book-leading-normal book-flex book-items-center book-justify-between">
                                                     <li
                                                         class="plus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
-                                                        <div class="book-h-full book-leading-8" onclick="Change_AdultCount(this)">
+                                                        <div class="book-h-full book-leading-8"
+                                                            onclick="Change_AdultCount(this)">
                                                             <span class="count-icon-simple book-text-white
                                                             book-text-2xl">+</span>
                                                             <span class="count-icon-svg book-hidden"><svg
@@ -752,7 +710,8 @@
                                                     </li>
                                                     <li
                                                         class="minus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
-                                                        <div class="book-h-full book-leading-8" onclick="Change_AdultCount(this)">
+                                                        <div class="book-h-full book-leading-8"
+                                                            onclick="Change_AdultCount(this)">
                                                             <span class="count-icon-simple book-text-white
                                                             book-text-2xl">-</span>
                                                             <span class="count-icon-svg book-hidden"><svg
@@ -779,7 +738,8 @@
                                                     class="book-h-auto book-leading-normal book-flex book-items-center book-justify-between">
                                                     <li
                                                         class="plus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
-                                                        <div class="book-h-full book-leading-8" onclick="Change_ChildCount(this)">
+                                                        <div class="book-h-full book-leading-8"
+                                                            onclick="Change_ChildCount(this)">
                                                             <span class="count-icon-simple book-text-white
                                                             book-text-2xl">+</span>
                                                             <span class="count-icon-svg book-hidden"><svg
@@ -797,7 +757,8 @@
                                                     </li>
                                                     <li
                                                         class="minus-count deactive-change-button book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
-                                                        <div class="book-h-full book-leading-8" onclick="Change_ChildCount(this)">
+                                                        <div class="book-h-full book-leading-8"
+                                                            onclick="Change_ChildCount(this)">
                                                             <span class="count-icon-simple book-text-white
                                                             book-text-2xl">-</span>
                                                             <span class="count-icon-svg book-hidden"><svg
@@ -812,7 +773,9 @@
                                             </div>
                                             <input type="hidden" name="_root.rooms__1.childcountandage"
                                                 class="childcountandage" value="0" aria-label="childcountandage" />
-                                            <div class="section-select-age book-grid book-grid-cols-2 book-gap-2 book-mt-4"></div>
+                                            <div
+                                                class="section-select-age book-grid book-grid-cols-2 book-gap-2 book-mt-4">
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="confirm-passenger book-flex book-items-center book-justify-center book-mt-6  book-bg-primary-600 book-text-white book-rounded-lg book-font-medium book-h-12         book-transition-all book-duration-300 hover:book-bg-secondary-600 hover:book-text-white"
@@ -1018,7 +981,7 @@
                             return updatedItem;
                         });
 
-                        console.log("updated data",updatedData)
+                        console.log("updated data", updatedData)
 
                         $bc.setSource("api.gallery", updatedData);
 
@@ -1238,7 +1201,7 @@
                     propTitle =
                         propTitles[lang] ||
                         propTitles.fa ||
-                        Object.values(propTitles)[0]; 
+                        Object.values(propTitles)[0];
                     propTitle = String(propTitle).trim();
                 } else {
                     return null;
@@ -1773,7 +1736,7 @@
                 return '';
             }
         };
-       
+
         const renderAvailableRooms = async (element) => {
             try {
                 if (!element || !Array.isArray(element.availablerooms)) {
@@ -1828,10 +1791,26 @@
                         return `
                     <div class="${paddingClass}">
                       <h3 class="book-text-zinc-900 book-mb-3">${roomName}</h3>
-                      <div class="book-flex book-gap-2">
-                        <span class="book-bg-primary-50 book-text-primary-800 book-text-xs book-rounded-3xl book-py-1 book-px-3">${serviceLabel}</span>
-                        <span class="book-bg-specialcolor-1 book-text-specialcolor-2 book-text-xs book-rounded-3xl book-py-1 book-px-4">${availabilityLabel}</span>
-                      </div>
+                    <div class="book-flex book-items-center book-gap-2">
+                      <span class="book-bg-primary-50 book-text-primary-800 book-text-xs book-rounded-3xl book-py-1 book-px-3">
+                        ${serviceLabel}
+                      </span>
+                  
+                      <span class="book-bg-specialcolor-1 book-text-specialcolor-2 book-text-xs book-rounded-3xl book-py-1 book-px-4">
+                        ${availabilityLabel}
+                      </span>
+                  
+                      <button
+                        type="button"
+                        class="book-inline-flex book-items-center book-gap-1 book-text-blue-600 book-text-xs book-rounded-3xl book-py-1 book-px-3 hover:book-bg-blue-50 book-transition"
+                        onclick="showRules(this,'${element.optionId}')"
+                      >
+                        <svg width="48" height="48">
+                          <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-document"></use>
+                        </svg>
+                        قوانین اتاق
+                      </button>
+                    </div>
                             ${hiddenInputs}
                     </div>`;
                     })
@@ -2682,31 +2661,41 @@
         window.roomRulesCache = window.roomRulesCache || {};
         const showRules = async (el, optionId) => {
             try {
-                const container = document.getElementById('book-hotel__rules__content');
+                const container = document.getElementById("book-hotel__rules__content");
                 if (!container) {
-                    console.warn('book-hotel__rules__content not found');
+                    console.warn("book-hotel__rules__content not found");
                     return;
                 }
 
+                const fallbackHtml = `
+      <div class="book-text-center book-py-6 book-text-xs book-text-zinc-500">
+        قوانین اتاق برای این گزینه ثبت نشده است.
+      </div>
+    `;
+
+                // اگر قبلاً کش شده
                 if (roomRulesCache[optionId]) {
                     container.innerHTML = roomRulesCache[optionId];
                     openRoomRulesModal();
                     return;
                 }
 
+                // Loading
                 container.innerHTML = `
-                <div class="book-text-center book-py-6 book-text-xs book-text-zinc-400">
-                    در حال بارگذاری قوانین اتاق...
-                </div>
-            `;
+      <div class="book-text-center book-py-6 book-text-xs book-text-zinc-400">
+        در حال بارگذاری قوانین اتاق...
+      </div>
+    `;
 
-                const providerId = window.cmsData && window.cmsData.provider
-                    ? Number(window.cmsData.provider)
-                    : 0;
+                const providerId =
+                    window.cmsData && window.cmsData.provider
+                        ? Number(window.cmsData.provider)
+                        : 0;
 
-                const dmnid = window.cmsData && window.cmsData.dmnid
-                    ? Number(window.cmsData.dmnid)
-                    : 0;
+                const dmnid =
+                    window.cmsData && window.cmsData.dmnid
+                        ? Number(window.cmsData.dmnid)
+                        : 0;
 
                 const mainproviderObj = {
                     provider_id: providerId,
@@ -2714,27 +2703,48 @@
                 };
 
                 const formData = new FormData();
-                formData.append('mainprovider', JSON.stringify(mainproviderObj));
-                formData.append('optionId', optionId);
+                formData.append("mainprovider", JSON.stringify(mainproviderObj));
+                formData.append("optionId", optionId);
 
-                const response = await fetch('/Client_Room_Rule.bc', {
-                    method: 'POST',
+                const response = await fetch("/Client_Room_Rule.bc", {
+                    method: "POST",
                     body: formData,
                 });
 
                 if (!response.ok) {
-                    throw new Error(`Error retrieving room rules: ${response.status} ${response.statusText}`);
+                    throw new Error(
+                        `Error retrieving room rules: ${response.status} ${response.statusText}`,
+                    );
                 }
 
                 const html = await response.text();
+                const raw = (html || "").trim();
 
-                roomRulesCache[optionId] = html;
+                // اگر سرور چیزی برنگردوند یا خروجی بی‌معنا بود
+                const isEmpty =
+                    !raw ||
+                    raw === "null" ||
+                    raw === "undefined" ||
+                    raw === "[]" ||
+                    raw === "{}";
 
-                container.innerHTML = html;
+                const finalHtml = isEmpty ? fallbackHtml : html;
+
+                roomRulesCache[optionId] = finalHtml;
+                container.innerHTML = finalHtml;
                 openRoomRulesModal();
-
             } catch (error) {
-                console.error('Error loading room rules:', error);
+                console.error("Error loading room rules:", error);
+
+                const container = document.getElementById("book-hotel__rules__content");
+                if (container) {
+                    container.innerHTML = `
+        <div class="book-text-center book-py-6 book-text-xs book-text-zinc-500">
+          خطا در دریافت قوانین اتاق. لطفاً دوباره تلاش کنید.
+        </div>
+      `;
+                    openRoomRulesModal();
+                }
             }
         };
 
