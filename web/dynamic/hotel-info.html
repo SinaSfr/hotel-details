@@ -13,6 +13,10 @@
 </head>
 
 <style>
+    .book-flex-\[2\.3\] {
+        flex: 2.3;
+    }
+
     .book-rotate-180 {
         transform: rotate(180deg);
     }
@@ -116,9 +120,10 @@
             /* 32px */
         ;
     }
+
     .book-text-center {
-    text-align: center;
-}
+        text-align: center;
+    }
 </style>
 
 <body class="book-bg-zinc-50">
@@ -132,11 +137,11 @@
         <!-- Commands / Requests -->
         <basis core="call" file="hotel/info/commands" lid="1"></basis>
         <div class="max-xl:book-w-[97%] xl:book-max-w-7xl book-mx-auto book-my-5">
-            <div class="relative flex items-center justify-center gap-1">
+            <div class="book-flex book-items-center book-justify-center book-gap-1">
                 <a href="/"
                     class="book-text-zinc-700 book-text-xs book-transition-all book-duration-300 hover:book-text-primary-300">صفحه
                     اصلی</a>
-                <span>/</span>
+                <span class="book-text-zinc-700 book-text-xs">/</span>
                 <span class="book-hotel__title"></span>
             </div>
             <section class="book-relative book-mt-6">
@@ -226,14 +231,14 @@
                             </div>
 
                             <div
-                                class="swiper-button-next-popup book-flex book-items-center book-justify-center book-absolute book-top-1/2 book-left-6 book-z-10 book-w-12 book-h-12 book-bg-white/30 -book-translate-y-1/2 backdrop-blur-md book-rounded-full book-text-white book-shadow-lg book-transition-all book-duration-300 hover:book-bg-primary-600">
+                                class="swiper-button-next-popup book-flex book-items-center book-justify-center book-absolute book-top-1/2 book-left-6 book-z-10 book-w-12 book-h-12 book-bg-white/30 -book-translate-y-1/2 book-backdrop-blur-md book-rounded-full book-text-white book-shadow-lg book-transition-all book-duration-300 hover:book-bg-primary-600">
                                 <svg width="32" height="32" class="book-text-white">
                                     <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-chevron-left">
                                     </use>
                                 </svg>
                             </div>
                             <div
-                                class="swiper-button-prev-popup book-flex book-items-center book-justify-center book-absolute book-top-1/2 book-right-6 book-z-10 book-w-12 book-h-12 book-bg-white/30 -book-translate-y-1/2 backdrop-blur-md book-rounded-full book-text-white book-shadow-lg book-transition-all book-duration-300 hover:book-bg-primary-600">
+                                class="swiper-button-prev-popup book-flex book-items-center book-justify-center book-absolute book-top-1/2 book-right-6 book-z-10 book-w-12 book-h-12 book-bg-white/30 -book-translate-y-1/2 book-backdrop-blur-md book-rounded-full book-text-white book-shadow-lg book-transition-all book-duration-300 hover:book-bg-primary-600">
                                 <svg width="32" height="32" class="book-text-white">
                                     <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-chevron-right">
                                     </use>
@@ -298,9 +303,9 @@
                                         <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-mail">
                                         </use>
                                     </svg>
-                                    <span
+                                    <a href=""
                                         class="book-hotel__email book-relative book-group book-text-sm book-text-zinc-900 book-transition-all book-duration-300 hover:book-text-primary-300">
-                                    </span>
+                                    </a>
                                 </div>
                                 <div class="book-hotel__fax__wrapper book-hidden book-items-center book-gap-1">
                                     <svg width="48" height="48" class="book-shrink-0">
@@ -308,7 +313,7 @@
                                         </use>
                                     </svg>
                                     <span
-                                        class="book-hotel__fax book-relative book-group book-text-sm book-font-medium book-text-zinc-900 book-transition-all book-duration-300 hover:book-text-primary-300">
+                                        class="book-hotel__fax book-relative book-group book-text-sm book-font-medium book-text-zinc-900">
                                     </span>
                                 </div>
                             </div>
@@ -467,15 +472,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="book-flex book-flex-col book-gap-1 book-items-center book-mt-1.5">
-                                            <h3 class="book-text-xs book-text-zinc-900">قیمت نهایی:</h3>
-                                            {{
-                                            return `
-                                                <div class="book-flex book-items-center book-gap-1"
-                                                    data-original-price="${$data.totalCom}">${await
-                                                    priceWithCurrency($data.totalCom)}</div>`
-                                            }}
-                                        </div>
+                                        {{
+                                            return await priceWithCurrency($data.totalCom, { commission: $data.commissioncost });
+                                        }}
                                         <div class="book-mt-4">
                                             <button
                                                 class="book-w-full book-h-12 book-flex book-items-center book-justify-center book-rounded-xl book-bg-primary-300 book-text-white book-font-medium book-transition-all book-duration-300 hover:book-bg-primary-900">رزرو
@@ -533,7 +532,7 @@
                         </div>
                     </section>
                     <div id="r-hotel" class="r-hotel module-form relative" data-module="hotel">
-                        <form action="/Tem3_Hotel_Search.bc?lid=2" method="post" data-form="hotel" id="hotelSearch"
+                        <form action="/Tem3_Hotel_Search.bc?lid=1" method="post" data-form="hotel" id="hotelSearch"
                             onsubmit="form_search_isSubmited(this,event)"
                             class="form-search formhotel book-flex book-flex-col book-bg-white book-p-4 book-rounded-xl book-mt-3">
                             <input type="hidden" name="persiancurrent" class="persiancurrent" value="" />
@@ -569,7 +568,7 @@
                                         class="reserve-field departure-date book-flex-1 book-flex book-relative book-items-center book-justify-between book-bg-white book-rounded-xl book-px-3 book-h-12">
                                         <div>
                                             <input type="text" aria-label="Check in" value="" data-role="depart"
-                                                class="js-date-input departure__date Basis_Date start_date book-cursor-pointer book-h-full book-w-full"
+                                                class="js-date-input departure__date Basis_Date start_date book-cursor-pointer book-h-full book-w-full book-outline-none"
                                                 readonly="" name="fdate" id="fromdate2" required=""
                                                 placeholder="تاریخ رفت" />
                                             <input value="" class="mstring_date mstring_fdate" type="hidden"
@@ -582,7 +581,7 @@
                                         class="reserve-field return-date book-flex-1 book-flex book-relative book-items-center book-justify-between book-bg-white book-rounded-xl book-px-3 book-h-12">
                                         <div class="">
                                             <input type="text" aria-label="Check out" value="" data-role="return"
-                                                class="js-date-input arrival__date Basis_Date end_date book-cursor-pointer book-h-full book-w-full"
+                                                class="js-date-input arrival__date Basis_Date end_date book-cursor-pointer book-h-full book-w-full book-outline-none"
                                                 readonly="" name="tdate" id="todate2" required=""
                                                 placeholder="تاریخ برگشت" />
                                             <input value="" class="mstring_date mstring_tdate" type="hidden"
@@ -599,7 +598,7 @@
                                 <div onclick="show_passengerbox(this)"
                                     class="show-passengers-dropdown show-passengers-dropdown-hotel book-flex book-items-center book-justify-between book-cursor-pointer">
                                     <div class="book-flex book-flex-col book-justify-between book-cursor-pointer">
-                                        <span class="label-text text-sm">مسافران</span>
+                                        <span class="label-text book-font-medium">مسافران</span>
                                         <div class="book-flex book-items-center book-gap-2">
                                             <span
                                                 class="passenger-counts room-count book-flex book-items-center book-gap-1"><span
@@ -812,8 +811,6 @@
         class="book-rtl book-absolute book-left-0 book-top-0 book-max-w-[95vw] book-hidden book-w-[680px] book-rounded-2xl book-border book-border-zinc-200 book-bg-white book-shadow-lg book-p-3 book-z-40">
     </div>
     <!-- multi calendar -->
-    <script
-        src="[##cms.cms.cdn##]/booking/js/multiLang-calendar.js?ver=[##cms.cms.date2##][##cms.cms.time2##]"></script>
     <script>
         /**
          * Global variables to store session search and booking data from sessionSearch.
@@ -1315,12 +1312,11 @@
         function getSectionHTML(data, sectionTitles) {
             try {
                 const sections = unifyHotelData(data);
-                console.log(sections);
                 if (!sections.length) return "";
 
-                const lang = getCurrentLang(); // "fa" | "en" | "ar"
+                const lang = getCurrentLang();
 
-                // 🔹 انتخاب عنوان سکشن بر اساس زبان
+
                 let secTitle = null;
                 if (typeof sectionTitles === "string") {
                     secTitle = sectionTitles.trim();
@@ -1524,6 +1520,9 @@
                     if (websiteElement) {
                         websiteElement.textContent = website;
                         websiteElement.setAttribute('href', website);
+                        // اضافه کردن کلاس‌ها برای هاور و خط زیر
+                        websiteElement.classList.add("book-relative", "book-group", "book-text-sm", "book-text-zinc-900", "book-transition-all", "book-duration-300", "hover:book-text-primary-300");
+                        websiteElement.innerHTML += `<span class="book-absolute -book-bottom-1 book-right-0 book-w-0 book-transition-all book-duration-300 book-h-px book-bg-primary-300 group-hover:book-w-full"></span>`;
                     }
 
                     const websiteElementWrapper = document.querySelector('.book-hotel__website__wrapper');
@@ -1561,11 +1560,11 @@
                     const phoneElement = document.querySelector('.book-hotel__phones');
                     if (phoneElement) {
                         phoneElement.innerHTML = `
-                <span class="book-relative book-group book-text-sm book-text-zinc-900 book-transition-all book-duration-300 hover:book-text-primary-300">
-                    ${phone}
-                    <span class="book-absolute -book-bottom-1 book-right-0 book-w-0 book-transition-all book-duration-300 book-h-px book-bg-primary-300 group-hover:book-w-full"></span>
-                </span>
-            `;
+            <a href="tel:${phone}" class="book-relative book-group book-text-sm book-text-zinc-900 book-transition-all book-duration-300 hover:book-text-primary-300">
+                ${phone}
+                <span class="book-absolute -book-bottom-1 book-right-0 book-w-0 book-transition-all book-duration-300 book-h-px book-bg-primary-300 group-hover:book-w-full"></span>
+            </a>
+        `;
                     }
 
                     const phoneElementWrapper = document.querySelector('.book-hotel__phones__wrapper');
@@ -1586,6 +1585,12 @@
                     if (emailElement) {
                         emailElement.textContent = email;
                         emailElement.setAttribute('href', `mailto:${email}`);
+
+                        // اضافه کردن کلاس‌ها برای هاور و خط زیر
+                        emailElement.classList.add("book-relative", "book-group", "book-text-sm", "book-text-zinc-900", "book-transition-all", "book-duration-300", "hover:book-text-primary-300");
+                        emailElement.innerHTML += `
+            <span class="book-absolute -book-bottom-1 book-right-0 book-w-0 book-transition-all book-duration-300 book-h-px book-bg-primary-300 group-hover:book-w-full"></span>
+        `;
                     }
 
                     const emailElementWrapper = document.querySelector('.book-hotel__email__wrapper');
@@ -1707,7 +1712,7 @@
                     HOTEL_FIELD_TITLES.gps.section
                 );
                 if (locationValue) {
-                    const [lat, lng] = location.split(' ');
+                    const [lat, lng] = locationValue.split(' ');
                     const locationElement = document.querySelector('.book-hotel__location');
                     if (locationElement) {
                         locationElement.src = `https://www.google.com/maps?q=${lat},${lng}&output=embed`;
@@ -1725,23 +1730,45 @@
                     }
                 }
 
-                const hotelInfoContent = document.querySelector(".book-hotel__content");
-                const hotelContentWrapperLoader = document.querySelector(".hotel-content-wrapper-loader");
-                hotelContentWrapperLoader.classList.remove("book-flex");
-                hotelContentWrapperLoader.classList.add("book-hidden");
-                hotelInfoContent.classList.remove("book-hidden");
+                if (window.innerWidth < 1024) {
+                    const hotelContents = document.querySelectorAll(".book-hotel__content");
+                    const hotelLoaders = document.querySelectorAll(".hotel-content-loader");
+
+                    hotelLoaders.forEach((loader) => {
+                        loader.classList.add("book-hidden");
+                    });
+
+                    hotelContents.forEach((content) => {
+                        content.classList.remove("book-hidden");
+                    });
+                } else {
+                    const hotelInfoContent = document.querySelector(".book-hotel__content");
+                    const hotelContentWrapperLoader = document.querySelector(".hotel-content-wrapper-loader");
+
+                    if (hotelContentWrapperLoader) {
+                        hotelContentWrapperLoader.classList.remove("book-flex");
+                        hotelContentWrapperLoader.classList.add("book-hidden");
+                    }
+                    if (hotelInfoContent) {
+                        hotelInfoContent.classList.remove("book-hidden");
+                    }
+                }
 
             } catch (error) {
-                console.error("setInfo error: " + error.message);
+                console.error("setInfo error:", error);
+                console.error("stack:", error?.stack);
                 return '';
             }
         };
 
         const renderAvailableRooms = async (element) => {
             try {
-                if (!element || !Array.isArray(element.availablerooms)) {
-                    console.warn("⚠️ renderAvailableRooms: no availablerooms found");
-                    return "";
+                if (!element || !Array.isArray(element.availablerooms) || element.availablerooms.length === 0 || (element.msg && element.msg === 'no data')) {
+                    return `
+                <div class="book-text-center book-text-zinc-900 book-text-xs book-mt-4">
+                    هیچ اتاقی برای نمایش موجود نیست. لطفاً فیلترها را تغییر دهید یا دوباره تلاش کنید.
+                </div>
+            `;
                 }
 
                 const serviceLabel = element.services;
@@ -1817,11 +1844,83 @@
                     .join("");
 
                 return `
-            <div class="book-flex-[2.75] book-flex book-flex-col book-justify-center book-gap-6 book-divide-y book-divide-dashed book-divide-zinc-300">
+            <div class="book-flex-[2.3] book-flex book-flex-col book-justify-center book-gap-6 book-divide-y book-divide-dashed book-divide-zinc-300">
             ${roomsHtml}
             </div>`;
             } catch (error) {
                 console.error(`renderAvailableRooms: ${error.message}`);
+                return "";
+            }
+        };
+
+        const renderAvailableRoomsMobile = async (element) => {
+            try {
+                if (!element || !Array.isArray(element.availablerooms)) {
+                    console.warn("⚠️ renderAvailableRoomsMobile: no availablerooms found");
+                    return "";
+                }
+
+                const serviceLabel = element.services || "";
+
+                const { currency_cost_number, floatdigit } = getCurrencyUnitFromStorage();
+                const currency_unit = renderUnit("");
+
+                const roomsHtml = element.availablerooms
+                    .map((room, index) => {
+                        const info = room.info || {};
+                        const roomName = info.room || "";
+                        const availability = info.availability || "";
+                        const availabilityLabel = availability
+                            ? availability.charAt(0).toUpperCase() + availability.slice(1)
+                            : "";
+
+                        const paddingClass = index > 0 ? " book-pt-6" : "";
+
+                        const hiddenInputs = `
+                    ${renderOptionId(element)}
+                    ${renderadults(element)}
+                    ${renderchildwithbed(element)}
+                    ${renderchildwithoutbed(element)}
+                    ${renderinfant(element)}
+                    ${renderroomid(element)}
+                    ${renderid(element)} 
+                    ${renderproviderId(element)} 
+                    ${renderprovider(element)} 
+                    ${renderhotelidRooms(element)}
+                    ${rendernightsRooms(element)} 
+                    ${rendersupplierRooms(element)} 
+                    <input type="hidden" value="${currency_unit}" name="rate-unit" class="rate-unit" /> 
+                    <input type="hidden" value="${currency_cost_number}" name="rate-cost" class="rate-cost" /> 
+                    <input type="hidden" value="${floatdigit}" name="rate-floatdigit" class="rate-floatdigit" /> 
+                    <input type="hidden" value="[##cms.form.sid|(2)##]" name="sid" />
+                    <input type="hidden" value="[##cms.form.Hotel-Date|(0)##]" name="Hotel-Date" />
+                    <input type="hidden" value="[##cms.form.cityid##]" name="cityid" /> 
+                    <input type="hidden" value="[##cms.form.coHotel##]" name="coHotel" /> 
+                    <input type="hidden" value='[##cms.json.header|cms.form.roomSearch##]' name="roomSearch" /> 
+                    <input type="hidden" value="[##cms.form.fdate##]" name="fdate" /> 
+                    <input type="hidden" value="[##cms.form.tdate##]" name="tdate" /> 
+                `;
+
+                        return `
+                    <div class="${paddingClass}">
+                        <h3 class="book-text-xs book-text-zinc-900 book-mb-4">${roomName}</h3>
+                        <div class="book-flex book-gap-2">
+                            <span class="book-bg-primary-50 book-text-primary-800 book-text-xs book-rounded-3xl book-py-1 book-px-3">${serviceLabel}</span>
+                            <span class="book-bg-specialcolor-1 book-text-specialcolor-2 book-text-xs book-rounded-3xl book-py-1 book-px-4">${availabilityLabel}</span>
+                        </div>
+                        ${hiddenInputs}
+                    </div>
+                `;
+                    })
+                    .join("");
+
+                return `
+            <div class="book-flex book-flex-col book-gap-6 book-divide-y book-divide-dashed book-divide-zinc-300">
+                ${roomsHtml}
+            </div>
+        `;
+            } catch (error) {
+                console.error(`renderAvailableRoomsMobile: ${error.message}`);
                 return "";
             }
         };
@@ -2141,6 +2240,15 @@
                     }
                 }
 
+                // Calculate commission
+                const commission = opts.commission || 0;
+                const commissionLabel = commission > 0
+                    ? `<div class="commission-text book-flex book-items-center book-gap-1 book-text-red-600 book-text-xs">کمیسیون: <span class="book-text-zinc-900 book-font-bold book-text-xl">${commission.toLocaleString()}</span> <span class="book-text-zinc-500 book-text-xs book-font-normal">${unit}</span></div>`
+                    : '';
+
+                // Calculate final payable amount
+                const payableAmount = commission > 0 ? a - commission : a;
+
                 if (opts.as === 'number') return x;
 
                 // Format with comma separator
@@ -2158,19 +2266,39 @@
                 );
 
                 const formattedPrice = nf.format(x);
+                const formattedPayable = nf.format(payableAmount);
 
-                // If unit is provided, append it to the formatted price
-                const priceSpan = `<span class="book-price__check__currency book-text-zinc-900 book-font-bold book-text-xl">${formattedPrice}</span>`;
-                const unitSpan = `<span class="book-unit__check__currency book-text-zinc-500 book-text-xs book-font-normal">${unit}</span>`;
+                // Price unit container
+                const priceUnitDiv = `
+            <div class="price-unit-container book-flex book-items-center book-gap-1">
+                <span class="book-price__check__currency book-text-zinc-900 book-font-bold book-text-xl">${formattedPrice}</span>
+                <span class="book-unit__check__currency book-text-zinc-500 book-text-xs book-font-normal">${unit}</span>
+            </div>
+        `;
 
-                return priceSpan + " " + unitSpan;
-
-                return formattedPrice;
+                // Final UI with commission and payable amount
+                return `
+                <div class="book-flex book-flex-col book-gap-1 book-items-center ${window.innerWidth < 1024 ? 'book-mt-6' : ''}">
+                <div class="book-flex book-items-center book-gap-1" data-original-price="${amount}">
+                    <h3 class="book-text-xs book-text-zinc-900">مبلغ اصلی:</h3>
+                    ${priceUnitDiv}
+                </div>
+                ${commissionLabel}
+                ${commission > 0 ? `
+                <div class="book-flex book-items-center book-gap-1">
+                    <span class="book-text-zinc-900 book-text-xs">مبلغ قابل پرداخت: </span>
+                    <span class="book-price__check__currency book-text-zinc-900 book-font-bold book-text-xl">${formattedPayable}</span>
+                    <span class="book-unit__check__currency book-text-zinc-500 book-text-xs book-font-normal">${unit}</span>
+                </div>` : ''}
+            </div>
+        `;
 
             } catch {
                 return opts.as === 'number' ? 0 : '0';
             }
         };
+
+
 
         /**
          * Global state for hotel room filtering, sorting, and pagination
@@ -2200,20 +2328,20 @@
             let start = 0;
             let end = 2; // نمایش 10 اتاق در هر صفحه
             let dynamicRoomCount = 0;
-
             // ============= PAGINATION HANDLERS =============
             if (args.source.id === 'cms.page') {
                 mustUpdate = true;
                 InUpdatePaging = false;
                 InUpdateFiltering = false;
 
-                const currentValue = parseInt(args.source.rows[0].value);
-                console.log('cms.page', currentValue);
+                const selectedPage = parseInt(args.source.rows[0].value);
+
+                let currentValue = selectedPage - 1;
                 const prevButton = document.querySelector(".book-prevpage");
                 const nextButton = document.querySelector(".book-nextpage");
                 const pagingContainer = document.querySelector(".book-paging__cards__container");
 
-                const totalPages = Math.ceil(pagingContainer.children.length / 2);
+                const totalPages = Math.ceil(pagingContainer.children.length - 2);
 
                 // Update active page styling
                 const activeButton = document.querySelector(".book-active__paging");
@@ -2225,7 +2353,7 @@
                     activeButton.classList.add("book-text-zinc-900");
                 }
 
-                const newActive = pagingContainer.querySelector(`[bc-value="${currentValue}"]`);
+                const newActive = pagingContainer.querySelector(`[bc-value="${selectedPage}"]`);
                 if (newActive) {
                     newActive.classList.add("book-active__paging");
                     newActive.classList.add("book-bg-primary-50");
@@ -2240,12 +2368,12 @@
 
                 // Toggle previous button visibility based on current page and total pages
                 if (prevButton) {
-                    prevButton.classList.toggle("book-hidden", currentValue <= 1); // Hide prev if it's on the first page
+                    prevButton.classList.toggle("book-hidden", selectedPage <= 1); // Hide prev if it's on the first page
                 }
 
                 // Toggle next button visibility based on current page and total pages
                 if (nextButton) {
-                    nextButton.classList.toggle("book-hidden", currentValue >= totalPages - 1); // Hide next if it's on the last page
+                    nextButton.classList.toggle("book-hidden", selectedPage >= totalPages); // Hide next if it's on the last page
                 }
 
             } else if (args.source.id === 'cms.nextpage') {
@@ -2257,11 +2385,11 @@
                 const prevButton = document.querySelector(".book-prevpage");
                 const nextButton = document.querySelector(".book-nextpage");
                 const activeButton = document.querySelector(".book-active__paging");
-                const currentValue = parseInt(activeButton.getAttribute("bc-value"));
+                const selectedPage = parseInt(activeButton.getAttribute("bc-value"));
                 const pagingContainer = document.querySelector(".book-paging__cards__container");
-                const nextValue = currentValue + 1;
+                const nextValue = selectedPage + 1;
                 const nextPage = document.querySelector(`.book-paging__cards__container [bc-value="${nextValue}"]`);
-                const totalPages = Math.ceil(pagingContainer.children.length / 2);
+                const totalPages = Math.ceil(pagingContainer.children.length - 2);
 
                 if (nextPage) {
                     // Update active page styling
@@ -2298,8 +2426,14 @@
                 }
 
                 // Update pagination range
-                start = nextValue * 2;
+                console.log("before", start);
+                console.log("before", end);
+
+                start = selectedPage * 2;
                 end = start + 2;
+
+                console.log("after", start);
+                console.log("after", end);
             } else if (args.source.id === 'cms.prevpage') {
                 mustUpdate = true;
                 InUpdatePaging = false;
@@ -2308,8 +2442,8 @@
                 const prevButton = document.querySelector(".book-prevpage");
                 const nextButton = document.querySelector(".book-nextpage");
                 const activeButton = document.querySelector(".book-active__paging");
-                const currentValue = parseInt(activeButton.getAttribute("bc-value"));
-                const prevValue = currentValue - 1;
+                const selectedPage = parseInt(activeButton.getAttribute("bc-value"));
+                const prevValue = selectedPage - 1;
                 const prevPage = document.querySelector(`.book-paging__cards__container [bc-value="${prevValue}"]`);
 
                 if (prevPage) {
@@ -2465,6 +2599,7 @@
                 );
 
                 // Update room count display
+
                 dynamicRoomCount = newSource.length;
                 const countElement = document.querySelector(".book-count__api__content");
                 if (countElement) {
@@ -2509,7 +2644,6 @@
                                 isActive: i === activePage,
                                 isVisible: true
                             }));
-                            console.log("arrayPaging", arrayPaging);
                             if (nextPage) {
                                 nextPage.classList.toggle("book-hidden", arrayPaging.length <= 1);
                             }
@@ -2669,7 +2803,7 @@
 
                 const fallbackHtml = `
       <div class="book-text-center book-py-6 book-text-xs book-text-zinc-500">
-        قوانین اتاق برای این گزینه ثبت نشده است.
+        قوانینی برای این اتاق ثبت نشده است
       </div>
     `;
 
@@ -2888,33 +3022,21 @@
             const element = e.closest(".reserve-field").querySelector(".hidden-box");
             const icon = e.closest(".reserve-field").querySelector(".down-icon");
             if (element) {
-                if (window.innerWidth > 1024) {
-                    if (element.classList.contains("book-hidden")) {
-                        element.classList.remove("book-hidden");
-                        element.style.maxHeight = '0px';
-                        void element.offsetHeight;
-                        element.style.maxHeight = element.scrollHeight * 6 + 'px';
+                if (element.classList.contains("book-hidden")) {
+                    element.classList.remove("book-hidden");
+                    element.style.maxHeight = '0px';
+                    void element.offsetHeight;
+                    element.style.maxHeight = element.scrollHeight * 6 + 'px';
 
-                        if (window.innerWidth < 1024) {
-                            element.classList.add("fixed-passengerbox");
-                            document.querySelector("body").classList.add("book-overflow-hidden");
-                        }
-                    } else {
-                        element.style.maxHeight = '0px';
-                        element.addEventListener(
-                            "transitionend",
-                            () => {
-                                element.classList.add("book-hidden");
-                            },
-                            { once: true }
-                        );
-                    }
                 } else {
-                    element.classList.toggle("book-hidden");
-                    if (window.innerWidth < 1024) {
-                        element.classList.add("fixed-passengerbox");
-                        document.querySelector("body").classList.add("book-overflow-hidden");
-                    }
+                    element.style.maxHeight = '0px';
+                    element.addEventListener(
+                        "transitionend",
+                        () => {
+                            element.classList.add("book-hidden");
+                        },
+                        { once: true }
+                    );
                 }
             }
             if (icon) {
@@ -3544,7 +3666,8 @@
 
     </script>
 
-
+    <script
+        src="[##cms.cms.cdn##]/booking/js/multiLang-calendar.js?ver=[##cms.cms.date2##][##cms.cms.time2##]"></script>
 </body>
 
 </html>
