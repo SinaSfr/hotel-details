@@ -1,4 +1,6 @@
 const onrenderedApiGallery = async () => {
+  const galleryImgLoader = document.querySelector(".gallery-img-loader");
+  if (galleryImgLoader) galleryImgLoader.style.display = "none";
   // 0) Elements
   const smallGalleryEl = document.querySelector(".hotel-small-img-gallery");
   const bigGalleryEl = document.querySelector(".hotel-big-img-gallery");
@@ -6,9 +8,6 @@ const onrenderedApiGallery = async () => {
     console.warn("⚠️ گالری پیدا نشد.");
     return;
   }
-
-  const galleryImgLoader = document.querySelector(".gallery-img-loader");
-  if (galleryImgLoader) galleryImgLoader.style.display = "none";
 
   // 1) اول از src عکس‌های موجود مقدار بگیر (raw src)
   const smallImgs = document.querySelectorAll(

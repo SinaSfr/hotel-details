@@ -453,7 +453,7 @@
                                                         </button>
                                                     </div>
 
-                                                    <div id="book-hotel__rules__content"
+                                                    <div id="book-hotel__rules__content" dir="auto"
                                                         class="book-max-h-[60vh] book-overflow-y-auto book-px-6 book-py-4 book-text-sm book-leading-relaxed book-text-zinc-700">
                                                         <div
                                                             class="book-text-center book-py-6 book-text-xs book-text-zinc-400">
@@ -1763,12 +1763,18 @@
 
         const renderAvailableRooms = async (element) => {
             try {
+                console.log(element);
                 if (!element || !Array.isArray(element.availablerooms) || element.availablerooms.length === 0 || (element.msg && element.msg === 'no data')) {
-                    return `
-                <div class="book-text-center book-text-zinc-900 book-text-xs book-mt-4">
-                    هیچ اتاقی برای نمایش موجود نیست. لطفاً فیلترها را تغییر دهید یا دوباره تلاش کنید.
-                </div>
-            `;
+                    const sectionRooms = document.querySelector('#section-rooms');
+
+                    if (sectionRooms) {
+                        sectionRooms.insertAdjacentHTML('afterend', `
+                    <div class="book-text-center book-text-zinc-900 book-text-xs book-mt-4">
+                        هیچ اتاقی برای نمایش موجود نیست. لطفاً فیلترها را تغییر دهید یا دوباره تلاش کنید.
+                    </div>
+                `);
+                    }
+                    return;
                 }
 
                 const serviceLabel = element.services;
@@ -2712,6 +2718,15 @@
                       <div class="book-text-zinc-900 book-text-xs book-mt-2">لطفاً فیلترها را تغییر دهید</div>
                   </div>
               `;
+                    } else{
+                        const sectionRooms = document.querySelector('#section-rooms');
+                        if (sectionRooms) {
+                sectionRooms.insertAdjacentHTML('afterend', `
+                    <div class="book-text-center book-text-zinc-900 book-text-xs book-mt-4">
+                        هیچ اتاقی برای نمایش موجود نیست. لطفاً دوباره تلاش کنید.
+                    </div>
+                `);
+            }
                     }
 
                     // Hide pagination controls when no results
