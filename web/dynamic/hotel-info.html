@@ -187,12 +187,11 @@
                 <div>
                     <div class="gallery-img-loader book-w-full"></div>
                     <div class="book-flex book-gap-3">
-                        <basis core="print" datamembername="api.gallery" run="atclient"
+                        <basis core="print" datamembername="api.newGallery" run="atclient"
                             onrendered="onrenderedApiGallery">
                             <layout>
                                 <script type="text/template">
                                     <div class="book-flex-[2.53] swiper hotel-big-img-gallery book-select-none book-pb-10">
-                                        <div class="swiper-pagination !book-bottom-0"></div>
                                         <div class="swiper-wrapper">
                                             @child
                                         </div>
@@ -224,7 +223,7 @@
                             </face>
                         </basis>
 
-                        <basis core="print" datamembername="api.gallery" run="atclient"
+                        <basis core="print" datamembername="api.newGallery" run="atclient"
                             onrendered="onrenderedApiGallery">
                             <layout>
                                 <script type="text/template">
@@ -402,44 +401,49 @@
                                     class="book-flex book-flex-col book-gap-10 book-max-h-[500px] book-overflow-y-auto book-px-8 book-py-6">
 
                                     <!-- ===================== Section: مشخصات کلی ===================== -->
-                                    <section>
+                                    <section class="hotel-moreinfo-section">
                                         <h2
                                             class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
                                             مشخصات کلی
                                         </h2>
 
-                                        <div class="book-grid book-grid-cols-2 book-gap-4">
+                                        <div class="hotel-moreinfo-wrapper book-grid book-grid-cols-2 book-gap-4">
                                             <div
                                                 class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                                <span class="book-text-zinc-600 book-text-sm">تعداد طبقات</span>
+                                                <span class="book-text-zinc-600 book-font-medium book-text-sm">تعداد
+                                                    طبقات</span>
                                                 <span
                                                     class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__floors">—</span>
                                             </div>
 
                                             <div
                                                 class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                                <span class="book-text-zinc-600 book-text-sm">تعداد اتاق‌ها</span>
+                                                <span class="book-text-zinc-600 book-font-medium book-text-sm">تعداد
+                                                    اتاق‌ها</span>
                                                 <span
                                                     class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__rooms_count">—</span>
                                             </div>
 
                                             <div
                                                 class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                                <span class="book-text-zinc-600 book-text-sm">تعداد ساختمان‌ها</span>
+                                                <span class="book-text-zinc-600 book-font-medium book-text-sm">تعداد
+                                                    ساختمان‌ها</span>
                                                 <span
                                                     class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__buildings_count">—</span>
                                             </div>
 
                                             <div
                                                 class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                                <span class="book-text-zinc-600 book-text-sm">سال ساخت</span>
+                                                <span class="book-text-zinc-600 book-font-medium book-text-sm">سال
+                                                    ساخت</span>
                                                 <span
                                                     class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__build_year">—</span>
                                             </div>
 
                                             <div
                                                 class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3 book-col-span-3">
-                                                <span class="book-text-zinc-600 book-text-sm">چشم‌انداز</span>
+                                                <span
+                                                    class="book-text-zinc-600 book-font-medium book-text-sm">چشم‌انداز</span>
                                                 <span
                                                     class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__view">—</span>
                                             </div>
@@ -447,7 +451,7 @@
                                     </section>
 
                                     <!-- ===================== Section: امکانات عمومی ===================== -->
-                                    <section>
+                                    <section class="hotel-moreinfo-section">
                                         <h2
                                             class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
                                             امکانات عمومی
@@ -457,7 +461,7 @@
 
                                             <div
                                                 class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
-                                                <p class="book-text-zinc-700 book-text-sm book-font-semibold book-mb-3">
+                                                <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
                                                     سیستم تهویه</p>
                                                 <div
                                                     class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__air_conditioning">
@@ -466,7 +470,7 @@
 
                                             <div
                                                 class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
-                                                <p class="book-text-zinc-700 book-text-sm book-font-semibold book-mb-3">
+                                                <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
                                                     امکانات معلولین</p>
                                                 <div
                                                     class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__disabled_facilities">
@@ -475,7 +479,7 @@
 
                                             <div
                                                 class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
-                                                <p class="book-text-zinc-700 book-text-sm book-font-semibold book-mb-3">
+                                                <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
                                                     صبحانه</p>
                                                 <div
                                                     class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__breakfast">
@@ -484,7 +488,7 @@
 
                                             <div
                                                 class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
-                                                <p class="book-text-zinc-700 book-text-sm book-font-semibold book-mb-3">
+                                                <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
                                                     ناهار</p>
                                                 <div
                                                     class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__lunch">
@@ -493,7 +497,7 @@
 
                                             <div
                                                 class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
-                                                <p class="book-text-zinc-700 book-text-sm book-font-semibold book-mb-3">
+                                                <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
                                                     شام</p>
                                                 <div
                                                     class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__dinner">
@@ -502,7 +506,7 @@
 
                                             <div
                                                 class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4 book-col-span-2">
-                                                <p class="book-text-zinc-700 book-text-sm book-font-semibold book-mb-3">
+                                                <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
                                                     سیگار کشیدن</p>
                                                 <div
                                                     class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__smoking">
@@ -514,7 +518,7 @@
 
 
                                     <!-- ===================== Section: اینترنت و رسانه ===================== -->
-                                    <section>
+                                    <section class="hotel-moreinfo-section">
                                         <h2
                                             class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
                                             اینترنت و رسانه
@@ -524,7 +528,7 @@
 
                                             <div
                                                 class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
-                                                <p class="book-text-zinc-700 book-text-sm book-font-semibold book-mb-3">
+                                                <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
                                                     سرویس اینترنت</p>
                                                 <div
                                                     class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__internet_service">
@@ -533,7 +537,7 @@
 
                                             <div
                                                 class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
-                                                <p class="book-text-zinc-700 book-text-sm book-font-semibold book-mb-3">
+                                                <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
                                                     تلویزیون</p>
                                                 <div
                                                     class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__tv">
@@ -542,7 +546,7 @@
 
                                             <div
                                                 class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4 book-col-span-3">
-                                                <p class="book-text-zinc-700 book-text-sm book-font-semibold book-mb-3">
+                                                <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
                                                     کانال‌های تلویزیونی</p>
                                                 <div
                                                     class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__tv_channels">
@@ -553,7 +557,7 @@
                                     </section>
 
                                     <!-- ===================== Section: سرویس‌های اتاق و حمام ===================== -->
-                                    <section>
+                                    <section class="hotel-moreinfo-section">
                                         <h2
                                             class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
                                             سرویس‌های اتاق و حمام
@@ -563,7 +567,7 @@
 
                                             <div
                                                 class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
-                                                <p class="book-text-zinc-700 book-text-sm book-font-semibold book-mb-3">
+                                                <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
                                                     حمام</p>
                                                 <div
                                                     class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__bathroom">
@@ -572,7 +576,7 @@
 
                                             <div
                                                 class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
-                                                <p class="book-text-zinc-700 book-text-sm book-font-semibold book-mb-3">
+                                                <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
                                                     خدمات آرایشی و بهداشتی</p>
                                                 <div
                                                     class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__beauty_hygiene_services">
@@ -581,7 +585,7 @@
 
                                             <div
                                                 class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4 book-col-span-3">
-                                                <p class="book-text-zinc-700 book-text-sm book-font-semibold book-mb-3">
+                                                <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
                                                     ابعاد اتاق</p>
                                                 <div
                                                     class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__room_size">
@@ -592,7 +596,7 @@
                                     </section>
 
                                     <!-- ===================== Section: تفریح، ورزش و ساحل ===================== -->
-                                    <section>
+                                    <section class="hotel-moreinfo-section">
                                         <h2
                                             class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
                                             تفریح، ورزش و ساحل
@@ -602,7 +606,7 @@
 
                                             <div
                                                 class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
-                                                <p class="book-text-zinc-700 book-text-sm book-font-semibold book-mb-3">
+                                                <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
                                                     ورزش و تفریحات</p>
                                                 <div
                                                     class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__sports">
@@ -610,7 +614,8 @@
 
                                                 <div
                                                     class="book-mt-4 book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                                    <span class="book-text-zinc-600 book-text-sm">تعداد زمین تنیس</span>
+                                                    <span class="book-text-zinc-600 book-font-medium book-text-sm">تعداد
+                                                        زمین تنیس</span>
                                                     <span
                                                         class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__tennis_courts_count">—</span>
                                                 </div>
@@ -618,7 +623,7 @@
 
                                             <div
                                                 class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
-                                                <p class="book-text-zinc-700 book-text-sm book-font-semibold book-mb-3">
+                                                <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
                                                     امکانات ساحلی</p>
                                                 <div
                                                     class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__beach_facilities">
@@ -629,7 +634,7 @@
                                     </section>
 
                                     <!-- ===================== Section: پارکینگ و حمل‌ونقل ===================== -->
-                                    <section>
+                                    <section class="hotel-moreinfo-section">
                                         <h2
                                             class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
                                             پارکینگ و حمل‌ونقل
@@ -639,7 +644,7 @@
 
                                             <div
                                                 class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
-                                                <p class="book-text-zinc-700 book-text-sm book-font-semibold book-mb-3">
+                                                <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
                                                     پارکینگ</p>
                                                 <div
                                                     class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__parking">
@@ -648,7 +653,7 @@
 
                                             <div
                                                 class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
-                                                <p class="book-text-zinc-700 book-text-sm book-font-semibold book-mb-3">
+                                                <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
                                                     خدمات رفت‌وآمد</p>
                                                 <div
                                                     class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__transport_services">
@@ -659,51 +664,57 @@
                                     </section>
 
                                     <!-- ===================== Section: رستوران، استخر و بار ===================== -->
-                                    <section>
+                                    <section class="hotel-moreinfo-section">
                                         <h2
                                             class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
                                             رستوران، استخر و بار
                                         </h2>
 
-                                        <div class="book-grid book-grid-cols-2 book-gap-4">
+                                        <div class="hotel-moreinfo-wrapper book-grid book-grid-cols-2 book-gap-4">
                                             <div
                                                 class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                                <span class="book-text-zinc-600 book-text-sm">تعداد رستوران</span>
+                                                <span class="book-text-zinc-600 book-font-medium book-text-sm">تعداد
+                                                    رستوران</span>
                                                 <span
                                                     class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__restaurants_count">—</span>
                                             </div>
 
                                             <div
                                                 class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                                <span class="book-text-zinc-600 book-text-sm">تعداد کافی‌شاپ</span>
+                                                <span class="book-text-zinc-600 book-font-medium book-text-sm">تعداد
+                                                    کافی‌شاپ</span>
                                                 <span
                                                     class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__cafes_count">—</span>
                                             </div>
 
                                             <div
                                                 class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                                <span class="book-text-zinc-600 book-text-sm">تعداد بار</span>
+                                                <span class="book-text-zinc-600 book-font-medium book-text-sm">تعداد
+                                                    بار</span>
                                                 <span
                                                     class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__bars_count">—</span>
                                             </div>
 
                                             <div
                                                 class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                                <span class="book-text-zinc-600 book-text-sm">تعداد بار استخر</span>
+                                                <span class="book-text-zinc-600 book-font-medium book-text-sm">تعداد بار
+                                                    استخر</span>
                                                 <span
                                                     class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__pool_bars_count">—</span>
                                             </div>
 
                                             <div
                                                 class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                                <span class="book-text-zinc-600 book-text-sm">استخر روباز</span>
+                                                <span class="book-text-zinc-600 book-font-medium book-text-sm">استخر
+                                                    روباز</span>
                                                 <span
                                                     class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__pool_outdoor_count">—</span>
                                             </div>
 
                                             <div
                                                 class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                                <span class="book-text-zinc-600 book-text-sm">استخر سرپوشیده</span>
+                                                <span class="book-text-zinc-600 book-font-medium book-text-sm">استخر
+                                                    سرپوشیده</span>
                                                 <span
                                                     class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__pool_indoor_count">—</span>
                                             </div>
@@ -711,23 +722,25 @@
                                     </section>
 
                                     <!-- ===================== Section: جلسات و کنفرانس ===================== -->
-                                    <section>
+                                    <section class="hotel-moreinfo-section">
                                         <h2
                                             class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
                                             جلسات و کنفرانس
                                         </h2>
 
-                                        <div class="book-grid book-grid-cols-2 book-gap-4">
+                                        <div class="hotel-moreinfo-wrapper book-grid book-grid-cols-2 book-gap-4">
                                             <div
                                                 class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                                <span class="book-text-zinc-600 book-text-sm">اتاق ملاقات</span>
+                                                <span class="book-text-zinc-600 book-font-medium book-text-sm">اتاق
+                                                    ملاقات</span>
                                                 <span
                                                     class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__meeting_rooms_count">—</span>
                                             </div>
 
                                             <div
                                                 class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                                <span class="book-text-zinc-600 book-text-sm">سالن کنفرانس</span>
+                                                <span class="book-text-zinc-600 book-font-medium book-text-sm">سالن
+                                                    کنفرانس</span>
                                                 <span
                                                     class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__conference_halls_count">—</span>
                                             </div>
@@ -735,7 +748,7 @@
                                     </section>
 
                                     <!-- ===================== Section: اتاق‌ها، تخت‌ها و زبان‌ها ===================== -->
-                                    <section>
+                                    <section class="hotel-moreinfo-section">
                                         <h2
                                             class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
                                             اتاق‌ها، تخت‌ها و زبان‌ها
@@ -744,7 +757,7 @@
                                         <div class="book-grid book-grid-cols-2 book-gap-5">
                                             <div
                                                 class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
-                                                <p class="book-text-zinc-700 book-text-sm book-font-semibold book-mb-3">
+                                                <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
                                                     انواع اتاق</p>
                                                 <div
                                                     class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__room_types">
@@ -753,7 +766,7 @@
 
                                             <div
                                                 class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
-                                                <p class="book-text-zinc-700 book-text-sm book-font-semibold book-mb-3">
+                                                <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
                                                     انواع تخت</p>
                                                 <div
                                                     class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__bed_types">
@@ -762,7 +775,7 @@
 
                                             <div
                                                 class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4 book-col-span-3">
-                                                <p class="book-text-zinc-700 book-text-sm book-font-semibold book-mb-3">
+                                                <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
                                                     زبان کارکنان</p>
                                                 <div
                                                     class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__staff_languages">
@@ -772,7 +785,7 @@
                                     </section>
 
                                     <!-- ===================== Section: قوانین و پرداخت ===================== -->
-                                    <section>
+                                    <section class="hotel-moreinfo-section">
                                         <h2
                                             class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
                                             قوانین و پرداخت
@@ -781,7 +794,7 @@
                                         <div class="book-grid book-grid-cols-2 book-gap-5">
                                             <div
                                                 class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
-                                                <p class="book-text-zinc-700 book-text-sm book-font-semibold book-mb-3">
+                                                <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
                                                     نوع پرداخت</p>
                                                 <div
                                                     class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__payment_type">
@@ -790,7 +803,7 @@
 
                                             <div
                                                 class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
-                                                <p class="book-text-zinc-700 book-text-sm book-font-semibold book-mb-3">
+                                                <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
                                                     کارت‌های اعتباری</p>
                                                 <div
                                                     class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__credit_cards">
@@ -799,14 +812,16 @@
 
                                             <div
                                                 class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                                <span class="book-text-zinc-600 book-text-sm">نوع اقامتگاه</span>
+                                                <span class="book-text-zinc-600 book-font-medium book-text-sm">نوع
+                                                    اقامتگاه</span>
                                                 <span
                                                     class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__property_type">—</span>
                                             </div>
 
                                             <div
                                                 class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                                <span class="book-text-zinc-600 book-text-sm">نظافت</span>
+                                                <span
+                                                    class="book-text-zinc-600 book-font-medium book-text-sm">نظافت</span>
                                                 <span
                                                     class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__cleaning">—</span>
                                             </div>
@@ -814,23 +829,25 @@
                                     </section>
 
                                     <!-- ===================== Section: حیوانات خانگی ===================== -->
-                                    <section>
+                                    <section class="hotel-moreinfo-section">
                                         <h2
                                             class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
                                             حیوانات خانگی
                                         </h2>
 
-                                        <div class="book-grid book-grid-cols-2 book-gap-4">
+                                        <div class="hotel-moreinfo-wrapper book-grid book-grid-cols-2 book-gap-4">
                                             <div
                                                 class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                                <span class="book-text-zinc-600 book-text-sm">حداکثر وزن حیوانات</span>
+                                                <span class="book-text-zinc-600 book-font-medium book-text-sm">حداکثر
+                                                    وزن حیوانات</span>
                                                 <span
                                                     class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__pets_max_weight">—</span>
                                             </div>
 
                                             <div
                                                 class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                                <span class="book-text-zinc-600 book-text-sm">حداکثر حیوانات در هر
+                                                <span class="book-text-zinc-600 book-font-medium book-text-sm">حداکثر
+                                                    حیوانات در هر
                                                     اتاق</span>
                                                 <span
                                                     class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__pets_max_per_room">—</span>
@@ -839,16 +856,17 @@
                                     </section>
 
                                     <!-- ===================== Section: سایر ===================== -->
-                                    <section>
+                                    <section class="hotel-moreinfo-section">
                                         <h2
                                             class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
                                             سایر
                                         </h2>
 
-                                        <div class="book-grid book-grid-cols-2 book-gap-4">
+                                        <div class="hotel-moreinfo-wrapper book-grid book-grid-cols-2 book-gap-4">
                                             <div
                                                 class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                                <span class="book-text-zinc-600 book-text-sm">کد پستی</span>
+                                                <span class="book-text-zinc-600 book-font-medium book-text-sm">کد
+                                                    پستی</span>
                                                 <span
                                                     class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__postal_code">—</span>
                                             </div>
@@ -860,7 +878,7 @@
                                 <div
                                     class="book-px-8 book-py-5 book-border-t book-border-solid book-border-zinc-200 book-flex book-justify-end">
                                     <button type="button"
-                                        class="close-hotel-moreinfo-btn book-rounded-xl book-px-8 book-py-4 book-text-sm book-font-semibold book-text-zinc-700 book-border book-border-solid book-border-zinc-200 hover:book-bg-zinc-50 book-transition">
+                                        class="close-hotel-moreinfo-btn book-rounded-xl book-px-8 book-py-4 book-text-sm book-font-semibold book-text-zinc-700 book-border book-border-solid book-border-zinc-200 book-transition-all book-duration-300 hover:book-bg-zinc-200">
                                         بستن
                                     </button>
                                 </div>
@@ -869,13 +887,13 @@
                         </div>
                     </section>
                     <section class="book-bg-white book-rounded-xl book-py-6 book-px-8 book-mt-3">
-                        <div class="book-shrink-0 book-flex book-items-center book-gap-4 book-mb-4">
+                        <div class="book-hotel__checkin__wrapper book-shrink-0 book-flex book-items-center book-gap-4 book-mb-4">
                             <div class="book-flex-1 book-flex book-flex-col book-items-center book-gap-2">
                                 <h3 class="book-text-zinc-900">ساعت ورود</h3>
                                 <span
                                     class="book-hotel__checkin__time book-flex book-items-center book-justify-center book-w-full book-bg-primary-50 book-rounded-full book-text-sm book-text-zinc-900 book-py-2"></span>
                             </div>
-                            <div class="book-flex-1 book-flex book-flex-col book-items-center book-gap-2">
+                            <div class="book-hotel__checkout__wrapper book-flex-1 book-flex book-flex-col book-items-center book-gap-2">
                                 <h3 class="book-text-zinc-900">ساعت خروج</h3>
                                 <span
                                     class="book-hotel__checkout__time book-flex book-items-center book-justify-center book-w-full book-bg-primary-50 book-rounded-full book-text-sm book-text-zinc-900 book-py-2"></span>
@@ -1217,7 +1235,7 @@
                                             <div
                                                 class="passenger-item adult-passenger-item book-w-full book-flex book-justify-between">
                                                 <label for="passenger-room-adultcount1"
-                                                    class="label-passengeradult label-passengeradult-hotel"><span
+                                                    class="label-passengeradult label-passengeradult-hotel book-flex book-items-center book-gap-1"><span
                                                         class="adult-tlt-icon book-hidden"><svg class="align-middle"
                                                             width="15" height="15">
                                                             <use xlink:href="images/sprite-icons.svg#engine-adult-icon">
@@ -1265,7 +1283,7 @@
                                             <div
                                                 class="passenger-item child-passenger-item book-w-full book-flex book-justify-between">
                                                 <label for="passenger-room-childcount1"
-                                                    class="label-passengerchild label-passengerchild-hotel"><span
+                                                    class="label-passengerchild label-passengerchild-hotel book-flex book-items-center book-gap-1"><span
                                                         class="child-tlt-icon book-hidden"><svg class="align-middle"
                                                             width="15" height="15">
                                                             <use xlink:href="images/sprite-icons.svg#engine-child-icon">
@@ -1558,9 +1576,6 @@
                         console.error('error:', error);
                     }
                 };
-
-
-
 
 
                 // Check if provider is in allowed list and trigger API call
@@ -3876,12 +3891,15 @@
                 const raw = (html || "").trim();
 
                 // اگر سرور چیزی برنگردوند یا خروجی بی‌معنا بود
+                const normalized = raw.replace(/\s+/g, " ").toLowerCase();
                 const isEmpty =
                     !raw ||
                     raw === "null" ||
                     raw === "undefined" ||
                     raw === "[]" ||
-                    raw === "{}";
+                    raw === "{}" ||
+                    normalized === '<div class="rule-room">msg: no data</div>' ||
+                    (normalized.includes('class="rule-room"') && normalized.includes("msg: no data"));
 
                 const finalHtml = isEmpty ? fallbackHtml : html;
 
@@ -4688,6 +4706,28 @@
     </script>
 
     <script>
+        const onProcessedapiGallery = async (args) => {
+            const response = args.response;
+            const responseJson = await response.json();
+
+            const updatedJson = (Array.isArray(responseJson) ? responseJson : []).map((item) => {
+                const src = (item?.originalImage || "").trim();
+
+                if (!src) return item;
+
+                const hasDomain = src.startsWith("http://") || src.startsWith("https://");
+                const normalized = !hasDomain && !src.startsWith("/") ? "/" + src : src;
+
+                return {
+                    ...item,
+                    originalImage: normalized,
+                };
+            });
+
+            $bc.setSource("api.newGallery", updatedJson);
+
+            return updatedJson;
+        };
         function setupHotelMoreinfoModal() {
             const modal = document.getElementById("hotel-moreinfo-modal");
             if (!modal) return;
