@@ -1081,10 +1081,38 @@ body {
     animation: gallery-img-skeleton-animation 2000ms infinite;
 }
 
+[dir="ltr"] .gallery-img-loader:after {
+    background-position:
+        0 0,
+        922px 0px,
+        922px 188px,
+        922px 376px,
+        0px 0px,
+        0 0;
+    animation: gallery-img-skeleton-animation-ltr 2000ms infinite;
+}
+
+@keyframes gallery-img-skeleton-animation-ltr {
+    to {
+        background-position:
+            100% 0,
+            922px 0px,
+            922px 188px,
+            922px 376px,
+            0px 0px,
+            0 0;
+    }
+}
+
+
 @keyframes gallery-img-skeleton-animation {
     to {
         background-position: 100% 0, 0px 0px, 0px 188px, 0px 376px, 372px 0px, 0 0;
     }
+}
+
+.hotel-content-loader {
+    position: relative;
 }
 
 .hotel-content-loader:after {
@@ -1096,7 +1124,8 @@ body {
     left: 0;
     top: 0;
     background-repeat: no-repeat;
-    background-image: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%),
+    background-image:
+        linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%),
         linear-gradient(#aaaaaa 16px, transparent 0),
         linear-gradient(#aaaaaa 16px, transparent 0),
         linear-gradient(#aaaaaa 30px, transparent 0),
@@ -1105,15 +1134,49 @@ body {
         linear-gradient(#aaaaaa 30px, transparent 0),
         linear-gradient(#aaaaaa 32px, transparent 0),
         linear-gradient(#ffffff 100%, transparent 0);
-    background-size: 449px 100%, 600px 16px, 700px 16px, 750px 30px, 600px 20px, 800px 16px, 898px 30px, 700px 32px, 100% 100%;
-    background-position: 0 0, 298px 32px, 198px 59px, 148px 86px, 298px 127px, 98px 201px, 0px 228px, 198px 158px, 0 0;
+    background-size:
+        449px 100%,
+        600px 16px,
+        700px 16px,
+        750px 30px,
+        600px 20px,
+        800px 16px,
+        898px 30px,
+        700px 32px,
+        100% 100%;
+    background-position:
+        0 0,
+        298px 32px,
+        198px 59px,
+        148px 86px,
+        298px 127px,
+        98px 201px,
+        0px 228px,
+        198px 158px,
+        0 0;
     animation: hotel-content-animation 2000ms infinite;
 }
 
 @keyframes hotel-content-animation {
     to {
-        background-position: 100% 0, 298px 32px, 198px 59px, 148px 86px, 298px 127px, 98px 201px, 0px 228px, 198px 158px, 0 0;
+        background-position:
+            100% 0,
+            298px 32px,
+            198px 59px,
+            148px 86px,
+            298px 127px,
+            98px 201px,
+            0px 228px,
+            198px 158px,
+            0 0;
     }
+}
+
+html[dir="ltr"] .hotel-content-loader:after,
+[dir="ltr"] .hotel-content-loader:after,
+.hotel-content-loader[dir="ltr"]:after {
+    transform: scaleX(-1);
+    transform-origin: center;
 }
 
 .book-hotel__description {
@@ -1204,4 +1267,3 @@ body {
         max-width: 80rem;
     }
 }
-
