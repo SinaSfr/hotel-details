@@ -417,8 +417,12 @@ async function runApiLogic() {
     const fetchHotelImages = async () => {
       try {
         const formData = new FormData()
-        formData.append('optionId', '[##cms.form.optionId-hotel##]')
-        formData.append('sid', window.cmsData.sid)
+
+        const optionId = window.cmsData?.optionId
+        const sid = window.cmsData?.sid
+
+        formData.append('optionId', optionId)
+        formData.append('sid', sid)
 
         const response = await fetch('/Client_Hotel_Image_Json.bc', {
           method: 'POST',
@@ -431,7 +435,6 @@ async function runApiLogic() {
 
         const jsonObject = await response.json()
 
-        // ✅ اگر ریسپانس { msg: 'no data' } بود
         if (
           jsonObject &&
           !Array.isArray(jsonObject) &&
@@ -442,7 +445,6 @@ async function runApiLogic() {
           return []
         }
 
-        // اگر آرایه نبود هم امن‌سازی
         const safeArray = Array.isArray(jsonObject) ? jsonObject : []
 
         const updatedData = safeArray.map((item) => {
@@ -474,8 +476,12 @@ async function runApiLogic() {
     const fetchHotelInfo = async () => {
       try {
         const formData = new FormData()
-        formData.append('optionId', '[##cms.form.optionId-hotel##]')
-        formData.append('clid', window.cmsData.clid)
+
+        const optionId = window.cmsData?.optionId
+        const clid = window.cmsData?.clid
+
+        formData.append('optionId', optionId)
+        formData.append('clid', clid)
 
         const response = await fetch('/Client_Hotel_Info_Json.bc', {
           method: 'POST',
@@ -511,15 +517,17 @@ async function runApiLogic() {
 
     const formBody = new URLSearchParams()
     formBody.append('optionId', optionId)
-    // formBody.append('lid', LID);
 
-    const response = await fetch('/Client_Hotel_ShowAllRooms.bc?clid=2', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    const response = await fetch(
+      `/Client_Hotel_ShowAllRooms.bc?clid=${window.cmsData.clid}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+        },
+        body: formBody.toString(),
       },
-      body: formBody.toString(),
-    })
+    )
 
     const rawText = await response.text()
     const fixedText = rawText.replace(/'/g, '"')
@@ -634,95 +642,144 @@ function externalToUnifiedSections(sections) {
   }))
 }
 
-function unifyHotelData(data) {
-  const raw = normalizeRawJSON(data)
-  if (!raw.length) return []
+function detectSource(raw) {
+  // external: آرایه سکشن‌ها که توش properties هست
+  if (Array.isArray(raw) && raw.some((x) => x && Array.isArray(x.properties)))
+    return 'external'
 
-  const first = raw[0]
-
-  if (first && Array.isArray(first.properties)) {
-    return externalToUnifiedSections(raw)
-  }
-
-  if (first && first.properties && !Array.isArray(first.properties)) {
-    return restfulToUnifiedSections(raw)
-  }
-
+  // restful: آرایه‌ای که item.properties به صورت object (keyed by title) هست
   if (
-    first &&
-    typeof first.title === 'string' &&
-    Array.isArray(first.properties)
+    Array.isArray(raw) &&
+    raw.some(
+      (x) =>
+        x &&
+        x.properties &&
+        !Array.isArray(x.properties) &&
+        typeof x.properties === 'object',
+    )
   ) {
-    return externalToUnifiedSections(raw)
+    return 'restful'
   }
 
-  console.warn('unifyHotelData: unknown structure', raw)
-  return []
+  // fallback
+  return 'restful'
 }
+
+function unifyHotelData(raw, { lang = 'fa', source } = {}) {
+  raw = normalizeRawJSON(raw)
+  const finalSource = source || detectSource(raw)
+  // unifiedSections استاندارد: [{ title, properties:[{ title, answer:[{text}]}] }]
+  const unifiedSections =
+    finalSource === 'restful'
+      ? restfulToUnifiedSections(raw)
+      : externalToUnifiedSections(raw)
+
+  return {
+    lang,
+    source: finalSource,
+    sections: unifiedSections,
+  }
+}
+
 function getCurrentLang() {
   const clid = Number(window.cmsData?.clid)
-
   if (clid === 2) return 'en'
   if (clid === 3) return 'ar'
   return 'fa'
 }
-function getProperty(data, propTitles, sectionTitles = null, opts = {}) {
-  try {
-    const sections = unifyHotelData(data)
-    if (!sections.length) return opts.list ? [] : null
+function resolveTitle(map, lang = 'fa', source = 'restful') {
+  if (!map) return ''
+  if (typeof map === 'string') return map
 
-    const lang = getCurrentLang() // "fa" | "en" | "ar"
+  // map[lang][source]
+  const v = map?.[lang]?.[source]
+  if (typeof v === 'string') return v
 
-    const pickTitle = (titles) => {
-      if (typeof titles === 'string') return titles.trim()
-      if (titles && typeof titles === 'object') {
-        const t = titles[lang] || titles.fa || Object.values(titles)[0]
-        return String(t || '').trim()
-      }
-      return null
-    }
+  // fallback: map[lang] اگر رشته بود
+  if (typeof map?.[lang] === 'string') return map[lang]
 
-    const propTitle = pickTitle(propTitles)
-    if (!propTitle) return opts.list ? [] : null
+  return ''
+}
 
-    const sectionTitle = sectionTitles ? pickTitle(sectionTitles) : null
+function normalizeToFlatProps(data) {
+  if (!Array.isArray(data)) return []
 
-    for (const section of sections) {
-      if (sectionTitle && String(section.title).trim() !== sectionTitle)
-        continue
-      if (!Array.isArray(section.properties)) continue
-
-      const property = section.properties.find(
-        (p) => String(p.title).trim() === propTitle,
-      )
-
-      if (!property || !Array.isArray(property.answer)) continue
-
-      const values = property.answer
-        .map((a) => {
-          const raw = a && typeof a === 'object' && 'text' in a ? a.text : a
-          return raw != null ? String(raw).trim() : ''
-        })
-        .filter(Boolean)
-
-      if (opts.list) return values
-      return values.length ? values[0] : null
-    }
-
-    return opts.list ? [] : null
-  } catch (error) {
-    console.error('Error in getProperty:', error)
-    return opts.list ? [] : null
+  // حالت flat: [{title, answer:[{text}]}]
+  const isFlat = data.some((x) => x && 'answer' in x && !('properties' in x))
+  if (isFlat) {
+    return data
+      .filter((x) => x && x.title)
+      .map((x) => ({
+        title: String(x.title),
+        answer: Array.isArray(x.answer) ? x.answer : [],
+      }))
   }
+
+  // حالت section-based: [{title, properties:[{title, answer:[{text}]}]}]
+  const out = []
+  data.forEach((section) => {
+    const props = Array.isArray(section?.properties) ? section.properties : []
+    props.forEach((p) => {
+      out.push({
+        title: String(p?.title ?? ''),
+        answer: Array.isArray(p?.answer) ? p.answer : [],
+      })
+    })
+  })
+  return out.filter((x) => x.title)
+}
+/**
+ * @param {Array} data - می‌تونه flat یا section-based باشه
+ * @param {Object|string} propMap - مثل: HOTEL_FIELD_TITLES.website.prop
+ * @param {Object|string} sectionMap - مثل: HOTEL_FIELD_TITLES.website.section
+ * @param {Object} opts - { lang: 'fa'|'en', source: 'restful'|'external' }
+ */
+function getProperty(unified, propMap, sectionMap, opts = {}) {
+  const lang = opts.lang || unified?.lang || 'fa'
+  const source = opts.source || unified?.source || 'restful'
+  const wantList = !!opts.list
+
+  const propTitle = resolveTitle(propMap, lang, source)
+  const sectionTitle = resolveTitle(sectionMap, lang, source)
+
+  if (!propTitle) return wantList ? [] : null
+
+  const sections = unified?.sections || []
+  const targetSections = sectionTitle
+    ? sections.filter(
+        (s) => String(s.title).trim() === String(sectionTitle).trim(),
+      )
+    : sections
+
+  let answers = []
+
+  for (const sec of targetSections) {
+    const props = Array.isArray(sec.properties) ? sec.properties : []
+    const hit = props.find(
+      (p) => String(p.title).trim() === String(propTitle).trim(),
+    )
+    if (!hit) continue
+
+    const arr = Array.isArray(hit.answer) ? hit.answer : []
+    answers = arr
+      .map((a) => (a && typeof a === 'object' && 'text' in a ? a.text : a))
+      .map((t) => String(t).trim())
+      .filter(Boolean)
+
+    if (answers.length) break
+  }
+
+  if (wantList) return answers
+  return answers[0] || null
 }
 
 function getSectionHTML(data, sectionTitles) {
   try {
-    const sections = unifyHotelData(data)
-    if (!sections.length) return ''
-
+    
     const lang = getCurrentLang()
-
+    const unified = unifyHotelData(data, { lang })
+    const sections = unified.sections || []
+    if (!sections.length) return ''
     let secTitle = null
     if (typeof sectionTitles === 'string') {
       secTitle = sectionTitles.trim()
@@ -847,293 +904,752 @@ const setInfo = async (args) => {
     const HOTEL_FIELD_TITLES = {
       // عنوان / نام هتل
       name: {
-        prop: { fa: 'عنوان', en: 'Hotel Name' },
-        section: { fa: 'مشخصات هتل', en: 'General specifications' },
+        prop: {
+          fa: { restful: 'عنوان', external: 'Web Address' },
+          en: { restful: 'Hotel Website', external: 'Website' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'General specifications' },
+          en: {
+            restful: 'General specifications',
+            external: 'Hotel Information',
+          },
+        },
       },
 
       // درجه / ستاره هتل
       rating: {
-        prop: { fa: 'درجه', en: 'star rating' },
-        section: { fa: 'مشخصات هتل', en: 'General specifications' },
+        prop: {
+          fa: { restful: 'درجه', external: 'star rating' },
+          en: { restful: 'Hotel star rating', external: 'Hotel Star Rating' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'General specifications' },
+          en: {
+            restful: 'General specifications',
+            external: 'Hotel Information',
+          },
+        },
       },
 
       // کشور
       country: {
-        prop: { fa: 'کشور', en: 'country' },
-        section: { fa: 'مشخصات هتل', en: 'Connections' },
+        prop: {
+          fa: { restful: 'کشور', external: 'country' },
+          en: { restful: 'Country', external: 'Country' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Connections' },
+          en: { restful: 'Connections', external: 'Hotel Details' },
+        },
       },
 
       // شهر
       city: {
-        prop: { fa: 'شهر', en: 'city' },
-        section: { fa: 'مشخصات هتل', en: 'Connections' },
+        prop: {
+          fa: { restful: 'شهر', external: 'city' },
+          en: { restful: 'City', external: 'City' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Connections' },
+          en: { restful: 'Connections', external: 'Hotel Details' },
+        },
       },
 
       // آدرس
       address: {
-        prop: { fa: 'آدرس', en: 'Address' },
-        section: { fa: 'مشخصات هتل', en: 'contact' },
+        prop: {
+          fa: { restful: 'آدرس', external: 'Address' },
+          en: { restful: 'Address', external: 'Address' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Contact Information' },
+          en: {
+            restful: 'Contact Information',
+            external: 'Contact Information',
+          },
+        },
       },
 
       // تلفن
       phone: {
-        prop: { fa: 'تلفن', en: 'Phone' },
-        section: { fa: 'مشخصات هتل', en: 'contact' },
+        prop: {
+          fa: { restful: 'تلفن', external: 'Phone' },
+          en: { restful: 'Phone', external: 'Phone' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Contact Information' },
+          en: {
+            restful: 'Contact Information',
+            external: 'Contact Information',
+          },
+        },
       },
 
       // فکس
       fax: {
-        prop: { fa: 'فکس', en: 'Fax' },
-        section: { fa: 'مشخصات هتل', en: 'contact' },
+        prop: {
+          fa: { restful: 'فکس', external: 'Fax' },
+          en: { restful: 'Fax', external: 'Fax' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Contact Information' },
+          en: {
+            restful: 'Contact Information',
+            external: 'Contact Information',
+          },
+        },
       },
 
       // وب‌سایت
       website: {
-        prop: { fa: 'وب سایت', en: 'Website' },
-        section: { fa: 'مشخصات هتل', en: 'contact' },
+        prop: {
+          fa: { restful: 'وب سایت', external: 'Website' },
+          en: { restful: 'Hotel Website', external: 'Hotel Website' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Contact Information' },
+          en: {
+            restful: 'Contact Information',
+            external: 'Contact Information',
+          },
+        },
       },
 
       // ایمیل
       email: {
-        prop: { fa: 'ایمیل', en: 'Email' },
-        section: { fa: 'مشخصات هتل', en: 'contact' },
+        prop: {
+          fa: { restful: 'ایمیل', external: 'Email' },
+          en: { restful: 'Email', external: 'Email' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Contact Information' },
+          en: {
+            restful: 'Contact Information',
+            external: 'Contact Information',
+          },
+        },
       },
 
       // زمان تحویل گرفتن (Check-in)
       checkin: {
-        prop: { fa: 'زمان تحویل گرفتن', en: 'Check-in time' },
-        section: { fa: 'مشخصات هتل', en: 'General specifications' },
+        prop: {
+          fa: { restful: 'زمان تحویل گرفتن', external: 'Check-in time' },
+          en: { restful: 'Check-in time', external: 'Check-in time' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'General specifications' },
+          en: {
+            restful: 'General specifications',
+            external: 'General specifications',
+          },
+        },
       },
 
       // زمان تحویل دادن (Check-out)
       checkout: {
-        prop: { fa: 'زمان تحویل دادن', en: 'Check-out time' },
-        section: { fa: 'مشخصات هتل', en: 'General specifications' },
+        prop: {
+          fa: { restful: 'زمان تحویل دادن', external: 'Check-out time' },
+          en: { restful: 'Check-out time', external: 'Check-out time' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'General specifications' },
+          en: {
+            restful: 'General specifications',
+            external: 'General specifications',
+          },
+        },
       },
 
       // امکانات هتل (لیست)
       facilities: {
-        prop: { fa: 'امکانات هتل', en: 'hotel facilities' },
-        section: { fa: 'مشخصات هتل', en: 'Facilities' },
+        prop: {
+          fa: { restful: 'امکانات هتل', external: 'hotel facilities' },
+          en: { restful: 'Hotel facilities', external: 'Hotel facilities' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Facilities' },
+          en: { restful: 'Facilities', external: 'Facilities' },
+        },
       },
 
       roomFacilities: {
-        prop: { fa: 'امکانات اتاق', en: 'room facilities' },
-        section: { fa: 'مشخصات هتل', en: 'Facilities' },
+        prop: {
+          fa: { restful: 'امکانات اتاق', external: 'Room Facilities' },
+          en: { restful: 'Room facilities', external: 'Room Facilities' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Facilities' },
+          en: { restful: 'Facilities', external: 'Facilities' },
+        },
       },
 
       // GPS
       gps: {
-        prop: { fa: 'سیستم موقعیت یابی جهانی', en: 'GPS' },
-        section: { fa: 'مشخصات هتل', en: 'Hotel space' },
+        prop: {
+          fa: { restful: 'سیستم موقعیت یابی جهانی', external: 'GPS' },
+          en: { restful: 'GPS', external: 'GPS' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Hotel space' },
+          en: { restful: 'Hotel space', external: 'Hotel space' },
+        },
       },
 
       // توضیحات (HTML)
       description: {
-        // برای توضیحات، عنوان سکشن مهم‌تر از عنوان پراپرتی‌ه
-        section: { fa: 'توضیحات', en: 'Description' },
+        section: {
+          fa: { restful: 'توضیحات', external: 'Description' },
+          en: { restful: 'Description', external: 'Description' },
+        },
       },
 
       // اضافه کن به HOTEL_FIELD_TITLES
       floors: {
-        prop: { fa: 'تعداد طبقات(ساختمان)', en: 'Number of floors (building)' },
-        section: { fa: 'مشخصات هتل', en: 'General specifications' },
+        prop: {
+          fa: { restful: 'تعداد طبقات(ساختمان)', external: 'Number of floors' },
+          en: {
+            restful: 'Number of floors (building)',
+            external: 'Number of floors',
+          },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'General specifications' },
+          en: {
+            restful: 'General specifications',
+            external: 'General specifications',
+          },
+        },
       },
       roomsCount: {
-        prop: { fa: 'تعداد اتاق ها', en: 'Number of rooms' },
-        section: { fa: 'مشخصات هتل', en: 'General specifications' },
+        prop: {
+          fa: { restful: 'تعداد اتاق ها', external: 'Number of rooms' },
+          en: { restful: 'Number of rooms', external: 'Number of rooms' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'General specifications' },
+          en: {
+            restful: 'General specifications',
+            external: 'General specifications',
+          },
+        },
       },
+
+      // امکانات اینترنت
       internetService: {
-        prop: { fa: 'سرویس اینترنت', en: 'Internet service' },
-        section: { fa: 'مشخصات هتل', en: 'Facilities' },
+        prop: {
+          fa: { restful: 'سرویس اینترنت', external: 'Internet service' },
+          en: { restful: 'Internet service', external: 'Internet service' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Facilities' },
+          en: { restful: 'Facilities', external: 'Facilities' },
+        },
       },
+
       tv: {
-        prop: { fa: 'تلویزیون', en: 'TV' },
-        section: { fa: 'مشخصات هتل', en: 'Facilities' },
+        prop: {
+          fa: { restful: 'تلویزیون', external: 'TV' },
+          en: { restful: 'TV', external: 'TV' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Facilities' },
+          en: { restful: 'Facilities', external: 'Facilities' },
+        },
       },
       bathroom: {
-        prop: { fa: 'حمام', en: 'Bathroom' },
-        section: { fa: 'مشخصات هتل', en: 'Facilities' },
+        prop: {
+          fa: { restful: 'حمام', external: 'Bathroom' },
+          en: { restful: 'Bathroom', external: 'Bathroom' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Facilities' },
+          en: { restful: 'Facilities', external: 'Facilities' },
+        },
       },
       sports: {
-        prop: { fa: 'ورزش و تفریحات', en: 'Sports & recreation' },
-        section: { fa: 'مشخصات هتل', en: 'Facilities' },
+        prop: {
+          fa: { restful: 'ورزش و تفریحات', external: 'Sports & recreation' },
+          en: {
+            restful: 'Sports & recreation',
+            external: 'Sports & recreation',
+          },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Facilities' },
+          en: { restful: 'Facilities', external: 'Facilities' },
+        },
       },
       view: {
-        prop: { fa: 'چشم انداز', en: 'View' },
-        section: { fa: 'مشخصات هتل', en: 'General specifications' },
+        prop: {
+          fa: { restful: 'چشم انداز', external: 'View' },
+          en: { restful: 'View', external: 'View' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'General specifications' },
+          en: {
+            restful: 'General specifications',
+            external: 'General specifications',
+          },
+        },
       },
       parking: {
-        prop: { fa: 'پارکینگ', en: 'Parking' },
-        section: { fa: 'مشخصات هتل', en: 'Facilities' },
+        prop: {
+          fa: { restful: 'پارکینگ', external: 'Parking' },
+          en: { restful: 'Parking', external: 'Parking' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Facilities' },
+          en: { restful: 'Facilities', external: 'Facilities' },
+        },
       },
       beachFacilities: {
-        prop: { fa: 'امکانات ساحلی', en: 'Beach facilities' },
-        section: { fa: 'مشخصات هتل', en: 'Facilities' },
+        prop: {
+          fa: { restful: 'امکانات ساحلی', external: 'Beach facilities' },
+          en: { restful: 'Beach facilities', external: 'Beach facilities' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Facilities' },
+          en: { restful: 'Facilities', external: 'Facilities' },
+        },
       },
 
       buildingsCount: {
-        prop: { fa: 'تعداد ساختمان ها', en: 'Number of buildings' },
-        section: { fa: 'مشخصات هتل', en: 'General specifications' },
+        prop: {
+          fa: { restful: 'تعداد ساختمان ها', external: 'Number of buildings' },
+          en: {
+            restful: 'Number of buildings',
+            external: 'Number of buildings',
+          },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'General specifications' },
+          en: {
+            restful: 'General specifications',
+            external: 'General specifications',
+          },
+        },
       },
       buildYear: {
-        prop: { fa: 'سال ساخت', en: 'Year built' },
-        section: { fa: 'مشخصات هتل', en: 'General specifications' },
+        prop: {
+          fa: { restful: 'سال ساخت', external: 'Year built' },
+          en: { restful: 'Year built', external: 'Year built' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'General specifications' },
+          en: {
+            restful: 'General specifications',
+            external: 'General specifications',
+          },
+        },
       },
       restaurantsCount: {
-        prop: { fa: 'تعداد رستوران ها', en: 'Number of restaurants' },
-        section: { fa: 'مشخصات هتل', en: 'Facilities' },
+        prop: {
+          fa: {
+            restful: 'تعداد رستوران ها',
+            external: 'Number of restaurants',
+          },
+          en: {
+            restful: 'Number of restaurants',
+            external: 'Number of restaurants',
+          },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Facilities' },
+          en: { restful: 'Facilities', external: 'Facilities' },
+        },
       },
       poolOutdoorCount: {
-        prop: { fa: 'تعداد استخرهای سرباز', en: 'Outdoor pools count' },
-        section: { fa: 'مشخصات هتل', en: 'Facilities' },
+        prop: {
+          fa: {
+            restful: 'تعداد استخرهای سرباز',
+            external: 'Outdoor pools count',
+          },
+          en: {
+            restful: 'Outdoor pools count',
+            external: 'Outdoor pools count',
+          },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Facilities' },
+          en: { restful: 'Facilities', external: 'Facilities' },
+        },
       },
       poolIndoorCount: {
-        prop: { fa: 'تعداد استخرهای سرپوشیده', en: 'Indoor pools count' },
-        section: { fa: 'مشخصات هتل', en: 'Facilities' },
+        prop: {
+          fa: {
+            restful: 'تعداد استخرهای سرپوشیده',
+            external: 'Indoor pools count',
+          },
+          en: { restful: 'Indoor pools count', external: 'Indoor pools count' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Facilities' },
+          en: { restful: 'Facilities', external: 'Facilities' },
+        },
       },
       barsCount: {
-        prop: { fa: 'تعداد بارها', en: 'Bars count' },
-        section: { fa: 'مشخصات هتل', en: 'Facilities' },
+        prop: {
+          fa: { restful: 'تعداد بارها', external: 'Bars count' },
+          en: { restful: 'Bars count', external: 'Bars count' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Facilities' },
+          en: { restful: 'Facilities', external: 'Facilities' },
+        },
       },
       poolBarsCount: {
-        prop: { fa: 'تعداد بار استخر', en: 'Pool bars count' },
-        section: { fa: 'مشخصات هتل', en: 'Facilities' },
+        prop: {
+          fa: { restful: 'تعداد بار استخر', external: 'Pool bars count' },
+          en: { restful: 'Pool bars count', external: 'Pool bars count' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Facilities' },
+          en: { restful: 'Facilities', external: 'Facilities' },
+        },
       },
       meetingRoomsCount: {
-        prop: { fa: 'تعداد اتاق های ملاقات', en: 'Meeting rooms count' },
-        section: { fa: 'مشخصات هتل', en: 'Facilities' },
+        prop: {
+          fa: {
+            restful: 'تعداد اتاق های ملاقات',
+            external: 'Meeting rooms count',
+          },
+          en: {
+            restful: 'Meeting rooms count',
+            external: 'Meeting rooms count',
+          },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Facilities' },
+          en: { restful: 'Facilities', external: 'Facilities' },
+        },
       },
 
       petsMaxWeight: {
-        prop: { fa: 'حداکثر وزن حیوانات', en: 'Max pets weight' },
-        section: { fa: 'مشخصات هتل', en: 'General specifications' },
+        prop: {
+          fa: { restful: 'حداکثر وزن حیوانات', external: 'Max pets weight' },
+          en: { restful: 'Max pets weight', external: 'Max pets weight' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'General specifications' },
+          en: {
+            restful: 'General specifications',
+            external: 'General specifications',
+          },
+        },
       },
       petsMaxPerRoom: {
         prop: {
-          fa: 'حداکثر تعداد حیوانات خانگی مجاز در هر اتاق',
-          en: 'Max pets per room',
+          fa: {
+            restful: 'حداکثر تعداد حیوانات خانگی مجاز در هر اتاق',
+            external: 'Max pets per room',
+          },
+          en: { restful: 'Max pets per room', external: 'Max pets per room' },
         },
-        section: { fa: 'مشخصات هتل', en: 'General specifications' },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'General specifications' },
+          en: {
+            restful: 'General specifications',
+            external: 'General specifications',
+          },
+        },
       },
-
       paymentType: {
-        prop: { fa: 'نوع پرداخت', en: 'Payment type' },
-        section: { fa: 'مشخصات هتل', en: 'General specifications' },
+        prop: {
+          fa: { restful: 'نوع پرداخت', external: 'Payment type' },
+          en: { restful: 'Payment type', external: 'Payment type' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'General specifications' },
+          en: {
+            restful: 'General specifications',
+            external: 'General specifications',
+          },
+        },
       },
       creditCards: {
-        prop: { fa: 'کارت های اعتباری', en: 'Credit cards' },
-        section: { fa: 'مشخصات هتل', en: 'General specifications' },
+        prop: {
+          fa: { restful: 'کارت های اعتباری', external: 'Credit cards' },
+          en: { restful: 'Credit cards', external: 'Credit cards' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'General specifications' },
+          en: {
+            restful: 'General specifications',
+            external: 'General specifications',
+          },
+        },
       },
       transportServices: {
-        prop: { fa: 'خدمات رفت و آمد به', en: 'Shuttle / transport to' },
-        section: { fa: 'مشخصات هتل', en: 'Facilities' },
+        prop: {
+          fa: {
+            restful: 'خدمات رفت و آمد به',
+            external: 'Shuttle / transport to',
+          },
+          en: {
+            restful: 'Shuttle / transport to',
+            external: 'Shuttle / transport to',
+          },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Facilities' },
+          en: { restful: 'Facilities', external: 'Facilities' },
+        },
       },
       minCheckinAge: {
-        prop: { fa: 'حداقل سن پذیرش', en: 'Minimum check-in age' },
-        section: { fa: 'مشخصات هتل', en: 'General specifications' },
+        prop: {
+          fa: { restful: 'حداقل سن پذیرش', external: 'Minimum check-in age' },
+          en: {
+            restful: 'Minimum check-in age',
+            external: 'Minimum check-in age',
+          },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'General specifications' },
+          en: {
+            restful: 'General specifications',
+            external: 'General specifications',
+          },
+        },
       },
 
       postalCode: {
-        prop: { fa: 'کد پستی', en: 'Postal code' },
-        section: { fa: 'مشخصات هتل', en: 'contact' },
+        prop: {
+          fa: { restful: 'کد پستی', external: 'Postal code' },
+          en: { restful: 'Postal code', external: 'Postal code' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'contact' },
+          en: { restful: 'contact', external: 'contact' },
+        },
       },
       propertyType: {
-        prop: { fa: 'نوع اقامتگاه', en: 'Property type' },
-        section: { fa: 'مشخصات هتل', en: 'General specifications' },
+        prop: {
+          fa: { restful: 'نوع اقامتگاه', external: 'Property type' },
+          en: { restful: 'Property type', external: 'Property type' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'General specifications' },
+          en: {
+            restful: 'General specifications',
+            external: 'General specifications',
+          },
+        },
       },
       cleaning: {
-        prop: { fa: 'نظافت', en: 'Cleaning' },
-        section: { fa: 'مشخصات هتل', en: 'General specifications' },
+        prop: {
+          fa: { restful: 'نظافت', external: 'Cleaning' },
+          en: { restful: 'Cleaning', external: 'Cleaning' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'General specifications' },
+          en: {
+            restful: 'General specifications',
+            external: 'General specifications',
+          },
+        },
       },
-
       staffLanguages: {
-        prop: { fa: 'کارکنان مسلط به زبان', en: 'Staff languages' },
-        section: { fa: 'مشخصات هتل', en: 'Facilities' },
+        prop: {
+          fa: { restful: 'کارکنان مسلط به زبان', external: 'Staff languages' },
+          en: { restful: 'Staff languages', external: 'Staff languages' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Facilities' },
+          en: { restful: 'Facilities', external: 'Facilities' },
+        },
       },
       roomTypes: {
-        prop: { fa: 'انواع اتاق', en: 'Room types' },
-        section: { fa: 'مشخصات هتل', en: 'Facilities' },
+        prop: {
+          fa: { restful: 'انواع اتاق', external: 'Room types' },
+          en: { restful: 'Room types', external: 'Room types' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Facilities' },
+          en: { restful: 'Facilities', external: 'Facilities' },
+        },
       },
       bedTypes: {
-        prop: { fa: 'انواع تخت', en: 'Bed types' },
-        section: { fa: 'مشخصات هتل', en: 'Facilities' },
+        prop: {
+          fa: { restful: 'انواع تخت', external: 'Bed types' },
+          en: { restful: 'Bed types', external: 'Bed types' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Facilities' },
+          en: { restful: 'Facilities', external: 'Facilities' },
+        },
       },
-
       beautyHygieneServices: {
-        prop: { fa: 'خدمات آرایشی و بهداشتی', en: 'Beauty & hygiene services' },
-        section: { fa: 'مشخصات هتل', en: 'Facilities' },
+        prop: {
+          fa: {
+            restful: 'خدمات آرایشی و بهداشتی',
+            external: 'Beauty & hygiene services',
+          },
+          en: {
+            restful: 'Beauty & hygiene services',
+            external: 'Beauty & hygiene services',
+          },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Facilities' },
+          en: { restful: 'Facilities', external: 'Facilities' },
+        },
       },
       tvChannels: {
-        prop: { fa: 'کانال های تلویزیونی', en: 'TV channels' },
-        section: { fa: 'مشخصات هتل', en: 'Facilities' },
+        prop: {
+          fa: { restful: 'کانال های تلویزیونی', external: 'TV channels' },
+          en: { restful: 'TV channels', external: 'TV channels' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Facilities' },
+          en: { restful: 'Facilities', external: 'Facilities' },
+        },
       },
       cafesCount: {
-        prop: { fa: 'تعداد کافی شاپ', en: 'Cafes count' },
-        section: { fa: 'مشخصات هتل', en: 'Facilities' },
+        prop: {
+          fa: { restful: 'تعداد کافی شاپ', external: 'Cafes count' },
+          en: { restful: 'Cafes count', external: 'Cafes count' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Facilities' },
+          en: { restful: 'Facilities', external: 'Facilities' },
+        },
       },
       conferenceHallsCount: {
-        prop: { fa: 'تعداد سالن کنفرانس', en: 'Conference halls count' },
-        section: { fa: 'مشخصات هتل', en: 'Facilities' },
+        prop: {
+          fa: {
+            restful: 'تعداد سالن کنفرانس',
+            external: 'Conference halls count',
+          },
+          en: {
+            restful: 'Conference halls count',
+            external: 'Conference halls count',
+          },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Facilities' },
+          en: { restful: 'Facilities', external: 'Facilities' },
+        },
       },
       roomSize: {
-        prop: { fa: 'ابعاد اتاق', en: 'Room size' },
-        section: { fa: 'مشخصات هتل', en: 'Facilities' },
+        prop: {
+          fa: { restful: 'ابعاد اتاق', external: 'Room size' },
+          en: { restful: 'Room size', external: 'Room size' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Facilities' },
+          en: { restful: 'Facilities', external: 'Facilities' },
+        },
       },
       tennisCourtsCount: {
-        prop: { fa: 'تعداد زمین تنیس', en: 'Tennis courts count' },
-        section: { fa: 'مشخصات هتل', en: 'Facilities' },
+        prop: {
+          fa: { restful: 'تعداد زمین تنیس', external: 'Tennis courts count' },
+          en: {
+            restful: 'Tennis courts count',
+            external: 'Tennis courts count',
+          },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Facilities' },
+          en: { restful: 'Facilities', external: 'Facilities' },
+        },
       },
       airConditioning: {
-        prop: { fa: 'سیستم تهویه', en: 'Air conditioning' },
-        section: { fa: 'مشخصات هتل', en: 'Facilities' },
+        prop: {
+          fa: { restful: 'سیستم تهویه', external: 'Air conditioning' },
+          en: { restful: 'Air conditioning', external: 'Air conditioning' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Facilities' },
+          en: { restful: 'Facilities', external: 'Facilities' },
+        },
       },
       disabledFacilities: {
-        prop: { fa: 'امکانات معلولین', en: 'Accessible facilities' },
-        section: { fa: 'مشخصات هتل', en: 'Facilities' },
+        prop: {
+          fa: { restful: 'امکانات معلولین', external: 'Accessible facilities' },
+          en: {
+            restful: 'Accessible facilities',
+            external: 'Accessible facilities',
+          },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Facilities' },
+          en: { restful: 'Facilities', external: 'Facilities' },
+        },
       },
       breakfast: {
-        prop: { fa: 'سرویس صبحانه', en: 'Breakfast service' },
-        section: { fa: 'مشخصات هتل', en: 'Facilities' },
+        prop: {
+          fa: { restful: 'سرویس صبحانه', external: 'Breakfast service' },
+          en: { restful: 'Breakfast service', external: 'Breakfast service' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Facilities' },
+          en: { restful: 'Facilities', external: 'Facilities' },
+        },
       },
       lunch: {
-        prop: { fa: 'سرویس ناهار', en: 'Lunch service' },
-        section: { fa: 'مشخصات هتل', en: 'Facilities' },
+        prop: {
+          fa: { restful: 'سرویس ناهار', external: 'Lunch service' },
+          en: { restful: 'Lunch service', external: 'Lunch service' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Facilities' },
+          en: { restful: 'Facilities', external: 'Facilities' },
+        },
       },
       dinner: {
-        prop: { fa: 'سرویس شام', en: 'Dinner service' },
-        section: { fa: 'مشخصات هتل', en: 'Facilities' },
+        prop: {
+          fa: { restful: 'سرویس شام', external: 'Dinner service' },
+          en: { restful: 'Dinner service', external: 'Dinner service' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'Facilities' },
+          en: { restful: 'Facilities', external: 'Facilities' },
+        },
       },
       smoking: {
-        prop: { fa: 'سیگار کشیدن', en: 'Smoking' },
-        section: { fa: 'مشخصات هتل', en: 'General specifications' },
+        prop: {
+          fa: { restful: 'سیگار کشیدن', external: 'Smoking' },
+          en: { restful: 'Smoking', external: 'Smoking' },
+        },
+        section: {
+          fa: { restful: 'مشخصات هتل', external: 'General specifications' },
+          en: {
+            restful: 'General specifications',
+            external: 'General specifications',
+          },
+        },
       },
     }
 
     // --- language detect (fa vs en) ---
-    const lang = (
-      document.documentElement.getAttribute('lang') || ''
-    ).toLowerCase()
+    const lang = getCurrentLang()
     const dir = (
       document.documentElement.getAttribute('dir') || ''
     ).toLowerCase()
     const isFa = lang.startsWith('fa') || lang.startsWith('ar') || dir === 'rtl'
+    const unified = unifyHotelData(data, { lang })
+    // تشخیص اینکه دیتا از external اومده یا restful
+    const source = unified.source
 
     const hotelTitle = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.name.prop,
       HOTEL_FIELD_TITLES.name.section,
+      { lang, source: unified.source },
     )
     if (hotelTitle) {
+      console.log(hotelTitle)
       document
         .querySelectorAll('.book-hotel__title')
         .forEach((el) => (el.textContent = hotelTitle))
     }
 
     const hotelRatingRaw = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.rating.prop,
       HOTEL_FIELD_TITLES.rating.section,
+      { lang, source: unified.source },
     )
     if (hotelRatingRaw) {
       const hotelRating = Number(hotelRatingRaw)
@@ -1145,9 +1661,10 @@ const setInfo = async (args) => {
     }
 
     const website = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.website.prop,
       HOTEL_FIELD_TITLES.website.section,
+      { lang, source: unified.source },
     )
     if (website) {
       const websiteElement = document.querySelector('.book-hotel__website')
@@ -1177,9 +1694,10 @@ const setInfo = async (args) => {
     }
 
     const address = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.address.prop,
       HOTEL_FIELD_TITLES.address.section,
+      { lang, source: unified.source },
     )
     if (address) {
       const addressElement = document.querySelector('.book-hotel__address')
@@ -1197,9 +1715,10 @@ const setInfo = async (args) => {
     }
 
     const phone = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.phone.prop,
       HOTEL_FIELD_TITLES.phone.section,
+      { lang, source: unified.source },
     )
 
     if (phone) {
@@ -1223,9 +1742,10 @@ const setInfo = async (args) => {
     }
 
     const email = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.email.prop,
       HOTEL_FIELD_TITLES.email.section,
+      { lang, source: unified.source },
     )
 
     if (email) {
@@ -1259,9 +1779,10 @@ const setInfo = async (args) => {
     }
 
     const fax = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.fax.prop,
       HOTEL_FIELD_TITLES.fax.section,
+      { lang, source: unified.source },
     )
     if (fax) {
       const faxElement = document.querySelector('.book-hotel__fax')
@@ -1279,9 +1800,10 @@ const setInfo = async (args) => {
     }
     // زمان تحویل گرفتن (Check-in)
     const checkIn = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.checkin.prop,
       HOTEL_FIELD_TITLES.checkin.section,
+      { lang, source: unified.source },
     )
     const checkInElement = document.querySelector('.book-hotel__checkin__time')
     const checkInWrapper = document.querySelector(
@@ -1303,9 +1825,10 @@ const setInfo = async (args) => {
     }
 
     const checkOut = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.checkout.prop,
       HOTEL_FIELD_TITLES.checkout.section,
+      { lang, source: unified.source },
     )
     const checkOutElement = document.querySelector(
       '.book-hotel__checkout__time',
@@ -1329,10 +1852,10 @@ const setInfo = async (args) => {
     }
 
     const facilities = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.facilities.prop,
       HOTEL_FIELD_TITLES.facilities.section,
-      { list: true },
+      { list: true, lang, source: unified.source },
     )
 
     const facilitiesContainer = document.querySelector(
@@ -1386,10 +1909,10 @@ ${facilitiesEmptyText}
     }
 
     const roomFacilities = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.roomFacilities.prop,
       HOTEL_FIELD_TITLES.roomFacilities.section,
-      { list: true },
+      { list: true, lang, source: unified.source },
     )
 
     const roomFacilitiesContainer = document.querySelector(
@@ -1432,10 +1955,10 @@ ${emptyText}
     }
 
     const gps = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.gps.prop,
       HOTEL_FIELD_TITLES.gps.section,
-      { list: true },
+      { list: true, lang, source: unified.source },
     )
 
     if (Array.isArray(gps) && gps.length >= 2) {
@@ -1449,7 +1972,7 @@ ${emptyText}
     }
 
     const description = getSectionHTML(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.description.section,
     )
     if (description) {
@@ -1460,9 +1983,10 @@ ${emptyText}
     }
 
     const floorsRaw = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.floors.prop,
       HOTEL_FIELD_TITLES.floors.section,
+      { lang, source: unified.source },
     )
 
     if (floorsRaw) {
@@ -1472,9 +1996,10 @@ ${emptyText}
     }
 
     const roomsCountRaw = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.roomsCount.prop,
       HOTEL_FIELD_TITLES.roomsCount.section,
+      { lang, source: unified.source },
     )
 
     if (roomsCountRaw) {
@@ -1484,10 +2009,10 @@ ${emptyText}
     }
 
     const internetValues = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.internetService.prop,
       HOTEL_FIELD_TITLES.internetService.section,
-      { list: true },
+      { list: true, lang, source: unified.source },
     )
 
     if (internetValues.length) {
@@ -1498,9 +2023,10 @@ ${emptyText}
     }
 
     const floors = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.floors.prop,
       HOTEL_FIELD_TITLES.floors.section,
+      { lang, source: unified.source },
     )
     if (floors) {
       document
@@ -1510,9 +2036,10 @@ ${emptyText}
 
     // roomsCount
     const roomsCount = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.roomsCount.prop,
       HOTEL_FIELD_TITLES.roomsCount.section,
+      { lang, source: unified.source },
     )
     if (roomsCount) {
       document
@@ -1522,10 +2049,10 @@ ${emptyText}
 
     // internetService (list)
     const internetService = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.internetService.prop,
       HOTEL_FIELD_TITLES.internetService.section,
-      { list: true },
+      { list: true, lang, source: unified.source },
     )
     renderListWithIcon(
       '.book-hotel__moreinfo__internet_service',
@@ -1534,10 +2061,10 @@ ${emptyText}
 
     //airConditioning (list)
     const airConditioning = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.airConditioning.prop,
       HOTEL_FIELD_TITLES.airConditioning.section,
-      { list: true },
+      { list: true, lang, source: unified.source },
     )
     renderListWithIcon(
       '.book-hotel__moreinfo__air_conditioning',
@@ -1546,10 +2073,10 @@ ${emptyText}
 
     //disabledFacilities (list)
     const disabledFacilities = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.disabledFacilities.prop,
       HOTEL_FIELD_TITLES.disabledFacilities.section,
-      { list: true },
+      { list: true, lang, source: unified.source },
     )
     renderListWithIcon(
       '.book-hotel__moreinfo__disabled_facilities',
@@ -1558,72 +2085,73 @@ ${emptyText}
 
     // breakfast (list)
     const breakfast = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.breakfast.prop,
       HOTEL_FIELD_TITLES.breakfast.section,
-      { list: true },
+      { list: true, lang, source: unified.source },
     )
     renderListWithIcon('.book-hotel__moreinfo__breakfast', breakfast)
 
     // lunch (list)
     const lunch = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.lunch.prop,
       HOTEL_FIELD_TITLES.lunch.section,
-      { list: true },
+      { list: true, lang, source: unified.source },
     )
     renderListWithIcon('.book-hotel__moreinfo__lunch', lunch)
 
     // dinner (list)
     const dinner = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.dinner.prop,
       HOTEL_FIELD_TITLES.dinner.section,
-      { list: true },
+      { list: true, lang, source: unified.source },
     )
     renderListWithIcon('.book-hotel__moreinfo__dinner', dinner)
 
     // smoking (list)
     const smoking = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.smoking.prop,
       HOTEL_FIELD_TITLES.smoking.section,
-      { list: true },
+      { list: true, lang, source: unified.source },
     )
     renderListWithIcon('.book-hotel__moreinfo__smoking', smoking)
 
     // tv (list)
     const tv = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.tv.prop,
       HOTEL_FIELD_TITLES.tv.section,
-      { list: true },
+      { list: true, lang, source: unified.source },
     )
     renderListWithIcon('.book-hotel__moreinfo__tv', tv)
 
     // bathroom (list)
     const bathroom = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.bathroom.prop,
       HOTEL_FIELD_TITLES.bathroom.section,
-      { list: true },
+      { list: true, lang, source: unified.source },
     )
     renderListWithIcon('.book-hotel__moreinfo__bathroom', bathroom)
 
     // sports (list)
     const sports = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.sports.prop,
       HOTEL_FIELD_TITLES.sports.section,
-      { list: true },
+      { list: true, lang, source: unified.source },
     )
     renderListWithIcon('.book-hotel__moreinfo__sports', sports)
 
     // view (single)
     const view = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.view.prop,
       HOTEL_FIELD_TITLES.view.section,
+      { lang, source: unified.source },
     )
     if (view) {
       document
@@ -1633,20 +2161,20 @@ ${emptyText}
 
     // parking (list)
     const parking = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.parking.prop,
       HOTEL_FIELD_TITLES.parking.section,
-      { list: true },
+      { list: true, lang, source: unified.source },
     )
 
     renderListWithIcon('.book-hotel__moreinfo__parking', parking)
 
     // beachFacilities (list)
     const beachFacilities = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.beachFacilities.prop,
       HOTEL_FIELD_TITLES.beachFacilities.section,
-      { list: true },
+      { list: true, lang, source: unified.source },
     )
     renderListWithIcon(
       '.book-hotel__moreinfo__beach_facilities',
@@ -1655,9 +2183,10 @@ ${emptyText}
 
     // buildingsCount
     const buildingsCount = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.buildingsCount.prop,
       HOTEL_FIELD_TITLES.buildingsCount.section,
+      { lang, source: unified.source },
     )
     if (buildingsCount) {
       document
@@ -1667,9 +2196,10 @@ ${emptyText}
 
     // buildYear
     const buildYear = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.buildYear.prop,
       HOTEL_FIELD_TITLES.buildYear.section,
+      { lang, source: unified.source },
     )
     if (buildYear) {
       document
@@ -1679,9 +2209,10 @@ ${emptyText}
 
     // restaurantsCount
     const restaurantsCount = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.restaurantsCount.prop,
       HOTEL_FIELD_TITLES.restaurantsCount.section,
+      { lang, source: unified.source },
     )
     if (restaurantsCount) {
       document
@@ -1691,9 +2222,10 @@ ${emptyText}
 
     // poolOutdoorCount
     const poolOutdoorCount = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.poolOutdoorCount.prop,
       HOTEL_FIELD_TITLES.poolOutdoorCount.section,
+      { lang, source: unified.source },
     )
     if (
       poolOutdoorCount !== null &&
@@ -1707,9 +2239,10 @@ ${emptyText}
 
     // poolIndoorCount
     const poolIndoorCount = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.poolIndoorCount.prop,
       HOTEL_FIELD_TITLES.poolIndoorCount.section,
+      { lang, source: unified.source },
     )
     if (
       poolIndoorCount !== null &&
@@ -1723,9 +2256,10 @@ ${emptyText}
 
     // barsCount
     const barsCount = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.barsCount.prop,
       HOTEL_FIELD_TITLES.barsCount.section,
+      { lang, source: unified.source },
     )
     if (
       barsCount !== null &&
@@ -1739,9 +2273,10 @@ ${emptyText}
 
     // poolBarsCount
     const poolBarsCount = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.poolBarsCount.prop,
       HOTEL_FIELD_TITLES.poolBarsCount.section,
+      { lang, source: unified.source },
     )
     if (
       poolBarsCount !== null &&
@@ -1755,9 +2290,10 @@ ${emptyText}
 
     // meetingRoomsCount
     const meetingRoomsCount = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.meetingRoomsCount.prop,
       HOTEL_FIELD_TITLES.meetingRoomsCount.section,
+      { lang, source: unified.source },
     )
     if (
       meetingRoomsCount !== null &&
@@ -1771,9 +2307,10 @@ ${emptyText}
 
     // petsMaxWeight
     const petsMaxWeight = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.petsMaxWeight.prop,
       HOTEL_FIELD_TITLES.petsMaxWeight.section,
+      { lang, source: unified.source },
     )
     if (
       petsMaxWeight !== null &&
@@ -1787,9 +2324,10 @@ ${emptyText}
 
     // petsMaxPerRoom
     const petsMaxPerRoom = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.petsMaxPerRoom.prop,
       HOTEL_FIELD_TITLES.petsMaxPerRoom.section,
+      { lang, source: unified.source },
     )
     if (
       petsMaxPerRoom !== null &&
@@ -1803,28 +2341,28 @@ ${emptyText}
 
     // paymentType (list)
     const paymentType = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.paymentType.prop,
       HOTEL_FIELD_TITLES.paymentType.section,
-      { list: true },
+      { list: true, lang, source: unified.source },
     )
     renderListWithIcon('.book-hotel__moreinfo__payment_type', paymentType)
 
     // creditCards (list)
     const creditCards = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.creditCards.prop,
       HOTEL_FIELD_TITLES.creditCards.section,
-      { list: true },
+      { list: true, lang, source: unified.source },
     )
     renderListWithIcon('.book-hotel__moreinfo__credit_cards', creditCards)
 
     // transportServices (list)
     const transportServices = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.transportServices.prop,
       HOTEL_FIELD_TITLES.transportServices.section,
-      { list: true },
+      { list: true, lang, source: unified.source },
     )
     renderListWithIcon(
       '.book-hotel__moreinfo__transport_services',
@@ -1833,9 +2371,10 @@ ${emptyText}
 
     // minCheckinAge
     const minCheckinAge = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.minCheckinAge.prop,
       HOTEL_FIELD_TITLES.minCheckinAge.section,
+      { lang, source: unified.source },
     )
     if (
       minCheckinAge !== null &&
@@ -1849,9 +2388,10 @@ ${emptyText}
 
     // postalCode
     const postalCode = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.postalCode.prop,
       HOTEL_FIELD_TITLES.postalCode.section,
+      { lang, source: unified.source },
     )
     if (postalCode) {
       document
@@ -1861,9 +2401,10 @@ ${emptyText}
 
     // propertyType
     const propertyType = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.propertyType.prop,
       HOTEL_FIELD_TITLES.propertyType.section,
+      { lang, source: unified.source },
     )
     if (propertyType) {
       document
@@ -1873,46 +2414,46 @@ ${emptyText}
 
     // cleaning (list)
     const cleaning = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.cleaning.prop,
       HOTEL_FIELD_TITLES.cleaning.section,
-      { list: true },
+      { list: true, lang, source: unified.source },
     )
     renderListWithIcon('.book-hotel__moreinfo__cleaning', cleaning)
 
     // staffLanguages (list)
     const staffLanguages = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.staffLanguages.prop,
       HOTEL_FIELD_TITLES.staffLanguages.section,
-      { list: true },
+      { list: true, lang, source: unified.source },
     )
     renderListWithIcon('.book-hotel__moreinfo__staff_languages', staffLanguages)
 
     // roomTypes (list)
     const roomTypes = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.roomTypes.prop,
       HOTEL_FIELD_TITLES.roomTypes.section,
-      { list: true },
+      { list: true, lang, source: unified.source },
     )
     renderListWithIcon('.book-hotel__moreinfo__room_types', roomTypes)
 
     // bedTypes (list)
     const bedTypes = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.bedTypes.prop,
       HOTEL_FIELD_TITLES.bedTypes.section,
-      { list: true },
+      { list: true, lang, source: unified.source },
     )
     renderListWithIcon('.book-hotel__moreinfo__bed_types', bedTypes)
 
     // beautyHygieneServices (list)
     const beautyHygieneServices = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.beautyHygieneServices.prop,
       HOTEL_FIELD_TITLES.beautyHygieneServices.section,
-      { list: true },
+      { list: true, lang, source: unified.source },
     )
     renderListWithIcon(
       '.book-hotel__moreinfo__beauty_hygiene_services',
@@ -1921,18 +2462,19 @@ ${emptyText}
 
     // tvChannels (list)
     const tvChannels = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.tvChannels.prop,
       HOTEL_FIELD_TITLES.tvChannels.section,
-      { list: true },
+      { list: true, lang, source: unified.source },
     )
     renderListWithIcon('.book-hotel__moreinfo__tv_channels', tvChannels)
 
     // cafesCount
     const cafesCount = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.cafesCount.prop,
       HOTEL_FIELD_TITLES.cafesCount.section,
+      { lang, source: unified.source },
     )
     if (
       cafesCount !== null &&
@@ -1946,9 +2488,10 @@ ${emptyText}
 
     // conferenceHallsCount
     const conferenceHallsCount = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.conferenceHallsCount.prop,
       HOTEL_FIELD_TITLES.conferenceHallsCount.section,
+      { lang, source: unified.source },
     )
     if (
       conferenceHallsCount !== null &&
@@ -1962,18 +2505,19 @@ ${emptyText}
 
     // roomSize (list)
     const roomSize = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.roomSize.prop,
       HOTEL_FIELD_TITLES.roomSize.section,
-      { list: true },
+      { list: true, lang, source: unified.source },
     )
     renderListWithIcon('.book-hotel__moreinfo__room_size', roomSize)
 
     // tennisCourtsCount
     const tennisCourtsCount = getProperty(
-      data,
+      unified,
       HOTEL_FIELD_TITLES.tennisCourtsCount.prop,
       HOTEL_FIELD_TITLES.tennisCourtsCount.section,
+      { lang, source: unified.source },
     )
     if (
       tennisCourtsCount !== null &&
@@ -1990,7 +2534,7 @@ ${emptyText}
 
       const clean = (s) =>
         (s || '')
-          .replace(/[\u00A0\u200C\u200D\u200E\u200F\u202A-\u202E]/g, '') 
+          .replace(/[\u00A0\u200C\u200D\u200E\u200F\u202A-\u202E]/g, '')
           .trim()
           .toLowerCase()
 
@@ -2156,13 +2700,15 @@ const renderAvailableRooms = async (element) => {
   <input type="hidden" value="${currency_unit}" name="rate-unit" class="rate-unit" /> 
   <input type="hidden" value="${currency_cost_number}" name="rate-cost" class="rate-cost" /> 
   <input type="hidden" value="${floatdigit}" name="rate-floatdigit" class="rate-floatdigit" /> 
-  <input type="hidden" value="[##cms.form.sid|(2)##]" name="sid" />
-  <input type="hidden" value="[##cms.form.Hotel-Date|(0)##]" name="Hotel-Date" />
-  <input type="hidden" value="[##cms.form.cityid##]" name="cityid" /> 
-  <input type="hidden" value="[##cms.form.coHotel##]" name="coHotel" /> 
-  <input type="hidden" value='[##cms.json.header|cms.form.roomSearch##]' name="roomSearch" /> 
-  <input type="hidden" value="[##cms.form.fdate##]" name="fdate" /> 
-  <input type="hidden" value="[##cms.form.tdate##]" name="tdate" /> 
+  <input type="hidden" value="${window.cmsData?.sid}" name="sid" />
+  <input type="hidden" value="${window.cmsData?.HotelDate}" name="Hotel-Date" />
+  <input type="hidden" value="${window.cmsData?.cityi}" name="cityid" /> 
+  <input type="hidden" value="${window.cmsData?.coHotel}" name="coHotel" /> 
+  <input type="hidden" value='${
+    window.cmsData?.roomSearch
+  }' name="roomSearch" /> 
+  <input type="hidden" value="${window.cmsData?.fdate}" name="fdate" /> 
+  <input type="hidden" value="${window.cmsData?.tdate}" name="tdate" />
 `
 
         setActionForAllForms()
@@ -2245,16 +2791,18 @@ const renderAvailableRoomsMobile = async (element) => {
             ${renderhotelidRooms(element)}
             ${rendernightsRooms(element)} 
             ${rendersupplierRooms(element)} 
-            <input type="hidden" value="${currency_unit}" name="rate-unit" class="rate-unit" /> 
-            <input type="hidden" value="${currency_cost_number}" name="rate-cost" class="rate-cost" /> 
-            <input type="hidden" value="${floatdigit}" name="rate-floatdigit" class="rate-floatdigit" /> 
-            <input type="hidden" value="[##cms.form.sid|(2)##]" name="sid" />
-            <input type="hidden" value="[##cms.form.Hotel-Date|(0)##]" name="Hotel-Date" />
-            <input type="hidden" value="[##cms.form.cityid##]" name="cityid" /> 
-            <input type="hidden" value="[##cms.form.coHotel##]" name="coHotel" /> 
-            <input type="hidden" value='[##cms.json.header|cms.form.roomSearch##]' name="roomSearch" /> 
-            <input type="hidden" value="[##cms.form.fdate##]" name="fdate" /> 
-            <input type="hidden" value="[##cms.form.tdate##]" name="tdate" /> 
+  <input type="hidden" value="${currency_unit}" name="rate-unit" class="rate-unit" /> 
+  <input type="hidden" value="${currency_cost_number}" name="rate-cost" class="rate-cost" /> 
+  <input type="hidden" value="${floatdigit}" name="rate-floatdigit" class="rate-floatdigit" /> 
+  <input type="hidden" value="${window.cmsData?.sid}" name="sid" />
+  <input type="hidden" value="${window.cmsData?.HotelDate}" name="Hotel-Date" />
+  <input type="hidden" value="${window.cmsData?.cityi}" name="cityid" /> 
+  <input type="hidden" value="${window.cmsData?.coHotel}" name="coHotel" /> 
+  <input type="hidden" value='${
+    window.cmsData?.roomSearch
+  }' name="roomSearch" /> 
+  <input type="hidden" value="${window.cmsData?.fdate}" name="fdate" /> 
+  <input type="hidden" value="${window.cmsData?.tdate}" name="tdate" />
         `
 
         return `
@@ -2282,8 +2830,8 @@ const renderAvailableRoomsMobile = async (element) => {
 }
 
 const renderAction = (element) => {
-  let type_module = '[##cms.form.type_module|cms.form.key##]'
-  let clid = '[##cms.form.clid|(1)##]'
+  let clid = window.cmsData.clid
+
   if (clid == 1) {
     return '/Client_Show_Hotel_ver.2.bc'
   } else if (clid == 2) {
@@ -2337,7 +2885,7 @@ function renderOptionId(element) {
 }
 function renderUnit(currency_unit) {
   if (currency_unit === '') {
-    let moneytype = '[##cms.form.moneytype##]'
+    let moneytype = window.cmsData?.moneytype || ''
     return moneytype
   } else {
     return currency_unit
