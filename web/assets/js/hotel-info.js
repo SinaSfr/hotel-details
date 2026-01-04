@@ -349,7 +349,9 @@ const LID = (() => {
   if (lang.startsWith('ar')) return '3' // Arabic
   return '2' // Default: English
 })()
-const hotelName = currentLanguage === 'fa' ? 'هتل' : 'hotel'
+const hotelName = currentLanguage === 'fa' ? 'هتل' : 
+                  currentLanguage === 'en' ? 'hotel' : 
+                  currentLanguage === 'ar' ? 'الفندق' : 'hotel';
 const isMobile = document.querySelector('main').dataset.mob === 'true'
 var provider, id, optionId, usedforids
 
@@ -549,7 +551,11 @@ async function runApiLogic() {
 function normalizeRawJSON(data) {
   if (data && data.rows && Array.isArray(data.rows)) data = data.rows
   if (typeof data === 'string') data = JSON.parse(data)
-  if (Array.isArray(data) && data.length === 1 && typeof data[0].value === 'string') {
+  if (
+    Array.isArray(data) &&
+    data.length === 1 &&
+    typeof data[0].value === 'string'
+  ) {
     data = JSON.parse(data[0].value)
   }
   if (!Array.isArray(data)) return []
@@ -763,8 +769,9 @@ function getProperty(unified, propMap, sectionMap, opts = {}) {
 
   const targetSections = sectionTitle
     ? sections.filter(
-        (s) => String(s.title).trim().toLowerCase() ===
-        String(sectionTitle).trim().toLowerCase(),
+        (s) =>
+          String(s.title).trim().toLowerCase() ===
+          String(sectionTitle).trim().toLowerCase(),
       )
     : sections
 
@@ -785,8 +792,9 @@ function getProperty(unified, propMap, sectionMap, opts = {}) {
     )
 
     const hit = props.find(
-      (p) => String(p.title).trim().toLowerCase() ===
-      String(propTitle).trim().toLowerCase(),
+      (p) =>
+        String(p.title).trim().toLowerCase() ===
+        String(propTitle).trim().toLowerCase(),
     )
 
     if (!hit) continue
@@ -806,26 +814,34 @@ function getProperty(unified, propMap, sectionMap, opts = {}) {
   return wantList ? answers : answers[0] || null
 }
 
-
 function getSectionHTML(unified, sectionTitles) {
   if (!unified || !Array.isArray(unified.sections)) return ''
 
   const lang = unified.lang || 'fa'
   const sections = unified.sections
 
-  let secTitle = typeof sectionTitles === 'string'
-    ? sectionTitles.trim()
-    : sectionTitles?.[lang] || sectionTitles?.fa || Object.values(sectionTitles)[0]
+  let secTitle =
+    typeof sectionTitles === 'string'
+      ? sectionTitles.trim()
+      : sectionTitles?.[lang] ||
+        sectionTitles?.fa ||
+        Object.values(sectionTitles)[0]
 
   secTitle = String(secTitle).trim()
-  const section = sections.find(sec => String(sec.title).trim() === secTitle)
+  const section = sections.find((sec) => String(sec.title).trim() === secTitle)
   if (!section) return ''
 
   const prop = section.properties?.[0]
   if (!prop) return ''
 
   const first = prop.answer?.[0]
-  return first?.text ? String(first.text) : first ? String(first) : prop.title ? String(prop.title) : ''
+  return first?.text
+    ? String(first.text)
+    : first
+    ? String(first)
+    : prop.title
+    ? String(prop.title)
+    : ''
 }
 
 function renderListWithIcon(targetSelector, items, opts = {}) {
@@ -911,6 +927,7 @@ const setInfo = async (args) => {
         prop: {
           fa: { restful: 'عنوان', external: 'نام هتل' },
           en: { restful: 'Title', external: 'Hotel Name' },
+          ar: { restful: 'لقب', external: 'اسم الفندق' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'مشخصات عمومی' },
@@ -918,6 +935,7 @@ const setInfo = async (args) => {
             restful: 'مشخصات هتل',
             external: 'General specifications',
           },
+          ar: { restful: 'مشخصات هتل', external: 'معلومات عامة' },
         },
       },
 
@@ -926,6 +944,7 @@ const setInfo = async (args) => {
         prop: {
           fa: { restful: 'درجه', external: 'درجه' },
           en: { restful: 'star rating', external: 'star rating' },
+          ar: { restful: 'تصنيف', external: 'تصنيف' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'مشخصات عمومی' },
@@ -933,6 +952,7 @@ const setInfo = async (args) => {
             restful: 'مشخصات هتل',
             external: 'General specifications',
           },
+          ar: { restful: 'مشخصات هتل', external: 'معلومات عامة' },
         },
       },
 
@@ -941,10 +961,12 @@ const setInfo = async (args) => {
         prop: {
           fa: { restful: 'کشور', external: 'کشور' },
           en: { restful: 'country', external: 'Country' },
+          ar: { restful: 'بلد', external: 'بلد' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'ارتباطات' },
           en: { restful: 'مشخصات هتل', external: 'Connections' },
+          ar: { restful: 'مشخصات هتل', external: 'الاتصالات' },
         },
       },
 
@@ -953,10 +975,12 @@ const setInfo = async (args) => {
         prop: {
           fa: { restful: 'شهر', external: 'شهر' },
           en: { restful: 'City', external: 'City' },
+          ar: { restful: 'مدينة', external: 'مدينة' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'ارتباطات' },
           en: { restful: 'مشخصات هتل', external: 'Connections' },
+          ar: { restful: 'مشخصات هتل', external: 'الاتصالات' },
         },
       },
 
@@ -965,6 +989,7 @@ const setInfo = async (args) => {
         prop: {
           fa: { restful: 'آدرس', external: 'آدرس' },
           en: { restful: 'Office Address', external: 'Address' },
+          ar: { restful: 'عنوان', external: 'عنوان' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'تماس' },
@@ -972,6 +997,7 @@ const setInfo = async (args) => {
             restful: 'مشخصات هتل',
             external: 'contact',
           },
+          ar: { restful: 'مشخصات هتل', external: 'اتصالات' },
         },
       },
 
@@ -980,6 +1006,7 @@ const setInfo = async (args) => {
         prop: {
           fa: { restful: 'تلفن', external: 'Phone' },
           en: { restful: 'Phone', external: 'Phone' },
+          ar: { restful: 'هاتف', external: 'Phone' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'تماس' },
@@ -987,6 +1014,7 @@ const setInfo = async (args) => {
             restful: 'مشخصات هتل',
             external: 'contact',
           },
+          ar: { restful: 'مشخصات هتل', external: 'اتصالات' },
         },
       },
 
@@ -995,6 +1023,7 @@ const setInfo = async (args) => {
         prop: {
           fa: { restful: 'فکس', external: 'فکس' },
           en: { restful: 'fax', external: 'Fax' },
+          ar: { restful: 'فاكس', external: 'بالفاكس' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'تماس' },
@@ -1002,6 +1031,7 @@ const setInfo = async (args) => {
             restful: 'مشخصات هتل',
             external: 'contact',
           },
+          ar: { restful: 'مشخصات هتل', external: 'اتصالات' },
         },
       },
 
@@ -1010,6 +1040,7 @@ const setInfo = async (args) => {
         prop: {
           fa: { restful: 'وب سایت', external: 'وب سایت' },
           en: { restful: 'Website', external: 'Website' },
+          ar: { restful: 'موقع إلكتروني', external: 'موقع الويب' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Contact Information' },
@@ -1017,6 +1048,7 @@ const setInfo = async (args) => {
             restful: 'مشخصات هتل',
             external: 'Contact',
           },
+          ar: { restful: 'مشخصات هتل', external: 'معلومات الاتصال' },
         },
       },
 
@@ -1025,6 +1057,7 @@ const setInfo = async (args) => {
         prop: {
           fa: { restful: 'ایمیل', external: 'ایمیل' },
           en: { restful: 'Email', external: 'Email' },
+          ar: { restful: 'بريد إلكتروني', external: 'بريد إلكتروني' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Contact Information' },
@@ -1032,6 +1065,7 @@ const setInfo = async (args) => {
             restful: 'مشخصات هتل',
             external: 'Contact',
           },
+          ar: { restful: 'مشخصات هتل', external: 'معلومات الاتصال' },
         },
       },
 
@@ -1040,6 +1074,7 @@ const setInfo = async (args) => {
         prop: {
           fa: { restful: 'زمان تحویل گرفتن', external: 'زمان تحویل گرفتن' },
           en: { restful: 'check in', external: 'check in' },
+          ar: { restful: 'تسجيل الوصول', external: 'تسجيل الوصول' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'General specifications' },
@@ -1047,6 +1082,7 @@ const setInfo = async (args) => {
             restful: 'مشخصات هتل',
             external: 'General specifications',
           },
+          ar: { restful: 'مشخصات هتل', external: 'General specifications' },
         },
       },
 
@@ -1055,6 +1091,7 @@ const setInfo = async (args) => {
         prop: {
           fa: { restful: 'زمان تحویل دادن', external: 'Check-out time' },
           en: { restful: 'check out', external: 'check in' },
+          ar: { restful: 'تسجيل المغادرة', external: 'وقت تسجيل المغادرة' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'General specifications' },
@@ -1062,6 +1099,7 @@ const setInfo = async (args) => {
             restful: 'مشخصات هتل',
             external: 'General specifications',
           },
+          ar: { restful: 'مشخصات هتل', external: 'General specifications' },
         },
       },
 
@@ -1070,21 +1108,25 @@ const setInfo = async (args) => {
         prop: {
           fa: { restful: 'امکانات هتل', external: 'hotel facilities' },
           en: { restful: 'hotel facilities', external: 'hotel facilities' },
+          ar: { restful: 'مرافق الفندق', external: 'hotel facilities' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'امکانات' },
           en: { restful: 'مشخصات هتل', external: 'Facilities' },
         },
+        ar: { restful: 'مشخصات هتل', external: 'مرافق' },
       },
 
       roomFacilities: {
         prop: {
           fa: { restful: 'امکانات اتاق', external: 'Room Facilities' },
           en: { restful: 'Room facilities', external: 'Room facilities' },
+          ar: { restful: 'مرافق الغرفة', external: 'Room Facilities' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Facilities' },
           en: { restful: 'مشخصات هتل', external: 'Facilities' },
+          ar: { restful: 'مشخصات هتل', external: 'مرافق' },
         },
       },
 
@@ -1093,10 +1135,12 @@ const setInfo = async (args) => {
         prop: {
           fa: { restful: 'سیستم موقعیت یابی جهانی', external: 'GPS' },
           en: { restful: 'GPS', external: 'GPS' },
+          ar: { restful: 'GPS', external: 'GPS' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'فضای هتل' },
           en: { restful: 'مشخصات هتل', external: 'Hotel space' },
+          ar: { restful: 'مشخصات هتل', external: 'فندق الفضاء' },
         },
       },
 
@@ -1105,17 +1149,22 @@ const setInfo = async (args) => {
         section: {
           fa: { restful: 'توضیحات', external: 'توضیحات' },
           en: { restful: 'Description', external: 'Description' },
+          ar: { restful: 'مشخصات هتل', external: 'وصف' },
         },
       },
 
       // اضافه کن به HOTEL_FIELD_TITLES
       floors: {
         prop: {
-          fa: { restful: 'تعداد طبقات(ساختمان)', external: 'تعداد طبقات(ساختمان)' },
+          fa: {
+            restful: 'تعداد طبقات(ساختمان)',
+            external: 'تعداد طبقات(ساختمان)',
+          },
           en: {
             restful: 'number of floors',
             external: 'Number of floors',
           },
+          ar: { restful: 'عدد الطوابق', external: 'تعداد طبقات(ساختمان)' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'General specifications' },
@@ -1123,12 +1172,14 @@ const setInfo = async (args) => {
             restful: 'مشخصات هتل',
             external: 'General specifications',
           },
+          ar: { restful: 'مشخصات هتل', external: 'General specifications' },
         },
       },
       roomsCount: {
         prop: {
           fa: { restful: 'تعداد اتاق ها', external: 'تعداد اتاق ها' },
           en: { restful: 'Number of rooms', external: 'Number of rooms' },
+          ar: { restful: 'عدد الغرف', external: 'تعداد اتاق ها' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'General specifications' },
@@ -1136,6 +1187,7 @@ const setInfo = async (args) => {
             restful: 'مشخصات هتل',
             external: 'General specifications',
           },
+          ar: { restful: 'مشخصات هتل', external: 'General specifications' },
         },
       },
 
@@ -1144,10 +1196,12 @@ const setInfo = async (args) => {
         prop: {
           fa: { restful: 'سرویس اینترنت', external: 'سرویس اینترنت' },
           en: { restful: 'Internet service', external: 'Internet service' },
+          ar: { restful: 'خدمات الإنترنت', external: 'سرویس اینترنت' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Facilities' },
           en: { restful: 'مشخصات هتل', external: 'Facilities' },
+          ar: { restful: 'مشخصات هتل', external: 'Facilities' },
         },
       },
 
@@ -1155,20 +1209,24 @@ const setInfo = async (args) => {
         prop: {
           fa: { restful: 'تلویزیون', external: 'TV' },
           en: { restful: 'TV', external: 'TV' },
+          ar: { restful: 'تلفزيون', external: 'TV' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Facilities' },
           en: { restful: 'مشخصات هتل', external: 'Facilities' },
+          ar: { restful: 'مشخصات هتل', external: 'Facilities' },
         },
       },
       bathroom: {
         prop: {
           fa: { restful: 'حمام', external: 'حمام' },
           en: { restful: 'Bathroom', external: 'Bathroom' },
+          ar: { restful: 'حمام', external: 'حمام' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Facilities' },
           en: { restful: 'مشخصات هتل', external: 'Facilities' },
+          ar: { restful: 'مشخصات هتل', external: 'Facilities' },
         },
       },
       sports: {
@@ -1178,16 +1236,19 @@ const setInfo = async (args) => {
             restful: 'sport and entertainment',
             external: 'Sports & recreation',
           },
+          ar: { restful: 'والرياضة والترفيه', external: 'ورزش و تفریحات' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Facilities' },
           en: { restful: 'مشخصات هتل', external: 'Facilities' },
+          ar: { restful: 'مشخصات هتل', external: 'Facilities' },
         },
       },
       view: {
         prop: {
           fa: { restful: 'چشم انداز', external: 'چشم انداز' },
           en: { restful: 'View', external: 'View' },
+          ar: { restful: 'رأي', external: 'چشم انداز' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'General specifications' },
@@ -1195,26 +1256,31 @@ const setInfo = async (args) => {
             restful: 'مشخصات هتل',
             external: 'General specifications',
           },
+          ar: { restful: 'مشخصات هتل', external: 'General specifications' },
         },
       },
       parking: {
         prop: {
           fa: { restful: 'پارکینگ', external: 'پارکینگ' },
           en: { restful: 'Parking', external: 'Parking' },
+          ar: { restful: 'موقف سيارات', external: 'پارکینگ' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Facilities' },
           en: { restful: 'مشخصات هتل', external: 'Facilities' },
+          ar: { restful: 'مشخصات هتل', external: 'Facilities' },
         },
       },
       beachFacilities: {
         prop: {
           fa: { restful: 'امکانات ساحلی', external: 'امکانات ساحلی' },
           en: { restful: 'facility Beach', external: 'Beach facilities' },
+          ar: { restful: 'منشأة الشاطئ', external: 'امکانات ساحلی' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Facilities' },
           en: { restful: 'مشخصات هتل', external: 'Facilities' },
+          ar: { restful: 'مشخصات هتل', external: 'Facilities' },
         },
       },
 
@@ -1225,6 +1291,7 @@ const setInfo = async (args) => {
             restful: 'number of buildings/towers',
             external: 'Number of buildings',
           },
+          ar: { restful: 'عدد المباني / الأبراج', external: 'تعداد ساختمان ها' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'General specifications' },
@@ -1232,12 +1299,14 @@ const setInfo = async (args) => {
             restful: 'مشخصات هتل',
             external: 'General specifications',
           },
+          ar: { restful: 'مشخصات هتل', external: 'General specifications' },
         },
       },
       buildYear: {
         prop: {
           fa: { restful: 'سال ساخت', external: 'سال ساخت' },
           en: { restful: 'built date', external: 'Year built' },
+          ar: { restful: 'تاريخ بنائها', external: 'سال ساخت' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'General specifications' },
@@ -1245,6 +1314,7 @@ const setInfo = async (args) => {
             restful: 'مشخصات هتل',
             external: 'General specifications',
           },
+          ar: { restful: 'مشخصات هتل', external: 'General specifications' },
         },
       },
       restaurantsCount: {
@@ -1257,10 +1327,12 @@ const setInfo = async (args) => {
             restful: 'Number of restaurants',
             external: 'Number of restaurants',
           },
+          ar: { restful: 'عدد المطاعم', external: 'Number of restaurants' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Facilities' },
           en: { restful: 'مشخصات هتل', external: 'Facilities' },
+          ar: { restful: 'مشخصات هتل', external: 'Facilities' },
         },
       },
       poolOutdoorCount: {
@@ -1273,10 +1345,12 @@ const setInfo = async (args) => {
             restful: 'Outdoor pools count',
             external: 'Outdoor pools count',
           },
+          ar: { restful: 'عدد حمامات السباحة في الهواء الطلق', external: 'Outdoor pools count' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Facilities' },
           en: { restful: 'مشخصات هتل', external: 'Facilities' },
+          ar: { restful: 'مشخصات هتل', external: 'Facilities' },
         },
       },
       poolIndoorCount: {
@@ -1286,30 +1360,36 @@ const setInfo = async (args) => {
             external: 'Indoor pools count',
           },
           en: { restful: 'Indoor pools count', external: 'Indoor pools count' },
+          ar: { restful: 'عدد حمامات السباحة في الأماكن المغلقة', external: 'Indoor pools count' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Facilities' },
           en: { restful: 'مشخصات هتل', external: 'Facilities' },
+          ar: { restful: 'مشخصات هتل', external: 'Facilities' },
         },
       },
       barsCount: {
         prop: {
           fa: { restful: 'تعداد بارها', external: 'Bars count' },
           en: { restful: 'Bars count', external: 'Bars count' },
+          ar: { restful: 'عدد البارات', external: 'Bars count' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Facilities' },
           en: { restful: 'مشخصات هتل', external: 'Facilities' },
+          ar: { restful: 'مشخصات هتل', external: 'Facilities' },
         },
       },
       poolBarsCount: {
         prop: {
           fa: { restful: 'تعداد بار استخر', external: 'Pool bars count' },
           en: { restful: 'Number of pool bar', external: 'Pool bars count' },
+          ar: { restful: 'عدد بار المسبح', external: 'Pool bars count' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Facilities' },
           en: { restful: 'مشخصات هتل', external: 'Facilities' },
+          ar: { restful: 'مشخصات هتل', external: 'Facilities' },
         },
       },
       meetingRoomsCount: {
@@ -1322,10 +1402,12 @@ const setInfo = async (args) => {
             restful: 'number of meeting room',
             external: 'Meeting rooms count',
           },
+          ar: { restful: 'عدد قاعة الاجتماع', external: 'Meeting rooms count' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Facilities' },
           en: { restful: 'مشخصات هتل', external: 'Facilities' },
+          ar: { restful: 'مشخصات هتل', external: 'Facilities' },
         },
       },
 
@@ -1333,6 +1415,7 @@ const setInfo = async (args) => {
         prop: {
           fa: { restful: 'حداکثر وزن حیوانات', external: 'Max pets weight' },
           en: { restful: 'pet maximum weight', external: 'Max pets weight' },
+          ar: { restful: 'الحد الأقصى لوزن الحيوانات الأليفة', external: 'Max pets weight' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'General specifications' },
@@ -1340,6 +1423,7 @@ const setInfo = async (args) => {
             restful: 'مشخصات هتل',
             external: 'General specifications',
           },
+          ar: { restful: 'مشخصات هتل', external: 'General specifications' },
         },
       },
       petsMaxPerRoom: {
@@ -1349,6 +1433,7 @@ const setInfo = async (args) => {
             external: 'Max pets per room',
           },
           en: { restful: 'Max pets per room', external: 'Max pets per room' },
+          ar: { restful: 'الحد الأقصى لعدد الحيوانات الأليفة في كل غرفة', external: 'Max pets per room' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'General specifications' },
@@ -1356,12 +1441,14 @@ const setInfo = async (args) => {
             restful: 'مشخصات هتل',
             external: 'General specifications',
           },
+          ar: { restful: 'مشخصات هتل', external: 'General specifications' },
         },
       },
       paymentType: {
         prop: {
           fa: { restful: 'نوع پرداخت', external: 'Payment type' },
           en: { restful: 'Payment type', external: 'Payment type' },
+          ar: { restful: 'نوع الدفع', external: 'Payment type' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'General specifications' },
@@ -1369,12 +1456,14 @@ const setInfo = async (args) => {
             restful: 'مشخصات هتل',
             external: 'General specifications',
           },
+          ar: { restful: 'مشخصات هتل', external: 'General specifications' },
         },
       },
       creditCards: {
         prop: {
           fa: { restful: 'کارت های اعتباری', external: 'Credit cards' },
           en: { restful: 'accessible Debit cards', external: 'Credit cards' },
+          ar: { restful: 'وبطاقات السحب الآلي يمكن الوصول إليها', external: 'Credit cards' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'General specifications' },
@@ -1382,6 +1471,7 @@ const setInfo = async (args) => {
             restful: 'مشخصات هتل',
             external: 'General specifications',
           },
+          ar: { restful: 'مشخصات هتل', external: 'General specifications' },
         },
       },
       transportServices: {
@@ -1394,10 +1484,12 @@ const setInfo = async (args) => {
             restful: 'Shuttle / transport to',
             external: 'Shuttle / transport to',
           },
+          ar: { restful: 'مكوك', external: 'Shuttle / transport to' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Facilities' },
           en: { restful: 'مشخصات هتل', external: 'Facilities' },
+          ar: { restful: 'مشخصات هتل', external: 'Facilities' },
         },
       },
       minCheckinAge: {
@@ -1407,6 +1499,7 @@ const setInfo = async (args) => {
             restful: 'Minimum check-in age',
             external: 'Minimum check-in age',
           },
+          ar: { restful: 'الحد الأدنى لتسجيل النزول هو', external: 'Minimum check-in age' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'General specifications' },
@@ -1414,6 +1507,7 @@ const setInfo = async (args) => {
             restful: 'مشخصات هتل',
             external: 'General specifications',
           },
+          ar: { restful: 'مشخصات هتل', external: 'General specifications' },
         },
       },
 
@@ -1421,16 +1515,19 @@ const setInfo = async (args) => {
         prop: {
           fa: { restful: 'کد پستی', external: 'Postal code' },
           en: { restful: 'Postal code', external: 'Postal code' },
+          ar: { restful: 'الرمز البريدي', external: 'Postal code' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'contact' },
           en: { restful: 'مشخصات هتل', external: 'contact' },
+          ar: { restful: 'مشخصات هتل', external: 'contact' },
         },
       },
       propertyType: {
         prop: {
           fa: { restful: 'نوع اقامتگاه', external: 'Property type' },
           en: { restful: 'accommodation', external: 'Property type' },
+          ar: { restful: 'الإقامة', external: 'Property type' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'General specifications' },
@@ -1438,12 +1535,14 @@ const setInfo = async (args) => {
             restful: 'مشخصات هتل',
             external: 'General specifications',
           },
+          ar: { restful: 'مشخصات هتل', external: 'General specifications' },
         },
       },
       cleaning: {
         prop: {
           fa: { restful: 'نظافت', external: 'Cleaning' },
           en: { restful: 'housekeeping', external: 'Cleaning' },
+          ar: { restful: 'التدبير المنزلي', external: 'Cleaning' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'General specifications' },
@@ -1451,36 +1550,43 @@ const setInfo = async (args) => {
             restful: 'مشخصات هتل',
             external: 'General specifications',
           },
+          ar: { restful: 'مشخصات هتل', external: 'General specifications' },
         },
       },
       staffLanguages: {
         prop: {
           fa: { restful: 'کارکنان مسلط به زبان', external: 'Staff languages' },
           en: { restful: 'Staff languages', external: 'Staff languages' },
+          ar: { restful: 'طاقم متعدد اللغات', external: 'Staff languages' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Facilities' },
           en: { restful: 'مشخصات هتل', external: 'Facilities' },
+          ar: { restful: 'مشخصات هتل', external: 'Facilities' },
         },
       },
       roomTypes: {
         prop: {
           fa: { restful: 'انواع اتاق', external: 'Room types' },
           en: { restful: 'room type', external: 'Room types' },
+          ar: { restful: 'نوع الغرفة', external: 'Room types' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Facilities' },
           en: { restful: 'مشخصات هتل', external: 'Facilities' },
+          ar: { restful: 'مشخصات هتل', external: 'Facilities' },
         },
       },
       bedTypes: {
         prop: {
           fa: { restful: 'انواع تخت', external: 'Bed types' },
           en: { restful: 'bed type', external: 'Bed types' },
+          ar: { restful: 'نوع السرير', external: 'Bed types' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Facilities' },
           en: { restful: 'مشخصات هتل', external: 'Facilities' },
+          ar: { restful: 'مشخصات هتل', external: 'Facilities' },
         },
       },
       beautyHygieneServices: {
@@ -1493,30 +1599,36 @@ const setInfo = async (args) => {
             restful: 'Cosmetic services',
             external: 'Beauty & hygiene services',
           },
+          ar: { restful: 'خدمات التجميل', external: 'Beauty & hygiene services' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Facilities' },
           en: { restful: 'مشخصات هتل', external: 'Facilities' },
+          ar: { restful: 'مشخصات هتل', external: 'Facilities' },
         },
       },
       tvChannels: {
         prop: {
           fa: { restful: 'کانال های تلویزیونی', external: 'TV channels' },
           en: { restful: 'TV channels', external: 'TV channels' },
+          ar: { restful: 'قنوات التلفاز', external: 'TV channels' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Facilities' },
           en: { restful: 'مشخصات هتل', external: 'Facilities' },
+          ar: { restful: 'مشخصات هتل', external: 'Facilities' },
         },
       },
       cafesCount: {
         prop: {
           fa: { restful: 'تعداد کافی شاپ', external: 'Cafes count' },
           en: { restful: 'Cafes count', external: 'Cafes count' },
+          ar: { restful: 'عدد المقاهي', external: 'Cafes count' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Facilities' },
           en: { restful: 'مشخصات هتل', external: 'Facilities' },
+          ar: { restful: 'مشخصات هتل', external: 'Facilities' },
         },
       },
       conferenceHallsCount: {
@@ -1529,20 +1641,24 @@ const setInfo = async (args) => {
             restful: 'Conference halls count',
             external: 'Conference halls count',
           },
+          ar: { restful: 'عدد قاعة المؤتمرات', external: 'Conference halls count' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Facilities' },
           en: { restful: 'مشخصات هتل', external: 'Facilities' },
+          ar: { restful: 'مشخصات هتل', external: 'Facilities' },
         },
       },
       roomSize: {
         prop: {
           fa: { restful: 'ابعاد اتاق', external: 'Room size' },
           en: { restful: 'Room Dimensions', external: 'Room size' },
+          ar: { restful: 'أبعاد الغرفة', external: 'Room size' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Facilities' },
           en: { restful: 'مشخصات هتل', external: 'Facilities' },
+          ar: { restful: 'مشخصات هتل', external: 'Facilities' },
         },
       },
       tennisCourtsCount: {
@@ -1552,20 +1668,24 @@ const setInfo = async (args) => {
             restful: 'Number of tennis court',
             external: 'Tennis courts count',
           },
+          ar: { restful: 'عدد ملاعب التنس', external: 'Tennis courts count' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Facilities' },
           en: { restful: 'مشخصات هتل', external: 'Facilities' },
+          ar: { restful: 'مشخصات هتل', external: 'Facilities' },
         },
       },
       airConditioning: {
         prop: {
           fa: { restful: 'سیستم تهویه', external: 'Air conditioning' },
           en: { restful: 'Air conditioning', external: 'Air conditioning' },
+          ar: { restful: 'نظام التهوية', external: 'Air conditioning' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Facilities' },
           en: { restful: 'مشخصات هتل', external: 'Facilities' },
+          ar: { restful: 'مشخصات هتل', external: 'Facilities' },
         },
       },
       disabledFacilities: {
@@ -1575,46 +1695,55 @@ const setInfo = async (args) => {
             restful: 'facilities for disabled',
             external: 'Accessible facilities',
           },
+          ar: { restful: 'مرافق لذوي الاحتياجات الخاصة', external: 'Accessible facilities' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Facilities' },
           en: { restful: 'مشخصات هتل', external: 'Facilities' },
+          ar: { restful: 'مشخصات هتل', external: 'Facilities' },
         },
       },
       breakfast: {
         prop: {
           fa: { restful: 'سرویس صبحانه', external: 'Breakfast service' },
           en: { restful: 'Breakfast service', external: 'Breakfast service' },
+          ar: { restful: 'خدمة الإفطار', external: 'Breakfast service' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Facilities' },
           en: { restful: 'مشخصات هتل', external: 'Facilities' },
+          ar: { restful: 'مشخصات هتل', external: 'Facilities' },
         },
       },
       lunch: {
         prop: {
           fa: { restful: 'سرویس ناهار', external: 'Lunch service' },
           en: { restful: 'Lunch service', external: 'Lunch service' },
+          ar: { restful: 'خدمة الغداء', external: 'Lunch service' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Facilities' },
           en: { restful: 'مشخصات هتل', external: 'Facilities' },
+          ar: { restful: 'مشخصات هتل', external: 'Facilities' },
         },
       },
       dinner: {
         prop: {
           fa: { restful: 'سرویس شام', external: 'Dinner service' },
           en: { restful: 'Dinner service', external: 'Dinner service' },
+          ar: { restful: 'خدمة عشاء', external: 'Dinner service' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Facilities' },
           en: { restful: 'مشخصات هتل', external: 'Facilities' },
+          ar: { restful: 'مشخصات هتل', external: 'Facilities' },
         },
       },
       smoking: {
         prop: {
           fa: { restful: 'سیگار کشیدن', external: 'Smoking' },
           en: { restful: 'Smoking', external: 'Smoking' },
+          ar: { restful: 'تدخين', external: 'Smoking' },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'General specifications' },
@@ -1622,6 +1751,7 @@ const setInfo = async (args) => {
             restful: 'مشخصات هتل',
             external: 'General specifications',
           },
+          ar: { restful: 'مشخصات هتل', external: 'General specifications' },
         },
       },
     }
@@ -1631,7 +1761,8 @@ const setInfo = async (args) => {
     const dir = (
       document.documentElement.getAttribute('dir') || ''
     ).toLowerCase()
-    const isFa = lang.startsWith('fa') || lang.startsWith('ar') || dir === 'rtl'
+    const isPersian = lang.startsWith('fa');
+    const isArabic = lang.startsWith('ar');
     const unified = unifyHotelData(data, { lang })
     // تشخیص اینکه دیتا از external اومده یا restful
     const source = unified.source
@@ -1867,9 +1998,11 @@ const setInfo = async (args) => {
     const moreInfoBtn = document.querySelector('.open-hotel-moreinfo-btn')
     if (!facilitiesContainer) return
 
-    const facilitiesEmptyText = isFa
-      ? 'امکاناتی برای این هتل ثبت نشده است.'
-      : 'No hotel facilities have been provided.'
+    const facilitiesEmptyText = isPersian 
+    ? 'امکاناتی برای این هتل ثبت نشده است.'
+    : isArabic
+    ? 'لم يتم تسجيل أي مرافق لهذا الفندق.'
+    : 'No hotel facilities have been provided.';
 
     facilitiesContainer.innerHTML = ''
 
@@ -1926,9 +2059,11 @@ ${facilitiesEmptyText}
     )
     if (!roomFacilitiesContainer) return
 
-    const emptyText = isFa
-      ? 'امکاناتی برای این اتاق ثبت نشده است'
-      : 'No room facilities have been provided'
+    const emptyText = isPersian
+    ? 'امکاناتی برای این اتاق ثبت نشده است'
+    : isArabic
+    ? 'لم يتم تسجيل أي مرافق لهذه الغرفة'
+    : 'No room facilities have been provided';
 
     roomFacilitiesContainer.innerHTML = ''
 
@@ -2627,31 +2762,24 @@ ${emptyText}
 const renderAvailableRooms = async (element) => {
   try {
     // --- language detect (fa vs en) ---
-    const formEl =
-      document.querySelector('form[lang], form#hotelSearch') || null
-    const lang = (
-      formEl?.getAttribute('lang') ||
-      document.documentElement.getAttribute('lang') ||
-      ''
-    ).toLowerCase()
-    const dir = (
-      formEl?.getAttribute('dir') ||
-      document.documentElement.getAttribute('dir') ||
-      ''
-    ).toLowerCase()
-    const isFa = lang.startsWith('fa') || lang.startsWith('ar') || dir === 'rtl'
+    const lang = getCurrentLang()
+    const isPersian = lang.startsWith('fa')
+const isArabic = lang.startsWith('ar')
 
-    const TXT = isFa
-      ? {
-          noRooms:
-            'هیچ اتاقی برای نمایش موجود نیست. لطفاً فیلترها را تغییر دهید یا دوباره تلاش کنید.',
-          roomRules: 'قوانین اتاق',
-        }
-      : {
-          noRooms:
-            'No rooms available to display. Please adjust filters or try again.',
-          roomRules: 'Room rules',
-        }
+const TXT = isPersian
+? {
+    noRooms: 'هیچ اتاقی برای نمایش موجود نیست. لطفاً فیلترها را تغییر دهید یا دوباره تلاش کنید.',
+    roomRules: 'قوانین اتاق',
+  }
+: isArabic
+? {
+    noRooms: 'لا توجد غرف متاحة للعرض. يرجى تعديل الفلاتر أو المحاولة مرة أخرى.',
+    roomRules: 'قواعد الغرفة',
+  }
+: {
+    noRooms: 'No rooms available to display. Please adjust filters or try again.',
+    roomRules: 'Room rules',
+  }
 
     if (
       !element ||
@@ -3137,34 +3265,34 @@ const priceWithCurrency = (amount, opts = {}) => {
     if (!Number.isFinite(a)) return opts.as === 'number' ? 0 : '0'
 
     // language & direction detection
-    const lang = (
-      document.documentElement.getAttribute('lang') || ''
-    ).toLowerCase()
-
-    const dir = (
-      opts.formEl?.getAttribute('dir') ||
-      document.documentElement.getAttribute('dir') ||
-      ''
-    ).toLowerCase()
-
-    const isFa = lang.startsWith('fa') || lang.startsWith('ar') || dir === 'rtl'
+    const lang = getCurrentLang()
+    const isPersian = lang.startsWith('fa')
+const isArabic = lang.startsWith('ar')
 
     // texts
     const texts = {
-      basePrice: isFa ? 'مبلغ اصلی:' : 'Base Price:',
-      commission: isFa ? 'کمیسیون:' : 'Commission:',
-      payable: isFa ? 'مبلغ قابل پرداخت:' : 'Payable Amount:',
+      basePrice: isPersian ? 'مبلغ اصلی:' : 
+                 isArabic ? 'المبلغ الأساسي:' : 
+                 'Base Price:',
+      commission: isPersian ? 'کمیسیون:' : 
+                  isArabic ? 'العمولة:' : 
+                  'Commission:',
+      payable: isPersian ? 'مبلغ قابل پرداخت:' : 
+               isArabic ? 'المبلغ المستحق الدفع:' : 
+               'Payable Amount:',
     }
 
     const { currency_cost_number, floatdigit, currency_unit } =
       getCurrencyUnitFromStorage()
 
     const unit =
-      currency_unit && String(currency_unit).trim()
-        ? String(currency_unit).trim()
-        : isFa
-        ? 'ریال'
-        : 'IRR'
+    currency_unit && String(currency_unit).trim()
+    ? String(currency_unit).trim()
+    : isPersian
+    ? 'ریال'
+    : isArabic
+    ? 'ريال'
+    : 'IRR'
 
     const rate = Number.isFinite(opts.rate)
       ? Number(opts.rate)
@@ -3293,59 +3421,58 @@ let selectedServices = []
  * @returns {void}
  */
 function setupBookPagingDots() {
-  const container = document.querySelector('.book-paging__cards__container');
-  if (!container) return;
+  const container = document.querySelector('.book-paging__cards__container')
+  if (!container) return
 
   // حذف dots قبلی
-  container.querySelectorAll('.book-paging-dots').forEach(el => el.remove());
+  container.querySelectorAll('.book-paging-dots').forEach((el) => el.remove())
 
-  const pages = Array.from(
-    container.querySelectorAll('li[bc-value]')
-  ).filter(li =>
-    !li.classList.contains('book-prevpage') &&
-    !li.classList.contains('book-nextpage')
-  );
+  const pages = Array.from(container.querySelectorAll('li[bc-value]')).filter(
+    (li) =>
+      !li.classList.contains('book-prevpage') &&
+      !li.classList.contains('book-nextpage'),
+  )
 
-  if (!pages.length) return;
+  if (!pages.length) return
 
-  const active = container.querySelector('.book-active__paging');
-  if (!active) return;
+  const active = container.querySelector('.book-active__paging')
+  if (!active) return
 
-  const currentPage = parseInt(active.getAttribute('bc-value'), 10);
-  const pageNumbers = pages.map(li =>
-    parseInt(li.getAttribute('bc-value'), 10)
-  );
+  const currentPage = parseInt(active.getAttribute('bc-value'), 10)
+  const pageNumbers = pages.map((li) =>
+    parseInt(li.getAttribute('bc-value'), 10),
+  )
 
-  const minPage = Math.min(...pageNumbers);
-  const maxPage = Math.max(...pageNumbers);
+  const minPage = Math.min(...pageNumbers)
+  const maxPage = Math.max(...pageNumbers)
 
   const createDots = () => {
-    const li = document.createElement('li');
-    li.textContent = '…';
+    const li = document.createElement('li')
+    li.textContent = '…'
     li.className =
-      'book-paging-dots book-flex book-items-center book-justify-center book-w-12 book-h-12 book-text-zinc-500';
-    return li;
-  };
+      'book-paging-dots book-flex book-items-center book-justify-center book-w-12 book-h-12 book-text-zinc-500'
+    return li
+  }
 
   const findPage = (n) =>
-    pages.find(li => parseInt(li.getAttribute('bc-value'), 10) === n);
+    pages.find((li) => parseInt(li.getAttribute('bc-value'), 10) === n)
 
-  const firstPage = findPage(minPage);
-  const lastPage = findPage(maxPage);
+  const firstPage = findPage(minPage)
+  const lastPage = findPage(maxPage)
 
   // dots بعد از صفحه اول
   if (currentPage - minPage > 2 && firstPage) {
-    const afterFirst = firstPage.nextElementSibling;
+    const afterFirst = firstPage.nextElementSibling
     if (!afterFirst || afterFirst.textContent !== '…') {
-      container.insertBefore(createDots(), afterFirst);
+      container.insertBefore(createDots(), afterFirst)
     }
   }
 
   // dots قبل از صفحه آخر
   if (maxPage - currentPage > 2 && lastPage) {
-    const beforeLast = lastPage.previousElementSibling;
+    const beforeLast = lastPage.previousElementSibling
     if (!beforeLast || beforeLast.textContent !== '…') {
-      container.insertBefore(createDots(), lastPage);
+      container.insertBefore(createDots(), lastPage)
     }
   }
 }
@@ -3353,9 +3480,9 @@ function setupBookPagingDots() {
 const manipulation = async (args) => {
   // ============= INITIALIZATION =============
   let currentIndex = 0
-  let pageSize = 6;
+  let pageSize = 10
   let start = 0
-  let end = start + pageSize;  // نمایش 10 اتاق در هر صفحه
+  let end = start + pageSize // نمایش 10 اتاق در هر صفحه
   let dynamicRoomCount = 0
   // ============= PAGINATION HANDLERS =============
   if (args.source.id === 'cms.page') {
@@ -3407,7 +3534,7 @@ const manipulation = async (args) => {
     if (nextButton) {
       nextButton.classList.toggle('book-hidden', selectedPage >= totalPages) // Hide next if it's on the last page
     }
-    setupBookPagingDots() 
+    setupBookPagingDots()
   } else if (args.source.id === 'cms.nextpage') {
     mustUpdate = true
     InUpdatePaging = false
@@ -3464,7 +3591,7 @@ const manipulation = async (args) => {
 
     start = selectedPage * pageSize
     end = start + pageSize
-    setupBookPagingDots() 
+    setupBookPagingDots()
   } else if (args.source.id === 'cms.prevpage') {
     mustUpdate = true
     InUpdatePaging = false
@@ -3520,11 +3647,11 @@ const manipulation = async (args) => {
     // Update pagination range
     start = prevValue * pageSize
     end = start + pageSize
-    setupBookPagingDots() 
+    setupBookPagingDots()
   } else if (args.source.id === 'room.list') {
     newDataCame = true
     allDataProcessed = false
-    setupBookPagingDots() 
+    setupBookPagingDots()
   } else if (args.source.id === 'cms.roomtypes') {
     mustUpdate = true
     InUpdatePaging = true
@@ -3542,7 +3669,6 @@ const manipulation = async (args) => {
         searchText = args.source.rows[0]
       }
     }
-
     // اگر متنی تایپ شده، فیلتر کن
     if (searchText && searchText.trim()) {
       selectedRoomTypes = [searchText.trim()]
@@ -3638,6 +3764,14 @@ const manipulation = async (args) => {
       filters.every((filter) => filter(item)),
     )
 
+    const container = document.querySelector('.book-paging__cards__container')
+    if (container) {
+      if (newSource.length > 0) {
+        container.classList.remove('book-hidden')
+      } else {
+        container.classList.add('book-hidden')
+      }
+    }
     // Update room count display
 
     dynamicRoomCount = newSource.length
@@ -3690,7 +3824,7 @@ const manipulation = async (args) => {
           }
 
           args.context.setAsSource('hotel.paging', arrayPaging)
-          setupBookPagingDots() 
+          setupBookPagingDots()
         }
       }
 
@@ -3746,43 +3880,33 @@ const manipulation = async (args) => {
         keyFieldName: 'optionId',
       })
       InUpdateUIProcess = false
-      setupBookPagingDots() 
+      setupBookPagingDots()
     } else {
       // ============= NO RESULTS HANDLING =============
       InUpdateUIProcess = false
 
       // --- language detect (fa vs en) ---
-      const formEl = args?.context?.element
-        ? args.context.element.closest('form')
-        : null
+      const lang = getCurrentLang()
+      const isPersian = lang.startsWith('fa')
+const isArabic = lang.startsWith('ar')
 
-      const lang = (
-        formEl?.getAttribute('lang') ||
-        document.documentElement.getAttribute('lang') ||
-        ''
-      ).toLowerCase()
-
-      const dir = (
-        formEl?.getAttribute('dir') ||
-        document.documentElement.getAttribute('dir') ||
-        ''
-      ).toLowerCase()
-
-      const isFa =
-        lang.startsWith('fa') || lang.startsWith('ar') || dir === 'rtl'
-
-      const TXT = isFa
-        ? {
-            title: 'هیچ اتاقی با فیلترهای انتخابی یافت نشد',
-            subtitle: 'لطفاً فیلترها را تغییر دهید',
-            fallback:
-              'هیچ اتاقی برای نمایش موجود نیست. لطفاً دوباره تلاش کنید.',
-          }
-        : {
-            title: 'No rooms match your selected filters',
-            subtitle: 'Please adjust your filters',
-            fallback: 'No rooms are available to display. Please try again.',
-          }
+const TXT = isPersian
+? {
+    title: 'هیچ اتاقی با فیلترهای انتخابی یافت نشد',
+    subtitle: 'لطفاً فیلترها را تغییر دهید',
+    fallback: 'هیچ اتاقی برای نمایش موجود نیست. لطفاً دوباره تلاش کنید.',
+  }
+: isArabic
+? {
+    title: 'لم يتم العثور على غرف مع الفلاتر المحددة',
+    subtitle: 'يرجى تعديل الفلاتر',
+    fallback: 'لا توجد غرف متاحة للعرض. يرجى المحاولة مرة أخرى.',
+  }
+: {
+    title: 'No rooms match your selected filters',
+    subtitle: 'Please adjust your filters',
+    fallback: 'No rooms are available to display. Please try again.',
+  }
 
       // Display no rooms found message
       const listContainer = document.querySelector(
@@ -3827,7 +3951,7 @@ const manipulation = async (args) => {
 }
 
 const renderPaging = async (element) => {
-  let pageSize = 6;
+  let pageSize = 10
   try {
     const pagingContainer = document.querySelector(
       '.book-paging__cards__container',
@@ -3902,9 +4026,31 @@ const showRules = async (el, optionId) => {
       return
     }
 
+    const lang = getCurrentLang()
+    const isPersian = lang.startsWith('fa')
+    const isArabic = lang.startsWith('ar')
+
+    const texts = isPersian
+  ? {
+      noRules: 'قوانینی برای این اتاق ثبت نشده است',
+      loading: 'در حال بارگذاری قوانین اتاق...',
+      error: 'خطا در دریافت قوانین اتاق. لطفاً دوباره تلاش کنید.',
+    }
+  : isArabic
+  ? {
+      noRules: 'لم يتم تسجيل قواعد لهذه الغرفة',
+      loading: 'جاري تحميل قواعد الغرفة...',
+      error: 'خطأ في تحميل قواعد الغرفة. يرجى المحاولة مرة أخرى.',
+    }
+  : {
+      noRules: 'No rules have been provided for this room.',
+      loading: 'Loading room rules...',
+      error: 'Failed to load room rules. Please try again.',
+    }
+
     const fallbackHtml = `
 <div class="book-text-center book-py-6 book-text-xs book-text-zinc-500">
-قوانینی برای این اتاق ثبت نشده است
+${texts.noRules}
 </div>
 `
 
@@ -3918,7 +4064,7 @@ const showRules = async (el, optionId) => {
     // Loading
     container.innerHTML = `
 <div class="book-text-center book-py-6 book-text-xs book-text-zinc-400">
-در حال بارگذاری قوانین اتاق...
+${texts.loading}
 </div>
 `
 
@@ -3975,9 +4121,18 @@ const showRules = async (el, optionId) => {
 
     const container = document.getElementById('book-hotel__rules__content')
     if (container) {
+      const lang = getCurrentLang()
+      const isPersian = lang.startsWith('fa')
+const isArabic = lang.startsWith('ar')
+const texts = isPersian
+? 'خطا در دریافت قوانین اتاق. لطفاً دوباره تلاش کنید.'
+: isArabic
+? 'خطأ في تحميل قواعد الغرفة. يرجى المحاولة مرة أخرى.'
+: 'Failed to load room rules. Please try again.'
+
       container.innerHTML = `
 <div class="book-text-center book-py-6 book-text-xs book-text-zinc-500">
-  خطا در دریافت قوانین اتاق. لطفاً دوباره تلاش کنید.
+  ${texts}
 </div>
 `
       openRoomRulesModal()
@@ -4188,39 +4343,37 @@ function Change_Room_Count(t) {
       const formEl = t.closest('form')
 
       // --- language detect (fa vs en) ---
-      const lang = (
-        formEl?.getAttribute('lang') ||
-        document.documentElement.getAttribute('lang') ||
-        ''
-      ).toLowerCase()
-
-      const dir = (
-        formEl?.getAttribute('dir') ||
-        document.documentElement.getAttribute('dir') ||
-        ''
-      ).toLowerCase()
-
-      const isFa =
-        lang.startsWith('fa') || lang.startsWith('ar') || dir === 'rtl'
+      const lang = getCurrentLang()
+      const isPersian = lang.startsWith('fa');
+      const isArabic = lang.startsWith('ar');
 
       // --- texts ---
-      const TXT = isFa
-        ? {
-            room: 'اتاق',
-            removeRoom: 'حذف اتاق',
-            adult: 'بزرگسال',
-            adultAge: '(12 سال به بالا)',
-            child: 'کودک',
-            childAge: '(0 تا 12 سال)',
-          }
-        : {
-            room: 'Room',
-            removeRoom: 'Remove room',
-            adult: 'Adult',
-            adultAge: '(12+ years)',
-            child: 'Child',
-            childAge: '(0–12 years)',
-          }
+      const TXT = isPersian
+      ? {
+          room: 'اتاق',
+          removeRoom: 'حذف اتاق',
+          adult: 'بزرگسال',
+          adultAge: '(12 سال به بالا)',
+          child: 'کودک',
+          childAge: '(0 تا 12 سال)',
+        }
+      : isArabic
+      ? {
+          room: 'غرفة',
+          removeRoom: 'إزالة الغرفة',
+          adult: 'بالغ',
+          adultAge: '(12+ سنوات)',
+          child: 'طفل',
+          childAge: '(0–12 سنة)',
+        }
+      : {
+          room: 'Room',
+          removeRoom: 'Remove room',
+          adult: 'Adult',
+          adultAge: '(12+ years)',
+          child: 'Child',
+          childAge: '(0–12 years)',
+        }
 
       const roomsContainer = formEl.querySelector('.Rooms')
       const adult_count = t
@@ -4342,40 +4495,37 @@ function Add_Room_Count(t) {
       const formEl = t.closest('form')
 
       // --- language detect (fa vs en) ---
-      const lang = (
-        formEl?.getAttribute('lang') ||
-        document.documentElement.getAttribute('lang') ||
-        ''
-      ).toLowerCase()
-
-      const dir = (
-        formEl?.getAttribute('dir') ||
-        document.documentElement.getAttribute('dir') ||
-        ''
-      ).toLowerCase()
-
-      const isFa =
-        lang.startsWith('fa') || lang.startsWith('ar') || dir === 'rtl'
+      const lang = getCurrentLang()
+      const isPersian = lang.startsWith('fa');
+      const isArabic = lang.startsWith('ar');
 
       // --- texts ---
-      const TXT = isFa
-        ? {
-            room: 'اتاق',
-            removeRoom: 'حذف اتاق',
-            adult: 'بزرگسال',
-            adultAge: '(12 سال به بالا)',
-            child: 'کودک',
-            childAge: '(0 تا 12 سال)',
-          }
-        : {
-            room: 'Room',
-            removeRoom: 'Remove room',
-            adult: 'Adult',
-            adultAge: '(12+ years)',
-            child: 'Child',
-            childAge: '(0–12 years)',
-          }
-
+      const TXT = isPersian
+      ? {
+          room: 'اتاق',
+          removeRoom: 'حذف اتاق',
+          adult: 'بزرگسال',
+          adultAge: '(12 سال به بالا)',
+          child: 'کودک',
+          childAge: '(0 تا 12 سال)',
+        }
+      : isArabic
+      ? {
+          room: 'غرفة',
+          removeRoom: 'إزالة الغرفة',
+          adult: 'بالغ',
+          adultAge: '(12+ سنة)',
+          child: 'طفل',
+          childAge: '(0–12 سنة)',
+        }
+      : {
+          room: 'Room',
+          removeRoom: 'Remove room',
+          adult: 'Adult',
+          adultAge: '(12+ years)',
+          child: 'Child',
+          childAge: '(0–12 years)',
+        }
       const roomsContainer = formEl.querySelector('.Rooms')
 
       const adult_count = t
@@ -4579,58 +4729,68 @@ function Change_ChildCount(t) {
   const formEl = t.closest('form')
 
   // --- language detect (fa vs en) ---
-  const lang = (
-    formEl?.getAttribute('lang') ||
-    document.documentElement.getAttribute('lang') ||
-    ''
-  ).toLowerCase()
-
-  const dir = (
-    formEl?.getAttribute('dir') ||
-    document.documentElement.getAttribute('dir') ||
-    ''
-  ).toLowerCase()
-
-  const isFa = lang.startsWith('fa') || lang.startsWith('ar') || dir === 'rtl'
+  const lang = getCurrentLang()
+  const isPersian = lang.startsWith('fa');
+  const isArabic = lang.startsWith('ar');
 
   // ordinals
   const ordinalWordsFa = ['اول', 'دوم', 'سوم', 'چهارم']
   const ordinalWordsEn = ['First', 'Second', 'Third', 'Fourth']
-  const ordinalWords = isFa ? ordinalWordsFa : ordinalWordsEn
-
+  const ordinalWordsAr = ['الأولى', 'الثانية', 'الثالثة', 'الرابعة']
+  const ordinalWords = isPersian ? ordinalWordsFa : 
+                       isArabic ? ordinalWordsAr : 
+                       ordinalWordsEn
+  
   // label text
-  const childAgeLabel = isFa ? 'سن کودک' : 'Child age'
-
+  const childAgeLabel = isPersian ? 'سن کودک' : 
+                        isArabic ? 'عمر الطفل' : 
+                        'Child age'
+  
   // options
-  const optionsHtml = isFa
+  const optionsHtml = isPersian
     ? `
-<option value="1">تا 1 سال</option>
-<option value="2">1 تا 2</option>
-<option value="3">2 تا 3</option>
-<option value="4">3 تا 4</option>
-<option value="5">4 تا 5</option>
-<option value="6">5 تا 6</option>
-<option value="7">6 تا 7</option>
-<option value="8">7 تا 8</option>
-<option value="9">8 تا 9</option>
-<option value="10">9 تا 10</option>
-<option value="11">10 تا 11</option>
-<option value="12">11 تا 12</option>
-`
+  <option value="1">تا 1 سال</option>
+  <option value="2">1 تا 2</option>
+  <option value="3">2 تا 3</option>
+  <option value="4">3 تا 4</option>
+  <option value="5">4 تا 5</option>
+  <option value="6">5 تا 6</option>
+  <option value="7">6 تا 7</option>
+  <option value="8">7 تا 8</option>
+  <option value="9">8 تا 9</option>
+  <option value="10">9 تا 10</option>
+  <option value="11">10 تا 11</option>
+  <option value="12">11 تا 12</option>
+  `
+    : isArabic
+    ? `
+  <option value="1">حتى سنة واحدة</option>
+  <option value="2">1 إلى 2</option>
+  <option value="3">2 إلى 3</option>
+  <option value="4">3 إلى 4</option>
+  <option value="5">4 إلى 5</option>
+  <option value="6">5 إلى 6</option>
+  <option value="7">6 إلى 7</option>
+  <option value="8">7 إلى 8</option>
+  <option value="9">8 إلى 9</option>
+  <option value="10">9 إلى 10</option>
+  <option value="11">10 إلى 11</option>
+  <option value="12">11 إلى 12</option>
+  `
     : `
-<option value="1">Up to 1 year</option>
-<option value="2">1 to 2</option>
-<option value="3">2 to 3</option>
-<option value="4">3 to 4</option>
-<option value="5">4 to 5</option>
-<option value="6">5 to 6</option>
-<option value="7">6 to 7</option>
-<option value="8">7 to 8</option>
-<option value="9">8 to 9</option>
-<option value="10">9 to 10</option>
-<option value="11">10 to 11</option>
-<option value="12">11 to 12</option>
-`
+  <option value="1">Up to 1 year</option>
+  <option value="2">1 to 2</option>
+  <option value="3">2 to 3</option>
+  <option value="4">3 to 4</option>
+  <option value="5">4 to 5</option>
+  <option value="6">5 to 6</option>
+  <option value="7">6 to 7</option>
+  <option value="8">7 to 8</option>
+  <option value="9">8 to 9</option>
+  <option value="10">9 to 10</option>
+  <option value="11">10 to 11</option>
+  <option value="12">11 to 12</option>
+  `
 
   const span = t.querySelector('span')
   const childCountInput = t.closest('ul').querySelector('.childcount')
@@ -4858,18 +5018,19 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function getHotelLangTexts() {
-    const lang = (
-      document.documentElement.getAttribute('lang') || ''
-    ).toLowerCase()
-    const dir = (
-      document.documentElement.getAttribute('dir') || ''
-    ).toLowerCase()
-    const isFa = lang.startsWith('fa') || lang.startsWith('ar') || dir === 'rtl'
+    const lang = getCurrentLang()
+    const isPersian = lang.startsWith('fa');
+    const isArabic = lang.startsWith('ar');
 
     return {
-      isFa,
-      nightsLabel: isFa ? 'شب' : 'night(s)',
-      tillLabel: isFa ? ' تا' : ' to',
+      isPersian,
+      isArabic,
+      nightsLabel: isPersian ? 'شب' : 
+                   isArabic ? 'ليلة' : 
+                   'night(s)',
+      tillLabel: isPersian ? ' تا' : 
+                 isArabic ? ' إلى' : 
+                 ' to',
     }
   }
 

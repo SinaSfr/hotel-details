@@ -846,7 +846,7 @@ body {
 
     font-weight: 400;
 
-    src: url('../fonts/DanaFaNum-Regular.ttf') format('truetype');
+    src: url('../_fonts/DanaFaNum-Regular.woff') format('truetype');
 }
 
 @font-face {
@@ -858,7 +858,7 @@ body {
 
     font-weight: 500;
 
-    src: url('../fonts/DanaFaNum-Medium.ttf') format('truetype');
+    src: url('../_fonts/DanaFaNum-Medium.woff') format('woff');
 }
 
 @font-face {
@@ -870,7 +870,7 @@ body {
 
     font-weight: 700;
 
-    src: url('../fonts/DanaFaNum-Bold.ttf') format('truetype');
+    src: url('../_fonts/DanaFaNum-Bold.woff') format('woff');
 }
 
 .swiper-pagination-bullet-active {
@@ -917,9 +917,9 @@ body {
 .hotel-content-loader {
     position: relative;
     height: 230px;
-  }
-  
-  .hotel-content-loader:after {
+}
+
+.hotel-content-loader:after {
     content: '';
     display: block;
     width: 100%;
@@ -927,48 +927,32 @@ body {
     position: absolute;
     left: 0;
     top: 0;
-  
+
     background-repeat: no-repeat;
     background-image:
-      linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%),
-      linear-gradient(#e8e8f0 16px, transparent 0),
-      linear-gradient(#e8e8f0 16px, transparent 0),
-      linear-gradient(#e8e8f0 16px, transparent 0),
-      linear-gradient(#e8e8f0 16px, transparent 0),
-      linear-gradient(#e8e8f0 16px, transparent 0),
-      linear-gradient(#e8e8f0 16px, transparent 0),
-      linear-gradient(#e8e8f0 16px, transparent 0),
-      linear-gradient(#ffffff 100%, transparent 0);
-  
+        linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%),
+        linear-gradient(#e8e8f0 16px, transparent 0),
+        linear-gradient(#e8e8f0 16px, transparent 0),
+        linear-gradient(#e8e8f0 16px, transparent 0),
+        linear-gradient(#e8e8f0 16px, transparent 0),
+        linear-gradient(#e8e8f0 16px, transparent 0),
+        linear-gradient(#e8e8f0 16px, transparent 0),
+        linear-gradient(#e8e8f0 16px, transparent 0),
+        linear-gradient(#ffffff 100%, transparent 0);
+
     background-size:
-      168.5px 100%,
-      91px 16px,
-      215px 16px,
-      162px 16px,
-      257px 16px,
-      287px 16px,
-      162px 16px,
-      315px 16px,
-      100% 100%;
-  
+        168.5px 100%,
+        91px 16px,
+        215px 16px,
+        162px 16px,
+        257px 16px,
+        287px 16px,
+        162px 16px,
+        315px 16px,
+        100% 100%;
+
     background-position:
-      0 0,
-      237px 16px,
-      113px 45px,
-      165px 74px,
-      71px 103px,
-      41px 132px,
-      165px 161px,
-      13px 190px,
-      0 0;
-  
-    animation: hotel-content-animation 2000ms infinite;
-  }
-  
-  @keyframes hotel-content-animation {
-    to {
-      background-position:
-        100% 0,
+        0 0,
         237px 16px,
         113px 45px,
         165px 74px,
@@ -977,13 +961,29 @@ body {
         165px 161px,
         13px 190px,
         0 0;
-    }
-  }
 
-  [dir="ltr"] .hotel-content-loader:after {
+    animation: hotel-content-animation 2000ms infinite;
+}
+
+@keyframes hotel-content-animation {
+    to {
+        background-position:
+            100% 0,
+            237px 16px,
+            113px 45px,
+            165px 74px,
+            71px 103px,
+            41px 132px,
+            165px 161px,
+            13px 190px,
+            0 0;
+    }
+}
+
+[dir="ltr"] .hotel-content-loader:after {
     transform: scaleX(-1);
     transform-origin: center;
-  }
+}
 
 .book-hotel__description {
     font-size: revert;

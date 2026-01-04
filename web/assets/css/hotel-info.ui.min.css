@@ -1014,7 +1014,7 @@ body {
 
     font-weight: 400;
 
-    src: url('../fonts/DanaFaNum-Regular.ttf') format('truetype');
+    src: url('../_fonts/DanaFaNum-Regular.woff') format('truetype');
 }
 
 @font-face {
@@ -1026,7 +1026,7 @@ body {
 
     font-weight: 500;
 
-    src: url('../fonts/DanaFaNum-Medium.ttf') format('truetype');
+    src: url('../_fonts/DanaFaNum-Medium.woff') format('woff');
 }
 
 @font-face {
@@ -1038,7 +1038,7 @@ body {
 
     font-weight: 700;
 
-    src: url('../fonts/DanaFaNum-Bold.ttf') format('truetype');
+    src: url('../_fonts/DanaFaNum-Bold.woff') format('woff');
 }
 
 .swiper-pagination-bullet-active {
