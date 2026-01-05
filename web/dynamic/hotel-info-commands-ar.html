@@ -28,3 +28,18 @@
         }'>
 </basis>
 <basis core="callback" triggers="api.info" run="atclient" method="setInfo"></basis>
+<basis core="external.fly.ws" procedurename="dbsource" source="cmsDbService2" name="db">
+    <member name="get_unit_currency" method="cms" query='{
+        "name": "db",
+        "mid": "20",
+        "member": [
+            {
+                "type": "list",
+                "dmnid": "[##cms.cms.domainid##]",
+                "name": "q",
+                "lid": "3",
+                "request": "get_unit_currency"
+            }
+        ]
+    }' />
+</basis>

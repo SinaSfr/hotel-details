@@ -13,15 +13,21 @@
 </head>
 
 
-<body class="book-bg-zinc-50">
+<body class="book-bg-zinc-50 book-body-EN">
     <basis core="call" file="header.inc" lid="2" pageindex="[##cms.cms.pageindex|(2)##]"></basis>
     <basis core="callback" run="atclient"
         triggers="room.list cms.page cms.nextpage cms.prevpage cms.services cms.roomtypes" method="manipulation">
     </basis>
+    <basis core="inlinesource" name="db">
+        <member name='currency_title' format="json" preview=""
+            postsql="select value from [db.currency_title] where field = 'title'">
+            {"root": [##db.get_unit_currency.result##]}
+        </member>
+    </basis>
     <main data-mob="true">
         <!-- Commands / Requests -->
         <basis core="call" file="hotel/info/commands" lid="2"></basis>
-        <div class="max-lg:book-w-[90%] book-mx-auto book-mt-8">
+        <div class="max-lg:book-w-[90%] book-mx-auto book-mt-8 book-mb-6">
             <div class="book-flex book-items-center book-gap-1">
                 <a href="/"
                     class="book-text-zinc-700 book-text-xs book-transition-all book-duration-300 hover:book-text-primary-300">home
@@ -95,14 +101,14 @@
 
                             </div>
                             <div
-                                class="swiper-button-next-popup book-flex book-items-center book-justify-center book-absolute book-top-1/2 book-right-6 book-z-10 book-w-12 book-h-12 book-bg-white/30 -book-translate-y-1/2 book-backdrop-blur-md book-rounded-full book-text-white book-shadow-lg book-transition-all book-duration-300 hover:book-bg-primary-600">
+                                class="swiper-button-prev-popup book-flex book-items-center book-justify-center book-absolute book-top-1/2 book-right-6 book-z-10 book-w-12 book-h-12 book-bg-white/30 -book-translate-y-1/2 book-backdrop-blur-md book-rounded-full book-text-white book-shadow-lg book-transition-all book-duration-300 hover:book-bg-primary-600">
                                 <svg width="32" height="32" class="book-text-white">
                                     <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-chevron-right">
                                     </use>
                                 </svg>
                             </div>
                             <div
-                                class="swiper-button-prev-popup book-flex book-items-center book-justify-center book-absolute book-top-1/2 book-left-6 book-z-10 book-w-12 book-h-12 book-bg-white/30 -book-translate-y-1/2 book-backdrop-blur-md book-rounded-full book-text-white book-shadow-lg book-transition-all book-duration-300 hover:book-bg-primary-600">
+                                class="swiper-button-next-popup book-flex book-items-center book-justify-center book-absolute book-top-1/2 book-left-6 book-z-10 book-w-12 book-h-12 book-bg-white/30 -book-translate-y-1/2 book-backdrop-blur-md book-rounded-full book-text-white book-shadow-lg book-transition-all book-duration-300 hover:book-bg-primary-600">
                                 <svg width="32" height="32" class="book-text-white">
                                     <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-chevron-left">
                                     </use>
@@ -197,7 +203,7 @@
                         <div
                             class="book-hotel__date__picker book-flex book-items-center book-justify-between book-cursor-pointer">
                             <div class="book-flex book-flex-col book-gap-1">
-                                <h2 class="book-font-medium book-text-zinc-900">Selected date</h2>
+                                <h2 class="book-font-medium book-text-zinc-900 book-text-base">Selected date</h2>
                                 <span class="book-flex book-items-center book-gap-2 book-text-zinc-500 book-text-sm">
                                     <span class="book-hotel__nights">
                                         <span class="book-hotel__day"></span>
@@ -247,7 +253,7 @@
                         <div onclick="show_passengerbox(this)"
                             class="show-passengers-dropdown show-passengers-dropdown-hotel book-flex book-items-center book-justify-between book-cursor-pointer">
                             <div class="book-flex book-flex-col book-justify-between book-cursor-pointer">
-                                <span class="label-text book-font-medium">Passengers</span>
+                                <h2 class="label-text book-font-medium book-text-base">Passengers</h2>
                                 <div class="book-flex book-items-center book-gap-2">
                                     <span
                                         class="passenger-counts room-count book-flex book-items-center book-gap-1"><span
@@ -1019,7 +1025,7 @@
 
                     <button
                         class="room-select-btn book-flex book-items-center book-justify-between book-bg-zinc-100 book-rounded-xl book-px-3 book-py-px book-w-full book-transition-all book-duration-300">
-                        <span class="room-select-text book-text-zinc-600">room_only</span>
+                        <span class="room-select-text book-text-zinc-600">-</span>
                         <svg width="48" height="48"
                             class="close-room-btn book-text-zinc-500 book-transition-all book-duration-300">
                             <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-chevron-down"></use>
@@ -1057,7 +1063,7 @@
             </section>
 
             <section class="book-bg-white book-rounded-xl book-px-3 book-pb-6 book-pt-3 book-mt-3">
-                <h2
+                <h2 id="section-rooms"
                     class="book-text-zinc-900 book-font-medium book-border-b book-border-solid book-border-zinc-200 -book-mx-3 book-px-3 book-pb-4 book-mb-4">
                     Rooms</h2>
                 <basis core="print" datamembername="hotel.updated" run="atclient">

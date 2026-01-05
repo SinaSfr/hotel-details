@@ -184,16 +184,22 @@ const onrenderedApiGallery = async () => {
         on: {
           init: function () {
             if (galleryCount) {
+              const lang = document.documentElement.lang || 'fa'
+              const separator =
+                lang === 'fa' ? 'از' : lang === 'ar' ? 'من' : 'of'
               galleryCount.textContent = `${
                 this.realIndex + 1
-              } از ${totalImages}`
+              } ${separator} ${totalImages}`
             }
           },
           slideChange: function () {
             if (galleryCount) {
+              const lang = document.documentElement.lang || 'fa'
+              const separator =
+                lang === 'fa' ? 'از' : lang === 'ar' ? 'من' : 'of'
               galleryCount.textContent = `${
                 this.realIndex + 1
-              } از ${totalImages}`
+              } ${separator} ${totalImages}`
             }
           },
         },
@@ -349,9 +355,14 @@ const LID = (() => {
   if (lang.startsWith('ar')) return '3' // Arabic
   return '2' // Default: English
 })()
-const hotelName = currentLanguage === 'fa' ? 'هتل' : 
-                  currentLanguage === 'en' ? 'hotel' : 
-                  currentLanguage === 'ar' ? 'الفندق' : 'hotel';
+const hotelName =
+  currentLanguage === 'fa'
+    ? 'هتل'
+    : currentLanguage === 'en'
+    ? 'hotel'
+    : currentLanguage === 'ar'
+    ? 'الفندق'
+    : 'hotel'
 const isMobile = document.querySelector('main').dataset.mob === 'true'
 var provider, id, optionId, usedforids
 
@@ -694,12 +705,6 @@ function resolveTitle(map, lang = 'fa', source = 'restful') {
 
   const v = map?.[lang]?.[source]
 
-  // console.log('=== RESOLVE TITLE ===')
-  // console.log('lang:', lang)
-  // console.log('source:', source)
-  // console.log('map:', map)
-  // console.log('resolved value:', v)
-
   if (typeof v === 'string') return v
 
   if (typeof map?.[lang] === 'string') return map[lang]
@@ -749,23 +754,12 @@ function getProperty(unified, propMap, sectionMap, opts = {}) {
   const propTitle = resolveTitle(propMap, lang, source)
   const sectionTitle = resolveTitle(sectionMap, lang, source)
 
-  console.log('=== GET PROPERTY ===')
-  console.log('lang:', lang)
-  console.log('source:', source)
-  console.log('propTitle:', propTitle)
-  console.log('sectionTitle:', sectionTitle)
-
   if (!propTitle) {
     console.warn('getProperty: empty propTitle')
     return wantList ? [] : null
   }
 
   const sections = unified?.sections || []
-
-  console.log(
-    'available sections:',
-    sections.map((s) => s.title),
-  )
 
   const targetSections = sectionTitle
     ? sections.filter(
@@ -775,21 +769,10 @@ function getProperty(unified, propMap, sectionMap, opts = {}) {
       )
     : sections
 
-  console.log(
-    'matched sections:',
-    targetSections.map((s) => s.title),
-  )
-
   let answers = []
 
   for (const sec of targetSections) {
     const props = Array.isArray(sec.properties) ? sec.properties : []
-
-    console.log(
-      'checking props in section:',
-      sec.title,
-      props.map((p) => p.title),
-    )
 
     const hit = props.find(
       (p) =>
@@ -808,8 +791,6 @@ function getProperty(unified, propMap, sectionMap, opts = {}) {
 
     break
   }
-
-  console.log('final answers:', answers)
 
   return wantList ? answers : answers[0] || null
 }
@@ -1291,7 +1272,10 @@ const setInfo = async (args) => {
             restful: 'number of buildings/towers',
             external: 'Number of buildings',
           },
-          ar: { restful: 'عدد المباني / الأبراج', external: 'تعداد ساختمان ها' },
+          ar: {
+            restful: 'عدد المباني / الأبراج',
+            external: 'تعداد ساختمان ها',
+          },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'General specifications' },
@@ -1345,7 +1329,10 @@ const setInfo = async (args) => {
             restful: 'Outdoor pools count',
             external: 'Outdoor pools count',
           },
-          ar: { restful: 'عدد حمامات السباحة في الهواء الطلق', external: 'Outdoor pools count' },
+          ar: {
+            restful: 'عدد حمامات السباحة في الهواء الطلق',
+            external: 'Outdoor pools count',
+          },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Facilities' },
@@ -1360,7 +1347,10 @@ const setInfo = async (args) => {
             external: 'Indoor pools count',
           },
           en: { restful: 'Indoor pools count', external: 'Indoor pools count' },
-          ar: { restful: 'عدد حمامات السباحة في الأماكن المغلقة', external: 'Indoor pools count' },
+          ar: {
+            restful: 'عدد حمامات السباحة في الأماكن المغلقة',
+            external: 'Indoor pools count',
+          },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Facilities' },
@@ -1415,7 +1405,10 @@ const setInfo = async (args) => {
         prop: {
           fa: { restful: 'حداکثر وزن حیوانات', external: 'Max pets weight' },
           en: { restful: 'pet maximum weight', external: 'Max pets weight' },
-          ar: { restful: 'الحد الأقصى لوزن الحيوانات الأليفة', external: 'Max pets weight' },
+          ar: {
+            restful: 'الحد الأقصى لوزن الحيوانات الأليفة',
+            external: 'Max pets weight',
+          },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'General specifications' },
@@ -1433,7 +1426,10 @@ const setInfo = async (args) => {
             external: 'Max pets per room',
           },
           en: { restful: 'Max pets per room', external: 'Max pets per room' },
-          ar: { restful: 'الحد الأقصى لعدد الحيوانات الأليفة في كل غرفة', external: 'Max pets per room' },
+          ar: {
+            restful: 'الحد الأقصى لعدد الحيوانات الأليفة في كل غرفة',
+            external: 'Max pets per room',
+          },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'General specifications' },
@@ -1463,7 +1459,10 @@ const setInfo = async (args) => {
         prop: {
           fa: { restful: 'کارت های اعتباری', external: 'Credit cards' },
           en: { restful: 'accessible Debit cards', external: 'Credit cards' },
-          ar: { restful: 'وبطاقات السحب الآلي يمكن الوصول إليها', external: 'Credit cards' },
+          ar: {
+            restful: 'وبطاقات السحب الآلي يمكن الوصول إليها',
+            external: 'Credit cards',
+          },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'General specifications' },
@@ -1499,7 +1498,10 @@ const setInfo = async (args) => {
             restful: 'Minimum check-in age',
             external: 'Minimum check-in age',
           },
-          ar: { restful: 'الحد الأدنى لتسجيل النزول هو', external: 'Minimum check-in age' },
+          ar: {
+            restful: 'الحد الأدنى لتسجيل النزول هو',
+            external: 'Minimum check-in age',
+          },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'General specifications' },
@@ -1599,7 +1601,10 @@ const setInfo = async (args) => {
             restful: 'Cosmetic services',
             external: 'Beauty & hygiene services',
           },
-          ar: { restful: 'خدمات التجميل', external: 'Beauty & hygiene services' },
+          ar: {
+            restful: 'خدمات التجميل',
+            external: 'Beauty & hygiene services',
+          },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Facilities' },
@@ -1641,7 +1646,10 @@ const setInfo = async (args) => {
             restful: 'Conference halls count',
             external: 'Conference halls count',
           },
-          ar: { restful: 'عدد قاعة المؤتمرات', external: 'Conference halls count' },
+          ar: {
+            restful: 'عدد قاعة المؤتمرات',
+            external: 'Conference halls count',
+          },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Facilities' },
@@ -1695,7 +1703,10 @@ const setInfo = async (args) => {
             restful: 'facilities for disabled',
             external: 'Accessible facilities',
           },
-          ar: { restful: 'مرافق لذوي الاحتياجات الخاصة', external: 'Accessible facilities' },
+          ar: {
+            restful: 'مرافق لذوي الاحتياجات الخاصة',
+            external: 'Accessible facilities',
+          },
         },
         section: {
           fa: { restful: 'مشخصات هتل', external: 'Facilities' },
@@ -1761,8 +1772,8 @@ const setInfo = async (args) => {
     const dir = (
       document.documentElement.getAttribute('dir') || ''
     ).toLowerCase()
-    const isPersian = lang.startsWith('fa');
-    const isArabic = lang.startsWith('ar');
+    const isPersian = lang.startsWith('fa')
+    const isArabic = lang.startsWith('ar')
     const unified = unifyHotelData(data, { lang })
     // تشخیص اینکه دیتا از external اومده یا restful
     const source = unified.source
@@ -1998,17 +2009,14 @@ const setInfo = async (args) => {
     const moreInfoBtn = document.querySelector('.open-hotel-moreinfo-btn')
     if (!facilitiesContainer) return
 
-    const facilitiesEmptyText = isPersian 
-    ? 'امکاناتی برای این هتل ثبت نشده است.'
-    : isArabic
-    ? 'لم يتم تسجيل أي مرافق لهذا الفندق.'
-    : 'No hotel facilities have been provided.';
+    const facilitiesEmptyText = isPersian
+      ? 'امکاناتی برای این هتل ثبت نشده است.'
+      : isArabic
+      ? 'لم يتم تسجيل أي مرافق لهذا الفندق.'
+      : 'No hotel facilities have been provided.'
 
     facilitiesContainer.innerHTML = ''
 
-    console.log(Array.isArray(facilities) && facilities.length)
-    console.log(facilities.length)
-    console.log(Array.isArray(facilities))
     if (Array.isArray(facilities) && facilities.length) {
       if (moreInfoBtn) {
         moreInfoBtn.classList.remove('book-hidden')
@@ -2060,10 +2068,10 @@ ${facilitiesEmptyText}
     if (!roomFacilitiesContainer) return
 
     const emptyText = isPersian
-    ? 'امکاناتی برای این اتاق ثبت نشده است'
-    : isArabic
-    ? 'لم يتم تسجيل أي مرافق لهذه الغرفة'
-    : 'No room facilities have been provided';
+      ? 'امکاناتی برای این اتاق ثبت نشده است'
+      : isArabic
+      ? 'لم يتم تسجيل أي مرافق لهذه الغرفة'
+      : 'No room facilities have been provided'
 
     roomFacilitiesContainer.innerHTML = ''
 
@@ -2671,57 +2679,111 @@ ${emptyText}
     }
 
     function hideEmptyMoreInfoSections() {
-      const sections = document.querySelectorAll('.hotel-moreinfo-section')
-
+      const sections = document.querySelectorAll('.hotel-moreinfo-section');
+    
       const clean = (s) =>
         (s || '')
           .replace(/[\u00A0\u200C\u200D\u200E\u200F\u202A-\u202E]/g, '')
           .trim()
-          .toLowerCase()
-
-      const isDashOnly = (s) => /^[-–—−]+$/.test(clean(s))
-
+          .toLowerCase();
+    
+      const isDashOnly = (s) => /^[-–—−]+$/.test(clean(s));
+    
       const isEmptyText = (s) => {
-        const v = clean(s)
-        return !v || v === 'n/a' || /^[-–—−]+$/.test(v)
-      }
-
+        const v = clean(s);
+        return !v || v === 'n/a' || /^[-–—−]+$/.test(v);
+      };
+    
+      let hasAnyVisibleSection = false;
+    
       sections.forEach((section) => {
-        const wrapper = section.querySelector('.hotel-moreinfo-wrapper')
-        if (!wrapper) return
-
-        const items = Array.from(wrapper.children)
-
-        items.forEach((item) => {
-          const valueEl =
-            item.querySelector('span[class*="book-hotel__moreinfo__"]') ||
-            item.querySelector('[class*="book-hotel__moreinfo__"]')
-
-          if (valueEl) {
-            const text = valueEl.textContent || ''
-            item.style.display = isEmptyText(text) ? 'none' : ''
-            return
-          }
-
-          item.style.display = 'none'
-        })
-
-        const hasVisibleItem = Array.from(wrapper.children).some(
-          (child) => child.style.display !== 'none',
-        )
-        wrapper.style.display = hasVisibleItem ? '' : 'none'
-
-        section.style.display = hasVisibleItem ? '' : 'none'
-      })
-
-      const hasAnyVisibleSection = Array.from(
-        document.querySelectorAll('.hotel-moreinfo-section'),
-      ).some((sec) => sec.style.display !== 'none')
-
-      const moreInfoBtn = document.querySelector('.open-hotel-moreinfo-btn')
+        let hasVisibleContent = false;
+    
+        // ==================== ساختار اول (دارای wrapper) ====================
+        const wrapper = section.querySelector('.hotel-moreinfo-wrapper');
+        if (wrapper) {
+          const items = Array.from(wrapper.children);
+          let hasVisibleItem = false;
+    
+          items.forEach((item) => {
+            const valueEl =
+              item.querySelector('span[class*="book-hotel__moreinfo__"]') ||
+              item.querySelector('[class*="book-hotel__moreinfo__"]');
+    
+            if (valueEl) {
+              const text = valueEl.textContent || '';
+              const isEmpty = isEmptyText(text);
+              item.style.display = isEmpty ? 'none' : '';
+              if (!isEmpty) hasVisibleItem = true;
+              return;
+            }
+    
+            item.style.display = 'none';
+          });
+    
+          wrapper.style.display = hasVisibleItem ? '' : 'none';
+          hasVisibleContent = hasVisibleItem;
+        }
+    
+        // ==================== ساختار دوم (بدون wrapper) ====================
+        const gridItems = section.querySelectorAll('.book-border.book-border-solid');
+        if (gridItems.length > 0) {
+          gridItems.forEach((item) => {
+            // پیدا کردن المان مقدار
+            const valueEls = item.querySelectorAll('[class*="book-hotel__moreinfo__"]');
+            let isItemEmpty = true;
+    
+            valueEls.forEach((el) => {
+              const text = el.textContent || '';
+              if (!isEmptyText(text)) {
+                isItemEmpty = false;
+              }
+            });
+    
+            // همچنین چک کردن span‌های مستقیم
+            const directSpans = item.querySelectorAll('span[class*="book-hotel__moreinfo__"]');
+            directSpans.forEach((span) => {
+              const text = span.textContent || '';
+              if (!isEmptyText(text)) {
+                isItemEmpty = false;
+              }
+            });
+    
+            // مخفی کردن آیتم اگر همه المان‌های داخلی خالی باشند
+            if (isItemEmpty) {
+              item.style.display = 'none';
+            } else {
+              item.style.display = '';
+              hasVisibleContent = true;
+            }
+          });
+    
+          // چک کردن بخش‌های اضافی در "تفریح، ورزش و ساحل"
+          const additionalItems = section.querySelectorAll('.book-flex.book-items-center.book-justify-between');
+          additionalItems.forEach((item) => {
+            const valueSpan = item.querySelector('span[class*="book-hotel__moreinfo__"]');
+            if (valueSpan) {
+              const text = valueSpan.textContent || '';
+              if (isEmptyText(text)) {
+                item.style.display = 'none';
+              } else {
+                item.style.display = '';
+                hasVisibleContent = true;
+              }
+            }
+          });
+        }
+    
+        // ==================== نمایش/مخفی کردن کل بخش ====================
+        section.style.display = hasVisibleContent ? '' : 'none';
+        if (hasVisibleContent) hasAnyVisibleSection = true;
+      });
+    
+      // ==================== کنترل دکمه ====================
+      const moreInfoBtn = document.querySelector('.open-hotel-moreinfo-btn');
       if (moreInfoBtn) {
-        moreInfoBtn.classList.toggle('book-hidden', !hasAnyVisibleSection)
-        moreInfoBtn.classList.toggle('book-flex', hasAnyVisibleSection)
+        moreInfoBtn.classList.toggle('book-hidden', !hasAnyVisibleSection);
+        moreInfoBtn.classList.toggle('book-flex', hasAnyVisibleSection);
       }
     }
 
@@ -2759,27 +2821,71 @@ ${emptyText}
   }
 }
 
+const getSearchCookie = (element) => {
+  try {
+    const value = `; ${document.cookie}`
+    const parts = value.split(`; ${element}=`)
+    return parts.length === 2 ? parts.pop().split(';').shift() : null
+  } catch (error) {
+    console.error('getSearchCookie: ' + error.message)
+    return null
+  }
+}
+
+// اینجا تعریف می‌کنیم
+let providerDataList = []
+
+// Async IIFE برای کار با await در سطح بالاتر
+;(async () => {
+  if (getSearchCookie('rkey')) {
+    const userResponse = await fetch('/Client_User_Type.inc')
+    const user = await userResponse.text()
+    console.log(user);
+    if (user && user === '1') {
+      const providerResponse = await fetch('/Client_Provider_Library.bc')
+      providerDataList = await providerResponse.json()
+    }
+  }
+})()
+
+const renderProviderWithCookie = (element) => {
+  try {
+    const providerData = providerDataList.find(
+      (provider) => provider.id === parseInt(element),
+    )
+    
+    return providerData ? JSON.stringify(providerData) : ''
+    
+  } catch (error) {
+    console.error(`renderProvider: ${error.message}`)
+    return ''
+  }
+}
+
 const renderAvailableRooms = async (element) => {
   try {
     // --- language detect (fa vs en) ---
     const lang = getCurrentLang()
     const isPersian = lang.startsWith('fa')
-const isArabic = lang.startsWith('ar')
+    const isArabic = lang.startsWith('ar')
 
-const TXT = isPersian
-? {
-    noRooms: 'هیچ اتاقی برای نمایش موجود نیست. لطفاً فیلترها را تغییر دهید یا دوباره تلاش کنید.',
-    roomRules: 'قوانین اتاق',
-  }
-: isArabic
-? {
-    noRooms: 'لا توجد غرف متاحة للعرض. يرجى تعديل الفلاتر أو المحاولة مرة أخرى.',
-    roomRules: 'قواعد الغرفة',
-  }
-: {
-    noRooms: 'No rooms available to display. Please adjust filters or try again.',
-    roomRules: 'Room rules',
-  }
+    const TXT = isPersian
+      ? {
+          noRooms:
+            'هیچ اتاقی برای نمایش موجود نیست. لطفاً فیلترها را تغییر دهید یا دوباره تلاش کنید.',
+          roomRules: 'قوانین اتاق',
+        }
+      : isArabic
+      ? {
+          noRooms:
+            'لا توجد غرف متاحة للعرض. يرجى تعديل الفلاتر أو المحاولة مرة أخرى.',
+          roomRules: 'قواعد الغرفة',
+        }
+      : {
+          noRooms:
+            'No rooms available to display. Please adjust filters or try again.',
+          roomRules: 'Room rules',
+        }
 
     if (
       !element ||
@@ -2803,6 +2909,27 @@ const TXT = isPersian
     }
 
     const serviceLabel = element.services
+
+    const providerIdResult = renderProviderWithCookie(
+      element.id?.provider?.provider_id
+    );
+    
+    let spanHTML = '';
+    
+    try {
+        const providerData = JSON.parse(providerIdResult || '{}');
+        if (providerData.name !== undefined && providerData.name !== null) {
+            spanHTML = `
+              <span class="book-bg-primary-900 book-text-white book-text-xs book-rounded-3xl book-py-1 book-px-4">
+                ${providerData.name}
+              </span>
+            `;
+        }
+    } catch (error) {
+        // خطا را نادیده بگیر یا لاگ کن
+        console.warn('Provider parsing failed:', error);
+    }
+    
 
     const { currency_cost_number, floatdigit } = getCurrencyUnitFromStorage()
     const currency_unit = renderUnit('')
@@ -2859,6 +2986,8 @@ const TXT = isPersian
       <span class="book-bg-specialcolor-1 book-text-specialcolor-2 book-text-xs book-rounded-3xl book-py-1 book-px-4">
         ${availabilityLabel}
       </span>
+
+      ${spanHTML}
 
       <button
         type="button"
@@ -2981,7 +3110,6 @@ const setActionForAllForms = () => {
   )
 
   if (!roomFormContainer) {
-    console.warn('⚠️ book-list__cards__container not found!')
     return
   }
 
@@ -3267,32 +3395,32 @@ const priceWithCurrency = (amount, opts = {}) => {
     // language & direction detection
     const lang = getCurrentLang()
     const isPersian = lang.startsWith('fa')
-const isArabic = lang.startsWith('ar')
+    const isArabic = lang.startsWith('ar')
 
     // texts
     const texts = {
-      basePrice: isPersian ? 'مبلغ اصلی:' : 
-                 isArabic ? 'المبلغ الأساسي:' : 
-                 'Base Price:',
-      commission: isPersian ? 'کمیسیون:' : 
-                  isArabic ? 'العمولة:' : 
-                  'Commission:',
-      payable: isPersian ? 'مبلغ قابل پرداخت:' : 
-               isArabic ? 'المبلغ المستحق الدفع:' : 
-               'Payable Amount:',
+      basePrice: isPersian
+        ? 'مبلغ اصلی:'
+        : isArabic
+        ? 'المبلغ الأساسي:'
+        : 'Base Price:',
+      commission: isPersian
+        ? 'کمیسیون:'
+        : isArabic
+        ? 'العمولة:'
+        : 'Commission:',
+      payable: isPersian
+        ? 'مبلغ قابل پرداخت:'
+        : isArabic
+        ? 'المبلغ المستحق الدفع:'
+        : 'Payable Amount:',
     }
 
     const { currency_cost_number, floatdigit, currency_unit } =
       getCurrencyUnitFromStorage()
 
     const unit =
-    currency_unit && String(currency_unit).trim()
-    ? String(currency_unit).trim()
-    : isPersian
-    ? 'ریال'
-    : isArabic
-    ? 'ريال'
-    : 'IRR'
+      currency_unit && String(currency_unit).trim() ? String(currency_unit).trim() : window.cmsData?.currencyValue
 
     const rate = Number.isFinite(opts.rate)
       ? Number(opts.rate)
@@ -3888,25 +4016,26 @@ const manipulation = async (args) => {
       // --- language detect (fa vs en) ---
       const lang = getCurrentLang()
       const isPersian = lang.startsWith('fa')
-const isArabic = lang.startsWith('ar')
+      const isArabic = lang.startsWith('ar')
 
-const TXT = isPersian
-? {
-    title: 'هیچ اتاقی با فیلترهای انتخابی یافت نشد',
-    subtitle: 'لطفاً فیلترها را تغییر دهید',
-    fallback: 'هیچ اتاقی برای نمایش موجود نیست. لطفاً دوباره تلاش کنید.',
-  }
-: isArabic
-? {
-    title: 'لم يتم العثور على غرف مع الفلاتر المحددة',
-    subtitle: 'يرجى تعديل الفلاتر',
-    fallback: 'لا توجد غرف متاحة للعرض. يرجى المحاولة مرة أخرى.',
-  }
-: {
-    title: 'No rooms match your selected filters',
-    subtitle: 'Please adjust your filters',
-    fallback: 'No rooms are available to display. Please try again.',
-  }
+      const TXT = isPersian
+        ? {
+            title: 'هیچ اتاقی با فیلترهای انتخابی یافت نشد',
+            subtitle: 'لطفاً فیلترها را تغییر دهید',
+            fallback:
+              'هیچ اتاقی برای نمایش موجود نیست. لطفاً دوباره تلاش کنید.',
+          }
+        : isArabic
+        ? {
+            title: 'لم يتم العثور على غرف مع الفلاتر المحددة',
+            subtitle: 'يرجى تعديل الفلاتر',
+            fallback: 'لا توجد غرف متاحة للعرض. يرجى المحاولة مرة أخرى.',
+          }
+        : {
+            title: 'No rooms match your selected filters',
+            subtitle: 'Please adjust your filters',
+            fallback: 'No rooms are available to display. Please try again.',
+          }
 
       // Display no rooms found message
       const listContainer = document.querySelector(
@@ -4031,22 +4160,22 @@ const showRules = async (el, optionId) => {
     const isArabic = lang.startsWith('ar')
 
     const texts = isPersian
-  ? {
-      noRules: 'قوانینی برای این اتاق ثبت نشده است',
-      loading: 'در حال بارگذاری قوانین اتاق...',
-      error: 'خطا در دریافت قوانین اتاق. لطفاً دوباره تلاش کنید.',
-    }
-  : isArabic
-  ? {
-      noRules: 'لم يتم تسجيل قواعد لهذه الغرفة',
-      loading: 'جاري تحميل قواعد الغرفة...',
-      error: 'خطأ في تحميل قواعد الغرفة. يرجى المحاولة مرة أخرى.',
-    }
-  : {
-      noRules: 'No rules have been provided for this room.',
-      loading: 'Loading room rules...',
-      error: 'Failed to load room rules. Please try again.',
-    }
+      ? {
+          noRules: 'قوانینی برای این اتاق ثبت نشده است',
+          loading: 'در حال بارگذاری قوانین اتاق...',
+          error: 'خطا در دریافت قوانین اتاق. لطفاً دوباره تلاش کنید.',
+        }
+      : isArabic
+      ? {
+          noRules: 'لم يتم تسجيل قواعد لهذه الغرفة',
+          loading: 'جاري تحميل قواعد الغرفة...',
+          error: 'خطأ في تحميل قواعد الغرفة. يرجى المحاولة مرة أخرى.',
+        }
+      : {
+          noRules: 'No rules have been provided for this room.',
+          loading: 'Loading room rules...',
+          error: 'Failed to load room rules. Please try again.',
+        }
 
     const fallbackHtml = `
 <div class="book-text-center book-py-6 book-text-xs book-text-zinc-500">
@@ -4123,12 +4252,12 @@ ${texts.loading}
     if (container) {
       const lang = getCurrentLang()
       const isPersian = lang.startsWith('fa')
-const isArabic = lang.startsWith('ar')
-const texts = isPersian
-? 'خطا در دریافت قوانین اتاق. لطفاً دوباره تلاش کنید.'
-: isArabic
-? 'خطأ في تحميل قواعد الغرفة. يرجى المحاولة مرة أخرى.'
-: 'Failed to load room rules. Please try again.'
+      const isArabic = lang.startsWith('ar')
+      const texts = isPersian
+        ? 'خطا در دریافت قوانین اتاق. لطفاً دوباره تلاش کنید.'
+        : isArabic
+        ? 'خطأ في تحميل قواعد الغرفة. يرجى المحاولة مرة أخرى.'
+        : 'Failed to load room rules. Please try again.'
 
       container.innerHTML = `
 <div class="book-text-center book-py-6 book-text-xs book-text-zinc-500">
@@ -4344,36 +4473,36 @@ function Change_Room_Count(t) {
 
       // --- language detect (fa vs en) ---
       const lang = getCurrentLang()
-      const isPersian = lang.startsWith('fa');
-      const isArabic = lang.startsWith('ar');
+      const isPersian = lang.startsWith('fa')
+      const isArabic = lang.startsWith('ar')
 
       // --- texts ---
       const TXT = isPersian
-      ? {
-          room: 'اتاق',
-          removeRoom: 'حذف اتاق',
-          adult: 'بزرگسال',
-          adultAge: '(12 سال به بالا)',
-          child: 'کودک',
-          childAge: '(0 تا 12 سال)',
-        }
-      : isArabic
-      ? {
-          room: 'غرفة',
-          removeRoom: 'إزالة الغرفة',
-          adult: 'بالغ',
-          adultAge: '(12+ سنوات)',
-          child: 'طفل',
-          childAge: '(0–12 سنة)',
-        }
-      : {
-          room: 'Room',
-          removeRoom: 'Remove room',
-          adult: 'Adult',
-          adultAge: '(12+ years)',
-          child: 'Child',
-          childAge: '(0–12 years)',
-        }
+        ? {
+            room: 'اتاق',
+            removeRoom: 'حذف اتاق',
+            adult: 'بزرگسال',
+            adultAge: '(12 سال به بالا)',
+            child: 'کودک',
+            childAge: '(0 تا 12 سال)',
+          }
+        : isArabic
+        ? {
+            room: 'غرفة',
+            removeRoom: 'إزالة الغرفة',
+            adult: 'بالغ',
+            adultAge: '(12+ سنوات)',
+            child: 'طفل',
+            childAge: '(0–12 سنة)',
+          }
+        : {
+            room: 'Room',
+            removeRoom: 'Remove room',
+            adult: 'Adult',
+            adultAge: '(12+ years)',
+            child: 'Child',
+            childAge: '(0–12 years)',
+          }
 
       const roomsContainer = formEl.querySelector('.Rooms')
       const adult_count = t
@@ -4496,36 +4625,36 @@ function Add_Room_Count(t) {
 
       // --- language detect (fa vs en) ---
       const lang = getCurrentLang()
-      const isPersian = lang.startsWith('fa');
-      const isArabic = lang.startsWith('ar');
+      const isPersian = lang.startsWith('fa')
+      const isArabic = lang.startsWith('ar')
 
       // --- texts ---
       const TXT = isPersian
-      ? {
-          room: 'اتاق',
-          removeRoom: 'حذف اتاق',
-          adult: 'بزرگسال',
-          adultAge: '(12 سال به بالا)',
-          child: 'کودک',
-          childAge: '(0 تا 12 سال)',
-        }
-      : isArabic
-      ? {
-          room: 'غرفة',
-          removeRoom: 'إزالة الغرفة',
-          adult: 'بالغ',
-          adultAge: '(12+ سنة)',
-          child: 'طفل',
-          childAge: '(0–12 سنة)',
-        }
-      : {
-          room: 'Room',
-          removeRoom: 'Remove room',
-          adult: 'Adult',
-          adultAge: '(12+ years)',
-          child: 'Child',
-          childAge: '(0–12 years)',
-        }
+        ? {
+            room: 'اتاق',
+            removeRoom: 'حذف اتاق',
+            adult: 'بزرگسال',
+            adultAge: '(12 سال به بالا)',
+            child: 'کودک',
+            childAge: '(0 تا 12 سال)',
+          }
+        : isArabic
+        ? {
+            room: 'غرفة',
+            removeRoom: 'إزالة الغرفة',
+            adult: 'بالغ',
+            adultAge: '(12+ سنة)',
+            child: 'طفل',
+            childAge: '(0–12 سنة)',
+          }
+        : {
+            room: 'Room',
+            removeRoom: 'Remove room',
+            adult: 'Adult',
+            adultAge: '(12+ years)',
+            child: 'Child',
+            childAge: '(0–12 years)',
+          }
       const roomsContainer = formEl.querySelector('.Rooms')
 
       const adult_count = t
@@ -4730,22 +4859,26 @@ function Change_ChildCount(t) {
 
   // --- language detect (fa vs en) ---
   const lang = getCurrentLang()
-  const isPersian = lang.startsWith('fa');
-  const isArabic = lang.startsWith('ar');
+  const isPersian = lang.startsWith('fa')
+  const isArabic = lang.startsWith('ar')
 
   // ordinals
   const ordinalWordsFa = ['اول', 'دوم', 'سوم', 'چهارم']
   const ordinalWordsEn = ['First', 'Second', 'Third', 'Fourth']
   const ordinalWordsAr = ['الأولى', 'الثانية', 'الثالثة', 'الرابعة']
-  const ordinalWords = isPersian ? ordinalWordsFa : 
-                       isArabic ? ordinalWordsAr : 
-                       ordinalWordsEn
-  
+  const ordinalWords = isPersian
+    ? ordinalWordsFa
+    : isArabic
+    ? ordinalWordsAr
+    : ordinalWordsEn
+
   // label text
-  const childAgeLabel = isPersian ? 'سن کودک' : 
-                        isArabic ? 'عمر الطفل' : 
-                        'Child age'
-  
+  const childAgeLabel = isPersian
+    ? 'سن کودک'
+    : isArabic
+    ? 'عمر الطفل'
+    : 'Child age'
+
   // options
   const optionsHtml = isPersian
     ? `
@@ -5019,18 +5152,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function getHotelLangTexts() {
     const lang = getCurrentLang()
-    const isPersian = lang.startsWith('fa');
-    const isArabic = lang.startsWith('ar');
+    const isPersian = lang.startsWith('fa')
+    const isArabic = lang.startsWith('ar')
 
     return {
       isPersian,
       isArabic,
-      nightsLabel: isPersian ? 'شب' : 
-                   isArabic ? 'ليلة' : 
-                   'night(s)',
-      tillLabel: isPersian ? ' تا' : 
-                 isArabic ? ' إلى' : 
-                 ' to',
+      nightsLabel: isPersian ? 'شب' : isArabic ? 'ليلة' : 'night(s)',
+      tillLabel: isPersian ? ' تا' : isArabic ? ' إلى' : ' to',
     }
   }
 

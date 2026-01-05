@@ -12,11 +12,17 @@
         type="text/css" rel="stylesheet" />
 </head>
 
-<body class="book-bg-zinc-50">
+<body class="book-bg-zinc-50 book-body-EN">
     <!-- Header -->
     <basis core="call" file="header.inc" lid="2" pageindex="[##cms.cms.pageindex|(1)##]"></basis>
     <basis core="callback" run="atclient"
         triggers="room.list cms.page cms.nextpage cms.prevpage cms.services cms.roomtypes" method="manipulation">
+    </basis>
+    <basis core="inlinesource" name="db">
+        <member name='currency_title' format="json" preview=""
+            postsql="select value from [db.currency_title] where field = 'title'">
+            {"root": [##db.get_unit_currency.result##]}
+        </member>
     </basis>
     <!-- Main-->
     <main>
@@ -115,14 +121,14 @@
                             </div>
 
                             <div
-                                class="swiper-button-next-popup book-flex book-items-center book-justify-center book-absolute book-top-1/2 book-left-6 book-z-10 book-w-12 book-h-12 book-bg-white/30 -book-translate-y-1/2 book-backdrop-blur-md book-rounded-full book-text-white book-shadow-lg book-transition-all book-duration-300 hover:book-bg-primary-600">
+                                class="swiper-button-prev-popup book-flex book-items-center book-justify-center book-absolute book-top-1/2 book-left-6 book-z-10 book-w-12 book-h-12 book-bg-white/30 -book-translate-y-1/2 book-backdrop-blur-md book-rounded-full book-text-white book-shadow-lg book-transition-all book-duration-300 hover:book-bg-primary-600">
                                 <svg width="32" height="32" class="book-text-white">
                                     <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-chevron-left">
                                     </use>
                                 </svg>
                             </div>
                             <div
-                                class="swiper-button-prev-popup book-flex book-items-center book-justify-center book-absolute book-top-1/2 book-right-6 book-z-10 book-w-12 book-h-12 book-bg-white/30 -book-translate-y-1/2 book-backdrop-blur-md book-rounded-full book-text-white book-shadow-lg book-transition-all book-duration-300 hover:book-bg-primary-600">
+                                class="swiper-button-next-popup book-flex book-items-center book-justify-center book-absolute book-top-1/2 book-right-6 book-z-10 book-w-12 book-h-12 book-bg-white/30 -book-translate-y-1/2 book-backdrop-blur-md book-rounded-full book-text-white book-shadow-lg book-transition-all book-duration-300 hover:book-bg-primary-600">
                                 <svg width="32" height="32" class="book-text-white">
                                     <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-chevron-right">
                                     </use>
@@ -775,7 +781,7 @@
 
                     <section
                         class="book-flex book-items-center book-justify-between book-bg-white book-rounded-xl book-mt-8 book-py-2 book-pr-6 book-pl-2">
-                        <h2 class="book-font-medium book-text-zinc-900">Filter by:</h2>
+                        <h2 class="book-font-medium book-text-zinc-900 book-text-base">Filter by:</h2>
                         <div class="book-flex book-items-center book-gap-2">
                             <h3 class="book-text-sm">Room name:</h3>
                             <div class="">
@@ -951,7 +957,7 @@
                                 <div
                                     class="book-hotel__date__picker book-flex book-items-center book-justify-between book-cursor-pointer">
                                     <div class="book-flex book-flex-col book-gap-1">
-                                        <h2 class="book-font-medium book-text-zinc-900">Selected date</h2>
+                                        <h2 class="book-font-medium book-text-zinc-900 book-text-base">Selected date</h2>
                                         <span
                                             class="book-flex book-items-center book-gap-2 book-text-zinc-500 book-text-sm">
                                             <span class="book-hotel__nights">
@@ -1004,7 +1010,7 @@
                                 <div onclick="show_passengerbox(this)"
                                     class="show-passengers-dropdown show-passengers-dropdown-hotel book-flex book-items-center book-justify-between book-cursor-pointer">
                                     <div class="book-flex book-flex-col book-justify-between book-cursor-pointer">
-                                        <span class="label-text book-font-medium">Passengers</span>
+                                        <h2 class="label-text book-font-medium book-text-base">Passengers</h2>
                                         <div class="book-flex book-items-center book-gap-2">
                                             <span
                                                 class="passenger-counts room-count book-flex book-items-center book-gap-1"><span
@@ -1027,7 +1033,7 @@
                                     </label>
                                 </div>
                                 <div
-                                    class="passengerbox hidden-box book-hidden book-w-[310px] book-p-4 book-overflow-hidden book-max-h-0 book-transition-all book-duration-300">
+                                    class="passengerbox hidden-box book-hidden book-w-[310px] book-p-3 book-overflow-hidden book-max-h-0 book-transition-all book-duration-300">
                                     <div
                                         class="passenger-item room-passenger-item book-flex book-items-center book-justify-between">
                                         <label for="passenger-roomcount1"

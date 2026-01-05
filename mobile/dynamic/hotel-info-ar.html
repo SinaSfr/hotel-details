@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="ar" dir="rtl">
 
 <head>
-    <basis core="call" file="book/taglist" lid="1"></basis>
-    <title>اطلاعات هتل</title>
-    <meta name="description" content="اطلاعات هتل">
+    <basis core="call" file="book/taglist" lid="3"></basis>
+    <title>معلومات الفندق</title>
+    <meta name="description" content="معلومات الفندق">
     <link href="[##cms.cms.cdn##]/_css/swiper-bundle.min.css" type="text/css" rel="stylesheet" />
     <link href="[##cms.cms.cdn##]/booking/css/hotel-info-mob.ui.min.css?ver=[##cms.cms.date2##][##cms.cms.time2##]"
         type="text/css" rel="stylesheet" />
@@ -12,19 +12,25 @@
         type="text/css" rel="stylesheet" />
 </head>
 
-<body class="book-bg-zinc-50">
-    <basis core="call" file="header.inc" lid="1" pageindex="[##cms.cms.pageindex|(2)##]"></basis>
+<body class="book-bg-zinc-50 book-body-AR">
+    <basis core="call" file="header.inc" lid="3" pageindex="[##cms.cms.pageindex|(2)##]"></basis>
     <basis core="callback" run="atclient"
         triggers="room.list cms.page cms.nextpage cms.prevpage cms.services cms.roomtypes" method="manipulation">
     </basis>
+    <basis core="inlinesource" name="db">
+        <member name='currency_title' format="json" preview=""
+            postsql="select value from [db.currency_title] where field = 'title'">
+            {"root": [##db.get_unit_currency.result##]}
+        </member>
+    </basis>
     <main data-mob="true">
         <!-- Commands / Requests -->
-        <basis core="call" file="hotel/info/commands" lid="1"></basis>
-        <div class="max-lg:book-w-[90%] book-mx-auto book-mt-8">
+        <basis core="call" file="hotel/info/commands" lid="3"></basis>
+        <div class="max-lg:book-w-[90%] book-mx-auto book-mt-8 book-mb-6">
             <div class="book-flex book-items-center book-gap-1">
                 <a href="/"
-                    class="book-text-zinc-700 book-text-xs book-transition-all book-duration-300 hover:book-text-primary-300">صفحه
-                    اصلی</a>
+                    class="book-text-zinc-700 book-text-xs book-transition-all book-duration-300 hover:book-text-primary-300">
+                    الصفحة الرئيسية</a>
                 <span class="book-text-zinc-700 book-text-xs">/</span>
                 <span class="book-hotel__title"></span>
             </div>
@@ -128,7 +134,7 @@
                     </div>
                 </section>
                 <section class="book-mt-10">
-                    <h2 class="book-font-medium book-text-sm book-text-primary-400">ارتباط با هتل</h2>
+                    <h2 class="book-font-medium book-text-sm book-text-primary-400">اتصال بالفندق</h2>
                     <div class="book-flex book-flex-col book-gap-1 book-mt-3">
                         <div class="book-hotel__website__wrapper book-hidden book-items-center book-gap-1">
                             <svg width="48" height="48" class="book-shrink-0">
@@ -196,7 +202,7 @@
                         <div
                             class="book-hotel__date__picker book-flex book-items-center book-justify-between book-cursor-pointer">
                             <div class="book-flex book-flex-col book-gap-1">
-                                <h2 class="book-font-medium book-text-zinc-900">تاریخ انتخابی</h2>
+                                <h2 class="book-font-medium book-text-zinc-900 book-text-base">التاريخ المختار</h2>
                                 <span class="book-flex book-items-center book-gap-2 book-text-zinc-500 book-text-sm">
                                     <span class="book-hotel__nights">
                                         <span class="book-hotel__day"></span>
@@ -219,7 +225,7 @@
                                 <div>
                                     <input type="text" aria-label="Check in" value="" data-role="depart"
                                         class="js-date-input departure__date Basis_Date start_date book-cursor-pointer book-h-full book-w-full book-outline-none"
-                                        readonly="" name="fdate" id="fromdate2" required="" placeholder="تاریخ رفت" />
+                                        readonly="" name="fdate" id="fromdate2" required="" placeholder="تاريخ الذهاب" />
                                     <input value="" class="mstring_date mstring_fdate" type="hidden"
                                         aria-label="mstring_fdate" />
 
@@ -231,7 +237,7 @@
                                 <div class="">
                                     <input type="text" aria-label="Check out" value="" data-role="return"
                                         class="js-date-input arrival__date Basis_Date end_date book-cursor-pointer book-h-full book-w-full book-outline-none"
-                                        readonly="" name="tdate" id="todate2" required="" placeholder="تاریخ برگشت" />
+                                        readonly="" name="tdate" id="todate2" required="" placeholder="تاريخ المغادرة" />
                                     <input value="" class="mstring_date mstring_tdate" type="hidden"
                                         aria-label="mstring_tdate" />
 
@@ -246,17 +252,17 @@
                         <div onclick="show_passengerbox(this)"
                             class="show-passengers-dropdown show-passengers-dropdown-hotel book-flex book-items-center book-justify-between book-cursor-pointer">
                             <div class="book-flex book-flex-col book-justify-between book-cursor-pointer">
-                                <span class="label-text book-font-medium">مسافران</span>
+                                <h2 class="label-text book-font-medium book-text-base">المسافرون</h2>
                                 <div class="book-flex book-items-center book-gap-2">
                                     <span
                                         class="passenger-counts room-count book-flex book-items-center book-gap-1"><span
-                                            class="count">1</span>اتاق</span>
+                                            class="count">1</span>غرفة</span>
                                     <span
                                         class="passenger-counts adult-count book-flex book-items-center book-gap-1"><span
-                                            class="count">2</span>بزرگسال</span>
+                                            class="count">2</span>بالغ</span>
                                     <span
                                         class="passenger-counts child-count book-hidden book-flex book-items-center book-gap-1"><span
-                                            class="count">0</span>کودک</span>
+                                            class="count">0</span>طفل</span>
                                 </div>
                             </div>
                             <label class="label-passengers label-passengers-hotel book-flex book-cursor-pointer"
@@ -276,7 +282,7 @@
                                         class="room-tlt-icon book-hidden"><svg class="align-middle" width="15"
                                             height="15">
                                             <use xlink:href="images/sprite-icons.svg#engine-room-icon"></use>
-                                        </svg></span><span>اتاق</span></label>
+                                        </svg></span><span>غرفة</span></label>
                                 <ul
                                     class="book-h-auto book-leading-normal book-flex book-items-center book-justify-between">
                                     <!-- <li
@@ -319,7 +325,7 @@
                             <div class="Rooms book-mt-4">
                                 <div class="contentRoom book-flex book-flex-col book-gap-2">
                                     <div class="numberOfRoom">
-                                        اتاق<span class="ml-1">1</span></div>
+                                        غرفة<span class="ml-1">1</span></div>
                                     <div
                                         class="passenger-item adult-passenger-item book-w-full book-flex book-justify-between">
                                         <label for="passenger-room-adultcount1"
@@ -328,8 +334,7 @@
                                                     height="15">
                                                     <use xlink:href="images/sprite-icons.svg#engine-adult-icon">
                                                     </use>
-                                                </svg></span><span>بزرگسال</span><span class="exp-age">(12 سال
-                                                به بالا)</span></label>
+                                                </svg></span><span>بالغ</span><span class="exp-age">(12 سنة فأكثر)</span></label>
                                         <ul
                                             class="book-h-auto book-leading-normal book-flex book-items-center book-justify-between">
                                             <li
@@ -374,8 +379,7 @@
                                                     height="15">
                                                     <use xlink:href="images/sprite-icons.svg#engine-child-icon">
                                                     </use>
-                                                </svg></span><span>کودک</span><span class="exp-age">(0 تا 12
-                                                سال)</span></label>
+                                                </svg></span><span>طفل</span><span class="exp-age">(0 إلى 12 سنة)</span></label>
                                         <ul
                                             class="book-h-auto book-leading-normal book-flex book-items-center book-justify-between">
                                             <li
@@ -422,7 +426,7 @@
                                 <span class="confirmpass-tlt-icon book-hidden"><svg class="align-middle" width="15"
                                         height="15">
                                         <use xlink:href="images/sprite-icons.svg#engine-confirmpass-icon"></use>
-                                    </svg></span><span>تایید</span>
+                                    </svg></span><span>تأكيد</span>
                             </div>
                             <div class="clr"></div>
                         </div>
@@ -430,7 +434,7 @@
 
                     <div class="reserve-search">
                         <button type="submit"
-                            class="search-hotel book-w-full book-h-14 book-flex book-items-center book-justify-center book-rounded-xl book-bg-primary-300 book-text-white book-font-medium book-mt-16 book-transition-all book-duration-300 hover:book-bg-primary-900"><span>جستحو</span>
+                            class="search-hotel book-w-full book-h-14 book-flex book-items-center book-justify-center book-rounded-xl book-bg-primary-300 book-text-white book-font-medium book-mt-16 book-transition-all book-duration-300 hover:book-bg-primary-900"><span>یبحث</span>
                         </button>
                     </div>
                 </form>
@@ -442,13 +446,13 @@
                     class="book-hotel__content book-hidden book-bg-white book-rounded-xl book-px-3 book-pb-6 book-pt-3 book-mt-3">
                     <h2
                         class="book-text-zinc-900 book-font-medium book-border-b book-border-solid book-border-zinc-200 -book-mx-3 book-px-3 book-pb-4 book-mb-4">
-                        امکانات هتل</h2>
+                        مرافق الفندق</h2>
                     <div class="book-hotel__facilities book-flex book-flex-col book-gap-6">
 
                     </div>
                     <button type="button"
-                        class="open-hotel-moreinfo-btn book-w-full book-h-14 book-flex book-items-center book-justify-center book-rounded-xl book-bg-primary-300 book-text-white book-font-medium book-mt-6 book-mr-auto book-transition-all book-duration-300 hover:book-bg-primary-900"><span>مشاهده
-                            بیشتر</span>
+                        class="open-hotel-moreinfo-btn book-w-full book-h-14 book-flex book-items-center book-justify-center book-rounded-xl book-bg-primary-300 book-text-white book-font-medium book-mt-6 book-mr-auto book-transition-all book-duration-300 hover:book-bg-primary-900"><span>
+                            عرض المزيد</span>
                     </button>
                 </div>
                 <!-- Modal Card -->
@@ -461,8 +465,8 @@
                         <div
                             class="book-flex book-items-center book-justify-between book-py-4 book-pb-5 book-border-b book-border-solid book-border-zinc-200">
                             <div>
-                                <h2 class="book-text-zinc-900 book-text-2xl book-font-bold book-mt-1">امکانات و
-                                    ویژگی‌ها
+                                <h2 class="book-text-zinc-900 book-text-2xl book-font-bold book-mt-1">
+                                    المرافق والخصائص
                                 </h2>
                             </div>
 
@@ -483,45 +487,45 @@
                             <section class="hotel-moreinfo-section">
                                 <h2
                                     class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
-                                    مشخصات کلی
+                                    المواصفات العامة
                                 </h2>
 
                                 <div class="hotel-moreinfo-wrapper book-flex book-flex-col book-gap-4">
                                     <div
                                         class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">تعداد
-                                            طبقات</span>
+                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">عدد
+                                            الطوابق</span>
                                         <span
                                             class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__floors">—</span>
                                     </div>
 
                                     <div
                                         class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">تعداد
-                                            اتاق‌ها</span>
+                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">عدد
+                                            الغرف</span>
                                         <span
                                             class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__rooms_count">—</span>
                                     </div>
 
                                     <div
                                         class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">تعداد
-                                            ساختمان‌ها</span>
+                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">عدد
+                                            المباني</span>
                                         <span
                                             class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__buildings_count">—</span>
                                     </div>
 
                                     <div
                                         class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">سال
-                                            ساخت</span>
+                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">سنة
+                                            البناء</span>
                                         <span
                                             class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__build_year">—</span>
                                     </div>
 
                                     <div
                                         class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3 book-col-span-3">
-                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">چشم‌انداز</span>
+                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">الإطلالة</span>
                                         <span
                                             class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__view">—</span>
                                     </div>
@@ -532,7 +536,7 @@
                             <section class="hotel-moreinfo-section">
                                 <h2
                                     class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
-                                    امکانات عمومی
+                                    مرافق عامة
                                 </h2>
 
                                 <div class="hotel-moreinfo-wrapper book-flex book-flex-col book-gap-4">
@@ -540,7 +544,7 @@
                                     <div
                                         class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
                                         <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
-                                            سیستم تهویه</p>
+                                            نظام التكييف</p>
                                         <div
                                             class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__air_conditioning">
                                         </div>
@@ -549,7 +553,7 @@
                                     <div
                                         class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
                                         <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
-                                            امکانات معلولین</p>
+                                            مرافق ذوي الإعاقة</p>
                                         <div
                                             class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__disabled_facilities">
                                         </div>
@@ -558,7 +562,7 @@
                                     <div
                                         class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
                                         <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
-                                            صبحانه</p>
+                                            الإفطار</p>
                                         <div
                                             class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__breakfast">
                                         </div>
@@ -567,7 +571,7 @@
                                     <div
                                         class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
                                         <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
-                                            ناهار</p>
+                                            الغداء</p>
                                         <div class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__lunch">
                                         </div>
                                     </div>
@@ -575,7 +579,7 @@
                                     <div
                                         class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
                                         <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
-                                            شام</p>
+                                            العشاء</p>
                                         <div class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__dinner">
                                         </div>
                                     </div>
@@ -583,7 +587,7 @@
                                     <div
                                         class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4 book-col-span-2">
                                         <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
-                                            سیگار کشیدن</p>
+                                            التدخين</p>
                                         <div
                                             class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__smoking">
                                         </div>
@@ -597,7 +601,7 @@
                             <section class="hotel-moreinfo-section">
                                 <h2
                                     class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
-                                    اینترنت و رسانه
+                                    الإنترنت والإعلام
                                 </h2>
 
                                 <div class="hotel-moreinfo-wrapper book-flex book-flex-col book-gap-4">
@@ -605,7 +609,7 @@
                                     <div
                                         class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
                                         <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
-                                            سرویس اینترنت</p>
+                                            خدمة الإنترنت</p>
                                         <div
                                             class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__internet_service">
                                         </div>
@@ -614,7 +618,7 @@
                                     <div
                                         class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
                                         <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
-                                            تلویزیون</p>
+                                            التلفزيون</p>
                                         <div class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__tv">
                                         </div>
                                     </div>
@@ -622,7 +626,7 @@
                                     <div
                                         class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4 book-col-span-3">
                                         <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
-                                            کانال‌های تلویزیونی</p>
+                                            القنوات التلفزيونية</p>
                                         <div
                                             class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__tv_channels">
                                         </div>
@@ -635,7 +639,7 @@
                             <section class="hotel-moreinfo-section">
                                 <h2
                                     class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
-                                    سرویس‌های اتاق و حمام
+                                    خدمات الغرفة والحمام
                                 </h2>
 
                                 <div class="hotel-moreinfo-wrapper book-flex book-flex-col book-gap-4">
@@ -643,7 +647,7 @@
                                     <div
                                         class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
                                         <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
-                                            حمام</p>
+                                            الحمام</p>
                                         <div
                                             class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__bathroom">
                                         </div>
@@ -652,7 +656,7 @@
                                     <div
                                         class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
                                         <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
-                                            خدمات آرایشی و بهداشتی</p>
+                                            خدمات التجميل والنظافة</p>
                                         <div
                                             class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__beauty_hygiene_services">
                                         </div>
@@ -661,7 +665,7 @@
                                     <div
                                         class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4 book-col-span-3">
                                         <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
-                                            ابعاد اتاق</p>
+                                            أبعاد الغرفة</p>
                                         <div
                                             class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__room_size">
                                         </div>
@@ -674,7 +678,7 @@
                             <section class="hotel-moreinfo-section">
                                 <h2
                                     class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
-                                    تفریح، ورزش و ساحل
+                                    الترفيه، الرياضة والشاطئ
                                 </h2>
 
                                 <div class="hotel-moreinfo-wrapper book-flex book-flex-col book-gap-4">
@@ -682,14 +686,14 @@
                                     <div
                                         class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
                                         <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
-                                            ورزش و تفریحات</p>
+                                            الرياضة والترفيه</p>
                                         <div class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__sports">
                                         </div>
 
                                         <div
                                             class="book-mt-4 book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                            <span class="book-text-zinc-600 book-font-medium book-text-sm">تعداد
-                                                زمین تنیس</span>
+                                            <span class="book-text-zinc-600 book-font-medium book-text-sm">عدد
+                                                ملاعب التنس</span>
                                             <span
                                                 class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__tennis_courts_count">—</span>
                                         </div>
@@ -698,7 +702,7 @@
                                     <div
                                         class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
                                         <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
-                                            امکانات ساحلی</p>
+                                            مرافق الشاطئ</p>
                                         <div
                                             class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__beach_facilities">
                                         </div>
@@ -711,7 +715,7 @@
                             <section class="hotel-moreinfo-section">
                                 <h2
                                     class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
-                                    پارکینگ و حمل‌ونقل
+                                    مواقف السيارات والنقل
                                 </h2>
 
                                 <div class="hotel-moreinfo-wrapper book-flex book-flex-col book-gap-4">
@@ -719,7 +723,7 @@
                                     <div
                                         class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
                                         <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
-                                            پارکینگ</p>
+                                            مواقف السيارات</p>
                                         <div
                                             class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__parking">
                                         </div>
@@ -728,7 +732,7 @@
                                     <div
                                         class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
                                         <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
-                                            خدمات رفت‌وآمد</p>
+                                            خدمات النقل</p>
                                         <div
                                             class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__transport_services">
                                         </div>
@@ -741,54 +745,54 @@
                             <section class="hotel-moreinfo-section">
                                 <h2
                                     class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
-                                    رستوران، استخر و بار
+                                    المطعم، المسبح والبار
                                 </h2>
 
                                 <div class="hotel-moreinfo-wrapper book-flex book-flex-col book-gap-4">
                                     <div
                                         class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">تعداد
-                                            رستوران</span>
+                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">عدد
+                                            المطاعم</span>
                                         <span
                                             class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__restaurants_count">—</span>
                                     </div>
 
                                     <div
                                         class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">تعداد
-                                            کافی‌شاپ</span>
+                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">عدد
+                                            المقاهي</span>
                                         <span
                                             class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__cafes_count">—</span>
                                     </div>
 
                                     <div
                                         class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">تعداد
-                                            بار</span>
+                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">عدد
+                                            البارات</span>
                                         <span
                                             class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__bars_count">—</span>
                                     </div>
 
                                     <div
                                         class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">تعداد بار
-                                            استخر</span>
+                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">عدد بارات
+                                            المسبح</span>
                                         <span
                                             class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__pool_bars_count">—</span>
                                     </div>
 
                                     <div
                                         class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">استخر
-                                            روباز</span>
+                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">المسبح
+                                            الخارجي</span>
                                         <span
                                             class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__pool_outdoor_count">—</span>
                                     </div>
 
                                     <div
                                         class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">استخر
-                                            سرپوشیده</span>
+                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">المسبح
+                                            الداخلي</span>
                                         <span
                                             class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__pool_indoor_count">—</span>
                                     </div>
@@ -799,22 +803,22 @@
                             <section class="hotel-moreinfo-section">
                                 <h2
                                     class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
-                                    جلسات و کنفرانس
+                                    الاجتماعات والمؤتمرات
                                 </h2>
 
                                 <div class="hotel-moreinfo-wrapper book-flex book-flex-col book-gap-4">
                                     <div
                                         class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">اتاق
-                                            ملاقات</span>
+                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">غرفة
+                                            الاجتماعات</span>
                                         <span
                                             class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__meeting_rooms_count">—</span>
                                     </div>
 
                                     <div
                                         class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">سالن
-                                            کنفرانس</span>
+                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">قاعة
+                                            المؤتمرات</span>
                                         <span
                                             class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__conference_halls_count">—</span>
                                     </div>
@@ -825,14 +829,14 @@
                             <section class="hotel-moreinfo-section">
                                 <h2
                                     class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
-                                    اتاق‌ها، تخت‌ها و زبان‌ها
+                                    الغرف، الأسرة واللغات
                                 </h2>
 
                                 <div class="hotel-moreinfo-wrapper book-flex book-flex-col book-gap-4">
                                     <div
                                         class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
                                         <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
-                                            انواع اتاق</p>
+                                            أنواع الغرف</p>
                                         <div
                                             class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__room_types">
                                         </div>
@@ -841,7 +845,7 @@
                                     <div
                                         class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
                                         <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
-                                            انواع تخت</p>
+                                            أنواع الأسرة</p>
                                         <div
                                             class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__bed_types">
                                         </div>
@@ -850,7 +854,7 @@
                                     <div
                                         class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4 book-col-span-3">
                                         <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
-                                            زبان کارکنان</p>
+                                            لغات الموظفين</p>
                                         <div
                                             class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__staff_languages">
                                         </div>
@@ -862,14 +866,14 @@
                             <section class="hotel-moreinfo-section">
                                 <h2
                                     class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
-                                    قوانین و پرداخت
+                                    القواعد والدفع
                                 </h2>
 
                                 <div class="hotel-moreinfo-wrapper book-flex book-flex-col book-gap-4">
                                     <div
                                         class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
                                         <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
-                                            نوع پرداخت</p>
+                                            نوع الدفع</p>
                                         <div
                                             class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__payment_type">
                                         </div>
@@ -878,7 +882,7 @@
                                     <div
                                         class="book-border book-border-solid book-border-zinc-200 book-rounded-2xl book-p-4">
                                         <p class="book-text-zinc-700 book-text-sm book-font-medium book-mb-3">
-                                            کارت‌های اعتباری</p>
+                                            البطاقات الائتمانية</p>
                                         <div
                                             class="book-grid book-grid-cols-2 book-gap-2 book-hotel__moreinfo__credit_cards">
                                         </div>
@@ -887,14 +891,14 @@
                                     <div
                                         class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
                                         <span class="book-text-zinc-600 book-font-medium book-text-sm">نوع
-                                            اقامتگاه</span>
+                                            العقار</span>
                                         <span
                                             class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__property_type">—</span>
                                     </div>
 
                                     <div
                                         class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">نظافت</span>
+                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">التنظيف</span>
                                         <span
                                             class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__cleaning">—</span>
                                     </div>
@@ -905,23 +909,22 @@
                             <section class="hotel-moreinfo-section">
                                 <h2
                                     class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
-                                    حیوانات خانگی
+                                    الحيوانات الأليفة
                                 </h2>
 
                                 <div class="hotel-moreinfo-wrapper book-flex book-flex-col book-gap-4">
                                     <div
                                         class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">حداکثر
-                                            وزن حیوانات</span>
+                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">الحد
+                                            الأقصى لوزن الحيوانات</span>
                                         <span
                                             class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__pets_max_weight">—</span>
                                     </div>
 
                                     <div
                                         class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">حداکثر
-                                            حیوانات در هر
-                                            اتاق</span>
+                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">الحد
+                                            الأقصى للحيوانات في كل غرفة</span>
                                         <span
                                             class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__pets_max_per_room">—</span>
                                     </div>
@@ -932,14 +935,14 @@
                             <section class="hotel-moreinfo-section">
                                 <h2
                                     class="book-text-zinc-900 book-text-xl book-font-bold book-border-b book-border-solid book-border-zinc-200 -book-mx-8 book-px-8 book-pb-6 book-mb-6">
-                                    سایر
+                                    أخرى
                                 </h2>
 
                                 <div class="hotel-moreinfo-wrapper book-flex book-flex-col book-gap-4">
                                     <div
                                         class="book-flex book-items-center book-justify-between book-border book-border-solid book-border-zinc-200 book-rounded-xl book-px-4 book-py-3">
-                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">کد
-                                            پستی</span>
+                                        <span class="book-text-zinc-600 book-font-medium book-text-sm">الرمز
+                                            البريدي</span>
                                         <span
                                             class="book-text-zinc-900 book-font-semibold book-hotel__moreinfo__postal_code">—</span>
                                     </div>
@@ -952,7 +955,7 @@
                             class="book-py-4 book-border-t book-border-solid book-border-zinc-200 book-flex book-justify-end">
                             <button type="button"
                                 class="close-hotel-moreinfo-btn book-rounded-xl book-px-8 book-py-4 book-text-sm book-font-semibold book-text-zinc-700 book-border book-border-solid book-border-zinc-200 book-transition-all book-duration-300 hover:book-bg-zinc-200">
-                                بستن
+                                إغلاق
                             </button>
                         </div>
 
@@ -965,34 +968,34 @@
                 <div class="book-flex book-items-center book-gap-4 book-mb-6">
                     <div
                         class="book-hotel__checkout__wrapper book-flex-1 book-flex book-flex-col book-items-center book-gap-2">
-                        <h3 class="book-text-zinc-900">ساعت خروج</h3>
+                        <h3 class="book-text-zinc-900">وقت الخروج</h3>
                         <span
                             class="book-hotel__checkout__time book-flex book-items-center book-justify-center book-w-full book-bg-primary-50 book-rounded-full book-text-sm book-text-zinc-900 book-py-2"></span>
                     </div>
                     <div
                         class="book-hotel__checkin__wrapper book-flex-1 book-flex book-flex-col book-items-center book-gap-2">
-                        <h3 class="book-text-zinc-900">ساعت ورود</h3>
+                        <h3 class="book-text-zinc-900">وقت الدخول</h3>
                         <span
                             class="book-hotel__checkin__time book-flex book-items-center book-justify-center book-w-full book-bg-primary-50 book-rounded-full book-text-sm book-text-zinc-900 book-py-2"></span>
                     </div>
                 </div>
                 <h2
                     class="book-text-zinc-900 book-font-medium book-border-b book-border-solid book-border-zinc-200 -book-mx-3 book-px-3 book-pb-6 book-mb-6">
-                    امکانات اتاق</h2>
+                    مرافق الغرفة</h2>
                 <div class="book-room__facilities book-flex book-flex-col book-gap-9">
 
                 </div>
             </section>
             <section class="book-bg-zinc-800 book-rounded-xl book-px-6 book-py-2 book-mt-3">
                 <div class="book-flex book-flex-col book-gap-3">
-                    <p class="book-flex book-items-center book-gap-2 book-text-white">تعداد
-                        کودک:<span>[##cms.form.hotel_info_childcount##]</span></p>
-                    <p class="book-flex book-items-center book-gap-2 book-text-white">تعداد
-                        بزرگسال:<span>[##cms.form.hotel_info_adultcount##]</span></p>
-                    <p class="book-flex book-items-center book-gap-2 book-text-white">تعداد
-                        اتاق:<span>[##cms.form.hotel_info_roomcount##]</span></p>
+                    <p class="book-flex book-items-center book-gap-2 book-text-white">عدد
+                        الأطفال:<span>[##cms.form.hotel_info_childcount##]</span></p>
+                    <p class="book-flex book-items-center book-gap-2 book-text-white">عدد
+                        البالغين:<span>[##cms.form.hotel_info_adultcount##]</span></p>
+                    <p class="book-flex book-items-center book-gap-2 book-text-white">عدد
+                        الغرف:<span>[##cms.form.hotel_info_roomcount##]</span></p>
                     <p class="book-flex book-items-center book-gap-2 book-text-white">
-                        تاریخ:<span>[##cms.form.fdate##]</span> -
+                        التاريخ:<span>[##cms.form.fdate##]</span> -
                         <span>[##cms.form.tdate##]</span>
                     </p>
                 </div>
@@ -1000,13 +1003,13 @@
 
             <section
                 class="book-flex book-flex-col book-gap-7 book-bg-white book-rounded-xl book-mt-3 book-py-2 book-px-3">
-                <h2 class="book-text-sm book-font-medium book-text-zinc-900">فیلتر بر اساس:</h2>
+                <h2 class="book-text-sm book-font-medium book-text-zinc-900">تصفية حسب:</h2>
                 <div class="book-relative book-w-full book-max-w-sm">
-                    <h3 class="book-text-sm book-mb-2">خدمات اتاق:</h3>
+                    <h3 class="book-text-sm book-mb-2">خدمات الغرفة:</h3>
 
                     <button
                         class="room-select-btn book-flex book-items-center book-justify-between book-bg-zinc-100 book-rounded-xl book-px-3 book-py-px book-w-full book-transition-all book-duration-300">
-                        <span class="room-select-text book-text-zinc-600">room_only</span>
+                        <span class="room-select-text book-text-zinc-600">-</span>
                         <svg width="48" height="48"
                             class="close-room-btn book-text-zinc-500 book-transition-all book-duration-300">
                             <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-chevron-down"></use>
@@ -1034,19 +1037,19 @@
                 </div>
 
                 <div>
-                    <h3 class="book-text-sm book-mb-2">نام اتاق:</h3>
+                    <h3 class="book-text-sm book-mb-2">اسم الغرفة:</h3>
                     <div class="book-bg-zinc-100 book-rounded-xl book-px-3 book-py-px">
                         <input type="text" bc-name="cms.roomtypes" bc-value="" bc-triggers="keyup"
                             class="book-placeholder-zinc-600 book-bg-transparent book-h-12 book-outline-none" name=""
-                            id="" placeholder="نام اتاق">
+                            id="" placeholder="اسم الغرفة">
                     </div>
                 </div>
             </section>
 
             <section class="book-bg-white book-rounded-xl book-px-3 book-pb-6 book-pt-3 book-mt-3">
-                <h2
+                <h2 id="section-rooms"
                     class="book-text-zinc-900 book-font-medium book-border-b book-border-solid book-border-zinc-200 -book-mx-3 book-px-3 book-pb-4 book-mb-4">
-                    اتاق ها</h2>
+                    الغرف</h2>
                 <basis core="print" datamembername="hotel.updated" run="atclient">
                     <layout>
                         <script type="text/template">
@@ -1071,7 +1074,7 @@
                                                     <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-document">
                                                     </use>
                                                 </svg>
-                                                <span class="book-text-blue-600 book-text-xs">قوانين اتاق</span>
+                                                <span class="book-text-blue-600 book-text-xs">قواعد الغرفة</span>
                                             </div>`
                                             }}
                                             <div id="book-hotel__rules__modal"
@@ -1083,7 +1086,7 @@
                                                     <div
                                                         class="book-flex book-items-center book-justify-between book-px-6 book-py-4 book-border-b book-border-zinc-200">
                                                         <h2 class="book-text-sm book-font-bold book-text-zinc-800">
-                                                            قوانین اتاق
+                                                           قواعد الغرفة
                                                         </h2>
                                                         <button type="button"
                                                             class="book-hotel__close__rules book-inline-flex book-items-center book-justify-center book-w-8 book-h-8 book-rounded-full book-text-zinc-500 hover:book-bg-zinc-100 hover:book-text-zinc-700 book-transition">
@@ -1099,7 +1102,7 @@
                                                         class="book-max-h-[60vh] book-overflow-y-auto book-px-6 book-py-4 book-text-sm book-leading-relaxed book-text-zinc-700">
                                                         <div
                                                             class="book-text-center book-py-6 book-text-xs book-text-zinc-400">
-                                                            در حال بارگذاری قوانین اتاق...
+                                                            جاري تحميل قواعد الغرفة...
                                                         </div>
                                                     </div>
 
@@ -1107,7 +1110,7 @@
                                                         class="book-flex book-justify-end book-gap-2 book-px-6 book-py-4 book-border-t book-border-zinc-100">
                                                         <button type="button"
                                                             class="book-hotel__close__rules book-inline-flex book-items-center book-justify-center book-rounded-lg book-px-4 book-py-2 book-text-xs book-font-medium book-text-zinc-700 book-bg-zinc-100 hover:book-bg-zinc-200 book-transition-all">
-                                                            بستن
+                                                            إغلاق
                                                         </button>
                                                     </div>
 
@@ -1115,8 +1118,9 @@
                                             </div>
                                         </div>
                                         <button
-                                            class="book-flex-1 book-h-12 book-flex book-items-center book-justify-center book-rounded-xl book-bg-primary-300 book-text-white book-font-medium">رزرو
-                                            اتاق</button>
+                                            class="book-flex-1 book-h-12 book-flex book-items-center book-justify-center book-rounded-xl book-bg-primary-300 book-text-white book-font-medium">
+                                            حجز غرفة
+                                            </button>
                                     </div>
                                 </form>
                             </script>
@@ -1159,7 +1163,7 @@
     </main>
 
     <!-- Footer-->
-    <basis core="call" file="footer.inc" lid="1" pageindex="[##cms.cms.pageindex|(2)##]"></basis>
+    <basis core="call" file="footer.inc" lid="3" pageindex="[##cms.cms.pageindex|(2)##]"></basis>
     <script src="[##cms.cms.cdn##]/_js/swiper-bundle.11.2.5.min.js" type="text/javascript"></script>
     <script src="[##cms.cms.cdn##]/booking/js/hotel-info.js?ver=[##cms.cms.date2##][##cms.cms.time2##]"
         type="text/javascript"></script>
@@ -1168,7 +1172,7 @@
         class="book-rtl book-fixed book-hidden book-inset-x-0 book-top-0 book-bottom-0 book-w-full book-transition book-bg-white book-z-[9999999999] book-overflow-auto book-overscroll-contain book-h-dvh">
     </div>
 
-    <script type="text/javascript"><basis core="call" file="hotel/info/scripts" lid="1"></basis></script>
+    <script type="text/javascript"><basis core="call" file="hotel/info/scripts" lid="3"></basis></script>
     <!-- multi calendar -->
     <script
         src="[##cms.cms.cdn##]/booking/js/multiLang-calendar.js?ver=[##cms.cms.date2##][##cms.cms.time2##]"></script>

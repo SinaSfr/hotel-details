@@ -31,6 +31,7 @@
         fdate: '[##cms.form.fdate##]',
         tdate: '[##cms.form.tdate##]',
         moneytype: '[##cms.form.moneytype##]',
+        currencyValue: '[##db.currency_title.value##]',
       }
 
       // Run API logic
