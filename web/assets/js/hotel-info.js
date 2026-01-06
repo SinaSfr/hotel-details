@@ -344,6 +344,22 @@ document.addEventListener('click', (event) => {
  */
 let translations = {}
 let currentLanguage = document.documentElement.lang || 'fa'
+const loadTranslations = async () => {
+  try {
+      const res = await fetch(`/json/translations?lid=1`);
+      translations = await res.json();
+      currentLanguageTranslate = currentLanguage;
+      console.log(currentLanguageTranslate);
+  } catch (e) {
+      console.error('Failed to load translations');
+  }
+};
+
+const translate = (text) => translations[text]?.[currentLanguageTranslate] || text;
+
+(async () => {
+  await loadTranslations();
+})();
 const LID = (() => {
   // Try <html lang="fa|en|ar"> first; fallback to dir attribute
   const lang = (
@@ -521,7 +537,7 @@ async function runApiLogic() {
     }
 
     // Check if provider is in allowed list and trigger API call
-    if (allowedProviders.includes(String(provider))) {
+    if (usedforids && usedforids.trim() !== '') {
       $bc.setSource('cms.token')
     } else {
       fetchHotelImages()
@@ -1769,11 +1785,6 @@ const setInfo = async (args) => {
 
     // --- language detect (fa vs en) ---
     const lang = getCurrentLang()
-    const dir = (
-      document.documentElement.getAttribute('dir') || ''
-    ).toLowerCase()
-    const isPersian = lang.startsWith('fa')
-    const isArabic = lang.startsWith('ar')
     const unified = unifyHotelData(data, { lang })
     // تشخیص اینکه دیتا از external اومده یا restful
     const source = unified.source
@@ -2009,11 +2020,7 @@ const setInfo = async (args) => {
     const moreInfoBtn = document.querySelector('.open-hotel-moreinfo-btn')
     if (!facilitiesContainer) return
 
-    const facilitiesEmptyText = isPersian
-      ? 'امکاناتی برای این هتل ثبت نشده است.'
-      : isArabic
-      ? 'لم يتم تسجيل أي مرافق لهذا الفندق.'
-      : 'No hotel facilities have been provided.'
+    const facilitiesEmptyText = translate("no_hotel_facilities");
 
     facilitiesContainer.innerHTML = ''
 
@@ -2067,11 +2074,7 @@ ${facilitiesEmptyText}
     )
     if (!roomFacilitiesContainer) return
 
-    const emptyText = isPersian
-      ? 'امکاناتی برای این اتاق ثبت نشده است'
-      : isArabic
-      ? 'لم يتم تسجيل أي مرافق لهذه الغرفة'
-      : 'No room facilities have been provided'
+    const emptyText = translate("no_room_facilities");
 
     roomFacilitiesContainer.innerHTML = ''
 
@@ -2862,30 +2865,22 @@ const renderProviderWithCookie = (element) => {
   }
 }
 
+const renderAction = (element) => {
+  let clid = window.cmsData.clid
+
+  if (clid == 1) {
+    return '/Client_Show_Hotel_ver.2.bc'
+  } else if (clid == 2) {
+    return '/Client_Show_Hotel_En_ver.2.bc'
+  } else if (clid == 3) {
+    return '/Client_Show_Hotel_Ar_ver.2.bc'
+  }
+}
+
 const renderAvailableRooms = async (element) => {
   try {
     // --- language detect (fa vs en) ---
     const lang = getCurrentLang()
-    const isPersian = lang.startsWith('fa')
-    const isArabic = lang.startsWith('ar')
-
-    const TXT = isPersian
-      ? {
-          noRooms:
-            'هیچ اتاقی برای نمایش موجود نیست. لطفاً فیلترها را تغییر دهید یا دوباره تلاش کنید.',
-          roomRules: 'قوانین اتاق',
-        }
-      : isArabic
-      ? {
-          noRooms:
-            'لا توجد غرف متاحة للعرض. يرجى تعديل الفلاتر أو المحاولة مرة أخرى.',
-          roomRules: 'قواعد الغرفة',
-        }
-      : {
-          noRooms:
-            'No rooms available to display. Please adjust filters or try again.',
-          roomRules: 'Room rules',
-        }
 
     if (
       !element ||
@@ -2900,7 +2895,7 @@ const renderAvailableRooms = async (element) => {
           'afterend',
           `
   <div class="book-text-zinc-900 book-text-sm book-mt-4">
-    ${TXT.noRooms}
+  ${translate("no_rooms_available")}
   </div>
 `,
         )
@@ -2997,11 +2992,11 @@ const renderAvailableRooms = async (element) => {
         <svg width="48" height="48">
           <use href="/booking/images/sprite-hotelDetails-icons.svg#icon-document"></use>
         </svg>
-        ${TXT.roomRules}
+        ${translate("room_rules")}
       </button>
     </div>
 
-    ${hiddenInputs}
+      ${hiddenInputs}
   </div>
 `
       })
@@ -3089,18 +3084,6 @@ const renderAvailableRoomsMobile = async (element) => {
   } catch (error) {
     console.error(`renderAvailableRoomsMobile: ${error.message}`)
     return ''
-  }
-}
-
-const renderAction = (element) => {
-  let clid = window.cmsData.clid
-
-  if (clid == 1) {
-    return '/Client_Show_Hotel_ver.2.bc'
-  } else if (clid == 2) {
-    return '/Client_Show_Hotel_En_ver.2.bc'
-  } else if (clid == 3) {
-    return '/Client_Show_Hotel_Ar_ver.2.bc'
   }
 }
 
@@ -3394,27 +3377,6 @@ const priceWithCurrency = (amount, opts = {}) => {
 
     // language & direction detection
     const lang = getCurrentLang()
-    const isPersian = lang.startsWith('fa')
-    const isArabic = lang.startsWith('ar')
-
-    // texts
-    const texts = {
-      basePrice: isPersian
-        ? 'مبلغ اصلی:'
-        : isArabic
-        ? 'المبلغ الأساسي:'
-        : 'Base Price:',
-      commission: isPersian
-        ? 'کمیسیون:'
-        : isArabic
-        ? 'العمولة:'
-        : 'Commission:',
-      payable: isPersian
-        ? 'مبلغ قابل پرداخت:'
-        : isArabic
-        ? 'المبلغ المستحق الدفع:'
-        : 'Payable Amount:',
-    }
 
     const { currency_cost_number, floatdigit, currency_unit } =
       getCurrencyUnitFromStorage()
@@ -3478,7 +3440,7 @@ const priceWithCurrency = (amount, opts = {}) => {
       commission > 0
         ? `
     <div class="commission-text book-flex book-items-center book-gap-1 book-text-red-600 book-text-xs">
-        ${texts.commission}
+    ${translate("commission")}
         <span class="book-text-zinc-900 book-font-bold book-text-xl">
             ${nf.format(commission)}
         </span>
@@ -3493,7 +3455,7 @@ const priceWithCurrency = (amount, opts = {}) => {
       window.innerWidth < 1024 ? 'book-mt-6' : ''
     }">
     <div class="book-flex book-items-center book-gap-1" data-original-price="${amount}">
-        <h3 class="book-text-xs book-text-zinc-900">${texts.basePrice}</h3>
+        <h3 class="book-text-xs book-text-zinc-900">${translate("base_price")}</h3>
         <div class="price-unit-container book-flex book-items-center book-gap-1">
             <span class="book-price__check__currency book-text-zinc-900 book-font-bold book-text-xl">
                 ${formattedPrice}
@@ -3510,7 +3472,7 @@ const priceWithCurrency = (amount, opts = {}) => {
       commission > 0
         ? `
     <div class="book-flex book-items-center book-gap-1">
-        <span class="book-text-zinc-900 book-text-xs">${texts.payable}</span>
+        <span class="book-text-zinc-900 book-text-xs">$${translate("payable_amount")}</span>
         <span class="book-price__check__currency book-text-zinc-900 book-font-bold book-text-xl">
             ${formattedPayable}
         </span>
@@ -4007,6 +3969,7 @@ const manipulation = async (args) => {
       args.context.setAsSource('hotel.updated', pagedSource, {
         keyFieldName: 'optionId',
       })
+      setTimeout(setActionForAllForms, 0);
       InUpdateUIProcess = false
       setupBookPagingDots()
     } else {
@@ -4015,27 +3978,6 @@ const manipulation = async (args) => {
 
       // --- language detect (fa vs en) ---
       const lang = getCurrentLang()
-      const isPersian = lang.startsWith('fa')
-      const isArabic = lang.startsWith('ar')
-
-      const TXT = isPersian
-        ? {
-            title: 'هیچ اتاقی با فیلترهای انتخابی یافت نشد',
-            subtitle: 'لطفاً فیلترها را تغییر دهید',
-            fallback:
-              'هیچ اتاقی برای نمایش موجود نیست. لطفاً دوباره تلاش کنید.',
-          }
-        : isArabic
-        ? {
-            title: 'لم يتم العثور على غرف مع الفلاتر المحددة',
-            subtitle: 'يرجى تعديل الفلاتر',
-            fallback: 'لا توجد غرف متاحة للعرض. يرجى المحاولة مرة أخرى.',
-          }
-        : {
-            title: 'No rooms match your selected filters',
-            subtitle: 'Please adjust your filters',
-            fallback: 'No rooms are available to display. Please try again.',
-          }
 
       // Display no rooms found message
       const listContainer = document.querySelector(
@@ -4044,8 +3986,8 @@ const manipulation = async (args) => {
       if (listContainer) {
         listContainer.innerHTML = `
 <div class="book-text-center">
-<div>${TXT.title}</div>
-<div class="book-text-zinc-900 book-text-xs book-mt-2">${TXT.subtitle}</div>
+<div>${translate("no_rooms_match_filters")}</div>
+<div class="book-text-zinc-900 book-text-xs book-mt-2">${translate("adjust_filters")}</div>
 </div>
 `
       } else {
@@ -4055,7 +3997,7 @@ const manipulation = async (args) => {
             'afterend',
             `
 <div class="book-text-zinc-900 book-text-sm book-mt-4">
-  ${TXT.fallback}
+${translate("no_rooms_available_display")}
 </div>
 `,
           )
@@ -4156,30 +4098,10 @@ const showRules = async (el, optionId) => {
     }
 
     const lang = getCurrentLang()
-    const isPersian = lang.startsWith('fa')
-    const isArabic = lang.startsWith('ar')
-
-    const texts = isPersian
-      ? {
-          noRules: 'قوانینی برای این اتاق ثبت نشده است',
-          loading: 'در حال بارگذاری قوانین اتاق...',
-          error: 'خطا در دریافت قوانین اتاق. لطفاً دوباره تلاش کنید.',
-        }
-      : isArabic
-      ? {
-          noRules: 'لم يتم تسجيل قواعد لهذه الغرفة',
-          loading: 'جاري تحميل قواعد الغرفة...',
-          error: 'خطأ في تحميل قواعد الغرفة. يرجى المحاولة مرة أخرى.',
-        }
-      : {
-          noRules: 'No rules have been provided for this room.',
-          loading: 'Loading room rules...',
-          error: 'Failed to load room rules. Please try again.',
-        }
 
     const fallbackHtml = `
 <div class="book-text-center book-py-6 book-text-xs book-text-zinc-500">
-${texts.noRules}
+${translate("no_rules_provided")}
 </div>
 `
 
@@ -4193,7 +4115,7 @@ ${texts.noRules}
     // Loading
     container.innerHTML = `
 <div class="book-text-center book-py-6 book-text-xs book-text-zinc-400">
-${texts.loading}
+${translate("loading_room_rules")}
 </div>
 `
 
@@ -4251,17 +4173,10 @@ ${texts.loading}
     const container = document.getElementById('book-hotel__rules__content')
     if (container) {
       const lang = getCurrentLang()
-      const isPersian = lang.startsWith('fa')
-      const isArabic = lang.startsWith('ar')
-      const texts = isPersian
-        ? 'خطا در دریافت قوانین اتاق. لطفاً دوباره تلاش کنید.'
-        : isArabic
-        ? 'خطأ في تحميل قواعد الغرفة. يرجى المحاولة مرة أخرى.'
-        : 'Failed to load room rules. Please try again.'
 
       container.innerHTML = `
 <div class="book-text-center book-py-6 book-text-xs book-text-zinc-500">
-  ${texts}
+${translate("failed_load_room_rules")}
 </div>
 `
       openRoomRulesModal()
@@ -4473,36 +4388,6 @@ function Change_Room_Count(t) {
 
       // --- language detect (fa vs en) ---
       const lang = getCurrentLang()
-      const isPersian = lang.startsWith('fa')
-      const isArabic = lang.startsWith('ar')
-
-      // --- texts ---
-      const TXT = isPersian
-        ? {
-            room: 'اتاق',
-            removeRoom: 'حذف اتاق',
-            adult: 'بزرگسال',
-            adultAge: '(12 سال به بالا)',
-            child: 'کودک',
-            childAge: '(0 تا 12 سال)',
-          }
-        : isArabic
-        ? {
-            room: 'غرفة',
-            removeRoom: 'إزالة الغرفة',
-            adult: 'بالغ',
-            adultAge: '(12+ سنوات)',
-            child: 'طفل',
-            childAge: '(0–12 سنة)',
-          }
-        : {
-            room: 'Room',
-            removeRoom: 'Remove room',
-            adult: 'Adult',
-            adultAge: '(12+ years)',
-            child: 'Child',
-            childAge: '(0–12 years)',
-          }
 
       const roomsContainer = formEl.querySelector('.Rooms')
       const adult_count = t
@@ -4526,12 +4411,12 @@ function Change_Room_Count(t) {
         'contentRoom book-flex book-flex-col book-gap-2 book-border-t book-border-solid book-border-zinc-200 book-pt-2'
 
       newRoom.innerHTML = `
-<div class="numberOfRoom">${TXT.room} ${s}</div>
-<div class="deleteRoom book-hidden book-cursor-pointer" onclick="remove_Room(this)">${TXT.removeRoom}</div>
+<div class="numberOfRoom">${translate("room")} ${s}</div>
+<div class="deleteRoom book-hidden book-cursor-pointer" onclick="remove_Room(this)">${translate("remove_room")}</div>
 
 <div class="passenger-item adult-passenger-item book-w-full book-flex book-justify-between">
   <label for="passenger-room-adultcount${s}" class="book-flex book-items-center book-gap-1">
-    <span>${TXT.adult}</span><span class="exp-age">${TXT.adultAge}</span>
+    <span>${translate("passenger_adult")}</span><span class="exp-age">${translate("adult_age")}</span>
   </label>
   <ul class="book-h-auto book-leading-normal book-flex book-items-center book-justify-between">
     <li class="plus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
@@ -4552,7 +4437,7 @@ function Change_Room_Count(t) {
 
 <div class="passenger-item child-passenger-item book-w-full book-flex book-justify-between">
   <label for="passenger-room-childcount${s}" class="book-flex book-items-center book-gap-1">
-    <span>${TXT.child}</span><span class="exp-age">${TXT.childAge}</span>
+    <span>${translate("passenger_child")}</span><span class="exp-age">${translate("child_age")}</span>
   </label>
   <ul class="book-h-auto book-leading-normal book-flex book-items-center book-justify-between">
     <li class="plus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
@@ -4611,6 +4496,37 @@ function Change_Room_Count(t) {
     Sum_ChildCount(t)
   }
 }
+document.addEventListener("click", function (event) {
+  const disabledEl = event.target.closest(".disable-button");
+  if (!disabledEl) return;
+
+  const form = disabledEl.closest("form");
+  const module = form ? form.getAttribute("id") : "";
+
+  if (module == "hotelSearch") {
+    if (!disabledEl.closest(".passengerbox").querySelector(".alert-adults")) {
+      const alertDiv = document.createElement("div");
+      alertDiv.className =
+        "alert-adults alert-for-passenger text-sm warningColor-100 text-right";
+      alertDiv.textContent = "باید تعداد بزرگسال کمتر از 15 باشد !";
+      disabledEl.closest(".adult-passenger-item").after(alertDiv);
+      setTimeout(() => alertDiv.remove(), 3000);
+    }
+  } else {
+    if (!disabledEl.closest(".passengerbox").querySelector(".alert-passengers")) {
+      const alertDiv = document.createElement("div");
+      alertDiv.className =
+        "alert-passengers alert-for-passenger text-sm warningColor-100 text-right";
+      alertDiv.textContent =
+        "باید مجموع تعداد بزرگسال و کودک کمتر از 10 باشد !";
+      disabledEl
+        .closest(".passengerbox")
+        .querySelector(".child-passenger-item")
+        .after(alertDiv);
+      setTimeout(() => alertDiv.remove(), 3000);
+    }
+  }
+});
 function Add_Room_Count(t) {
   let e = parseInt(t.closest('ul').querySelector('.roomcount').value)
   let n = e + 1
@@ -4625,36 +4541,7 @@ function Add_Room_Count(t) {
 
       // --- language detect (fa vs en) ---
       const lang = getCurrentLang()
-      const isPersian = lang.startsWith('fa')
-      const isArabic = lang.startsWith('ar')
 
-      // --- texts ---
-      const TXT = isPersian
-        ? {
-            room: 'اتاق',
-            removeRoom: 'حذف اتاق',
-            adult: 'بزرگسال',
-            adultAge: '(12 سال به بالا)',
-            child: 'کودک',
-            childAge: '(0 تا 12 سال)',
-          }
-        : isArabic
-        ? {
-            room: 'غرفة',
-            removeRoom: 'إزالة الغرفة',
-            adult: 'بالغ',
-            adultAge: '(12+ سنة)',
-            child: 'طفل',
-            childAge: '(0–12 سنة)',
-          }
-        : {
-            room: 'Room',
-            removeRoom: 'Remove room',
-            adult: 'Adult',
-            adultAge: '(12+ years)',
-            child: 'Child',
-            childAge: '(0–12 years)',
-          }
       const roomsContainer = formEl.querySelector('.Rooms')
 
       const adult_count = t
@@ -4678,12 +4565,12 @@ function Add_Room_Count(t) {
       newRoom.className = 'contentRoom book-flex book-flex-col book-gap-2'
 
       newRoom.innerHTML = `
-<div class="numberOfRoom">${TXT.room} ${s}</div>
-<div class="deleteRoom book-hidden book-cursor-pointer" onclick="remove_Room(this)">${TXT.removeRoom}</div>
+<div class="numberOfRoom">${translate("room")} ${s}</div>
+<div class="deleteRoom book-hidden book-cursor-pointer" onclick="remove_Room(this)">${translate("remove_room")}</div>
 
 <div class="passenger-item adult-passenger-item book-w-full book-flex book-justify-between">
   <label for="passenger-room-adultcount${s}" class="book-flex book-items-center book-gap-1">
-    <span>${TXT.adult}</span><span class="exp-age">${TXT.adultAge}</span>
+    <span>${translate("passenger_adult")}</span><span class="exp-age">${translate("adult_age")}</span>
   </label>
   <ul class="book-h-auto book-leading-normal book-flex book-items-center book-justify-between">
     <li class="plus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
@@ -4704,7 +4591,7 @@ function Add_Room_Count(t) {
 
 <div class="passenger-item child-passenger-item book-w-full book-flex book-justify-between">
   <label for="passenger-room-childcount${s}" class="book-flex book-items-center book-gap-1">
-    <span>${TXT.child}</span><span class="exp-age">${TXT.childAge}</span>
+    <span>${translate("passenger_child")}</span><span class="exp-age">${translate("child_age")}</span>
   </label>
   <ul class="book-h-auto book-leading-normal book-flex book-items-center book-justify-between">
     <li class="plus-count book-leading-normal book-w-6 book-h-6 book-bg-primary-600 book-flex book-items-center book-justify-center book-rounded book-cursor-pointer">
@@ -4828,19 +4715,42 @@ function destroyRoomDropdown(container, count) {
   }
 }
 function Change_AdultCount(t) {
-  const button = t.querySelector('span')
-  const adultCountInput = button.closest('ul').querySelector('.adultcount')
-  const currentValue = parseInt(adultCountInput.value)
-  const updatedValue =
-    button.textContent.indexOf('+') > -1
-      ? currentValue + 1
-      : currentValue > 0
-      ? currentValue - 1
-      : 0
-  if (updatedValue < 10 || updatedValue >= 1) {
-    adultCountInput.value = updatedValue
-    Sum_AdultCount(button)
+  // اگر دکمه disable بود اصلاً اجرا نکن
+  const btnLi = t.closest('.plus-count, .minus-count')
+  if (btnLi && btnLi.classList.contains('disable-button')) return
+
+  const form = t.closest('form')
+  const module = form ? form.getAttribute('id') : ''
+
+  // span درست (+/-)
+  const span =
+    t.querySelector('.count-icon-simple') ||
+    t.querySelector('span')
+
+  const ul = t.closest('ul')
+  if (!ul) return
+
+  const adultCountInput = ul.querySelector('.adultcount')
+  if (!adultCountInput) return
+
+  const currentValue = parseInt(adultCountInput.value) || 0
+  const isPlus = span && span.textContent.indexOf('+') > -1
+
+  const MIN_ADULT = 1
+  const MAX_ADULT_HOTEL = 14 // یعنی کمتر از 15
+
+  let updatedValue = isPlus
+    ? currentValue + 1
+    : Math.max(currentValue - 1, MIN_ADULT)
+
+  // محدودیت هتل: نذار از 14 رد بشه
+  if (module === 'hotelSearch' && updatedValue > MAX_ADULT_HOTEL) {
+    Check_Passenger_Count(t) // فقط disable-button رو آپدیت کن (alert با listener شما میاد)
+    return
   }
+
+  adultCountInput.value = updatedValue
+  Sum_AdultCount(t)
   Check_Passenger_Count(t)
 }
 function Sum_AdultCount(t) {
@@ -5000,91 +4910,80 @@ function destroyChildDropdown(t, e) {
   }
 }
 function Check_Passenger_Count(t) {
-  const module = t.closest('form').getAttribute('id')
-  if (module == 'hotelSearch') {
-    if (
-      t.closest('.passenger-item').classList.contains('adult-passenger-item')
-    ) {
-      const adult_count = t.closest('ul').querySelector('.adultcount').value
-      if (adult_count > 13) {
-        if (!t.closest('.plus-count').classList.contains('disable-button')) {
-          t.closest('.plus-count').classList.add('disable-button')
-        }
-      } else {
-        if (t.closest('.contentRoom').querySelector('.alert-adults')) {
-          t.closest('.contentRoom').querySelector('.alert-adults').remove()
-        }
-        t.closest('.contentRoom')
-          .querySelectorAll('.plus-count')
-          .forEach(function (button) {
-            if (button.classList.contains('disable-button')) {
-              button.classList.remove('disable-button')
-            }
-          })
-        if (
-          t.closest('.passengerbox').querySelector('.second-room-type') &&
-          t
-            .closest('.passengerbox')
-            .querySelector('.second-room-type')
-            .classList.contains('disable-button')
-        ) {
-          t.closest('.passengerbox')
-            .querySelector('.second-room-type')
-            .classList.remove('disable-button')
-        }
-      }
+  const formEl = t.closest('form')
+  if (!formEl) return
+
+  const module = formEl.getAttribute('id') || ''
+
+  // =========================
+  // HOTEL SEARCH (سقف بزرگسال هر اتاق: < 15)
+  // =========================
+  if (module === 'hotelSearch') {
+    const passengerItem = t.closest('.passenger-item')
+    if (!passengerItem) return
+
+    // فقط روی ردیف بزرگسال اعمال شود
+    if (!passengerItem.classList.contains('adult-passenger-item')) return
+
+    const ul = t.closest('ul')
+    if (!ul) return
+
+    const adultInput = ul.querySelector('.adultcount')
+    const adult_count = parseInt(adultInput?.value) || 0
+
+    // فقط دکمه + بزرگسال همان ردیف
+    const plusLi = ul.querySelector('.plus-count')
+    if (!plusLi) return
+
+    // کمتر از 15 یعنی max=14
+    if (adult_count >= 14) {
+      plusLi.classList.add('disable-button')
+    } else {
+      plusLi.classList.remove('disable-button')
     }
+
+    return
+  }
+
+  // =========================
+  // OTHER MODULES (سقف مجموع: < 10)
+  // =========================
+  const passengersField = t.closest('.passengers-field')
+  const passengerBox = t.closest('.passengerbox')
+  if (!passengersField || !passengerBox) return
+
+  const adult_count =
+    passengersField.querySelector('.adult-count .count')?.textContent || '0'
+  const child_count =
+    passengersField.querySelector('.child-count .count')?.textContent || '0'
+
+  let sum_passenger = 0
+
+  if (module === 'flightSearch' || module === 'serviceSearch') {
+    const infant_count =
+      passengersField.querySelector('.infant-count .count')?.textContent || '0'
+    sum_passenger =
+      parseInt(adult_count) + parseInt(child_count) + parseInt(infant_count)
   } else {
-    const adult_count = t
-      .closest('.passengers-field')
-      .querySelector('.adult-count')
-      .querySelector('.count').textContent
-    const child_count = t
-      .closest('.passengers-field')
-      .querySelector('.child-count')
-      .querySelector('.count').textContent
-    let sum_passenger = 0
-    if (module == 'flightSearch' || module == 'serviceSearch') {
-      const infant_count = t
-        .closest('.passengers-field')
-        .querySelector('.infant-count')
-        .querySelector('.count').textContent
-      sum_passenger =
-        parseInt(adult_count) + parseInt(child_count) + parseInt(infant_count)
-    } else {
-      sum_passenger = parseInt(adult_count) + parseInt(child_count)
-    }
-    if (sum_passenger > 8) {
-      t.closest('.passengerbox')
-        .querySelectorAll('.plus-count')
-        .forEach(function (button) {
-          if (!button.classList.contains('disable-button')) {
-            button.classList.add('disable-button')
-          }
-        })
-    } else {
-      if (t.closest('.passengerbox').querySelector('.alert-passengers')) {
-        t.closest('.passengerbox').querySelector('.alert-passengers').remove()
-      }
-      t.closest('.passengerbox')
-        .querySelectorAll('.plus-count')
-        .forEach(function (button) {
-          if (button.classList.contains('disable-button')) {
-            button.classList.remove('disable-button')
-          }
-        })
-      if (
-        t.closest('.passengerbox').querySelector('.second-room-type') &&
-        t
-          .closest('.passengerbox')
-          .querySelector('.second-room-type')
-          .classList.contains('disable-button')
-      ) {
-        t.closest('.passengerbox')
-          .querySelector('.second-room-type')
-          .classList.remove('disable-button')
-      }
-    }
+    sum_passenger = parseInt(adult_count) + parseInt(child_count)
+  }
+
+  // پیام listener شما میگه: "کمتر از 10" => یعنی max=9
+  if (sum_passenger >= 10) {
+    passengerBox.querySelectorAll('.plus-count').forEach((btn) => {
+      btn.classList.add('disable-button')
+    })
+
+    // اگر دکمه افزودن اتاق (second-room-type) هم باید disable شود:
+    const secondRoomBtn = passengerBox.querySelector('.second-room-type')
+    if (secondRoomBtn) secondRoomBtn.classList.add('disable-button')
+  } else {
+    passengerBox.querySelectorAll('.plus-count').forEach((btn) => {
+      btn.classList.remove('disable-button')
+    })
+
+    const secondRoomBtn = passengerBox.querySelector('.second-room-type')
+    if (secondRoomBtn) secondRoomBtn.classList.remove('disable-button')
   }
 }
 document.addEventListener('DOMContentLoaded', () => {
@@ -5152,16 +5051,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function getHotelLangTexts() {
     const lang = getCurrentLang()
-    const isPersian = lang.startsWith('fa')
-    const isArabic = lang.startsWith('ar')
-
+    
     return {
-      isPersian,
-      isArabic,
-      nightsLabel: isPersian ? 'شب' : isArabic ? 'ليلة' : 'night(s)',
-      tillLabel: isPersian ? ' تا' : isArabic ? ' إلى' : ' to',
+      isPersian: lang.startsWith('fa'),
+      isArabic: lang.startsWith('ar'),
+      nightsLabel: translate("nights_label"),
+      tillLabel: translate("till_label"),
     }
-  }
+}
 
   function updateDateFields() {
     const startDateInput = document.querySelector('.js-date-input.start_date')
@@ -5183,8 +5080,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (fdate) fdate.innerText = startDateJalali
     if (tdate) tdate.innerText = endDateJalali
 
-    const { nightsLabel, tillLabel } = getHotelLangTexts()
-
     if (startDateGregorian && endDateGregorian) {
       const dayDifference = calculateDateDifference(
         startDateGregorian,
@@ -5192,14 +5087,14 @@ document.addEventListener('DOMContentLoaded', () => {
       )
       if (nightsElem)
         nightsElem.innerText = dayDifference
-          ? `${dayDifference} ${nightsLabel}`
+          ? `${dayDifference} ${translate("nights_label")}`
           : ''
     } else {
       if (nightsElem) nightsElem.innerText = ''
     }
 
     if (tdate && tdate.innerText.trim() !== '') {
-      if (tillText) tillText.innerText = tillLabel
+      if (tillText) tillText.innerText = translate("till_label")
     } else {
       if (tillText) tillText.innerText = ''
     }

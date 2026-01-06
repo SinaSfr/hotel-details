@@ -1,8 +1,7 @@
 <!-- Get Token -->
 <basis core="api" name="api.token" url="https://admin.basiscore.net/apitoken" method="post"
     content-type="application/json" run="atclient" if="{##cms.token##}" triggers="cms.token" body='{
-        "dmnid": "[##cms.cms.domainid##]",
-        "lid": "2"
+        "dmnid": "[##cms.cms.domainid##]"
     }'>
 </basis>
 <basis core="callback" triggers="api.token" run="atclient" method="setToken"></basis>
@@ -12,8 +11,7 @@
     content-type="application/json" run="atclient" if="{##cms.data##}" triggers="cms.data" body='{
         "token": "{##cms.data.token##}",
         "usedforid":[{##cms.data.usedforids##}],
-        "wordid": "94604",
-        "lid": "2"
+        "wordid": "94604"
         }' onprocessed="onProcessedapiGallery">
 </basis>
 <!-- Get Info -->
@@ -22,9 +20,7 @@
     content-type="application/json" run="atclient" if="{##cms.data##}" triggers="cms.data" body='{
         "token": "{##cms.data.token##}",
         "usedforids":[{##cms.data.usedforids##}],
-        "mode": "3",
-        "lid": "2"
-      
+        "mode": "3"      
         }'>
 </basis>
 <basis core="callback" triggers="api.info" run="atclient" method="setInfo"></basis>
