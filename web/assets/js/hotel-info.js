@@ -537,7 +537,7 @@ async function runApiLogic() {
     }
 
     // Check if provider is in allowed list and trigger API call
-    if (usedforids && usedforids.trim() !== '') {
+    if (allowedProviders.includes(String(provider))) {
       $bc.setSource('cms.token')
     } else {
       fetchHotelImages()
@@ -1970,8 +1970,9 @@ const setInfo = async (args) => {
       checkInElement.textContent = checkIn
 
       if (checkInWrapper) {
-        checkInWrapper.classList.remove('book-hidden')
-        checkInWrapper.classList.add('book-flex')
+        // checkInWrapper.classList.remove('book-hidden')
+        // checkInWrapper.classList.add('book-flex')
+        checkInWrapper.classList.add('book-hidden')
       }
     } else {
       if (checkInWrapper) {
@@ -1997,8 +1998,9 @@ const setInfo = async (args) => {
       checkOutElement.textContent = checkOut
 
       if (checkOutWrapper) {
-        checkOutWrapper.classList.remove('book-hidden')
-        checkOutWrapper.classList.add('book-flex')
+        // checkOutWrapper.classList.remove('book-hidden')
+        // checkOutWrapper.classList.add('book-flex')
+        checkInWrapper.classList.add('book-hidden')
       }
     } else {
       if (checkOutWrapper) {
